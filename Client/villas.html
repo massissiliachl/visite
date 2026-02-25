@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Villas de Luxe - Votre Agence de Voyage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --primary-dark: #1e7065;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #636e72;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            padding: 3.5rem 1rem 2.5rem;
+        }
+
+        header h1 { font-size: 2.6rem; margin-bottom: 0.6rem; }
+        header p { font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .listings-section { padding: 3.5rem 0; }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .villa-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .villa-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+        }
+
+        .villa-img {
+            height: 240px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-body { padding: 1.6rem; }
+
+        .card-body h3 {
+            font-size: 1.55rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-dark);
+        }
+
+        .location {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .description { color: var(--gray); margin-bottom: 1.3rem; font-size: 0.98rem; }
+
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.4rem;
+            color: #555;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .price small { font-weight: normal; font-size: 0.9rem; color: var(--gray); }
+
+        .btn {
+            display: block;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 0.9rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 700px) {
+            header h1 { font-size: 2.1rem; }
+            .listings-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Nos Villas de Luxe</h1>
+            <p>Des villas spacieuses avec piscine privée, vue mer ou jardin tropical, parfaites pour des vacances inoubliables en famille ou entre amis.</p>
+        </div>
+    </header>
+
+    <section class="listings-section">
+        <div class="container">
+
+            <div class="listings-grid">
+
+                <!-- Villa 1 -->
+                <div class="villa-card">
+                    <div class="villa-img" style="background-image: url('https://cf.bstatic.com/xdata/images/hotel/max1024x768/216867224.jpg?k=2c2bfd250231391e1e51a41c7a901e13d11b81dd9e33bbbdc9ecbe1a230e0d95&o=');"></div>
+                    <div class="card-body">
+                        <h3>Villa Éden Tropical</h3>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> Bali, Indonésie</div>
+                        <p class="description">Villa contemporaine avec piscine à débordement, 4 chambres, jardin luxuriant et vue sur les rizières.</p>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-users"></i> 8 pers.</div>
+                            <div class="detail-item"><i class="fas fa-bed"></i> 4 ch.</div>
+                            <div class="detail-item"><i class="fas fa-swimming-pool"></i> Piscine privée</div>
+                        </div>
+                        <div class="price">Dès 320 € <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilités</a>
+                    </div>
+                </div>
+
+                <!-- Villa 2 -->
+                <div class="villa-card">
+                    <div class="villa-img" style="background-image: url('https://equityresidences.com/wp-content/uploads/2025/01/Mauna-Lani-3-Bedroom-Villa-Poolside-and-Exterior-View-scaled.jpg');"></div>
+                    <div class="card-body">
+                        <h3>Villa Mauna Lani</h3>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> Hawaï, États-Unis</div>
+                        <p class="description">Villa moderne avec vue océan, 3 chambres spacieuses, terrasse extérieure et accès plage privé.</p>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-users"></i> 6 pers.</div>
+                            <div class="detail-item"><i class="fas fa-bed"></i> 3 ch.</div>
+                            <div class="detail-item"><i class="fas fa-swimming-pool"></i> Piscine chauffée</div>
+                        </div>
+                        <div class="price">Dès 580 € <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilités</a>
+                    </div>
+                </div>
+
+                <!-- Villa 3 -->
+                <div class="villa-card">
+                    <div class="villa-img" style="background-image: url('https://thumbs.dreamstime.com/b/tropical-luxury-villa-private-pool-lush-plants-open-air-bedroom-design-356392417.jpg');"></div>
+                    <div class="card-body">
+                        <h3>Villa Lotus</h3>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> Phuket, Thaïlande</div>
+                        <p class="description">Villa élégante entourée de nature, piscine infinie, chambre extérieure et service concierge 24/7.</p>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-users"></i> 10 pers.</div>
+                            <div class="detail-item"><i class="fas fa-bed"></i> 5 ch.</div>
+                            <div class="detail-item"><i class="fas fa-swimming-pool"></i> Piscine privée</div>
+                        </div>
+                        <div class="price">Dès 410 € <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilités</a>
+                    </div>
+                </div>
+
+                <!-- Tu peux ajouter d'autres villas ici -->
+
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h3>VisitBejaia</h3>
+                <p>Votre partenaire de confiance pour découvrir Béjaïa authentique et inoubliable.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="index.html#accueil">Accueil</a></li>
+                    <li><a href="index.html#apropos">À Propos</a></li>
+                    <li><a href="index.html#destinations">Destinations</a></li>
+                    <li><a href="hebergement.html">Hébergement</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Activités</h4>
+                <ul>
+                    <li><a href="#">Sortie en bateau</a></li>
+                    <li><a href="#">Randonnée quad</a></li>
+                    <li><a href="#">Randonnée cheval</a></li>
+                    <li><a href="#">Vol en parapente</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 VisitBejaia. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

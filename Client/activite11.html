@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activités et Sorties - VisitBejaia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== DESIGN SYSTEM AVEC ANIMATIONS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fcf9f5;
+            color: #2c3e3d;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== TYPOGRAPHIE ===== */
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1e4f4a;
+            position: relative;
+            padding-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            animation: lineExpand 1s ease 0.5s forwards;
+            width: 0;
+        }
+
+        @keyframes lineExpand {
+            to { width: 80px; }
+        }
+
+        /* ===== NAVIGATION LUXE AVEC EFFETS ===== */
+        .navbar {
+            background: rgba(255, 252, 248, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(200, 175, 150, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 252, 248, 0.95);
+            box-shadow: 0 10px 30px -10px rgba(30, 79, 74, 0.2);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #1e4f4a, #7a5b4b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            white-space: nowrap;
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 0 rgba(182, 139, 110, 0); }
+            100% { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2f4f4a;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::before {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: #b68b6e;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            padding: 0.8rem 0;
+            top: 100%;
+            left: -10px;
+            border: 1px solid #efe4d8;
+            z-index: 3000;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: dropdownFade 0.3s forwards;
+        }
+
+        @keyframes dropdownFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content li {
+            list-style: none;
+        }
+
+        .dropdown-content a {
+            padding: 0.7rem 1.8rem;
+            display: block;
+            color: #2f4f4a;
+        }
+
+        .dropdown-content a:hover {
+            background: #fcf9f5;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            background: none;
+            border: none;
+            z-index: 2001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: #1e4f4a;
+            transition: 0.3s;
+            display: block;
+        }
+
+        /* ===== HERO SPECTACULAIRE AVEC PARALLAXE ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: url('assets/images/hero.jpg') center/cover no-repeat;
+            background-attachment: fixed;
+            animation: heroZoom 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes heroZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 1;
+            animation: overlayPulse 5s infinite alternate;
+        }
+
+        @keyframes overlayPulse {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.6; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+            color: white;
+            animation: heroContentFade 1.5s ease;
+        }
+
+        @keyframes heroContentFade {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: white;
+            text-shadow: 0 10px 30px rgba(0, 20, 10, 0.4);
+            margin-bottom: 1rem;
+            animation: titlePulse 3s infinite alternate;
+        }
+
+        @keyframes titlePulse {
+            0% { text-shadow: 0 10px 30px rgba(0, 20, 10, 0.4); }
+            100% { text-shadow: 0 20px 50px rgba(182, 139, 110, 0.6); }
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: rgba(255, 250, 240, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease 0.3s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            background: white;
+            color: #1e4f4a;
+            box-shadow: 0 15px 30px -10px #102a26;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 40px -8px #0f2a25;
+            background: #1e4f4a;
+            color: white;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23fcf9f5" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 3;
+            animation: waveMove 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes waveMove {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* ===== FILTRES ACTIVITÉS ===== */
+        .filters-section {
+            padding: 3rem 20px 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 20px 40px -20px rgba(30, 79, 74, 0.3);
+            border: 1px solid rgba(182, 139, 110, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .filter-container:hover {
+            box-shadow: 0 30px 50px -20px rgba(30, 79, 74, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(182, 139, 110, 0.3);
+            background: white;
+            color: #2c3e3d;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(30, 79, 74, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #1e4f4a;
+            color: white;
+            border-color: #1e4f4a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px #1e4f4a;
+        }
+
+        .filter-btn i {
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .filter-btn:hover i {
+            transform: rotate(360deg);
+        }
+
+        .results-count {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #7c8f89;
+            margin-top: 1rem;
+            padding-left: 0.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== GRILLE ACTIVITÉS AMÉLIORÉE ===== */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
+            padding: 0 20px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 15px 35px -10px rgba(30, 50, 40, 0.12);
+            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            cursor: pointer;
+            border: 1px solid rgba(210, 190, 170, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardFadeIn 0.8s forwards;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .activity-card:nth-child(1) { animation-delay: 0.1s; }
+        .activity-card:nth-child(2) { animation-delay: 0.2s; }
+        .activity-card:nth-child(3) { animation-delay: 0.3s; }
+        .activity-card:nth-child(4) { animation-delay: 0.4s; }
+        .activity-card:nth-child(5) { animation-delay: 0.5s; }
+        .activity-card:nth-child(6) { animation-delay: 0.6s; }
+        .activity-card:nth-child(7) { animation-delay: 0.7s; }
+        .activity-card:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .activity-card:hover {
+            transform: translateY(-15px) scale(1.02) rotateX(2deg);
+            box-shadow: 0 30px 45px -10px #1e4f4a80;
+        }
+
+        .activity-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            padding: 2px;
+            background: linear-gradient(145deg, transparent, rgba(182, 139, 110, 0.3), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .activity-card:hover::after {
+            opacity: 1;
+        }
+
+        .activity-image {
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, transparent 50%, rgba(30, 79, 74, 0.2) 100%);
+            z-index: 2;
+            mix-blend-mode: overlay;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .activity-card:hover .activity-image::before {
+            opacity: 1;
+        }
+
+        .activity-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.3, 1);
+        }
+
+        .activity-card:hover .activity-image img {
+            transform: scale(1.1);
+        }
+
+        .activity-badge {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 10;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: badgePulse 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .activity-content {
+            padding: 2rem;
+            background: #ffffffdd;
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #f5ede5;
+            position: relative;
+            z-index: 3;
+        }
+
+        .activity-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e4f4a;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .activity-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            transition: width 0.3s ease;
+        }
+
+        .activity-card:hover .activity-title::after {
+            width: 50px;
+        }
+
+        .activity-meta {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.95rem;
+            color: #547a7a;
+            border-bottom: 1px dashed #dacfc4;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .activity-meta i {
+            color: #1e4f4a;
+            width: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .activity-card:hover .activity-meta i {
+            transform: scale(1.2);
+            color: #b68b6e;
+        }
+
+        .activity-description {
+            color: #3b4f5c;
+            font-weight: 300;
+            line-height: 1.7;
+            margin: 1.2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .activity-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e4f4a;
+            margin: 1.5rem 0 1.8rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-price strong {
+            font-weight: 800;
+            background: linear-gradient(145deg, #1e4f4a, #1e4f4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .activity-card:hover .activity-price strong {
+            background: linear-gradient(145deg, #b68b6e, #1e4f4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .activity-price small {
+            font-size: 1rem;
+            font-weight: 300;
+            color: #7e9a8c;
+        }
+
+        .btn-reserve {
+            background: transparent;
+            border: 2px solid #1e4f4a;
+            color: #1e4f4a;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 40px;
+            width: 100%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(145deg, #ffffff, #f7f3ef);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-reserve::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-reserve:hover::before {
+            left: 100%;
+        }
+
+        .btn-reserve i { 
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-reserve:hover {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            border-color: #1e4f4a;
+            box-shadow: 0 15px 25px -8px #1e4f4a70;
+            transform: scale(1.02) translateY(-3px);
+        }
+
+        .btn-reserve:hover i {
+            transform: rotate(360deg);
+        }
+
+        /* ===== MODALE AMÉLIORÉE ===== */
+        .reservation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(20, 40, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 1.5rem;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                backdrop-filter: blur(0);
+            }
+            to {
+                opacity: 1;
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .reservation-modal.active {
+            display: flex;
+        }
+
+        .reservation-form {
+            background: linear-gradient(135deg, #fefcf9, #f8f4ef);
+            border-radius: 2.5rem;
+            max-width: 680px;
+            width: 100%;
+            padding: 3rem;
+            position: relative;
+            border: 1px solid rgba(182, 139, 110, 0.3);
+            box-shadow: 0 50px 100px -20px #142e26;
+            margin: auto;
+            animation: modalSlideUp 0.4s ease;
+            transform-origin: center;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.8rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #9b8b7c;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            animation: closeButtonRotate 10s infinite linear;
+        }
+
+        @keyframes closeButtonRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .close-modal:hover {
+            background: #ece0d6;
+            color: #1e4f4a;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .reservation-form h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #1e4f4a;
+            margin-bottom: 2rem;
+            border-left: 6px solid #b68b6e;
+            padding-left: 1.5rem;
+            padding-right: 2rem;
+            position: relative;
+        }
+
+        .reservation-form h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 1.5rem;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            border-radius: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #1e4f4a;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(182, 139, 110, 0.2);
+            border-radius: 60px;
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group textarea {
+            border-radius: 30px;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e4f4a;
+            box-shadow: 0 0 0 4px rgba(30, 79, 74, 0.1);
+            transform: scale(1.02);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: #b68b6e;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .total-price-container {
+            background: linear-gradient(135deg, #f4f0ea, #e8dfd5);
+            padding: 1.2rem;
+            border-radius: 60px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+            animation: priceGlow 2s infinite alternate;
+        }
+
+        @keyframes priceGlow {
+            from { box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); }
+            to { box-shadow: inset 0 5px 15px rgba(30, 79, 74, 0.1); }
+        }
+
+        .total-price-container p {
+            margin: 0;
+            font-weight: 600;
+            color: #1e4f4a;
+            font-size: 1.2rem;
+        }
+
+        .total-price-container span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #b68b6e;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            border: none;
+            padding: 1.3rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            width: 100%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px -10px #b68b6e;
+        }
+
+        .btn-submit i {
+            margin-right: 0.5rem;
+            animation: submitIcon 2s infinite;
+        }
+
+        @keyframes submitIcon {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        .form-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 60px;
+            display: none;
+            font-weight: 600;
+            text-align: center;
+            animation: messagePop 0.3s ease;
+        }
+
+        @keyframes messagePop {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .form-message.success {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            color: #065f46;
+            display: block;
+        }
+
+        .form-message.error {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+            display: block;
+        }
+
+        /* ===== FOOTER AMÉLIORÉ ===== */
+        .footer {
+            background: linear-gradient(135deg, #1e3a35, #15312b);
+            color: #e5ddd2;
+            padding: 4rem 0 1rem;
+            border-radius: 4rem 4rem 0 0;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            animation: footerLine 3s infinite;
+        }
+
+        @keyframes footerLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #f3e7db;
+            margin-bottom: 0.8rem;
+            animation: footerLogoGlow 3s infinite alternate;
+        }
+
+        @keyframes footerLogoGlow {
+            from { text-shadow: 0 0 10px rgba(182, 139, 110, 0); }
+            to { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+        }
+
+        .footer-links h4 {
+            color: #dacbbc;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #b68b6e;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links:hover h4::after {
+            width: 50px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-links li:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-links a {
+            color: #bfb7ab;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #e2ccb8;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .social-icons a {
+            background: #31554e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #bfb7ab;
+            text-decoration: none;
+            font-size: 1.3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .social-icons a:hover::before {
+            opacity: 1;
+        }
+
+        .social-icons a i {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-8px) rotate(360deg);
+            box-shadow: 0 10px 25px -5px #b68b6e;
+        }
+
+        .social-icons a:hover i {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 1rem 0;
+            border-top: 1px solid #406156;
+            margin-top: 3rem;
+            color: #9faa9e;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== SCROLLBAR PERSONNALISÉE ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5efe8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+        }
+
+        /* ===== EFFET DE PARTICULES ===== */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: particleFloat 10s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 1;
+            }
+        }
+
+        /* ===== MEDIA QUERIES ===== */
+        @media (max-width: 1024px) {
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 252, 248, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.2rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                border-bottom: 1px solid #efe4d8;
+                z-index: 1999;
+                max-height: calc(100vh - 70px);
+                overflow-y: auto;
+                animation: slideDown 0.3s ease;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a {
+                font-size: 1.1rem;
+                padding: 0.8rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .dropdown {
+                width: 100%;
+                text-align: center;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border: none;
+                background: transparent;
+                padding: 0;
+                margin-top: 0.5rem;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown-content a {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .filter-container {
+                padding: 1.5rem;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .activities-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 0 15px;
+            }
+
+            .reservation-form {
+                padding: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .navbar .container {
+                height: 60px;
+            }
+            
+            .nav-menu {
+                top: 60px;
+            }
+            
+            .hero {
+                min-height: 80vh;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .activity-title {
+                font-size: 1.8rem;
+            }
+            
+            .reservation-form {
+                padding: 1.5rem;
+            }
+            
+            .reservation-form h2 {
+                font-size: 2rem;
+                padding-left: 1rem;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero Section avec particules -->
+    <section class="hero">
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <h1>Découvrez Béjaïa</h1>
+            <p>Entre mer turquoise et falaises majestueuses</p>
+            <a href="#activites" class="btn">Explorer les activités</a>
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <!-- Filtres -->
+    <section class="filters-section">
+        <div class="filter-container">
+            <div class="filter-buttons" id="filterButtons">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-compass"></i> Toutes
+                </button>
+                <button class="filter-btn" data-filter="nautique">
+                    <i class="fas fa-ship"></i> Nautiques
+                </button>
+                <button class="filter-btn" data-filter="terrestre">
+                    <i class="fas fa-hiking"></i> Terrestres
+                </button>
+                <button class="filter-btn" data-filter="aerien">
+                    <i class="fas fa-plane"></i> Aériens
+                </button>
+            </div>
+        </div>
+        <div class="results-count" id="resultsCount">8 activités disponibles</div>
+    </section>
+
+    <!-- Activités Grid -->
+    <div class="container" id="activites">
+        <div class="activities-grid" id="activitiesGrid">
+            <!-- Sortie en bateau -->
+            <div class="activity-card" data-activity="bateau" data-category="nautique" id="bateau">
+                <div class="activity-badge"><i class="fas fa-star"></i> Populaire</div>
+                <div class="activity-image">
+                    <img src="assets/images/quad3.jpeg" alt="Sortie en bateau">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Sortie en Bateau</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 4h</span>
+                        <span><i class="fas fa-users"></i> 2-8 pers.</span>
+                        <span><i class="fas fa-water"></i> Nautique</span>
+                    </div>
+                    <p class="activity-description">
+                        Explorez les côtes magnifiques de Béjaïa en bateau. Admirez les falaises, les grottes marines et détendez-vous sur les plages isolées.
+                    </p>
+                    <div class="activity-price"><strong>5 000 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('bateau', 'Sortie en Bateau', 5000)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+
+            <!-- Randonnée Quad -->
+            <div class="activity-card" data-activity="quad" data-category="terrestre" id="quad">
+                <div class="activity-image">
+                    <img src="assets/images/quad.jpeg" alt="Randonnée quad">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Randonnée Quad</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 3h</span>
+                        <span><i class="fas fa-users"></i> 1-4 pers.</span>
+                        <span><i class="fas fa-mountain"></i> Terrestre</span>
+                    </div>
+                    <p class="activity-description">
+                        Vivez une aventure palpitante à travers les sentiers montagneux. Guide expérimenté inclus et équipement de sécurité complet.
+                    </p>
+                    <div class="activity-price"><strong>6 500 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('quad', 'Randonnée Quad', 6500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+
+            <!-- Randonnée Cheval -->
+            <div class="activity-card" data-activity="cheval" data-category="terrestre" id="cheval">
+                <div class="activity-image">
+                    <img src="assets/images/chev.jpg" alt="Randonnée cheval">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Randonnée à Cheval</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 2h30</span>
+                        <span><i class="fas fa-users"></i> 2-6 pers.</span>
+                        <span><i class="fas fa-tree"></i> Terrestre</span>
+                    </div>
+                    <p class="activity-description">
+                        Parcourez les paysages pittoresques de Béjaïa à dos de cheval. Expérience relaxante adaptée à tous les niveaux.
+                    </p>
+                    <div class="activity-price"><strong>4 500 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('cheval', 'Randonnée à Cheval', 4500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vol en Parapente -->
+            <div class="activity-card" data-activity="vol" data-category="aerien" id="vol">
+                <div class="activity-badge"><i class="fas fa-crown"></i> Luxe</div>
+                <div class="activity-image">
+                    <img src="assets/images/vol parapente.jpg" alt="Vol en parapente">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Vol en Parapente</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 1h30</span>
+                        <span><i class="fas fa-users"></i> 1-2 pers.</span>
+                        <span><i class="fas fa-cloud"></i> Aérien</span>
+                    </div>
+                    <p class="activity-description">
+                        Envolez-vous et survolez les côtes de Béjaïa en parapente. Vues panoramiques spectaculaires et sensations fortes garanties.
+                    </p>
+                    <div class="activity-price"><strong>8 000 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('vol', 'Vol en Parapente', 8000)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plongée sous-marine -->
+            <div class="activity-card" data-activity="plongee" data-category="nautique" id="plongee">
+                <div class="activity-image">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600" alt="Plongée sous-marine">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Plongée Sous-Marine</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 3h</span>
+                        <span><i class="fas fa-users"></i> 2-4 pers.</span>
+                        <span><i class="fas fa-fish"></i> Nautique</span>
+                    </div>
+                    <p class="activity-description">
+                        Explorez le monde sous-marin de la Méditerranée. Découvrez la riche faune marine et des paysages sous-marins fascinants.
+                    </p>
+                    <div class="activity-price"><strong>7 500 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('plongee', 'Plongée Sous-Marine', 7500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tyrolienne -->
+            <div class="activity-card" data-activity="tyrolienne" data-category="aerien" id="tyrolienne">
+                <div class="activity-image">
+                    <img src="assets/images/tr.jpg" alt="Tyrolienne">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Tyrolienne</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 2h</span>
+                        <span><i class="fas fa-users"></i> 1-6 pers.</span>
+                        <span><i class="fas fa-bolt"></i> Aérien</span>
+                    </div>
+                    <p class="activity-description">
+                        Glissez à travers les paysages de Béjaïa en tyrolienne. Frissons garantis avec vue panoramique sur les montagnes et la mer.
+                    </p>
+                    <div class="activity-price"><strong>5 500 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('tyrolienne', 'Tyrolienne', 5500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+
+            <!-- Paddle -->
+            <div class="activity-card" data-activity="paddle" data-category="nautique" id="paddle">
+                <div class="activity-image">
+                    <img src="assets/images/padlle.jpg" alt="Paddle">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Paddle</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 2h</span>
+                        <span><i class="fas fa-users"></i> 1-4 pers.</span>
+                        <span><i class="fas fa-water"></i> Nautique</span>
+                    </div>
+                    <p class="activity-description">
+                        Glissez sur les eaux cristallines en paddle. Détente et sport nautique combinés pour une expérience inoubliable.
+                    </p>
+                    <div class="activity-price"><strong>3 500 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('paddle', 'Paddle', 3500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+
+            <!-- Jet Ski -->
+            <div class="activity-card" data-activity="jetski" data-category="nautique" id="jetski">
+                <div class="activity-badge"><i class="fas fa-bolt"></i> Sensations</div>
+                <div class="activity-image">
+                    <img src="assets/images/jets.jpg" alt="Jet Ski">
+                </div>
+                <div class="activity-content">
+                    <h3 class="activity-title">Jet Ski</h3>
+                    <div class="activity-meta">
+                        <span><i class="fas fa-clock"></i> 1h30</span>
+                        <span><i class="fas fa-users"></i> 1-2 pers.</span>
+                        <span><i class="fas fa-water"></i> Nautique</span>
+                    </div>
+                    <p class="activity-description">
+                        Frissons garantis en jet ski le long des côtes spectaculaires de Béjaïa avec équipement de sécurité complet.
+                    </p>
+                    <div class="activity-price"><strong>8 500 DZD</strong> <small>par personne</small></div>
+                    <button class="btn-reserve" onclick="openReservation('jetski', 'Jet Ski', 8500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Réservation Modal -->
+    <div class="reservation-modal" id="reservationModal">
+        <div class="reservation-form">
+            <button class="close-modal" onclick="closeReservation()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 id="modalTitle">Réserver une Activité</h2>
+            <form id="reservationForm" onsubmit="submitReservation(event)">
+                <div class="form-group">
+                    <label for="fullName">Nom Complet *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Téléphone *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date de la Réservation *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="participants">Nombre de Participants *</label>
+                        <input type="number" id="participants" name="participants" min="1" max="10" value="1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="specialRequests">Demandes Spéciales</label>
+                    <textarea id="specialRequests" name="specialRequests" class="textarea" placeholder="Précisez vos besoins particuliers..."></textarea>
+                </div>
+
+                <div class="total-price-container">
+                    <p>Prix total estimé: <span id="totalPrice">0 DZD</span></p>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-check-circle"></i> Confirmer la Réservation
+                </button>
+
+                <div class="form-message" id="formMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h3>VisitBejaia</h3>
+                <p>Votre partenaire de confiance pour découvrir Béjaïa authentique et inoubliable.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="index.html#accueil">Accueil</a></li>
+                    <li><a href="index.html#apropos">À Propos</a></li>
+                    <li><a href="index.html#destinations">Destinations</a></li>
+                    <li><a href="hebergement.html">Hébergement</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Activités</h4>
+                <ul>
+                    <li><a href="#bateau">Sortie en bateau</a></li>
+                    <li><a href="#quad">Randonnée quad</a></li>
+                    <li><a href="#cheval">Randonnée cheval</a></li>
+                    <li><a href="#vol">Vol en parapente</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 VisitBejaia. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Créer des particules pour le hero
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Effet de scroll sur la navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    const spans = this.querySelectorAll('span');
+                    if (navMenu.classList.contains('active')) {
+                        spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                        spans[1].style.opacity = '0';
+                        spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                    } else {
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    }
+                });
+
+                const menuLinks = navMenu.querySelectorAll('a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        const spans = hamburger.querySelectorAll('span');
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    });
+                });
+            }
+
+            // Système de filtres
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const activityCards = document.querySelectorAll('.activity-card');
+            const resultsCount = document.getElementById('resultsCount');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filter = btn.dataset.filter;
+                    let visibleCount = 0;
+                    
+                    activityCards.forEach(card => {
+                        const category = card.dataset.category;
+                        if (filter === 'all' || category === filter) {
+                            card.style.display = 'block';
+                            visibleCount++;
+                            // Animation de réapparition
+                            card.style.animation = 'none';
+                            card.offsetHeight; // Force reflow
+                            card.style.animation = 'cardFadeIn 0.8s forwards';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    resultsCount.textContent = `${visibleCount} activité${visibleCount > 1 ? 's' : ''} disponible${visibleCount > 1 ? 's' : ''}`;
+                });
+            });
+
+            // Initialiser les dates
+            const today = new Date();
+            const dateInput = document.getElementById('date');
+            if (dateInput) {
+                dateInput.min = today.toISOString().split('T')[0];
+            }
+        });
+
+        // Script de réservation (en conservant votre système qui fonctionne)
+        let currentActivity = '';
+        let currentPrice = 0;
+        let currentActivityName = '';
+
+        async function getBlockedDates(activityId) {
+            try {
+                const res = await fetch(`http://localhost:3000/availability/${encodeURIComponent(activityId)}`);
+                if (!res.ok) {
+                    console.warn("Impossible de charger les dates bloquées");
+                    return [];
+                }
+                const dates = await res.json();
+                return dates;
+            } catch (err) {
+                console.error("Erreur chargement dates bloquées:", err);
+                return [];
+            }
+        }
+
+        function disableBlockedDates(blockedDates) {
+            const dateInput = document.getElementById('date');
+            if (!dateInput) return;
+
+            const blockedSet = new Set(blockedDates);
+
+            if (blockedSet.has(dateInput.value)) {
+                dateInput.value = '';
+            }
+
+            const originalChangeListener = dateInput.onchange;
+            dateInput.onchange = function(e) {
+                if (blockedSet.has(this.value)) {
+                    this.value = '';
+                    alert(`Cette date est indisponible pour ${currentActivityName}. Veuillez en choisir une autre.`);
+                }
+                if (originalChangeListener) originalChangeListener.call(this, e);
+            };
+
+            dateInput.addEventListener('input', function() {
+                if (blockedSet.has(this.value)) {
+                    this.setCustomValidity("Cette date est indisponible.");
+                    this.reportValidity();
+                } else {
+                    this.setCustomValidity("");
+                }
+            });
+
+            const today = new Date();
+            dateInput.min = today.toISOString().split('T')[0];
+        }
+
+        window.openReservation = async function(activityId, activityName, price) {
+            currentActivity = activityId;
+            currentActivityName = activityName;
+            currentPrice = price;
+
+            document.getElementById('modalTitle').textContent = `Réserver : ${activityName}`;
+            document.getElementById('reservationModal').classList.add('active');
+            document.getElementById('participants').value = 1;
+            updateTotalPrice();
+
+            const blockedDates = await getBlockedDates(activityId);
+            disableBlockedDates(blockedDates);
+            
+            // Empêcher le scroll du body quand la modale est ouverte
+            document.body.style.overflow = 'hidden';
+            
+            // Animation de la carte cliquée
+            const card = document.querySelector(`[data-activity="${activityId}"]`);
+            if (card) {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 200);
+            }
+        }
+
+        window.closeReservation = function() {
+            document.getElementById('reservationModal').classList.remove('active');
+            document.getElementById('reservationForm').reset();
+            document.getElementById('formMessage').className = 'form-message';
+            document.getElementById('totalPrice').textContent = '0 DZD';
+            
+            // Réactiver le scroll du body
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateTotalPrice() {
+            const participants = parseInt(document.getElementById('participants').value) || 1;
+            const total = participants * currentPrice;
+            document.getElementById('totalPrice').textContent = total.toLocaleString('fr-DZ') + ' DZD';
+        }
+
+        document.getElementById('participants')?.addEventListener('change', updateTotalPrice);
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function isValidPhone(phone) {
+            return /^[\d\s\-\+\(\)]{10,}$/.test(phone.trim());
+        }
+
+        window.submitReservation = async function(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('date').value;
+            const participants = parseInt(document.getElementById('participants').value);
+            const specialRequests = document.getElementById('specialRequests').value.trim();
+            const messageEl = document.getElementById('formMessage');
+
+            if (!isValidEmail(email)) {
+                messageEl.className = 'form-message error';
+                messageEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Email invalide';
+                return;
+            }
+            if (!isValidPhone(phone)) {
+                messageEl.className = 'form-message error';
+                messageEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Téléphone invalide';
+                return;
+            }
+            if (fullName.length < 3) {
+                messageEl.className = 'form-message error';
+                messageEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Nom trop court';
+                return;
+            }
+            if (!date) {
+                messageEl.className = 'form-message error';
+                messageEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Date requise';
+                return;
+            }
+
+            const payload = {
+                fullName,
+                email,
+                phone,
+                startDate: date,
+                participants,
+                totalPrice: currentPrice * participants,
+                destination: currentActivity,
+                specialRequests
+            };
+
+            try {
+                const res = await fetch('http://localhost:3000/reservations', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || 'Erreur serveur');
+                }
+
+                messageEl.className = 'form-message success';
+                messageEl.innerHTML = '<i class="fas fa-check-circle"></i> Réservation confirmée !';
+                
+                // Animation de succès
+                const submitBtn = document.querySelector('.btn-submit');
+                submitBtn.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    submitBtn.style.transform = '';
+                }, 200);
+                
+                setTimeout(closeReservation, 2500);
+            } catch (err) {
+                messageEl.className = 'form-message error';
+                messageEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${err.message}`;
+            }
+        }
+
+        document.getElementById('reservationForm')?.addEventListener('submit', submitReservation);
+        document.getElementById('reservationModal')?.addEventListener('click', function(event) {
+            if (event.target === this) closeReservation();
+        });
+        
+    </script>
+            document.getElementById('reservationForm')?.addEventListener('submit', submitReservation);
+        document.getElementById('reservationModal')?.addEventListener('click', function(event) {
+            if (event.target === this) closeReservation();
+        });
+        <script src="js/navbar.js"></script>
+    </script>
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VisitBejaïa - Admin Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- FullCalendar 6 -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --primary: #1d4ed8;
+      --accent: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #e2e8f0;
+      --sidebar: #ffffff;
+      --shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --primary: #60a5fa;
+      --accent: #34d399;
+      --border: #334155;
+      --sidebar: #1e293b;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    .layout { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
+
+    .sidebar {
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 0;
+      overflow-y: auto;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .sidebar-header {
+      padding: 0 1.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.9rem 1.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.25s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: rgba(29,78,216,0.08);
+      color: var(--primary);
+    }
+
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .header-left { display: flex; align-items: center; gap: 1.5rem; }
+    .menu-toggle { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
+    .page-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+
+    .header-right { display: flex; align-items: center; gap: 1.4rem; }
+    .icon-btn {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.6rem;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    .icon-btn:hover { background: rgba(29,78,216,0.1); color: var(--primary); }
+
+    main { padding: 2rem; overflow-y: auto; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+    }
+
+    .stat-card:hover { transform: translateY(-6px); }
+
+    .stat-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary); }
+    .stat-value { font-size: 2.4rem; font-weight: 700; }
+    .stat-label { color: var(--text-muted); font-size: 1rem; }
+
+    .chart-card {
+      background: var(--card);
+      border-radius: 1.2rem;
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    #adminCalendar {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .status-badge {
+      padding: 0.4rem 1.1rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .status-en_attente { background: #fef3c7; color: #92400e; }
+    .status-acceptee  { background: #dcfce7; color: #166534; }
+    .status-refusee   { background: #fee2e2; color: #991b1b; }
+
+    .action-buttons button {
+      padding: 0.7rem 1.4rem;
+      border: none;
+      border-radius: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 0.8rem;
+    }
+
+    .btn-accept { background: var(--accent); color: white; }
+    .btn-refuse  { background: var(--danger); color: white; }
+
+    @media (max-width: 1024px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: fixed; left: -260px; width: 260px; z-index: 100; transition: left 0.3s; }
+      .sidebar.open { left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <i class="fas fa-sailboat fa-2x" style="color:var(--primary)"></i>
+      <span class="logo">VisitBejaïa</span>
+    </div>
+    <nav style="margin-top:2rem;">
+      <a href="#" class="nav-item active"><i class="fas fa-home"></i> Dashboard</a>
+      <a href="#" class="nav-item"><i class="fas fa-calendar-check"></i> Réservations</a>
+      <a href="#" class="nav-item"><i class="fas fa-calendar-days"></i> Disponibilités</a>
+      <a href="#" class="nav-item"><i class="fas fa-mountain"></i> Activités</a>
+      <a href="#" class="nav-item"><i class="fas fa-bed"></i> Hébergements</a>
+      <a href="#" class="nav-item"><i class="fas fa-users"></i> Clients</a>
+    </nav>
+  </aside>
+
+  <div style="display:flex; flex-direction:column; width:100%;">
+    <header>
+      <div class="header-left">
+        <button class="icon-btn menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <h1 class="page-title">Dashboard Admin - VisitBejaïa</h1>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <button class="icon-btn"><i class="fas fa-bell"></i></button>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="text-align:right;">
+            <div style="font-weight:600;">Admin</div>
+            <div style="font-size:0.9rem; color:var(--text-muted);">visitbejaia.dz</div>
+          </div>
+          <i class="fas fa-user-circle fa-2x" style="color:var(--primary)"></i>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- Statistiques -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <i class="fas fa-plane-departure stat-icon"></i>
+          <div class="stat-value" id="total">0</div>
+          <div class="stat-label">Total Réservations</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-hourglass-half stat-icon" style="color:var(--warning)"></i>
+          <div class="stat-value" id="pending">0</div>
+          <div class="stat-label">En attente</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-check-circle stat-icon" style="color:var(--accent)"></i>
+          <div class="stat-value" id="accepted">0</div>
+          <div class="stat-label">Acceptées</div>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-times-circle stat-icon" style="color:var(--danger)"></i>
+          <div class="stat-value" id="refused">0</div>
+          <div class="stat-label">Refusées</div>
+        </div>
+      </div>
+
+      <!-- Graphique exemple -->
+      <div class="chart-card">
+        <h3 style="margin-bottom:1rem;">Évolution des réservations (exemple)</h3>
+        <canvas id="reservationsChart" height="140"></canvas>
+      </div>
+
+      <!-- Gestion disponibilités -->
+      <h2 style="margin:3rem 0 1rem; font-size:1.6rem; color:var(--primary);">Gestion des disponibilités</h2>
+
+      <div class="chart-card">
+        <div style="margin-bottom:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+          <select id="activitySelect" style="padding:0.8rem; border-radius:8px; border:1px solid var(--border); min-width:240px; font-size:1rem;">
+            <option value="">Choisir une activité</option>
+          </select>
+          <button onclick="refreshCalendar()" class="btn-accept" style="padding:0.8rem 1.6rem; font-size:1rem;">
+            <i class="fas fa-sync-alt"></i> Actualiser
+          </button>
+        </div>
+
+        <div id="adminCalendar"></div>
+      </div>
+
+      <!-- Réservations récentes -->
+      <h2 style="margin:3.5rem 0 1rem; font-size:1.5rem; color:var(--primary);">Réservations récentes</h2>
+      <div id="reservations" style="display:grid; gap:1.4rem;"></div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// Theme toggle
+document.getElementById('themeToggle')?.addEventListener('click', () => {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+  document.getElementById('themeToggle').innerHTML = current === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+});
+
+// Sidebar mobile
+document.getElementById('menuToggle')?.addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+// Chart.js exemple
+const ctx = document.getElementById('reservationsChart')?.getContext('2d');
+if (ctx) {
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août'],
+      datasets: [{
+        label: 'Réservations',
+        data: [12, 19, 28, 35, 42, 55, 68, 82],
+        borderColor: 'rgba(29, 78, 216, 1)',
+        backgroundColor: 'rgba(29, 78, 216, 0.12)',
+        tension: 0.3,
+        fill: true
+      }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+  });
+}
+
+// Chargement des réservations
+async function loadReservations() {
+  try {
+    const res = await fetch("http://localhost:3000/reservations");
+    if (!res.ok) throw new Error(`Erreur ${res.status}`);
+    const data = await res.json();
+
+    const container = document.getElementById("reservations");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    let pending = 0, accepted = 0, refused = 0;
+
+    data.forEach(r => {
+      if (r.status === "en_attente") pending++;
+      if (r.status === "acceptee") accepted++;
+      if (r.status === "refusee") refused++;
+
+      container.innerHTML += `
+        <div class="chart-card" style="border-left:5px solid var(--primary);">
+          <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:1rem;">
+            <div>
+              <h3 style="margin:0; font-size:1.3rem;">${r.nom || '?'} ${r.prenom || ''}</h3>
+              <div style="color:var(--text-muted); margin:0.4rem 0;">
+                <i class="fas fa-envelope"></i> ${r.email || '—'} • 
+                <i class="fas fa-phone"></i> ${r.telephone || '—'}
+              </div>
+            </div>
+            <span class="status-badge status-${r.status}">${r.status.replace("_", " ")}</span>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:0.8rem; margin:1rem 0;">
+            <div><strong>Activité :</strong> ${r.nom_item || '?'}</div>
+            <div><strong>Personnes :</strong> ${r.nb_personnes || 1}</div>
+            <div><strong>Prix :</strong> ${r.prix_total || 0} DZD</div>
+            <div><strong>Départ :</strong> ${r.date_depart ? new Date(r.date_depart).toLocaleDateString('fr-FR') : '—'}</div>
+          </div>
+          <div class="action-buttons">
+            <button class="btn-accept" onclick="updateStatus(${r.id}, 'acceptee')">✔ Accepter</button>
+            <button class="btn-refuse" onclick="updateStatus(${r.id}, 'refusee')">✖ Refuser</button>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("total").textContent = data.length;
+    document.getElementById("pending").textContent = pending;
+    document.getElementById("accepted").textContent = accepted;
+    document.getElementById("refused").textContent = refused;
+
+  } catch (err) {
+    console.error("Erreur loadReservations:", err);
+    const container = document.getElementById("reservations");
+    if (container) {
+      container.innerHTML = `<p style="color:var(--danger); text-align:center; padding:3rem;">Erreur : ${err.message}</p>`;
+    }
+  }
+}
+
+// Mise à jour statut
+async function updateStatus(id, status) {
+  if (!id || isNaN(id)) return alert("ID invalide");
+
+  const endpoint = status === 'acceptee' ? 'accept' : 'refuse';
+  try {
+    const res = await fetch(`http://localhost:3000/reservations/${id}/${endpoint}`, { method: "PUT" });
+    if (!res.ok) throw new Error(await res.text());
+    loadReservations();
+  } catch (err) {
+    alert("Échec mise à jour : " + err.message);
+  }
+}
+
+// Gestion calendrier + blocage/déblocage
+let calendar = null;
+let currentActivity = '';
+
+async function loadActivities() {
+  try {
+    const res = await fetch("http://localhost:3000/reservations");
+    const data = await res.json();
+    const activities = [...new Set(data.map(r => r.nom_item).filter(Boolean))];
+
+    const select = document.getElementById("activitySelect");
+    if (select) {
+      select.innerHTML = '<option value="">Choisir une activité</option>';
+      activities.forEach(act => {
+        const opt = document.createElement("option");
+        opt.value = act;
+        opt.textContent = act.charAt(0).toUpperCase() + act.slice(1);
+        select.appendChild(opt);
+      });
+    }
+  } catch (err) {
+    console.error("Erreur chargement activités:", err);
+  }
+}
+
+async function loadBlockedDates(activity) {
+  if (!activity) return [];
+  try {
+    const res = await fetch(`http://localhost:3000/availability/${encodeURIComponent(activity)}`);
+    if (!res.ok) return [];
+    return await res.json(); // ex: ["2026-02-17", ...]
+  } catch (err) {
+    console.error("Erreur chargement dates bloquées:", err);
+    return [];
+  }
+}
+
+async function initCalendar() {
+  const calendarEl = document.getElementById('adminCalendar');
+  if (!calendarEl) return console.warn("Calendrier introuvable");
+
+  calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek'
+    },
+    locale: 'fr',
+    height: 'auto',
+    selectable: true,
+    dateClick: async function(info) {
+      if (!currentActivity) {
+        alert("Sélectionne d'abord une activité dans la liste !");
+        return;
+      }
+
+      const dateStr = info.dateStr;
+      const blockedDates = await loadBlockedDates(currentActivity);
+      const isBlocked = blockedDates.includes(dateStr);
+
+      if (isBlocked) {
+        // Débloquer
+        if (confirm(`Débloquer la date ${dateStr} pour ${currentActivity} ?`)) {
+          try {
+            const res = await fetch(`http://localhost:3000/availability/block/${encodeURIComponent(currentActivity)}/${dateStr}`, {
+              method: 'DELETE'
+            });
+            if (res.ok) {
+              alert("Date débloquée avec succès");
+              calendar.refetchEvents();
+            } else {
+              alert("Erreur lors du déblocage");
+            }
+          } catch (err) {
+            alert("Erreur réseau : " + err.message);
+          }
+        }
+      } else {
+        // Bloquer
+        if (confirm(`Bloquer la date ${dateStr} pour ${currentActivity} ?`)) {
+          try {
+            const res = await fetch("http://localhost:3000/availability/block", {
+              method: 'POST',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                nom_item: currentActivity,
+                date: dateStr,
+                reason: "bloqué par admin"
+              })
+            });
+            if (res.ok) {
+              alert("Date bloquée avec succès");
+              calendar.refetchEvents();
+            } else {
+              alert("Erreur lors du blocage");
+            }
+          } catch (err) {
+            alert("Erreur réseau : " + err.message);
+          }
+        }
+      }
+    },
+    events: async function(fetchInfo, successCallback) {
+      if (!currentActivity) return successCallback([]);
+
+      const blocked = await loadBlockedDates(currentActivity);
+      const events = blocked.map(d => ({
+        start: d,
+        allDay: true,
+        display: 'background',
+        color: '#ef4444', // rouge vif pour bloqué
+        title: 'Bloqué'
+      }));
+
+      successCallback(events);
+    }
+  });
+
+  calendar.render();
+}
+
+function refreshCalendar() {
+  currentActivity = document.getElementById("activitySelect")?.value || '';
+  if (calendar) calendar.refetchEvents();
+}
+
+// ───────────────────────────────────────────────
+// Initialisation complète
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadReservations();
+  await loadActivities();
+  await initCalendar();
+
+  // Rafraîchir quand changement d'activité
+  document.getElementById("activitySelect")?.addEventListener("change", refreshCalendar);
+});
+</script>
+
+</body>
+</html>
