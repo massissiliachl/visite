@@ -1,0 +1,25 @@
+<script>
+    // Injecte la navbar dans toutes les pages
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar').innerHTML = data;
+
+            // Menu mobile toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            const dropdowns = document.querySelectorAll('.dropdown');
+
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        dropdown.classList.toggle('active');
+                    }
+                });
+            });
+        });
+</script>

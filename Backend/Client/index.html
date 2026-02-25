@@ -1,0 +1,2437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisitBejaia - Éclat Méditerranéen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== DESIGN SYSTEM COMPLET AVEC ANIMATIONS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fcf9f5;
+            color: #2c3e3d;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== TYPOGRAPHIE ===== */
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1e4f4a;
+            position: relative;
+            padding-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            animation: lineExpand 1s ease 0.5s forwards;
+            width: 0;
+        }
+
+        @keyframes lineExpand {
+            to { width: 80px; }
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6d7a75;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        /* ===== NAVIGATION LUXE AVEC EFFETS ===== */
+        .navbar {
+            background: rgba(255, 252, 248, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(200, 175, 150, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 252, 248, 0.95);
+            box-shadow: 0 10px 30px -10px rgba(30, 79, 74, 0.2);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #1e4f4a, #7a5b4b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            white-space: nowrap;
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 0 rgba(182, 139, 110, 0); }
+            100% { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2f4f4a;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::before {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: #b68b6e;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 220px;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+            border-radius: 15px;
+            padding: 0.8rem 0;
+            top: 100%;
+            left: -10px;
+            border: 1px solid #efe4d8;
+            z-index: 3000;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: dropdownFade 0.3s forwards;
+        }
+
+        @keyframes dropdownFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content li {
+            list-style: none;
+        }
+
+        .dropdown-content a {
+            padding: 0.7rem 1.8rem;
+            display: block;
+            color: #2f4f4a;
+        }
+
+        .dropdown-content a:hover {
+            background: #fcf9f5;
+        }
+
+        .voice-button {
+            background: #f3ede7;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e0d2c4;
+            color: #1e4f4a;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .voice-button:hover {
+            background: #1e4f4a;
+            color: white;
+            transform: rotate(360deg) scale(1.1);
+            border-color: #1e4f4a;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            background: none;
+            border: none;
+            z-index: 2001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: #1e4f4a;
+            transition: 0.3s;
+            display: block;
+        }
+
+        /* ===== HERO SPECTACULAIRE ===== */
+        .hero {
+    position: relative;
+    height: 100vh;
+    background: url("https://images.pexels.com/photos/36012522/pexels-photo-36012522.jpeg?auto=compress&cs=tinysrgb&w=1920") center center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+/* Overlay sombre pour meilleure lisibilité */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}.hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%) scale(1);
+            z-index: 1;
+            animation: videoZoom 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes videoZoom {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+
+        @keyframes heroContentFade {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: white;
+            text-shadow: 0 10px 30px rgba(0, 20, 10, 0.4);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            animation: titlePulse 3s infinite alternate;
+        }
+
+        @keyframes titlePulse {
+            0% { text-shadow: 0 10px 30px rgba(0, 20, 10, 0.4); }
+            100% { text-shadow: 0 20px 50px rgba(182, 139, 110, 0.6); }
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: rgba(255, 250, 240, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease 0.3s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            background: white;
+            color: #1e4f4a;
+            box-shadow: 0 15px 30px -10px #102a26;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+      
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 40px -8px #0f2a25;
+            background: #1e4f4a;
+            color: white;
+        }
+
+        .hero-stats {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+
+        .stat-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            color: white;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 2;
+            animation: overlayPulse 5s infinite alternate;
+        }
+
+        @keyframes overlayPulse {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.6; }
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23fcf9f5" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 4;
+            animation: waveMove 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes waveMove {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* ===== SECTION APROPOS ===== */
+        .apropos-section {
+            padding: 6rem 0;
+        }
+
+        .apropos-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .apropos-text p {
+            margin-bottom: 1.8rem;
+            color: #3f5a55;
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s forwards;
+        }
+
+        .apropos-text p:nth-child(1) { animation-delay: 0.2s; }
+        .apropos-text p:nth-child(2) { animation-delay: 0.4s; }
+        .apropos-text p:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slider {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .slide {
+            height: 250px;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 30px 35px -20px #264e45;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleIn 0.6s forwards;
+        }
+
+        .slide:nth-child(1) { animation-delay: 0.3s; }
+        .slide:nth-child(2) { animation-delay: 0.5s; }
+        .slide:nth-child(3) { animation-delay: 0.7s; }
+
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .slide:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 40px 50px -20px #1e4f4a;
+        }
+
+        .slide img, .slide-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .slide:hover img,
+        .slide:hover .slide-video {
+            transform: scale(1.1);
+        }
+
+        /* ===== INCONTOURNABLES ===== */
+        .must-see-section {
+            padding: 5rem 0;
+            background: #f5efe8;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .must-see-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            animation: lineMove 3s infinite;
+        }
+
+        @keyframes lineMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .must-see-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+        }
+
+        .must-see-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -10px rgba(70, 80, 60, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardFadeIn 0.8s forwards;
+            position: relative;
+        }
+
+        .must-see-card:nth-child(1) { animation-delay: 0.1s; }
+        .must-see-card:nth-child(2) { animation-delay: 0.2s; }
+        .must-see-card:nth-child(3) { animation-delay: 0.3s; }
+        .must-see-card:nth-child(4) { animation-delay: 0.4s; }
+        .must-see-card:nth-child(5) { animation-delay: 0.5s; }
+        .must-see-card:nth-child(6) { animation-delay: 0.6s; }
+        .must-see-card:nth-child(7) { animation-delay: 0.7s; }
+        .must-see-card:nth-child(8) { animation-delay: 0.8s; }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .must-see-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 40px 60px -15px #1e4f4a;
+        }
+
+        .card-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .must-see-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, transparent 50%, rgba(0,40,35,0.3) 100%);
+            z-index: 2;
+        }
+
+        .card-content {
+            padding: 1.8rem;
+            background: white;
+            position: relative;
+            z-index: 3;
+        }
+
+        .card-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
+            color: #1e4f4a;
+            transition: all 0.3s ease;
+        }
+
+        .must-see-card:hover .card-content h3 {
+            color: #b68b6e;
+            transform: translateX(5px);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #7c8f89;
+        }
+
+        .rating {
+            background: #fcf0e8;
+            padding: 5px 12px;
+            border-radius: 40px;
+            color: #a76740;
+            transition: all 0.3s ease;
+        }
+
+        .must-see-card:hover .rating {
+            background: #1e4f4a;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .must-see-text {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #3f5a55;
+            padding: 2rem;
+            background: #f8f2eb;
+            border-radius: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 1s forwards;
+        }
+
+        /* ===== MODALE AMÉLIORÉE ===== */
+        .must-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(20, 40, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                backdrop-filter: blur(0);
+            }
+            to {
+                opacity: 1;
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .must-modal.active {
+            display: flex;
+        }
+
+        .must-modal-content {
+            background: #fefcf9;
+            border-radius: 2rem;
+            max-width: 1100px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid #d9cdc0;
+            box-shadow: 0 50px 70px -20px #142e26;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideUp 0.4s ease;
+            transform-origin: center;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .must-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            font-size: 1.2rem;
+            color: #1e4f4a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            animation: closeButtonRotate 10s infinite linear;
+        }
+
+        @keyframes closeButtonRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .must-modal-close:hover {
+            background: #1e4f4a;
+            color: white;
+            transform: rotate(180deg) scale(1.1);
+        }
+
+        /* Galerie d'images */
+        .must-modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f5efe8, #e8dfd5);
+            border-radius: 2rem 2rem 0 0;
+        }
+
+        .must-modal-gallery-item {
+            height: 150px;
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .must-modal-gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .must-modal-gallery-item:hover {
+            transform: scale(1.05) translateY(-5px);
+            border-color: #1e4f4a;
+        }
+
+        .must-modal-gallery-item:hover::before {
+            opacity: 0.2;
+        }
+
+        .must-modal-gallery-item.active {
+            border-color: #b68b6e;
+            box-shadow: 0 0 0 4px rgba(182, 139, 110, 0.3);
+            animation: activePulse 2s infinite;
+        }
+
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(182, 139, 110, 0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(182, 139, 110, 0.1); }
+        }
+
+        .must-modal-gallery-item img,
+        .must-modal-gallery-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .must-modal-gallery-item:hover img,
+        .must-modal-gallery-item:hover video {
+            transform: scale(1.1);
+        }
+
+        /* Image principale */
+        .must-modal-main {
+            padding: 1rem;
+            background: #fefcf9;
+        }
+
+        .must-modal-main-media {
+            width: 100%;
+            height: 300px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .must-modal-main-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(145deg, transparent, rgba(182, 139, 110, 0.3), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .must-modal-main-media img,
+        .must-modal-main-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 10s ease;
+        }
+
+        .must-modal-main-media:hover img,
+        .must-modal-main-media:hover video {
+            transform: scale(1.1);
+        }
+
+        /* Contenu texte */
+        .must-modal-body {
+            padding: 1.5rem 2rem 2rem;
+            background: #fefcf9;
+        }
+
+        .must-modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: #1e4f4a;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .must-modal-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            border-radius: 3px;
+        }
+
+        .must-modal-rating {
+            font-size: 1.1rem;
+            color: #b68b6e;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .must-modal-rating i {
+            color: #ffb347;
+            animation: starTwinkle 2s infinite;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .must-modal-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #3f5a55;
+            margin-bottom: 1.5rem;
+        }
+
+        .must-modal-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #f8f4ef, #f0e8e0);
+            padding: 1.5rem;
+            border-radius: 1rem;
+        }
+
+        .must-modal-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            color: #2c3e3d;
+            padding: 0.5rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .must-modal-detail-item:hover {
+            background: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .must-modal-detail-item i {
+            width: 20px;
+            color: #1e4f4a;
+            font-size: 1rem;
+            animation: iconSpin 10s infinite linear;
+        }
+
+        @keyframes iconSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .must-modal-btn {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .must-modal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .must-modal-btn:hover::before {
+            left: 100%;
+        }
+
+        .must-modal-btn:hover {
+            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px -10px #b68b6e;
+        }
+
+        /* ===== DESTINATIONS ===== */
+        .destinations {
+            padding: 6rem 0;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .destination-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -10px #bab5ab;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardFadeIn 0.8s forwards;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 50px -15px #1e4f4a;
+        }
+
+        .destination-card .card-image {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .destination-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .destination-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            color: #5f786e;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            border-top: 1px solid #ece1d7;
+            padding-top: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .destination-card:hover .card-footer {
+            border-top-color: #b68b6e;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e4f4a;
+            transition: all 0.3s ease;
+        }
+
+        .destination-card:hover .price {
+            color: #b68b6e;
+            transform: scale(1.05);
+        }
+
+        .btn-small {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-small::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-small:hover::before {
+            left: 100%;
+        }
+
+        .btn-small:hover {
+            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px -5px #b68b6e;
+        }
+
+        /* ===== AT OUTS ===== */
+        .about-section {
+            padding: 5rem 0;
+            background: #eef4f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(182,139,110,0.1) 0%, transparent 70%);
+            animation: rotateGradient 20s infinite linear;
+        }
+
+        @keyframes rotateGradient {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-item {
+            text-align: center;
+            background: rgba(255,255,255,0.4);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 2rem;
+            border-radius: 3rem;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardFadeIn 0.8s forwards;
+            border: 1px solid rgba(182,139,110,0.2);
+        }
+
+        .about-item:nth-child(1) { animation-delay: 0.1s; }
+        .about-item:nth-child(2) { animation-delay: 0.2s; }
+        .about-item:nth-child(3) { animation-delay: 0.3s; }
+        .about-item:nth-child(4) { animation-delay: 0.4s; }
+
+        .about-item:hover {
+            background: white;
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 50px -20px #1e4f4a;
+            border-color: #b68b6e;
+        }
+
+        .about-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: iconBounce 3s infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .about-item:nth-child(1) .about-icon { animation-delay: 0s; }
+        .about-item:nth-child(2) .about-icon { animation-delay: 0.2s; }
+        .about-item:nth-child(3) .about-icon { animation-delay: 0.4s; }
+        .about-item:nth-child(4) .about-icon { animation-delay: 0.6s; }
+
+        /* ===== INSTAGRAM FEED ===== */
+        .instagram-section {
+            padding: 5rem 0;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .instagram-item {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 2rem;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleIn 0.6s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .instagram-item:nth-child(1) { animation-delay: 0.1s; }
+        .instagram-item:nth-child(2) { animation-delay: 0.2s; }
+        .instagram-item:nth-child(3) { animation-delay: 0.3s; }
+        .instagram-item:nth-child(4) { animation-delay: 0.4s; }
+        .instagram-item:nth-child(5) { animation-delay: 0.5s; }
+        .instagram-item:nth-child(6) { animation-delay: 0.6s; }
+        .instagram-item:nth-child(7) { animation-delay: 0.7s; }
+        .instagram-item:nth-child(8) { animation-delay: 0.8s; }
+
+        .instagram-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .instagram-item:hover {
+            transform: scale(0.95);
+            border-radius: 3rem;
+        }
+
+        .instagram-item:hover::before {
+            opacity: 0.3;
+        }
+
+        .instagram-item::after {
+            content: '\f16d';
+            font-family: 'Font Awesome 6 Brands';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white;
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+
+        .instagram-item:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 6rem 0;
+            background: #f5efe8;
+            position: relative;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            background: #fcf9f5;
+            padding: 2rem;
+            border-radius: 2rem;
+            border: 1px solid #ede3d9;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideInLeft 0.8s forwards;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateX(10px);
+        }
+
+        .info-icon {
+            font-size: 2rem;
+            animation: iconWobble 3s infinite;
+        }
+
+        @keyframes iconWobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -20px #b7a28b;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideInRight 0.8s forwards;
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 1px solid #e2d6cc;
+            border-radius: 60px;
+            font-family: 'Montserrat', sans-serif;
+            background: #fefcf9;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e4f4a;
+            box-shadow: 0 0 0 4px rgba(30, 79, 74, 0.1);
+            transform: scale(1.02);
+        }
+
+        .form-group textarea {
+            border-radius: 30px;
+        }
+
+        /* ===== MODALE RESERVATION ===== */
+        .reservation-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(20, 40, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .reservation-modal.active {
+            display: flex;
+        }
+
+        .reservation-form {
+            background: #fefcf9;
+            border-radius: 2.5rem;
+            max-width: 680px;
+            width: 100%;
+            padding: 3rem;
+            position: relative;
+            border: 1px solid #d9cdc0;
+            box-shadow: 0 50px 70px -20px #142e26;
+            animation: modalSlideUp 0.4s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.8rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #9b8b7c;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: #ece0d6;
+            color: #1e4f4a;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .reservation-form h2 {
+            font-size: 2.5rem;
+            color: #1e4f4a;
+            margin-bottom: 2rem;
+            border-left: 6px solid #b68b6e;
+            padding-left: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            border: none;
+            padding: 1.3rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            width: 100%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px -10px #b68b6e;
+        }
+
+        /* ===== FOOTER AMÉLIORÉ ===== */
+        .footer {
+            background: linear-gradient(135deg, #1e3a35, #15312b);
+            color: #e5ddd2;
+            padding: 4rem 0 1rem;
+            border-radius: 4rem 4rem 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            animation: footerLine 3s infinite;
+        }
+
+        @keyframes footerLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #f3e7db;
+            margin-bottom: 0.8rem;
+            animation: footerLogoGlow 3s infinite alternate;
+        }
+
+        @keyframes footerLogoGlow {
+            from { text-shadow: 0 0 10px rgba(182, 139, 110, 0); }
+            to { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+        }
+
+        .footer-links h4, .footer-social h4 {
+            color: #dacbbc;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #b68b6e;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links:hover h4::after {
+            width: 50px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-links li:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-links a {
+            color: #bfb7ab;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #e2ccb8;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .social-icons a {
+            background: #31554e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #bfb7ab;
+            text-decoration: none;
+            font-size: 1.3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .social-icons a:hover::before {
+            opacity: 1;
+        }
+
+        .social-icons a i {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-8px) rotate(360deg);
+            box-shadow: 0 10px 25px -5px #b68b6e;
+        }
+
+        .social-icons a:hover i {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 1rem 0;
+            border-top: 1px solid #406156;
+            margin-top: 3rem;
+            color: #9faa9e;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== SCROLLBAR PERSONNALISÉE ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5efe8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+        }
+
+        /* ===== MEDIA QUERIES ===== */
+        @media (max-width: 1024px) {
+            .apropos-content,
+            .contact-content,
+            .footer-container,
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 252, 248, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.2rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                border-bottom: 1px solid #efe4d8;
+                z-index: 1999;
+                animation: slideDown 0.3s ease;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a {
+                font-size: 1.1rem;
+                padding: 0.8rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .dropdown {
+                width: 100%;
+                text-align: center;
+            }
+
+            .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border: none;
+                background: transparent;
+                padding: 0;
+                margin-top: 0.5rem;
+                display: none;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown-content a {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .instagram-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 500px;
+            }
+            
+            .slider {
+                grid-template-columns: 1fr;
+            }
+            
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .reservation-form {
+                padding: 2rem;
+            }
+            
+            .must-modal-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .must-modal-details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .navbar .container {
+                height: 60px;
+            }
+            
+            .nav-menu {
+                top: 60px;
+            }
+            
+            .must-modal-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        [style*="background-image"] {
+            background-color: #cbc1b5;
+        }
+
+        /* ===== EFFET DE PARTICULES ===== */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: particleFloat 10s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+     <!-- Navigation -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero Section avec particules -->
+    <section id="accueil" class="hero">
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Béjaïa : Là où la montagne embrasse la mer</h1>
+            <p class="hero-description">Entre vestiges historiques et eaux cristallines, évadez-vous dans cette perle de la Méditerranée.</p>
+            <a href="#apropos" class="btn">DÉCOUVREZ NOTRE HISTOIRE</a>
+            <div class="hero-stats">
+                <span class="stat-badge">Déjà plus de 10 000 visiteurs cette saison</span>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="wave"></div>
+    </section>
+
+    <!-- À propos -->
+    <section id="apropos" class="apropos-section">
+        <div class="container">
+            <h2 class="section-title">Qui Sommes-nous ?</h2>
+            <div class="apropos-content">
+                <div class="apropos-text">
+                    <p><strong>VisitBejaia</strong> est votre partenaire idéal pour explorer Béjaïa de manière authentique et inoubliable. Née d'une passion profonde pour la Méditerranée et la richesse culturelle amazighe, notre agence propose des expériences uniques et mémorables.</p>
+                    <p>Depuis plus de 10 ans, notre équipe d'experts locaux accompagne des milliers de voyageurs en quête d'aventure et d'authenticité. Nous garantissons un accès privilégié aux plus beaux sites, une logistique irréprochable et un service haut de gamme.</p>
+                    <p>📍 <strong>Localisation :</strong> Béjaïa - Côte Méditerranéenne | 🌍 <strong>Certifiée :</strong> Agence de Voyage Algérienne</p>
+                    <a href="#activites" class="btn">Découvrir nos activités</a>
+                </div>
+                <div class="apropos-media">
+                    <div class="slider">
+                        <div class="slide"><img src="assets/images/i.jpeg" alt="Bejaia paysage"></div>
+                        <div class="slide"><video autoplay loop muted class="slide-video"><source src="assets/videos/video.mp4" type="video/mp4"></video></div>
+                        <div class="slide"><img src="assets/images/i1.jpeg" alt="Activités Bejaia"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+      
+    <!-- Incontournables -->
+    <section id="incontournables" class="must-see-section">
+        <div class="container">
+            <h2 class="section-title">À Ne Pas Manquer 🏛️</h2>
+            <p class="section-subtitle">Les attractions incontournables de Béjaïa et sa région</p>
+            <div class="must-see-grid">
+                <div class="must-see-card" data-modal="grotte">
+                    <div class="card-image" style="background-image: url('assets/images/grotte.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Les grottes de la côte ouest</h3>
+                        <div class="card-meta">
+                            <span>3 Jours / 2 Nuits</span>
+                            <span class="rating">⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="must-see-card" data-modal="ferme">
+                    <div class="card-image" style="background-image: url('assets/images/ferme.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Découvrir la ferme Djerba</h3>
+                        <div class="card-meta">
+                            <span>3 Jours / 2 Nuits</span>
+                            <span class="rating">⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="must-see-card" data-modal="historique">
+                    <div class="card-image" style="background-image: url('assets/images/casbah.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Visite des sites historiques</h3>
+                        <div class="card-meta">
+                            <span>2 Jours / 1 Nuit</span>
+                            <span class="rating">⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="must-see-card" data-modal="vol">
+                    <div class="card-image" style="background-image: url('assets/images/vol.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Vol au-dessus de la Méditerranée</h3>
+                        <div class="card-meta">
+                            <span>1 Jour</span>
+                            <span class="rating">⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="must-see-card" data-modal="petite-casbah">
+                    <div class="card-image" style="background-image: url('assets/images/casbah.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>La petite Casbah de Béjaïa</h3>
+                        <div class="card-meta">
+                            <span>1 Jour</span>
+                            <span class="rating">⭐ 4.6</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="must-see-card" data-modal="fort">
+                    <div class="card-image" style="background-image: url('assets/images/goraya.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Fort Yemma Gouraya</h3>
+                        <div class="card-meta">
+                            <span>1 Jour</span>
+                            <span class="rating">⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="must-see-card" data-modal="paddle">
+                    <div class="card-image" style="background-image: url('assets/images/padlle.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Initiation au paddle</h3>
+                        <div class="card-meta">
+                            <span>0.5 Jour</span>
+                            <span class="rating">⭐ 4.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="must-see-card" data-modal="location">
+                    <div class="card-image" style="background-image: url('assets/images/all.jpg')">
+                        <div class="card-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Location voiture ou van</h3>
+                        <div class="card-meta">
+                            <span>À la journée</span>
+                            <span class="rating">⭐ 4.6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="must-see-text">
+                <p>Réservez vos activités avec <strong>VisitBejaia</strong> pour garantir l'accès aux principales attractions, optimiser votre logistique et profiter pleinement de vos vacances en famille ou entre amis.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODALE POUR INCONTOURNABLES -->
+    <div class="must-modal" id="mustModal">
+        <div class="must-modal-content">
+            <button class="must-modal-close"><i class="fas fa-times"></i></button>
+            
+            <!-- Galerie d'images en haut -->
+            <div class="must-modal-gallery" id="mustModalGallery"></div>
+            
+            <!-- Image principale -->
+            <div class="must-modal-main">
+                <div class="must-modal-main-media" id="mustModalMainMedia"></div>
+            </div>
+            
+            <!-- Contenu texte -->
+            <div class="must-modal-body">
+                <h2 id="mustModalTitle" class="must-modal-title"></h2>
+                <div class="must-modal-rating" id="mustModalRating"></div>
+                <p id="mustModalDescription" class="must-modal-description"></p>
+                <div class="must-modal-details" id="mustModalDetails"></div>
+                <button class="must-modal-btn" onclick="alert('Réservation en cours...')">Réserver cette expérience</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Destinations -->
+    <section id="destinations" class="destinations">
+        <div class="container">
+            <h2 class="section-title">Nos Destinations</h2>
+            <p class="section-subtitle">Partez à la découverte de destinations magiques avec l'expertise de VisitBejaia</p>
+            <div class="destinations-grid">
+                <div class="destination-card"><div class="card-image" style="background-image: url('assets/images/cas.jpg')"><div class="card-overlay"></div></div><div class="card-content"><h3>-La petite casbah de bejaia</h3><p>La ville de l'amour et de la lumière</p><div class="destination-meta"><span>⏱️ 7 jours</span><span>📅 Prochain départ: 1er Juin</span></div><div class="card-footer"><span class="price">À partir de 8500 DZD</span><button class="btn-small" onclick="openDestinationReservation('casbah', 'La petite casbah de Béjaïa', 8500)">Réserver</button></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('assets/images/goraya.jpg')"><div class="card-overlay"></div></div><div class="card-content"><h3>-Fort ' yemma gouraya '</h3><p>Mélange unique de tradition et modernité</p><div class="destination-meta"><span>⏱️ 10 jours</span><span>📅 Prochain départ: 5 Juin</span></div><div class="card-footer"><span class="price">À partir de 5000 DZD</span><button class="btn-small" onclick="openDestinationReservation('fort-gouraya', 'Fort Yemma Gouraya', 5000)">Réserver</button></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800')"><div class="card-overlay"></div></div><div class="card-content"><h3>New York, USA</h3><p>La ville qui ne dort jamais</p><div class="destination-meta"><span>⏱️ 7 jours</span><span>📅 Prochain départ: 10 Juin</span></div><div class="card-footer"><span class="price">À partir de 128 000 DZD</span><button class="btn-small" onclick="openDestinationReservation('newyork', 'New York, USA', 128000)">Réserver</button></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800')"><div class="card-overlay"></div></div><div class="card-content"><h3>Bali, Indonésie</h3><p>Paradis tropical pour votre détente</p><div class="destination-meta"><span>⏱️ 14 jours</span><span>📅 Prochain départ: 15 Juin</span></div><div class="card-footer"><span class="price">À partir de 113 000 DZD</span><button class="btn-small" onclick="openDestinationReservation('bali', 'Bali, Indonésie', 113000)">Réserver</button></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800')"><div class="card-overlay"></div></div><div class="card-content"><h3>Barcelone, Espagne</h3><p>Architecture unique et plages magnifiques</p><div class="destination-meta"><span>⏱️ 5 jours</span><span>📅 Prochain départ: 20 Juin</span></div><div class="card-footer"><span class="price">À partir de 64 000 DZD</span><button class="btn-small" onclick="openDestinationReservation('barcelone', 'Barcelone, Espagne', 64000)">Réserver</button></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800')"><div class="card-overlay"></div></div><div class="card-content"><h3>Dubai, Émirats Arabes</h3><p>Luxe et modernité au cœur du désert</p><div class="destination-meta"><span>⏱️ 6 jours</span><span>📅 Prochain départ: 25 Juin</span></div><div class="card-footer"><span class="price">À partir de 156 000 DZD</span><button class="btn-small" onclick="openDestinationReservation('dubai', 'Dubai, Émirats Arabes', 156000)">Réserver</button></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nos Atouts -->
+    <section id="pourquoi" class="about-section">
+        <div class="container">
+            <h2 class="section-title">Pourquoi Choisir VisitBejaia ?</h2>
+            <div class="about-grid">
+                <div class="about-item"><div class="about-icon">🏆</div><h3>Service de Luxe</h3><p>Expérience premium pour chaque voyageur</p></div>
+                <div class="about-item"><div class="about-icon">🛡️</div><h3>Support 24/7</h3><p>Assistance disponible à tout moment</p></div>
+                <div class="about-item"><div class="about-icon">✅</div><h3>Réservation Garantie</h3><p>Confirmation immédiate de votre séjour</p></div>
+                <div class="about-item"><div class="about-icon">🌍</div><h3>Destinations Uniques</h3><p>Découvrez Bejaia sous un nouvel angle</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Feed -->
+    <section class="instagram-section">
+        <div class="container">
+            <h2 class="section-title">Instagram Feed</h2>
+            <div class="instagram-grid">
+                <div class="instagram-item" style="background-image: url('assets/images/jets.jpg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad.jpeg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad1.jpeg')"></div>
+                <div class="instagram-item" style="background-image: url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad4.jpeg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/vol\ parapente.jpg')"></div>
+                <div class="instagram-item" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad3.jpeg')"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activités -->
+    <section id="activites" class="activities-section">
+        <div class="container">
+            <h2 class="section-title">Nos Activités</h2>
+            <p class="section-subtitle">Vivez des expériences inoubliables à Béjaïa</p>
+            <div class="destinations-grid">
+                <div class="destination-card"><div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600')"><div class="card-overlay"></div></div><div class="card-content"><h3>Sortie en bateau</h3><p>Explorez les côtes magnifiques de Béjaïa en bateau</p><div class="card-footer"><span class="price">À partir de 5 000 DZD</span><a href="activites.html#bateau" class="btn-small">Découvrir</a></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('assets/images/quad.jpeg')"><div class="card-overlay"></div></div><div class="card-content"><h3> Quad</h3><p>Aventure palpitante à travers les sentiers montagneux</p><div class="card-footer"><span class="price">À partir de 6 500 DZD</span><a href="activites.html#quad" class="btn-small">Découvrir</a></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=600')"><div class="card-overlay"></div></div><div class="card-content"><h3>Randonnée à Cheval</h3><p>Parcourez les paysages pittoresques de Béjaïa</p><div class="card-footer"><span class="price">À partir de 4 500 DZD</span><a href="activites.html#cheval" class="btn-small">Découvrir</a></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('assets/images/plonge.jpg')"><div class="card-overlay"></div></div><div class="card-content"><h3>Plongée Sous-Marine</h3><p>Explorez le monde sous-marin de la Méditerranée</p><div class="card-footer"><span class="price">À partir de 7 500 DZD</span><a href="activites.html#plongee" class="btn-small">Découvrir</a></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('assets/images/padlle.jpg')"><div class="card-overlay"></div></div><div class="card-content"><h3>Paddle</h3><p>Glissez sur les eaux cristallines en paddle</p><div class="card-footer"><span class="price">À partir de 3 500 DZD</span><a href="activites.html#paddle" class="btn-small">Découvrir</a></div></div></div>
+                <div class="destination-card"><div class="card-image" style="background-image: url('assets/images/jets.jpg')"><div class="card-overlay"></div></div><div class="card-content"><h3>Jet Ski</h3><p>Frissons garantis en jet ski le long des côtes</p><div class="card-footer"><span class="price">À partir de 8 500 DZD</span><a href="activites.html#jetski" class="btn-small">Découvrir</a></div></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+  <section id="contact" class="contact">
+    <div class="container">
+
+        <h2 class="section-title">Nous Vous Écoutons</h2>
+        <p class="section-subtitle">
+            Contactez-nous pour planifier votre prochaine aventure à Béjaïa
+        </p>
+
+        <div class="contact-content">
+
+            <!-- INFO -->
+            <div class="contact-info">
+
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div>
+                        <h4>Adresse</h4>
+                        <p>123 Avenue de la Mer, Bejaia, Algérie</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div>
+                        <h4>Téléphone</h4>
+                        <p>+213 555 123 456</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">✉️</div>
+                    <div>
+                        <h4>Email</h4>
+                        <p>visitebejaia@gmail.com</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FORMULAIRE -->
+            <form class="contact-form" id="contactForm">
+
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Votre nom" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Votre email" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="tel" id="phone" placeholder="Votre téléphone">
+                </div>
+
+                <div class="form-group">
+                    <textarea id="message" rows="5" placeholder="Votre message" required></textarea>
+                </div>
+
+                <button type="submit" class="btn">
+                    Envoyer le message
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+
+    <!-- Modale Réservation Destinations -->
+    <div class="reservation-modal" id="destinationReservationModal">
+        <div class="reservation-form">
+            <button class="close-modal" onclick="closeDestinationReservation()"><i class="fas fa-times"></i></button>
+            <h2 id="destinationModalTitle">Réserver une Destination</h2>
+            <form id="destinationReservationForm" onsubmit="submitDestinationReservation(event)">
+                <div class="form-group"><label>Nom Complet *</label><input type="text" id="destFullName" required></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Email *</label><input type="email" id="destEmail" required></div>
+                    <div class="form-group"><label>Téléphone *</label><input type="tel" id="destPhone" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Date de Départ *</label><input type="date" id="destDate" required></div>
+                    <div class="form-group"><label>Participants *</label><input type="number" id="destParticipants" min="1" max="20" value="1" required></div>
+                </div>
+                <div class="form-group"><label>Type d'Hébergement</label><select id="destRegimen"><option value="demi-pension">Demi-Pension</option><option value="pension-complete">Pension Complète</option><option value="chambre-seule">Chambre Seule</option><option value="tout-inclus">Tout Inclus</option></select></div>
+                <div class="form-group"><label>Demandes Spéciales</label><textarea id="destRequests" class="textarea" placeholder="Vos souhaits et préférences..."></textarea></div>
+                <div style="background:#f4f0ea;padding:1.2rem;border-radius:60px;margin-bottom:2rem;text-align:center;"><p style="margin:0;font-weight:600;color:#1e4f4a;">Prix estimé: <span id="destTotalPrice">0 DZD</span></p></div>
+                <button type="submit" class="btn-submit"><i class="fas fa-check"></i> Confirmer la Réservation</button>
+                <div class="form-message" id="destFormMessage"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo"><h3>VisitBejaia</h3><p>Votre expert en voyages authentiques à Béjaïa.</p></div>
+            <div class="footer-links"><h4>Liens</h4><ul><li><a href="#accueil">Accueil</a></li><li><a href="#apropos">À Propos</a></li><li><a href="#destinations">Destinations</a></li></ul></div>
+            <div class="footer-links"><h4>Activités</h4><ul><li><a href="#">Bateau</a></li><li><a href="#">Quad</a></li><li><a href="#">Cheval</a></li></ul></div>
+            <div class="footer-social"><h4>Suivez-nous</h4><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div></div>
+        </div>
+        <div class="footer-bottom"><p>© 2025 VisitBejaia. Tous droits réservés.</p></div>
+    </footer>
+      <script src="js/navbar.js"></script>
+
+    <script>
+    //email 
+    
+document.getElementById("contactForm").addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const data = {
+        to: "visitebejaia@gmail.com",
+        subject: "✈️ VisitBejaia - Nouveau message client",
+        message: `
+Nom : ${document.getElementById("name").value}
+Email : ${document.getElementById("email").value}
+Téléphone : ${document.getElementById("phone").value}
+Message : ${document.getElementById("message").value}
+        `
+    };
+
+    try {
+
+        await fetch("http://localhost:3000/send-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        alert("Message envoyé !");
+
+    } catch (error) {
+        alert("Erreur envoi message");
+    }
+
+});
+
+        // Créer des particules pour le hero
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Effet de scroll sur la navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    const spans = this.querySelectorAll('span');
+                    if (navMenu.classList.contains('active')) {
+                        spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                        spans[1].style.opacity = '0';
+                        spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                    } else {
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    }
+                });
+
+                const menuLinks = navMenu.querySelectorAll('a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        const spans = hamburger.querySelectorAll('span');
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    });
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                        navMenu.classList.remove('active');
+                        const spans = hamburger.querySelectorAll('span');
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    }
+                });
+            }
+
+            // Données pour les incontournables
+            const mustSeeData = {
+                grotte: {
+                    title: "Les grottes de la côte ouest",
+                    rating: "⭐ 4.8 (2,345 avis)",
+                    description: "Explorez les magnifiques grottes marines de la côte ouest de Béjaïa. Accessibles uniquement en bateau, ces grottes sculptées par l'érosion offrent un spectacle naturel époustouflant avec leurs jeux de lumière et leurs eaux cristallines.",
+                    details: [
+                        { icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" },
+                        { icon: "fa-users", text: "Groupe : 4-10 personnes" },
+                        { icon: "fa-ship", text: "Transport en bateau inclus" },
+                        { icon: "fa-utensils", text: "Repas inclus (demi-pension)" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/grotte.jpg" },
+                        { type: "image", src: "assets/images/grotte2.jpg" },
+                        { type: "video", src: "assets/videos/grotte.mp4" },
+                        { type: "image", src: "assets/images/grotte3.jpg" }
+                    ]
+                },
+                ferme: {
+                    title: "Découvrir la ferme Djerba",
+                    rating: "⭐ 4.8 (1,890 avis)",
+                    description: "Immersion dans la vie rurale traditionnelle à la ferme Djerba. Découvrez l'agriculture locale, participez à la traite des chèvres et dégustez des produits frais dans un cadre authentique et préservé.",
+                    details: [
+                        { icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" },
+                        { icon: "fa-users", text: "Groupe : 2-8 personnes" },
+                        { icon: "fa-utensils", text: "Repas bio inclus" },
+                        { icon: "fa-tree", text: "Activités agricoles" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/ferme.jpg" },
+                        { type: "image", src: "assets/images/ferme2.jpg" },
+                        { type: "video", src: "assets/videos/ferme.mp4" }
+                    ]
+                },
+                historique: {
+                    title: "Visite des sites historiques",
+                    rating: "⭐ 4.9 (3,102 avis)",
+                    description: "Plongez dans l'histoire riche de Béjaïa à travers ses sites historiques : la Casbah, les remparts, les mosquées anciennes et les vestiges de l'époque médiévale. Guide expert inclus.",
+                    details: [
+                        { icon: "fa-clock", text: "Durée : 2 jours / 1 nuit" },
+                        { icon: "fa-users", text: "Groupe : 2-15 personnes" },
+                        { icon: "fa-map", text: "Guide historien" },
+                        { icon: "fa-camera", text: "Visite photo" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/casbah.jpg" },
+                        { type: "image", src: "assets/images/casbah2.jpg" },
+                        { type: "video", src: "assets/videos/historique.mp4" }
+                    ]
+                },
+                vol: {
+                    title: "Vol au-dessus de la Méditerranée",
+                    rating: "⭐ 4.7 (1,567 avis)",
+                    description: "Vivez une expérience unique en parapente au-dessus des eaux turquoise de la Méditerranée. Survolez les falaises, les criques et la ville de Béjaïa pour une vue à couper le souffle.",
+                    details: [
+                        { icon: "fa-clock", text: "Durée : 1 journée" },
+                        { icon: "fa-users", text: "Groupe : 1-4 personnes" },
+                        { icon: "fa-parachute-box", text: "Équipement inclus" },
+                        { icon: "fa-video", text: "Vidéo de votre vol" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/vol.jpg" },
+                        { type: "video", src: "assets/videos/parapente.mp4" },
+                        { type: "image", src: "assets/images/vol2.jpg" }
+                    ]
+                },
+                "petite-casbah": {
+                    title: "La petite Casbah de Béjaïa",
+                    rating: "⭐ 4.6 (2,001 avis)",
+                    description: "Balade dans les ruelles pittoresques de la petite Casbah, avec ses maisons blanches, ses portes colorées et son atmosphère authentique. Découvrez l'artisanat local et les saveurs traditionnelles.",
+                    details: [
+                        { icon: "fa-clock", text: "Durée : 1 journée" },
+                        { icon: "fa-users", text: "Groupe : 2-12 personnes" },
+                        { icon: "fa-shopping-bag", text: "Marché artisanal" },
+                        { icon: "fa-utensils", text: "Déjeuner typique" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/petite-casbah.jpg" },
+                        { type: "image", src: "assets/images/petite-casbah2.jpg" },
+                        { type: "video", src: "assets/videos/casbah.mp4" }
+                    ]
+                },
+                fort: {
+                    title: "Fort Yemma Gouraya",
+                    rating: "⭐ 4.7 (2,890 avis)",
+                    description: "Visitez le célèbre Fort Yemma Gouraya perché sur les hauteurs de Béjaïa. Admirez la vue panoramique sur la baie, découvrez l'histoire du fort et profitez des sentiers de randonnée environnants.",
+                    details: [
+                        { icon: "fa-clock", text: "Durée : 1 journée" },
+                        { icon: "fa-users", text: "Groupe : 2-20 personnes" },
+                        { icon: "fa-hiking", text: "Randonnée incluse" },
+                        { icon: "fa-camera", text: "Point photo exceptionnel" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/fort-gouraya.jpg" },
+                        { type: "image", src: "assets/images/fort2.jpg" },
+                        { type: "video", src: "assets/videos/fort.mp4" }
+                    ]
+                },
+                paddle: {
+                    title: "Initiation au paddle",
+                    rating: "⭐ 4.5 (978 avis)",
+                    description: "Initiez-vous au paddle sur les eaux calmes de la Méditerranée. Une activité ludique et accessible à tous pour découvrir la côte depuis la mer, entre falaises et criques secrètes.",
+                    details: [
+                        { icon: "fa-clock", text: "Durée : Demi-journée" },
+                        { icon: "fa-users", text: "Groupe : 1-6 personnes" },
+                        { icon: "fa-life-ring", text: "Équipement inclus" },
+                        { icon: "fa-water", text: "Cours d'initiation" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/paddle.jpg" },
+                        { type: "video", src: "assets/videos/paddle.mp4" },
+                        { type: "image", src: "assets/images/paddle2.jpg" }
+                    ]
+                },
+                location: {
+                    title: "Location voiture ou van",
+                    rating: "⭐ 4.6 (3,456 avis)",
+                    description: "Louez un véhicule pour explorer Béjaïa et ses environs en toute liberté. Voitures compactes, SUV ou vans aménagés pour tous vos besoins de voyage.",
+                    details: [
+                        { icon: "fa-clock", text: "À la journée ou à la semaine" },
+                        { icon: "fa-car", text: "Large choix de véhicules" },
+                        { icon: "fa-shield", text: "Assurance tous risques" },
+                        { icon: "fa-map-marked", text: "Conseils itinéraires" }
+                    ],
+                    media: [
+                        { type: "image", src: "assets/images/location-voiture.jpg" },
+                        { type: "image", src: "assets/images/voiture2.jpg" },
+                        { type: "video", src: "assets/videos/voiture.mp4" }
+                    ]
+                }
+            };
+
+            // Gestionnaire pour la modale des incontournables
+            const mustModal = document.getElementById('mustModal');
+            const mustModalGallery = document.getElementById('mustModalGallery');
+            const mustModalMainMedia = document.getElementById('mustModalMainMedia');
+            const mustModalTitle = document.getElementById('mustModalTitle');
+            const mustModalRating = document.getElementById('mustModalRating');
+            const mustModalDescription = document.getElementById('mustModalDescription');
+            const mustModalDetails = document.getElementById('mustModalDetails');
+
+            let currentMedia = [];
+
+            function setMainMedia(index) {
+                const media = currentMedia[index];
+                if (!media) return;
+                
+                // Mettre à jour la classe active dans la galerie
+                document.querySelectorAll('.must-modal-gallery-item').forEach((item, i) => {
+                    if (i === index) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+                
+                // Afficher le média dans la zone principale
+                if (media.type === 'video') {
+                    mustModalMainMedia.innerHTML = `<video controls autoplay loop muted src="${media.src}"></video>`;
+                } else {
+                    mustModalMainMedia.innerHTML = `<img src="${media.src}" alt="">`;
+                }
+            }
+
+            document.querySelectorAll('.must-see-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const key = card.dataset.modal;
+                    const data = mustSeeData[key];
+                    if (!data) return;
+                    
+                    currentMedia = data.media;
+                    
+                    // Remplir le titre
+                    mustModalTitle.textContent = data.title;
+                    
+                    // Remplir la note
+                    mustModalRating.innerHTML = `<i class="fas fa-star"></i> ${data.rating}`;
+                    
+                    // Remplir la description
+                    mustModalDescription.textContent = data.description;
+                    
+                    // Remplir les détails
+                    mustModalDetails.innerHTML = '';
+                    data.details.forEach(detail => {
+                        const div = document.createElement('div');
+                        div.className = 'must-modal-detail-item';
+                        div.innerHTML = `<i class="fas ${detail.icon}"></i> <span>${detail.text}</span>`;
+                        mustModalDetails.appendChild(div);
+                    });
+                    
+                    // Remplir la galerie
+                    mustModalGallery.innerHTML = '';
+                    data.media.forEach((media, index) => {
+                        const item = document.createElement('div');
+                        item.className = 'must-modal-gallery-item';
+                        if (index === 0) item.classList.add('active');
+                        
+                        if (media.type === 'video') {
+                            item.innerHTML = `<video src="${media.src}" muted></video>`;
+                        } else {
+                            item.innerHTML = `<img src="${media.src}" alt="">`;
+                        }
+                        
+                        item.addEventListener('click', () => setMainMedia(index));
+                        mustModalGallery.appendChild(item);
+                    });
+                    
+                    // Afficher le premier média
+                    setMainMedia(0);
+                    
+                    // Afficher la modale
+                    mustModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            // Fermer la modale
+            document.querySelector('.must-modal-close').addEventListener('click', () => {
+                mustModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            mustModal.addEventListener('click', (e) => {
+                if (e.target === mustModal) {
+                    mustModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Fonctions de réservation (simulées)
+            window.openDestinationReservation = function(id, name, price) {
+                alert(`Réservation pour ${name} à partir de ${price} DZD`);
+            }
+
+            window.closeDestinationReservation = function() {
+                document.getElementById('destinationReservationModal').classList.remove('active');
+            }
+
+            window.submitDestinationReservation = function(event) {
+                event.preventDefault();
+                alert('Réservation confirmée !');
+                closeDestinationReservation();
+            }
+        });
+    </script>
+</body>
+</html>

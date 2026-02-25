@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>À Propos - VisitBejaia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      line-height: 1.7;
+    }
+
+    /* Navbar (identique à tes autres pages) */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 1.2rem 0;
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2.8rem;
+      list-style: none;
+    }
+
+    .nav-menu a {
+      color: #1e293b;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.05rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -8px;
+      left: 0;
+      background: #60a5fa;
+      transition: width 0.4s;
+    }
+
+    .nav-menu a:hover::after,
+    .nav-menu a.active::after {
+      width: 100%;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: #60a5fa;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #1e293b;
+    }
+
+    /* Hero À Propos */
+    .hero {
+      height: 70vh;
+      min-height: 500px;
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.7)),
+                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=2000&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      padding: 0 20px;
+    }
+
+    .hero h1 {
+      font-size: 4.2rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero p {
+      font-size: 1.35rem;
+      max-width: 720px;
+      margin: 0 auto;
+      color: #e2e8f0;
+    }
+
+    /* Section contenu */
+    .about-section {
+      padding: 8rem 2rem 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.25rem;
+      color: #64748b;
+      max-width: 800px;
+      margin: 0 auto 4rem;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      font-size: 1.15rem;
+      color: #475569;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-text strong {
+      color: #1e40af;
+    }
+
+    .about-image img {
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+      transition: transform 0.5s;
+    }
+
+    .about-image img:hover {
+      transform: scale(1.03);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 5rem;
+    }
+
+    .value-card {
+      background: white;
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      transition: all 0.4s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(96,165,250,0.15);
+    }
+
+    .value-icon {
+      font-size: 2.8rem;
+      color: #60a5fa;
+      margin-bottom: 1.2rem;
+    }
+
+    .value-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .value-text {
+      color: #64748b;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 { font-size: 3.5rem; }
+      .section-title { font-size: 2.4rem; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container { padding: 0 1.5rem; }
+      .nav-menu {
+        position: absolute;
+        top: 90px;
+        left: 0; right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        display: none;
+      }
+      .nav-menu.active { display: flex; }
+      .hamburger { display: flex; }
+      .hero h1 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <h1>VisitBejaia</h1>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html#accueil">Accueil</a></li>
+        <li><a href="apropos.html" class="active">À Propos</a></li>
+        <li><a href="index.html#destinations">Choses à visiter</a></li>
+        <li><a href="index.html#activites">Activités</a></li>
+        <li><a href="hebergement.html">Hébergement</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>À Propos de VisitBejaia</h1>
+      <p>Découvrez qui nous sommes et pourquoi nous aimons partager la beauté de Béjaïa avec le monde.</p>
+    </div>
+  </section>
+
+  <!-- Contenu À Propos -->
+  <section class="about-section">
+    <h2 class="section-title">Qui sommes-nous ?</h2>
+    <p class="section-subtitle">
+      VisitBejaia est né d’une passion profonde pour notre région : Béjaïa et ses merveilles cachées.
+      Notre mission ? Vous faire vivre des expériences authentiques, inoubliables et respectueuses.
+    </p>
+
+    <div class="about-content">
+      <div class="about-text">
+        <p>VisitBejaia a été créé en <strong>2023</strong> par une petite équipe locale amoureuse de sa terre.</p>
+        <p>Nous voulons montrer le vrai visage de Béjaïa : ses plages sauvages, ses montagnes majestueuses, sa culture riche, sa gastronomie généreuse et l’hospitalité légendaire de ses habitants.</p>
+        <p>Nous ne sommes pas une simple agence touristique. Nous sommes des <strong>ambassadeurs</strong> de notre région, et nous vous invitons à la découvrir comme des amis.</p>
+      </div>
+
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" alt="Équipe VisitBejaia">
+      </div>
+    </div>
+
+    <!-- Nos valeurs -->
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon"><i class="fas fa-heart"></i></div>
+        <h3 class="value-title">Authenticité</h3>
+        <p class="value-text">Nous vous proposons uniquement des lieux et expériences vrais, loin des circuits de masse.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon"><i class="fas fa-leaf"></i></div>
+        <h3 class="value-title">Respect de l'environnement</h3>
+        <p class="value-text">Nous encourageons le tourisme responsable et protégeons les trésors naturels de Béjaïa.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon"><i class="fas fa-handshake"></i></div>
+        <h3 class="value-title">Échange & Partage</h3>
+        <p class="value-text">Nous valorisons les rencontres humaines et l’échange culturel avec les habitants.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="value-icon"><i class="fas fa-star"></i></div>
+        <h3 class="value-title">Qualité</h3>
+        <p class="value-text">Chaque recommandation est soigneusement choisie pour vous offrir le meilleur.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <h3>VisitBejaia</h3>
+        <p>Votre partenaire de confiance pour découvrir Béjaïa authentique et inoubliable.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Liens rapides</h4>
+        <ul>
+          <li><a href="index.html#accueil">Accueil</a></li>
+          <li><a href="index.html#apropos">À Propos</a></li>
+          <li><a href="index.html#destinations">Destinations</a></li>
+          <li><a href="hebergement.html">Hébergement</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links">
+        <h4>Activités</h4>
+        <ul>
+          <li><a href="#">Sortie en bateau</a></li>
+          <li><a href="#">Randonnée quad</a></li>
+          <li><a href="#">Randonnée cheval</a></li>
+          <li><a href="#">Vol en parapente</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h4>Suivez-nous</h4>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 VisitBejaia. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger menu mobile
+    document.querySelector('.hamburger').addEventListener('click', () => {
+      document.querySelector('.nav-menu').classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>

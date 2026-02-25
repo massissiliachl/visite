@@ -1,0 +1,2638 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hébergements de luxe - VisitBejaia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fcf9f5;
+            color: #2c3e3d;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typographie */
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #1e4f4a;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+        }
+
+        /* Navigation avec effet glassmorphisme */
+        .navbar {
+            background: rgba(255, 252, 248, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(200, 175, 150, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 252, 248, 0.95);
+            box-shadow: 0 10px 30px -10px rgba(30, 79, 74, 0.2);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #1e4f4a, #7a5b4b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            white-space: nowrap;
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 0 rgba(182, 139, 110, 0); }
+            100% { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2f4f4a;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::before,
+        .nav-menu a.active::before {
+            width: 100%;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #b68b6e;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            padding: 10px;
+            background: none;
+            border: none;
+            z-index: 2001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: #1e4f4a;
+            transition: 0.3s;
+            display: block;
+        }
+
+        /* Hero avec parallaxe */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 0 0 3rem 3rem;
+            overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=2000') center/cover no-repeat;
+            background-attachment: fixed;
+            animation: heroZoom 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes heroZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 2;
+            animation: overlayPulse 5s infinite alternate;
+        }
+
+        @keyframes overlayPulse {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.6; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 2rem;
+            color: white;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: white;
+            text-shadow: 0 10px 30px rgba(0, 20, 10, 0.4);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            animation: titleGlow 3s infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { text-shadow: 0 10px 30px rgba(0, 20, 10, 0.4); }
+            100% { text-shadow: 0 20px 40px rgba(182, 139, 110, 0.6); }
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: rgba(255, 250, 240, 0.9);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            animation: fadeInUp 1.5s ease 0.3s both;
+        }
+
+        /* Filtres avec animations */
+        .filters-section {
+            padding: 3rem 20px 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: 60px;
+            box-shadow: 0 20px 40px -20px rgba(30, 79, 74, 0.3);
+            border: 1px solid rgba(182, 139, 110, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .filter-container:hover {
+            box-shadow: 0 30px 50px -20px rgba(30, 79, 74, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(182, 139, 110, 0.3);
+            background: white;
+            color: #2c3e3d;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(30, 79, 74, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #1e4f4a;
+            color: white;
+            border-color: #1e4f4a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px #1e4f4a;
+        }
+
+        .filter-btn i {
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .filter-btn:hover i {
+            transform: rotate(360deg);
+        }
+
+        .search-sort {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b68b6e;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input {
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border-radius: 40px;
+            border: 1px solid rgba(182, 139, 110, 0.3);
+            font-family: 'Montserrat', sans-serif;
+            width: 250px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #1e4f4a;
+            box-shadow: 0 0 0 3px rgba(30, 79, 74, 0.1);
+            width: 300px;
+        }
+
+        .search-box input:focus + i {
+            transform: translateY(-50%) scale(1.2);
+            color: #1e4f4a;
+        }
+
+        .sort-select {
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(182, 139, 110, 0.3);
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            cursor: pointer;
+            color: #2c3e3d;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231e4f4a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .sort-select:hover {
+            border-color: #1e4f4a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px #1e4f4a;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: #1e4f4a;
+            box-shadow: 0 0 0 3px rgba(30, 79, 74, 0.1);
+        }
+
+        .results-count {
+            font-size: 0.95rem;
+            color: #7c8f89;
+            margin-top: 1rem;
+            padding-left: 0.5rem;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Grille des hébergements avec effet masonry */
+        .hebergement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            padding: 2rem 20px 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Cartes 3D avec effets spectaculaires */
+        .hebergement-card {
+            background: white;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -15px rgba(30, 79, 74, 0.2);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: cardAppear 0.8s forwards;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .hebergement-card:hover {
+            transform: translateY(-15px) scale(1.02) rotateX(2deg);
+            box-shadow: 0 40px 60px -15px #1e4f4a;
+        }
+
+        .hebergement-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            padding: 2px;
+            background: linear-gradient(145deg, transparent, rgba(182, 139, 110, 0.3), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .hebergement-card:hover::after {
+            opacity: 1;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 10;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: badgePulse 2s infinite;
+            transform-origin: center;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .card-badge.popular {
+            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+        }
+
+        .card-badge i {
+            margin-right: 0.3rem;
+            animation: starRotate 3s infinite linear;
+        }
+
+        @keyframes starRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .card-image {
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: transform 0.5s ease;
+            overflow: hidden;
+        }
+
+        .hebergement-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .hebergement-card:hover .card-image::before {
+            opacity: 1;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, transparent 50%, rgba(30, 79, 74, 0.2) 100%);
+            z-index: 2;
+            mix-blend-mode: overlay;
+        }
+
+        .card-ambiance {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 5;
+        }
+
+        .ambiance-tag {
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(5px);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #1e4f4a;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .hebergement-card:hover .ambiance-tag {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .ambiance-tag:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+
+        .ambiance-tag:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .card-content {
+            padding: 2rem 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            position: relative;
+            z-index: 3;
+        }
+
+        .card-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #1e4f4a;
+            font-family: 'Cormorant Garamond', serif;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .card-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            transition: width 0.3s ease;
+        }
+
+        .hebergement-card:hover .card-content h3::after {
+            width: 50px;
+        }
+
+        .card-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #7c8f89;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .hebergement-card:hover .card-location {
+            color: #1e4f4a;
+        }
+
+        .card-location i {
+            color: #b68b6e;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .hebergement-card:hover .card-location i {
+            transform: scale(1.2);
+        }
+
+        .card-description {
+            color: #3f5a55;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex: 1;
+            transition: all 0.3s ease;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(182, 139, 110, 0.2);
+            padding-top: 1.5rem;
+            margin-top: auto;
+            transition: all 0.3s ease;
+        }
+
+        .hebergement-card:hover .card-footer {
+            border-top-color: #b68b6e;
+        }
+
+        .card-price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e4f4a;
+            transition: all 0.3s ease;
+        }
+
+        .hebergement-card:hover .card-price {
+            transform: scale(1.05);
+            color: #b68b6e;
+        }
+
+        .btn-small {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px -5px #1e4f4a;
+        }
+
+        .btn-small::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-small:hover::before {
+            left: 100%;
+        }
+
+        .btn-small:hover {
+            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px -5px #b68b6e;
+        }
+
+        /* Modale avec animations */
+        .modal-hebergement {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(20, 40, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                backdrop-filter: blur(0);
+            }
+            to {
+                opacity: 1;
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .modal-hebergement.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fefcf9;
+            border-radius: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid rgba(182, 139, 110, 0.3);
+            box-shadow: 0 50px 100px -20px #142e26;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideUp 0.4s ease;
+            transform-origin: center;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            font-size: 1.2rem;
+            color: #1e4f4a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            animation: closeButtonRotate 10s infinite linear;
+        }
+
+        @keyframes closeButtonRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-close:hover {
+            background: #1e4f4a;
+            color: white;
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: 0 15px 30px rgba(30, 79, 74, 0.3);
+        }
+
+        /* Galerie d'images améliorée */
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f5efe8, #e8dfd5);
+            border-radius: 2rem 2rem 0 0;
+        }
+
+        .modal-gallery-item {
+            height: 120px;
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .modal-gallery-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .modal-gallery-item:hover {
+            transform: scale(1.05) translateY(-5px);
+            border-color: #1e4f4a;
+            box-shadow: 0 15px 30px -5px #1e4f4a;
+        }
+
+        .modal-gallery-item:hover::before {
+            opacity: 0.2;
+        }
+
+        .modal-gallery-item.active {
+            border-color: #b68b6e;
+            box-shadow: 0 0 0 4px rgba(182, 139, 110, 0.3);
+            animation: activePulse 2s infinite;
+        }
+
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(182, 139, 110, 0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(182, 139, 110, 0.1); }
+        }
+
+        .modal-gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .modal-gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .modal-main {
+            padding: 1rem;
+            background: #fefcf9;
+        }
+
+        .modal-main-media {
+            width: 100%;
+            height: 400px;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .modal-main-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(145deg, transparent, rgba(182, 139, 110, 0.3), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .modal-main-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 10s ease;
+        }
+
+        .modal-main-media:hover img {
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            background: #fefcf9;
+        }
+
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #1e4f4a;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .modal-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            border-radius: 3px;
+        }
+
+        .modal-location {
+            font-size: 1.1rem;
+            color: #b68b6e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-location i {
+            animation: locationBounce 2s infinite;
+        }
+
+        @keyframes locationBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .modal-availability {
+            display: inline-block;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            color: #2e7d32;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.2);
+            animation: availabilityPulse 2s infinite;
+        }
+
+        @keyframes availabilityPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .modal-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #3f5a55;
+            margin-bottom: 2rem;
+        }
+
+        .modal-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #f8f4ef, #f0e8e0);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .modal-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1rem;
+            color: #2c3e3d;
+            padding: 0.5rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .modal-feature-item:hover {
+            background: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .modal-feature-item i {
+            width: 25px;
+            color: #1e4f4a;
+            font-size: 1.1rem;
+            text-align: center;
+            animation: featureIconSpin 10s infinite linear;
+        }
+
+        @keyframes featureIconSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e4f4a;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .modal-price small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #7c8f89;
+        }
+
+        .modal-booking-btn {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -10px #1e4f4a;
+        }
+
+        .modal-booking-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .modal-booking-btn:hover::before {
+            left: 100%;
+        }
+
+        .modal-booking-btn:hover {
+            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px -10px #b68b6e;
+        }
+
+        .similar-properties {
+            border-top: 2px solid rgba(182, 139, 110, 0.2);
+            padding-top: 2rem;
+        }
+
+        .similar-properties h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #1e4f4a;
+        }
+
+        .similar-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .similar-item {
+            background: linear-gradient(135deg, #f8f4ef, #f0e8e0);
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .similar-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 30px -10px #1e4f4a;
+        }
+
+        .similar-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .similar-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .similar-item p {
+            padding: 1rem;
+            font-weight: 600;
+            color: #1e4f4a;
+            font-size: 0.95rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: rgba(255,255,255,0.9);
+            margin: 0;
+        }
+
+        .similar-item small {
+            color: #b68b6e;
+            font-weight: 400;
+            display: block;
+            margin-top: 0.3rem;
+        }
+
+        /* Modale de réservation améliorée */
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(20, 40, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: bookingFadeIn 0.3s ease;
+        }
+
+        @keyframes bookingFadeIn {
+            from {
+                opacity: 0;
+                backdrop-filter: blur(0);
+            }
+            to {
+                opacity: 1;
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .booking-modal.active {
+            display: flex;
+        }
+
+        .booking-content {
+            background: linear-gradient(135deg, #fefcf9, #f8f4ef);
+            border-radius: 2.5rem;
+            max-width: 600px;
+            width: 100%;
+            padding: 3rem;
+            position: relative;
+            border: 1px solid rgba(182, 139, 110, 0.3);
+            box-shadow: 0 50px 100px -20px #142e26;
+            animation: bookingSlideUp 0.4s ease;
+        }
+
+        @keyframes bookingSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .booking-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            font-size: 1.2rem;
+            color: #1e4f4a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .booking-close:hover {
+            background: #1e4f4a;
+            color: white;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .booking-title {
+            font-size: 2.2rem;
+            color: #1e4f4a;
+            margin-bottom: 2rem;
+            padding-right: 2rem;
+            position: relative;
+        }
+
+        .booking-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            border-radius: 3px;
+        }
+
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #1e4f4a;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 1rem 1.2rem;
+            border-radius: 40px;
+            border: 2px solid rgba(182, 139, 110, 0.2);
+            font-family: 'Montserrat', sans-serif;
+            background: white;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #1e4f4a;
+            box-shadow: 0 0 0 4px rgba(30, 79, 74, 0.1);
+            transform: scale(1.02);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover {
+            border-color: #b68b6e;
+        }
+
+        .total-price {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            padding: 1.2rem;
+            border-radius: 40px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            box-shadow: 0 10px 20px -5px #1e4f4a;
+            animation: priceGlow 2s infinite alternate;
+        }
+
+        @keyframes priceGlow {
+            from { box-shadow: 0 10px 20px -5px #1e4f4a; }
+            to { box-shadow: 0 20px 30px -5px #b68b6e; }
+        }
+
+        .booking-submit {
+            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            color: white;
+            border: none;
+            padding: 1.3rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .booking-submit:hover::before {
+            left: 100%;
+        }
+
+        .booking-submit:hover {
+            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px -10px #b68b6e;
+        }
+
+        .booking-submit i {
+            margin-right: 0.5rem;
+            animation: submitIcon 2s infinite;
+        }
+
+        @keyframes submitIcon {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        /* Footer amélioré */
+        .footer {
+            background: linear-gradient(135deg, #1e3a35, #15312b);
+            color: #e5ddd2;
+            padding: 5rem 0 1rem;
+            border-radius: 4rem 4rem 0 0;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            animation: footerLine 3s infinite;
+        }
+
+        @keyframes footerLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: #f3e7db;
+            margin-bottom: 0.8rem;
+            animation: footerLogoGlow 3s infinite alternate;
+        }
+
+        @keyframes footerLogoGlow {
+            from { text-shadow: 0 0 10px rgba(182, 139, 110, 0); }
+            to { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+        }
+
+        .footer-links h4 {
+            color: #dacbbc;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #b68b6e;
+            transition: width 0.3s ease;
+        }
+
+        .footer-links:hover h4::after {
+            width: 50px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-links li:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-links a {
+            color: #bfb7ab;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: #e2ccb8;
+            transform: scale(1.05);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .social-icons a {
+            background: #31554e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #bfb7ab;
+            text-decoration: none;
+            font-size: 1.3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+
+        .social-icons a:hover::before {
+            opacity: 1;
+        }
+
+        .social-icons a i {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: translateY(-8px) rotate(360deg);
+            box-shadow: 0 10px 25px -5px #b68b6e;
+        }
+
+        .social-icons a:hover i {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 2rem 1rem 0;
+            border-top: 1px solid #406156;
+            margin-top: 3rem;
+            color: #9faa9e;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1200px) {
+            .modal-gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 252, 248, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.2rem;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                border-bottom: 1px solid #efe4d8;
+                z-index: 1999;
+            }
+
+            .nav-menu.active {
+                display: flex;
+                animation: slideDown 0.3s ease;
+            }
+
+            .nav-menu a {
+                font-size: 1.1rem;
+                padding: 0.8rem 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 2rem;
+            }
+
+            .search-sort {
+                flex-direction: column;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .search-box input:focus {
+                width: 100%;
+            }
+
+            .sort-select {
+                width: 100%;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-features {
+                grid-template-columns: 1fr;
+            }
+
+            .similar-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 500px;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .modal-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .modal-main-media {
+                height: 250px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-features {
+                padding: 1.5rem;
+            }
+
+            .similar-properties h4 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .navbar .container {
+                height: 60px;
+            }
+            
+            .nav-menu {
+                top: 60px;
+            }
+            
+            .modal-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+
+            .modal-title {
+                font-size: 2rem;
+            }
+
+            .modal-price {
+                font-size: 2rem;
+            }
+
+            .booking-content {
+                padding: 2rem;
+            }
+        }
+
+        /* Loading animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(182, 139, 110, 0.3);
+            border-radius: 50%;
+            border-top-color: #1e4f4a;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar personnalisée */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5efe8;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #b68b6e, #1e4f4a);
+        }
+
+        /* Effet de vague pour le hero */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23fcf9f5" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 4;
+            animation: waveMove 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes waveMove {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Effet de particules */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            animation: particleFloat 10s infinite linear;
+        }
+
+        @keyframes particleFloat {
+            from {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div id="navbar-placeholder"></div>
+    <!-- Hero Section avec particules -->
+    <section class="hero">
+        <div class="particles" id="particles"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Séjours d'exception à Béjaïa</h1>
+            <p class="hero-description">Des villas de luxe avec piscine privée aux appartements de charme avec vue mer, trouvez le havre de paix idéal pour vos vacances méditerranéennes.</p>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="wave"></div>
+    </section>
+
+    <!-- Filtres -->
+    <section class="filters-section">
+        <div class="filter-container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-home"></i> Tous
+                </button>
+                <button class="filter-btn" data-filter="villa">
+                    <i class="fas fa-tree"></i> Villas
+                </button>
+                <button class="filter-btn" data-filter="appartement">
+                    <i class="fas fa-building"></i> Appartements
+                </button>
+            </div>
+            <div class="search-sort">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Rechercher...">
+                </div>
+                <select id="sortSelect" class="sort-select">
+                    <option value="default">Trier par</option>
+                    <option value="price-asc">Prix croissant</option>
+                    <option value="price-desc">Prix décroissant</option>
+                    <option value="popular">Popularité</option>
+                </select>
+            </div>
+        </div>
+        <div class="results-count" id="resultsCount">10 hébergements disponibles</div>
+    </section>
+
+    <!-- Grille des hébergements -->
+    <div class="hebergement-grid" id="hebergementGrid"></div>
+
+    <!-- Modale hébergement -->
+    <div class="modal-hebergement" id="hebergementModal">
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            
+            <div class="modal-gallery" id="modalGallery"></div>
+            
+            <div class="modal-main">
+                <div class="modal-main-media" id="modalMainMedia"></div>
+            </div>
+            
+            <div class="modal-body">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <div class="modal-location" id="modalLocation"></div>
+                <div class="modal-availability" id="modalAvailability">✓ Disponible pour vos dates</div>
+                <p id="modalDescription" class="modal-description"></p>
+                <div class="modal-features" id="modalFeatures"></div>
+                <div class="modal-price" id="modalPrice"></div>
+                <button class="modal-booking-btn" id="modalBookingBtn">Réserver maintenant</button>
+                
+                <div class="similar-properties">
+                    <h4>Hébergements similaires</h4>
+                    <div class="similar-grid" id="similarProperties"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale de réservation -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-content">
+            <button class="booking-close"><i class="fas fa-times"></i></button>
+            <h2 class="booking-title" id="bookingTitle">Réserver</h2>
+            
+            <form class="booking-form" id="bookingForm" onsubmit="handleBookingSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Arrivée</label>
+                        <input type="date" id="checkIn" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Départ</label>
+                        <input type="date" id="checkOut" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Adultes</label>
+                        <select id="adults">
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Enfants</label>
+                        <select id="children">
+                            <option value="0" selected>0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" id="fullName" placeholder="Votre nom" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="votre@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" id="phone" placeholder="+213 XXX XX XX XX" required>
+                </div>
+                
+                <div class="total-price" id="totalPrice">Total: 0 DZD</div>
+                
+                <button type="submit" class="booking-submit">
+                    <i class="fas fa-check"></i> Confirmer la réservation
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h3>VisitBejaia</h3>
+                <p>Votre expert en voyages authentiques à Béjaïa.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liens</h4>
+                <ul>
+                    <li><a href="index.html#accueil">Accueil</a></li>
+                    <li><a href="index.html#apropos">À Propos</a></li>
+                    <li><a href="index.html#destinations">Destinations</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Activités</h4>
+                <ul>
+                    <li><a href="#">Bateau</a></li>
+                    <li><a href="#">Quad</a></li>
+                    <li><a href="#">Cheval</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 VisitBejaia. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+          <script src="js/navbar.js"></script>
+
+    <script>
+        // Données des hébergements avec images de haute qualité
+        const properties = [
+            // Villas
+            {
+                id: 'villa1',
+                title: "Villa Azur",
+                location: "Tichy, Béjaïa",
+                description: "Villa d'exception en première ligne mer avec piscine chauffée à débordement, 5 chambres et vue panoramique.",
+                longDescription: "Villa d'exception en première ligne mer avec piscine chauffée à débordement. Profitez de 5 chambres lumineuses avec salle de bain privative, d'un grand salon panoramique, d'une cuisine haut de gamme équipée et d'une terrasse de 120 m² avec vue imprenable sur la Méditerranée. Le jardin tropical et l'accès direct à la plage privée complètent ce tableau idyllique.",
+                price: 28000,
+                type: 'villa',
+                capacity: 10,
+                bedrooms: 5,
+                rating: 4.9,
+                popular: true,
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '⭐ Luxe'],
+                features: [
+                    { icon: "fa-bed", text: "5 chambres doubles" },
+                    { icon: "fa-users", text: "10 personnes" },
+                    { icon: "fa-swimmer", text: "Piscine privée chauffée" },
+                    { icon: "fa-wifi", text: "Wi-Fi haut débit" },
+                    { icon: "fa-umbrella-beach", text: "Accès plage privée" },
+                    { icon: "fa-car", text: "Parking privé" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200",
+                    "https://images.unsplash.com/photo-1600585154340-be6161c0b6c2?w=1200",
+                    "https://images.unsplash.com/photo-1613977257592-8a0c7d4c7e8d?w=1200",
+                    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200"
+                ]
+            },
+            {
+                id: 'villa2',
+                title: "Villa Gouraya",
+                location: "Gouraya, Béjaïa",
+                description: "Villa moderne avec piscine privée, jardin luxuriant et 4 chambres spacieuses. Idéale pour les familles.",
+                longDescription: "Villa moderne avec piscine privée et jardin luxuriant. 4 chambres spacieuses, salon avec vue sur la montagne, cuisine entièrement équipée. Idéale pour des vacances en famille ou entre amis dans un cadre calme et verdoyant.",
+                price: 22000,
+                type: 'villa',
+                capacity: 8,
+                bedrooms: 4,
+                rating: 4.8,
+                popular: false,
+                ambiance: ['🏔️ Vue montagne', '🌳 Jardin', '🏊 Piscine'],
+                features: [
+                    { icon: "fa-bed", text: "4 chambres doubles" },
+                    { icon: "fa-users", text: "8 personnes" },
+                    { icon: "fa-swimmer", text: "Piscine privée" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-tree", text: "Jardin luxuriant" },
+                    { icon: "fa-car", text: "Parking" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1613977257592-8a0c7d4c7e8d?w=1200",
+                    "https://images.unsplash.com/photo-1614032462093-c567e1655b2e?w=1200",
+                    "https://images.unsplash.com/photo-1600585154340-be6161c0b6c2?w=1200",
+                    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200"
+                ]
+            },
+            {
+                id: 'villa3',
+                title: "Villa Cap Carbon",
+                location: "Cap Carbon, Béjaïa",
+                description: "Villa de luxe avec vue imprenable sur la mer et les falaises. Piscine, 6 chambres et prestations haut de gamme.",
+                longDescription: "Villa de luxe avec vue imprenable sur la mer et les falaises. Piscine extérieure, salon panoramique, 6 chambres avec salles de bain privatives. Décoration moderne et matériaux haut de gamme pour un séjour d'exception.",
+                price: 35000,
+                type: 'villa',
+                capacity: 12,
+                bedrooms: 6,
+                rating: 5.0,
+                popular: true,
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '⭐ Prestige'],
+                features: [
+                    { icon: "fa-bed", text: "6 chambres doubles" },
+                    { icon: "fa-users", text: "12 personnes" },
+                    { icon: "fa-swimmer", text: "Piscine" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-eye", text: "Vue panoramique" },
+                    { icon: "fa-car", text: "Parking privé" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200",
+                    "https://images.unsplash.com/photo-1564014042786-0e2c779b80b4?w=1200",
+                    "https://images.unsplash.com/photo-1564014070490-85f6f7ef3a4e?w=1200",
+                    "https://images.unsplash.com/photo-1580587771525-78b9e3f904ca?w=1200"
+                ]
+            },
+            {
+                id: 'villa4',
+                title: "Villa des Pins",
+                location: "Tichy, Béjaïa",
+                description: "Villa traditionnelle avec jardin méditerranéen, piscine et accès direct à la plage.",
+                longDescription: "Villa traditionnelle au charme authentique avec jardin méditerranéen, piscine et accès direct à la plage. 3 chambres confortables, grande terrasse ombragée et cadre paisible pour des vacances en famille.",
+                price: 18000,
+                type: 'villa',
+                capacity: 6,
+                bedrooms: 3,
+                rating: 4.6,
+                popular: false,
+                ambiance: ['🌊 Vue mer', '🌳 Jardin', '🏖️ Plage'],
+                features: [
+                    { icon: "fa-bed", text: "3 chambres" },
+                    { icon: "fa-users", text: "6 personnes" },
+                    { icon: "fa-swimmer", text: "Piscine" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-umbrella-beach", text: "Accès plage" },
+                    { icon: "fa-tree", text: "Jardin" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1580587771525-78b9e3f904ca?w=1200",
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200",
+                    "https://images.unsplash.com/photo-1600563438938-a9a0e3e0a3f5?w=1200",
+                    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200"
+                ]
+            },
+            {
+                id: 'villa5',
+                title: "Villa Mediterraneo",
+                location: "Aiguades, Béjaïa",
+                description: "Villa contemporaine avec vue mer, piscine à débordement et spa.",
+                longDescription: "Villa contemporaine avec vue mer, piscine à débordement et spa. 4 chambres de luxe, salle de sport, home cinéma et terrasse panoramique. Le summum du luxe et du confort.",
+                price: 42000,
+                type: 'villa',
+                capacity: 8,
+                bedrooms: 4,
+                rating: 5.0,
+                popular: true,
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '💆 Spa'],
+                features: [
+                    { icon: "fa-bed", text: "4 chambres luxe" },
+                    { icon: "fa-users", text: "8 personnes" },
+                    { icon: "fa-swimmer", text: "Piscine débordement" },
+                    { icon: "fa-spa", text: "Spa" },
+                    { icon: "fa-dumbbell", text: "Salle de sport" },
+                    { icon: "fa-wifi", text: "Wi-Fi" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1600563438938-a9a0e3e0a3f5?w=1200",
+                    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200",
+                    "https://images.unsplash.com/photo-1580587771525-78b9e3f904ca?w=1200",
+                    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200"
+                ]
+            },
+            {
+                id: 'villa6',
+                title: "Villa Bella Vista",
+                location: "Boulimat, Béjaïa",
+                description: "Villa provençale avec vue panoramique sur la baie de Béjaïa.",
+                longDescription: "Villa provençale avec vue panoramique sur la baie de Béjaïa. 3 chambres, piscine, grand jardin et terrasses ombragées. L'endroit parfait pour se ressourcer en famille.",
+                price: 15000,
+                type: 'villa',
+                capacity: 6,
+                bedrooms: 3,
+                rating: 4.5,
+                popular: false,
+                ambiance: ['🌊 Vue mer', '🌳 Jardin', '🍷 Charme'],
+                features: [
+                    { icon: "fa-bed", text: "3 chambres" },
+                    { icon: "fa-users", text: "6 personnes" },
+                    { icon: "fa-swimmer", text: "Piscine" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-tree", text: "Grand jardin" },
+                    { icon: "fa-car", text: "Parking" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1580587771525-78b9e3f904ca?w=1200",
+                    "https://images.unsplash.com/photo-1600585154340-be6161c0b6c2?w=1200",
+                    "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200",
+                    "https://images.unsplash.com/photo-1600563438938-a9a0e3e0a3f5?w=1200"
+                ]
+            },
+            
+            // Appartements
+            {
+                id: 'appart1',
+                title: "Appartement Vue Mer",
+                location: "Centre-ville, Béjaïa",
+                description: "Appartement lumineux avec balcon vue mer, 2 chambres, cuisine équipée. Idéal pour un séjour romantique.",
+                longDescription: "Appartement lumineux avec balcon vue mer, 2 chambres, cuisine équipée et salon confortable. Idéal pour un séjour romantique ou en famille. Situé en plein centre, proche de toutes les commodités.",
+                price: 9500,
+                type: 'appartement',
+                capacity: 4,
+                bedrooms: 2,
+                rating: 4.7,
+                popular: false,
+                ambiance: ['🌊 Vue mer', '🏙️ Centre-ville', '🌅 Balcon'],
+                features: [
+                    { icon: "fa-bed", text: "2 chambres" },
+                    { icon: "fa-users", text: "4 personnes" },
+                    { icon: "fa-binoculars", text: "Balcon vue mer" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-snowflake", text: "Climatisation" },
+                    { icon: "fa-store", text: "Proche commerces" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200",
+                    "https://images.unsplash.com/photo-1572120360610-d971b9b6396a?w=1200",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200"
+                ]
+            },
+            {
+                id: 'appart2',
+                title: "Le Corail",
+                location: "Port, Béjaïa",
+                description: "Appartement design avec vue sur le port, 3 chambres et terrasse.",
+                longDescription: "Appartement design avec vue sur le port, 3 chambres et terrasse aménagée. Décoration moderne, équipements haut de gamme et emplacement privilégié en bord de mer.",
+                price: 12000,
+                type: 'appartement',
+                capacity: 6,
+                bedrooms: 3,
+                rating: 4.8,
+                popular: true,
+                ambiance: ['🌊 Vue port', '⭐ Design', '🌅 Terrasse'],
+                features: [
+                    { icon: "fa-bed", text: "3 chambres" },
+                    { icon: "fa-users", text: "6 personnes" },
+                    { icon: "fa-terrace", text: "Terrasse" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-snowflake", text: "Climatisation" },
+                    { icon: "fa-utensils", text: "Cuisine équipée" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200",
+                    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200",
+                    "https://images.unsplash.com/photo-1572120360610-d971b9b6396a?w=1200"
+                ]
+            },
+            {
+                id: 'appart3',
+                title: "Les Terrasses de Tichy",
+                location: "Tichy, Béjaïa",
+                description: "Résidence calme avec piscine, appartement 2 pièces vue mer.",
+                longDescription: "Résidence calme avec piscine, appartement 2 pièces vue mer. Idéal pour un couple ou une petite famille. Accès à la piscine de la résidence et à la plage à 5 minutes à pied.",
+                price: 8000,
+                type: 'appartement',
+                capacity: 3,
+                bedrooms: 1,
+                rating: 4.5,
+                popular: false,
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '🌴 Résidence'],
+                features: [
+                    { icon: "fa-bed", text: "1 chambre + salon" },
+                    { icon: "fa-users", text: "3 personnes" },
+                    { icon: "fa-swimmer", text: "Piscine résidence" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-snowflake", text: "Climatisation" },
+                    { icon: "fa-umbrella-beach", text: "Proche plage" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1572120360610-d971b9b6396a?w=1200",
+                    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200",
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200"
+                ]
+            },
+            {
+                id: 'appart4',
+                title: "Le Penthouse",
+                location: "Centre-ville, Béjaïa",
+                description: "Superbe penthouse avec terrasse panoramique et vue à 360° sur la baie.",
+                longDescription: "Superbe penthouse avec terrasse panoramique de 80m² et vue à 360° sur la baie de Béjaïa. 3 chambres, salon luxueux, cuisine américaine haut de gamme. L'appartement le plus exclusif du centre-ville.",
+                price: 18000,
+                type: 'appartement',
+                capacity: 6,
+                bedrooms: 3,
+                rating: 5.0,
+                popular: true,
+                ambiance: ['🌊 Vue mer', '🏙️ Centre-ville', '⭐ Luxe', '🌅 Terrasse'],
+                features: [
+                    { icon: "fa-bed", text: "3 chambres" },
+                    { icon: "fa-users", text: "6 personnes" },
+                    { icon: "fa-terrace", text: "Terrasse 80m²" },
+                    { icon: "fa-wifi", text: "Wi-Fi" },
+                    { icon: "fa-snowflake", text: "Climatisation centrale" },
+                    { icon: "fa-eye", text: "Vue panoramique" }
+                ],
+                images: [
+                    "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200",
+                    "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200",
+                    "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200",
+                    "https://images.unsplash.com/photo-1572120360610-d971b9b6396a?w=1200"
+                ]
+            }
+        ];
+
+        // Variables globales
+        let currentProperty = null;
+        let currentImages = [];
+        let filteredProperties = [...properties];
+
+        // Créer des particules pour le hero
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Effet de scroll sur la navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    const spans = this.querySelectorAll('span');
+                    if (navMenu.classList.contains('active')) {
+                        spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                        spans[1].style.opacity = '0';
+                        spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+                    } else {
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    }
+                });
+
+                const menuLinks = navMenu.querySelectorAll('a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        const spans = hamburger.querySelectorAll('span');
+                        spans[0].style.transform = 'none';
+                        spans[1].style.opacity = '1';
+                        spans[2].style.transform = 'none';
+                    });
+                });
+            }
+
+            // Afficher les hébergements
+            displayProperties(properties);
+            
+            // Initialiser les écouteurs de filtres
+            initFilters();
+            
+            // Initialiser les dates par défaut pour la réservation
+            initBookingDates();
+        });
+
+        // Afficher les hébergements avec animation
+        function displayProperties(propertiesToShow) {
+            const grid = document.getElementById('hebergementGrid');
+            grid.innerHTML = '';
+            
+            propertiesToShow.forEach((prop, index) => {
+                const card = document.createElement('div');
+                card.className = 'hebergement-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.dataset.id = prop.id;
+                
+                const badgeHtml = prop.popular ? 
+                    '<div class="card-badge popular"><i class="fas fa-star"></i> Populaire</div>' : 
+                    '<div class="card-badge"><i class="fas fa-gem"></i> Nouveau</div>';
+                
+                const ambianceHtml = prop.ambiance.map(a => 
+                    `<span class="ambiance-tag">${a}</span>`
+                ).join('');
+                
+                card.innerHTML = `
+                    ${badgeHtml}
+                    <div class="card-image" style="background-image: url('${prop.images[0]}')">
+                        <div class="card-overlay"></div>
+                        <div class="card-ambiance">
+                            ${ambianceHtml}
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3>${prop.title}</h3>
+                        <div class="card-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${prop.location}</span>
+                        </div>
+                        <p class="card-description">${prop.description}</p>
+                        <div class="card-footer">
+                            <span class="card-price">${prop.price.toLocaleString()} DZD <small>/nuit</small></span>
+                            <button class="btn-small" onclick="openPropertyModal('${prop.id}')">Détails</button>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+            
+            document.getElementById('resultsCount').textContent = 
+                `${propertiesToShow.length} hébergement${propertiesToShow.length > 1 ? 's' : ''} disponibles`;
+        }
+
+        // Initialiser les filtres
+        function initFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('searchInput');
+            const sortSelect = document.getElementById('sortSelect');
+            
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    applyFilters();
+                });
+            });
+            
+            searchInput.addEventListener('input', applyFilters);
+            sortSelect.addEventListener('change', applyFilters);
+        }
+
+        // Appliquer les filtres avec animation
+        function applyFilters() {
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sortBy = document.getElementById('sortSelect').value;
+            
+            // Filtrer par type
+            let filtered = properties;
+            if (activeFilter !== 'all') {
+                filtered = properties.filter(p => p.type === activeFilter);
+            }
+            
+            // Filtrer par recherche
+            if (searchTerm) {
+                filtered = filtered.filter(p => 
+                    p.title.toLowerCase().includes(searchTerm) ||
+                    p.location.toLowerCase().includes(searchTerm) ||
+                    p.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Trier
+            if (sortBy === 'price-asc') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortBy === 'price-desc') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else if (sortBy === 'popular') {
+                filtered.sort((a, b) => b.rating - a.rating);
+            }
+            
+            filteredProperties = filtered;
+            
+            // Animation de transition
+            const grid = document.getElementById('hebergementGrid');
+            grid.style.opacity = '0';
+            setTimeout(() => {
+                displayProperties(filtered);
+                grid.style.opacity = '1';
+            }, 300);
+        }
+
+        // Ouvrir la modale d'un hébergement
+        function openPropertyModal(propertyId) {
+            const property = properties.find(p => p.id === propertyId);
+            if (!property) return;
+            
+            currentProperty = property;
+            currentImages = property.images;
+            
+            const modal = document.getElementById('hebergementModal');
+            
+            // Remplir les informations
+            document.getElementById('modalTitle').textContent = property.title;
+            document.getElementById('modalLocation').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${property.location}`;
+            document.getElementById('modalDescription').textContent = property.longDescription;
+            document.getElementById('modalPrice').innerHTML = `${property.price.toLocaleString()} DZD <small>/ nuit</small>`;
+            
+            // Disponibilité aléatoire pour l'exemple
+            const available = Math.random() > 0.3;
+            document.getElementById('modalAvailability').innerHTML = available ? 
+                '<i class="fas fa-check-circle"></i> Disponible pour vos dates' : 
+                '<i class="fas fa-exclamation-circle"></i> Dernières disponibilités';
+            document.getElementById('modalAvailability').style.background = available ? 
+                'linear-gradient(135deg, #e8f5e9, #c8e6c9)' : 
+                'linear-gradient(135deg, #fff3e0, #ffe0b2)';
+            document.getElementById('modalAvailability').style.color = available ? '#2e7d32' : '#bf360c';
+            
+            // Caractéristiques
+            const featuresContainer = document.getElementById('modalFeatures');
+            featuresContainer.innerHTML = '';
+            property.features.forEach(feature => {
+                const div = document.createElement('div');
+                div.className = 'modal-feature-item';
+                div.innerHTML = `<i class="fas ${feature.icon}"></i> <span>${feature.text}</span>`;
+                featuresContainer.appendChild(div);
+            });
+            
+            // Galerie
+            const gallery = document.getElementById('modalGallery');
+            gallery.innerHTML = '';
+            property.images.forEach((src, index) => {
+                const item = document.createElement('div');
+                item.className = 'modal-gallery-item';
+                if (index === 0) item.classList.add('active');
+                item.innerHTML = `<img src="${src}" alt="">`;
+                item.addEventListener('click', () => setMainMedia(index));
+                gallery.appendChild(item);
+            });
+            
+            // Image principale
+            setMainMedia(0);
+            
+            // Hébergements similaires
+            const similar = properties
+                .filter(p => p.type === property.type && p.id !== property.id)
+                .slice(0, 3);
+            
+            const similarContainer = document.getElementById('similarProperties');
+            similarContainer.innerHTML = '';
+            similar.forEach(sim => {
+                const div = document.createElement('div');
+                div.className = 'similar-item';
+                div.onclick = () => {
+                    openPropertyModal(sim.id);
+                };
+                div.innerHTML = `
+                    <img src="${sim.images[0]}" alt="${sim.title}">
+                    <p>${sim.title}<br><small>${sim.price.toLocaleString()} DZD</small></p>
+                `;
+                similarContainer.appendChild(div);
+            });
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Changer l'image principale dans la modale
+        function setMainMedia(index) {
+            const src = currentImages[index];
+            if (!src) return;
+            
+            document.querySelectorAll('.modal-gallery-item').forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            document.getElementById('modalMainMedia').innerHTML = `<img src="${src}" alt="">`;
+        }
+
+        // Initialiser les dates pour la réservation
+        function initBookingDates() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const nextWeek = new Date(today);
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            
+            const checkIn = document.getElementById('checkIn');
+            const checkOut = document.getElementById('checkOut');
+            
+            if (checkIn && checkOut) {
+                checkIn.valueAsDate = tomorrow;
+                checkOut.valueAsDate = nextWeek;
+                checkIn.min = today.toISOString().split('T')[0];
+                checkOut.min = tomorrow.toISOString().split('T')[0];
+                
+                checkIn.addEventListener('change', function() {
+                    const minCheckOut = new Date(this.value);
+                    minCheckOut.setDate(minCheckOut.getDate() + 1);
+                    checkOut.min = minCheckOut.toISOString().split('T')[0];
+                    if (new Date(checkOut.value) <= new Date(this.value)) {
+                        checkOut.valueAsDate = minCheckOut;
+                    }
+                    updateTotalPrice();
+                });
+                
+                checkOut.addEventListener('change', updateTotalPrice);
+                document.getElementById('adults').addEventListener('change', updateTotalPrice);
+                document.getElementById('children').addEventListener('change', updateTotalPrice);
+            }
+        }
+
+        // Calculer le nombre de nuits
+        function calculateNights(checkIn, checkOut) {
+            const start = new Date(checkIn);
+            const end = new Date(checkOut);
+            const diffTime = Math.abs(end - start);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays > 0 ? diffDays : 1;
+        }
+
+        // Mettre à jour le prix total
+        function updateTotalPrice() {
+            if (!currentProperty) return;
+            
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            const adults = parseInt(document.getElementById('adults').value);
+            const children = parseInt(document.getElementById('children').value);
+            
+            if (checkIn && checkOut) {
+                const nights = calculateNights(checkIn, checkOut);
+                let total = currentProperty.price * nights;
+                
+                // Supplément pour plus de personnes que la capacité
+                const totalPeople = adults + children;
+                if (totalPeople > currentProperty.capacity) {
+                    const extraPeople = totalPeople - currentProperty.capacity;
+                    total += extraPeople * 2000 * nights;
+                }
+                
+                document.getElementById('totalPrice').innerHTML = 
+                    `<i class="fas fa-calculator"></i> Total: ${total.toLocaleString()} DZD (${nights} nuits)`;
+            }
+        }
+
+        // Ouvrir la modale de réservation
+        function openBookingModal() {
+            if (!currentProperty) return;
+            
+            const modal = document.getElementById('bookingModal');
+            document.getElementById('bookingTitle').textContent = `Réserver ${currentProperty.title}`;
+            
+            // Pré-remplir avec le nombre max de personnes
+            const adultsSelect = document.getElementById('adults');
+            for (let i = 0; i < adultsSelect.options.length; i++) {
+                const val = parseInt(adultsSelect.options[i].value);
+                if (val <= currentProperty.capacity) {
+                    adultsSelect.options[i].disabled = false;
+                } else {
+                    adultsSelect.options[i].disabled = true;
+                }
+            }
+            
+            updateTotalPrice();
+            modal.classList.add('active');
+        }
+
+        // Fermer la modale de réservation
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        // Gérer la soumission du formulaire de réservation
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+            
+            const formData = {
+                property: currentProperty.title,
+                checkIn: document.getElementById('checkIn').value,
+                checkOut: document.getElementById('checkOut').value,
+                adults: document.getElementById('adults').value,
+                children: document.getElementById('children').value,
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                total: document.getElementById('totalPrice').textContent
+            };
+            
+            // Simulation d'envoi avec animation
+            const submitBtn = event.target.querySelector('.booking-submit');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                alert(`✅ Réservation confirmée !\n\nMerci ${formData.fullName},\nVotre réservation pour ${formData.property} a été enregistrée.\nUn email de confirmation a été envoyé à ${formData.email}\n\n${formData.total}`);
+                
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                closeBookingModal();
+                document.getElementById('hebergementModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }, 1500);
+        }
+
+        // Écouteurs pour les modales
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fermeture des modales
+            document.querySelector('.modal-close').addEventListener('click', () => {
+                document.getElementById('hebergementModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            document.querySelector('.booking-close').addEventListener('click', closeBookingModal);
+
+            document.getElementById('hebergementModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('hebergementModal')) {
+                    document.getElementById('hebergementModal').classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            document.getElementById('bookingModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('bookingModal')) {
+                    closeBookingModal();
+                }
+            });
+
+            // Bouton de réservation dans la modale
+            document.getElementById('modalBookingBtn').addEventListener('click', () => {
+                openBookingModal();
+            });
+        });
+    </script>
+</body>
+</html>

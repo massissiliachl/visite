@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Appartements - Votre Agence de Voyage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --primary-dark: #1e7065;
+            --light: #f8f9fa;
+            --dark: #2d3436;
+            --gray: #636e72;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+            padding: 3.5rem 1rem 2.5rem;
+        }
+
+        header h1 { font-size: 2.6rem; margin-bottom: 0.6rem; }
+        header p { font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.95; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .listings-section { padding: 3.5rem 0; }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .appart-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .appart-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+        }
+
+        .appart-img {
+            height: 240px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-body { padding: 1.6rem; }
+
+        .card-body h3 {
+            font-size: 1.55rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-dark);
+        }
+
+        .location {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .description { color: var(--gray); margin-bottom: 1.3rem; font-size: 0.98rem; }
+
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 1.4rem;
+            color: #555;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-size: 1.35rem;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .price small { font-weight: normal; font-size: 0.9rem; color: var(--gray); }
+
+        .btn {
+            display: block;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 0.9rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 700px) {
+            header h1 { font-size: 2.1rem; }
+            .listings-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Nos Appartements Sélectionnés</h1>
+            <p>Appartements modernes, studios cosy ou grands logements avec vue imprenable, idéalement situés en centre-ville, bord de mer ou quartier résidentiel.</p>
+        </div>
+    </header>
+
+    <section class="listings-section">
+        <div class="container">
+
+            <div class="listings-grid">
+
+                <!-- Appartement 1 -->
+                <div class="appart-card">
+                    <div class="appart-img" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800');"></div>
+                    <div class="card-body">
+                        <h3>Appartement Lumière Mer</h3>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> Nice, France</div>
+                        <p class="description">Appartement rénové de 2 chambres avec balcon vue mer, à 5 min de la Promenade des Anglais.</p>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-users"></i> 4 pers.</div>
+                            <div class="detail-item"><i class="fas fa-bed"></i> 2 ch.</div>
+                            <div class="detail-item"><i class="fas fa-wifi"></i> Wi-Fi rapide</div>
+                        </div>
+                        <div class="price">Dès 135 € <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilités</a>
+                    </div>
+                </div>
+
+                <!-- Appartement 2 -->
+                <div class="appart-card">
+                    <div class="appart-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800');"></div>
+                    <div class="card-body">
+                        <h3>Loft Urbain Centre-ville</h3>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> Lisbonne, Portugal</div>
+                        <p class="description">Loft design avec grande hauteur sous plafond, terrasse privative et emplacement hyper-central.</p>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-users"></i> 3 pers.</div>
+                            <div class="detail-item"><i class="fas fa-bed"></i> 1 ch.</div>
+                            <div class="detail-item"><i class="fas fa-mountain"></i> Vue panoramique</div>
+                        </div>
+                        <div class="price">Dès 98 € <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilités</a>
+                    </div>
+                </div>
+
+                <!-- Appartement 3 -->
+                <div class="appart-card">
+                    <div class="appart-img" style="background-image: url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800');"></div>
+                    <div class="card-body">
+                        <h3>Appartement Famille Plage</h3>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> Hammamet, Tunisie</div>
+                        <p class="description">Bel appartement 3 chambres à 200 m de la plage, piscine commune et parking inclus.</p>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-users"></i> 6 pers.</div>
+                            <div class="detail-item"><i class="fas fa-bed"></i> 3 ch.</div>
+                            <div class="detail-item"><i class="fas fa-swimming-pool"></i> Piscine partagée</div>
+                        </div>
+                        <div class="price">Dès 110 € <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilités</a>
+                    </div>
+                </div>
+
+                <!-- Appartement 4 -->
+                <div class="appart-card">
+                    <div class="appart-img" style="background-image: url('https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800');"></div>
+                    <div class="card-body">
+                        <h3>Studio Cosy Vieux-Port</h3>
+                        <div class="location"><i class="fas fa-map-marker-alt"></i> Marseille, France</div>
+                        <p class="description">Studio récent et lumineux au cœur du Vieux-Port, parfait pour un séjour court ou en couple.</p>
+                        <div class="details">
+                            <div class="detail-item"><i class="fas fa-users"></i> 2 pers.</div>
+                            <div class="detail-item"><i class="fas fa-bed"></i> Studio</div>
+                            <div class="detail-item"><i class="fas fa-location-arrow"></i> Centre historique</div>
+                        </div>
+                        <div class="price">Dès 79 € <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilités</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h3>VisitBejaia</h3>
+                <p>Votre partenaire de confiance pour découvrir Béjaïa authentique et inoubliable.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Liens rapides</h4>
+                <ul>
+                    <li><a href="index.html#accueil">Accueil</a></li>
+                    <li><a href="index.html#apropos">À Propos</a></li>
+                    <li><a href="index.html#destinations">Destinations</a></li>
+                    <li><a href="hebergement.html">Hébergement</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Activités</h4>
+                <ul>
+                    <li><a href="#">Sortie en bateau</a></li>
+                    <li><a href="#">Randonnée quad</a></li>
+                    <li><a href="#">Randonnée cheval</a></li>
+                    <li><a href="#">Vol en parapente</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 VisitBejaia. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
