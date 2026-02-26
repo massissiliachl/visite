@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>VisitBejaia - Éclat Méditerranéen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fcf9f5;
+            color: #2c3e3d;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== TYPOGRAPHIE RESPONSIVE ===== */
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            text-align: center;
+            color: #1e4f4a;
+            margin-bottom: 0.8rem;
+            padding-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #b68b6e;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            color: #6d7a75;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 15px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            background: rgba(255, 252, 248, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(182, 139, 110, 0.2);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #1e4f4a, #7a5b4b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2f4f4a;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: #1e4f4a;
+            transition: 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            height: 80vh;
+            min-height: 500px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/36012522/pexels-photo-36012522.jpeg?auto=compress&cs=tinysrgb&w=1920');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 4rem);
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: white;
+            color: #1e4f4a;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #1e4f4a;
+            color: white;
+        }
+
+        /* ===== SECTION APROPOS ===== */
+        .apropos-section {
+            padding: 4rem 0;
+        }
+
+        .apropos-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .apropos-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+        }
+
+        .apropos-text p {
+            margin-bottom: 1.5rem;
+            color: #3f5a55;
+            font-size: 1rem;
+        }
+
+        .slider {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .slider {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .slide {
+            height: 200px;
+            border-radius: 1.5rem;
+            overflow: hidden;
+        }
+
+        .slide img, .slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== INCONTOURNABLES ===== */
+        .must-see-section {
+            padding: 4rem 0;
+            background: #f5efe8;
+        }
+
+        .must-see-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            padding: 0 10px;
+        }
+
+        @media (min-width: 640px) {
+            .must-see-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .must-see-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        .must-see-card {
+            background: white;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .must-see-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            height: 160px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-content {
+            padding: 1.2rem;
+        }
+
+        .card-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #1e4f4a;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #6d7a75;
+        }
+
+        .rating {
+            background: #fcf0e8;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            color: #b68b6e;
+            font-weight: 500;
+        }
+
+        /* ===== DESTINATIONS - CARROUSEL RESPONSIVE ===== */
+        .destinations {
+            padding: 4rem 0;
+        }
+
+        .destinations-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 1rem;
+            padding: 1rem 0 1.5rem 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .destinations-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .destination-card {
+            flex: 0 0 85%;
+            scroll-snap-align: start;
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 640px) {
+            .destination-card {
+                flex: 0 0 45%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .destination-card {
+                flex: 0 0 30%;
+            }
+        }
+
+        .destination-card .card-image {
+            height: 200px;
+        }
+
+        .destination-card .card-content {
+            padding: 1.2rem;
+        }
+
+        .destination-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .destination-card p {
+            font-size: 0.9rem;
+            color: #6d7a75;
+            margin-bottom: 0.5rem;
+        }
+
+        .destination-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #5f786e;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #ece1d7;
+            padding-top: 0.8rem;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e4f4a;
+        }
+
+        /* ===== POURQUOI NOUS - SIMPLE ET ÉLÉGANT ===== */
+        .about-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #f8f9f7, #f0f5f2);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .about-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .about-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .about-item {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(5px);
+            padding: 1.8rem 1rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(182,139,110,0.2);
+            transition: all 0.3s;
+        }
+
+        .about-item:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -10px #1e4f4a;
+        }
+
+        .about-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.8rem;
+            color: #1e4f4a;
+        }
+
+        .about-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: #1e4f4a;
+        }
+
+        .about-item p {
+            font-size: 0.9rem;
+            color: #3f5a55;
+        }
+
+        /* ===== INSTAGRAM FEED ===== */
+        .instagram-section {
+            padding: 4rem 0;
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+        }
+
+        @media (min-width: 640px) {
+            .instagram-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        .instagram-item {
+            aspect-ratio: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .instagram-item:hover {
+            transform: scale(0.98);
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 4rem 0;
+            background: #f5efe8;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .contact-content {
+                grid-template-columns: 1fr 2fr;
+                gap: 3rem;
+            }
+        }
+
+        .contact-info {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .info-icon {
+            font-size: 1.8rem;
+            color: #1e4f4a;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #e2d6cc;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .form-group textarea {
+            border-radius: 20px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1e4f4a;
+            box-shadow: 0 0 0 3px rgba(30,79,74,0.1);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #1e3a35;
+            color: #e5ddd2;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-container {
+                grid-template-columns: 2fr 1fr 1fr 1.5fr;
+                gap: 2rem;
+            }
+        }
+
+        .footer-logo h3 {
+            font-size: 2rem;
+            color: #f3e7db;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links h4 {
+            color: #dacbbc;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #bfb7ab;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            background: #31554e;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bfb7ab;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: #b68b6e;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #406156;
+            color: #9faa9e;
+            font-size: 0.9rem;
+        }
+
+        /* ===== MENU MOBILE ===== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(255,252,248,0.98);
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1rem;
+                border-bottom: 1px solid #efe4d8;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu a {
+                display: block;
+                padding: 0.8rem;
+                text-align: center;
+                border-bottom: 1px solid #f0e8e0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>VisitBejaia</h1>
+            </div>
+            <button class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#pourquoi">Pourquoi nous</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Béjaïa, perle de la Méditerranée</h1>
+            <p class="hero-description">Entre montagnes et mer, vivez une expérience unique</p>
+            <a href="#apropos" class="btn">Découvrir</a>
+        </div>
+    </section>
+
+    <!-- À propos -->
+    <section id="apropos" class="apropos-section">
+        <div class="container">
+            <h2 class="section-title">Qui Sommes-nous ?</h2>
+            <div class="apropos-content">
+                <div class="apropos-text">
+                    <p>VisitBejaia est votre guide pour explorer Béjaïa de manière authentique. Passionnés par notre région, nous vous faisons découvrir ses trésors cachés.</p>
+                    <p>Avec plus de 10 ans d'expérience, notre équipe vous garantit des séjours inoubliables, alliant découvertes culturelles et plaisirs de la mer.</p>
+                    <a href="#activites" class="btn">Nos activités</a>
+                </div>
+                <div class="slider">
+                    <div class="slide"><img src="assets/images/i.jpeg" alt="Bejaia"></div>
+                    <div class="slide"><video autoplay loop muted><source src="assets/videos/video.mp4"></video></div>
+                    <div class="slide"><img src="assets/images/i1.jpeg" alt="Bejaia"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Incontournables -->
+    <section id="incontournables" class="must-see-section">
+        <div class="container">
+            <h2 class="section-title">À ne pas manquer</h2>
+            <div class="must-see-grid">
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/grotte.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Grottes de la côte ouest</h3>
+                        <div class="card-meta">
+                            <span>3 jours / 2 nuits</span>
+                            <span class="rating">⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/ferme.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Ferme Djerba</h3>
+                        <div class="card-meta">
+                            <span>3 jours / 2 nuits</span>
+                            <span class="rating">⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/casbah.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Sites historiques</h3>
+                        <div class="card-meta">
+                            <span>2 jours / 1 nuit</span>
+                            <span class="rating">⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/vol.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Vol en parapente</h3>
+                        <div class="card-meta">
+                            <span>1 jour</span>
+                            <span class="rating">⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/casbah.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Petite Casbah</h3>
+                        <div class="card-meta">
+                            <span>1 jour</span>
+                            <span class="rating">⭐ 4.6</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/goraya.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Fort Gouraya</h3>
+                        <div class="card-meta">
+                            <span>1 jour</span>
+                            <span class="rating">⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/padlle.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Initiation paddle</h3>
+                        <div class="card-meta">
+                            <span>Demi-journée</span>
+                            <span class="rating">⭐ 4.5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="must-see-card">
+                    <div class="card-image" style="background-image: url('assets/images/all.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Location van</h3>
+                        <div class="card-meta">
+                            <span>À la journée</span>
+                            <span class="rating">⭐ 4.6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations - Carrousel responsive -->
+    <section id="destinations" class="destinations">
+        <div class="container">
+            <h2 class="section-title">Nos Destinations</h2>
+            <p class="section-subtitle">Des voyages de rêve à portée de main</p>
+            
+            <div class="destinations-carousel">
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('assets/images/cas.jpg')"></div>
+                    <div class="card-content">
+                        <h3>La petite casbah</h3>
+                        <p>Béjaïa, Algérie</p>
+                        <div class="destination-meta">
+                            <span>⏱️ 7 jours</span>
+                            <span>📅 Juin</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">8500 DZD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('assets/images/goraya.jpg')"></div>
+                    <div class="card-content">
+                        <h3>Fort Gouraya</h3>
+                        <p>Béjaïa, Algérie</p>
+                        <div class="destination-meta">
+                            <span>⏱️ 10 jours</span>
+                            <span>📅 Juin</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">5000 DZD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=600')"></div>
+                    <div class="card-content">
+                        <h3>New York</h3>
+                        <p>États-Unis</p>
+                        <div class="destination-meta">
+                            <span>⏱️ 7 jours</span>
+                            <span>📅 Juin</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">128 000 DZD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=600')"></div>
+                    <div class="card-content">
+                        <h3>Bali</h3>
+                        <p>Indonésie</p>
+                        <div class="destination-meta">
+                            <span>⏱️ 14 jours</span>
+                            <span>📅 Juin</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">113 000 DZD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600')"></div>
+                    <div class="card-content">
+                        <h3>Barcelone</h3>
+                        <p>Espagne</p>
+                        <div class="destination-meta">
+                            <span>⏱️ 5 jours</span>
+                            <span>📅 Juin</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">64 000 DZD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600')"></div>
+                    <div class="card-content">
+                        <h3>Dubai</h3>
+                        <p>Émirats Arabes</p>
+                        <div class="destination-meta">
+                            <span>⏱️ 6 jours</span>
+                            <span>📅 Juin</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">156 000 DZD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pourquoi nous - Simple -->
+    <section id="pourquoi" class="about-section">
+        <div class="container">
+            <h2 class="section-title">Pourquoi nous choisir ?</h2>
+            <div class="about-grid">
+                <div class="about-item">
+                    <div class="about-icon">🏆</div>
+                    <h3>Service Premium</h3>
+                    <p>Expérience 5 étoiles</p>
+                </div>
+                <div class="about-item">
+                    <div class="about-icon">🛡️</div>
+                    <h3>Support 24/7</h3>
+                    <p>Toujours disponible</p>
+                </div>
+                <div class="about-item">
+                    <div class="about-icon">✅</div>
+                    <h3>Réservation garantie</h3>
+                    <p>Confirmation immédiate</p>
+                </div>
+                <div class="about-item">
+                    <div class="about-icon">🌍</div>
+                    <h3>Experts locaux</h3>
+                    <p>Guides passionnés</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram -->
+    <section class="instagram-section">
+        <div class="container">
+            <h2 class="section-title">Instagram</h2>
+            <div class="instagram-grid">
+                <div class="instagram-item" style="background-image: url('assets/images/jets.jpg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad.jpeg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad1.jpeg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad4.jpeg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/vol\ parapente.jpg')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/quad3.jpeg')"></div>
+                <div class="instagram-item" style="background-image: url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400')"></div>
+                <div class="instagram-item" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400')"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div>
+                            <h4>Adresse</h4>
+                            <p>123 Avenue de la Mer, Bejaia</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div>
+                            <h4>Téléphone</h4>
+                            <p>+213 555 123 456</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✉️</div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>visitebejaia@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Votre email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea rows="4" placeholder="Votre message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h3>VisitBejaia</h3>
+                <p>Votre guide pour des voyages authentiques</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liens</h4>
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#apropos">À propos</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Activités</h4>
+                <ul>
+                    <li><a href="#">Bateau</a></li>
+                    <li><a href="#">Quad</a></li>
+                    <li><a href="#">Randonnée</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Suivez-nous</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 VisitBejaia. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (navMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Fermer le menu au clic sur un lien
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                const spans = hamburger.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // Smooth scroll pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Formulaire de contact (simulation)
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Message envoyé ! Nous vous répondrons rapidement.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
