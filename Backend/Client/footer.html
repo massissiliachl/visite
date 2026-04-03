@@ -1,40 +1,109 @@
-<!-- footer.html -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>VisitBejaia</h3>
-        <p>Votre partenaire de confiance pour tous vos voyages. Nous rendons vos rêves de voyage réalité.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Liens Rapides</h4>
-        <ul>
-          <li><a href="index.html#accueil">Accueil</a></li>
-          <li><a href="index.html#apropos">À Propos</a></li>
-          <li><a href="index.html#destinations">Destinations</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Nous Suivre</h4>
-        <div class="social-links">
-          <a href="https://facebook.com" target="_blank" aria-label="Facebook">📘</a>
-          <a href="https://instagram.com" target="_blank" aria-label="Instagram">📷</a>
-          <a href="https://twitter.com" target="_blank" aria-label="Twitter">🐦</a>
-          <a href="https://whatsapp.com" target="_blank" aria-label="WhatsApp">💬</a>
-        </div>
-      </div>
-      <div class="footer-section">
-        <h4>Contact</h4>
-        <ul>
-          <li><a href="tel:+213555123456">+213 555 123 456</a></li>
-          <li><a href="mailto:contact@visitbejaia.com">contact@visitbejaia.com</a></li>
-          <li>Béjaïa, Algérie</li>
-        </ul>
-      </div>
+<style>
+  .vb-footer {
+    background: linear-gradient(135deg, #1e3a35, #15312b);
+    color: #e5ddd2;
+    padding: 56px 0 18px;
+    margin-top: 48px;
+    border-radius: 36px 36px 0 0;
+  }
+  .vb-footer * { box-sizing: border-box; }
+  .vb-footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1.2fr;
+    gap: 28px;
+  }
+  .vb-footer-logo h3 {
+    margin: 0 0 10px;
+    font-size: 32px;
+    color: #f3e7db;
+    font-family: "Cormorant Garamond", serif;
+  }
+  .vb-footer-logo p { margin: 0; color: #c9beb0; line-height: 1.7; }
+  .vb-footer-col h4 {
+    margin: 0 0 14px;
+    color: #dacbbc;
+    font-size: 20px;
+    font-family: "Cormorant Garamond", serif;
+  }
+  .vb-footer-col ul { list-style: none; margin: 0; padding: 0; }
+  .vb-footer-col li { margin-bottom: 8px; }
+  .vb-footer-col a {
+    color: #bfb7ab;
+    text-decoration: none;
+    transition: color .2s ease;
+  }
+  .vb-footer-col a:hover { color: #ffffff; }
+  .vb-social {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .vb-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #31554e;
+    color: #e5ddd2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+  }
+  .vb-footer-bottom {
+    max-width: 1200px;
+    margin: 26px auto 0;
+    padding: 16px 20px 0;
+    border-top: 1px solid #406156;
+    text-align: center;
+    color: #9faa9e;
+    font-size: 14px;
+  }
+  @media (max-width: 900px) {
+    .vb-footer-container { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .vb-footer { border-radius: 24px 24px 0 0; padding-top: 40px; }
+    .vb-footer-container { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>
+
+<footer class="vb-footer">
+  <div class="vb-footer-container">
+    <div class="vb-footer-logo">
+      <h3>VisitBejaia</h3>
+      <p>Votre expert en voyages authentiques a Bejaia.</p>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024-2026 VisitBejaia. Tous droits réservés.</p>
+
+    <div class="vb-footer-col">
+      <h4>Liens</h4>
+      <ul>
+        <li><a href="#accueil">Accueil</a></li>
+        <li><a href="#apropos">A propos</a></li>
+        <li><a href="#destinations">Destinations</a></li>
+      </ul>
+    </div>
+
+    <div class="vb-footer-col">
+      <h4>Activites</h4>
+      <ul>
+        <li><a href="#">Bateau</a></li>
+        <li><a href="#">Quad</a></li>
+        <li><a href="#">Cheval</a></li>
+      </ul>
+    </div>
+
+    <div class="vb-footer-col">
+      <h4>Suivez-nous</h4>
+      <div class="vb-social">
+        <a href="https://web.facebook.com/visitbejaia06" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/visit.bejaia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
     </div>
   </div>
+  <div class="vb-footer-bottom">© 2025 VisitBejaia. Tous droits reserves.</div>
 </footer>
+
+

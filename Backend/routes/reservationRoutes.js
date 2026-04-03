@@ -5,9 +5,9 @@ const reservationController = require('../controllers/reservationController');
 router.post('/', reservationController.createReservation);
 router.get('/', reservationController.getReservations);
 
-
 // ADMIN
 router.put('/:id/accept', reservationController.acceptReservation);
 router.put('/:id/refuse', reservationController.refuseReservation);
+router.put('/:id', reservationController.updateReservation);
 
 module.exports = router;

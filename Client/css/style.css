@@ -33,9 +33,9 @@ meme chose/* Reset et Variables */
 }
 
 :root {
-    --primary-color: #2563eb;
-    --secondary-color: #1e40af;
-    --accent-color: #f59e0b;
+    --primary-color: #1a3a6b;
+    --secondary-color: #2d5a9f;
+    --accent-color: #d32f2f;
     --success-color: #10b981;
     --text-dark: #1f2937;
     --text-light: #6b7280;
@@ -44,8 +44,8 @@ meme chose/* Reset et Variables */
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
     --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.2);
-    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #00a8ff 100%);
-    --gradient-ocean: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+    --gradient-primary: linear-gradient(135deg, #1a3a6b 0%, #d32f2f 100%);
+    --gradient-ocean: linear-gradient(135deg, #1a3a6b 0%, #2d5a9f 50%, #7e8ba3 100%);
     --gradient-sunset: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
 
@@ -107,7 +107,7 @@ body {
 
 .logo h1 {
     font-weight: 800;
-    background: linear-gradient(135deg, #2563eb 0%, #00a8ff 50%, #f59e0b 100%);
+    background: linear-gradient(135deg, #1a3a6b 0%, #d32f2f 50%, #d32f2f 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -133,7 +133,7 @@ body {
 
 .nav-menu a {
     text-decoration: none;
-    color: #2563eb;
+    color: #1a3a6b;
     font-weight: 700;
     padding: 8px 12px;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -150,13 +150,13 @@ body {
     left: 50%;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #2563eb 0%, #00a8ff 100%);
+    background: linear-gradient(90deg, #1a3a6b 0%, #d32f2f 100%);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform: translateX(-50%);
 }
 
 .nav-menu a:hover {
-    color: #1e40af;
+    color: #2d5a9f;
     background: rgba(37, 99, 235, 0.12);
     transform: translateY(-3px);
 }
@@ -185,7 +185,7 @@ body {
 .dropdown-content li a {
     display: block;
     padding: 10px 15px;
-    color: #2563eb;
+    color: #1a3a6b;
     font-weight: 600;
     transition: all 0.3s ease;
     border-left: 3px solid transparent;
@@ -194,8 +194,8 @@ body {
 
 .dropdown-content li a:hover {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(102, 126, 234, 0.05) 100%);
-    color: #2563eb;
-    border-left-color: #2563eb;
+    color: #1a3a6b;
+    border-left-color: #1a3a6b;
     padding-left: 20px;
 }
 
@@ -374,7 +374,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, #0066cc 0%, #00a8ff 50%, #66ccff 100%), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920') center/cover;
+    background: linear-gradient(135deg, #0066cc 0%, #d32f2f 50%, #66ccff 100%), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920') center/cover;
     background-blend-mode: overlay;
     z-index: 1;
     animation: zoomIn 20s ease-in-out infinite;
@@ -514,7 +514,7 @@ body {
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, transparent, #2563eb, #f59e0b, transparent);
+    background: linear-gradient(90deg, transparent, #1a3a6b, #d32f2f, transparent);
     opacity: 0.8;
 }
 
@@ -630,7 +630,7 @@ body {
 }
 
 .rating {
-    color: #f59e0b;
+    color: #d32f2f;
     font-weight: 600;
 }
 
@@ -649,7 +649,7 @@ body {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #2563eb, transparent);
+    background: linear-gradient(90deg, transparent, #1a3a6b, transparent);
     opacity: 0.5;
 }
 
@@ -674,7 +674,7 @@ body {
 .about-item:hover {
     transform: translateY(-12px) scale(1.05);
     box-shadow: 0 15px 40px rgba(37, 99, 235, 0.2);
-    border-color: #2563eb;
+    border-color: #1a3a6b;
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(102, 126, 234, 0.05));
 }
 
@@ -797,7 +797,7 @@ body {
 }
 
 .blog-meta .rating {
-    color: #f59e0b;
+    color: #d32f2f;
     font-weight: 600;
 }
 
@@ -979,7 +979,7 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #2563eb 0%, #00a8ff 50%, #00d4ff 100%);
+    background: linear-gradient(135deg, #1a3a6b 0%, #d32f2f 50%, #00d4ff 100%);
     color: var(--white);
     box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4), 0 0 20px rgba(37, 99, 235, 0.2);
     position: relative;
@@ -1041,7 +1041,7 @@ section {
     font-size: 2.8rem;
     text-align: center;
     margin-bottom: 1.5rem;
-    background: linear-gradient(135deg, #2563eb 0%, #00a8ff 50%, #00d4ff 100%);
+    background: linear-gradient(135deg, #1a3a6b 0%, #d32f2f 50%, #00d4ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1072,7 +1072,7 @@ section {
     transform: translateX(-50%);
     width: 100px;
     height: 5px;
-    background: linear-gradient(90deg, #2563eb 0%, #00a8ff 100%);
+    background: linear-gradient(90deg, #1a3a6b 0%, #d32f2f 100%);
     border-radius: 3px;
     transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
@@ -1468,7 +1468,7 @@ section {
 
 /* Footer */
 .footer {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
     color: var(--white);
     padding: 4rem 0 1rem;
     backdrop-filter: blur(10px);
@@ -2520,7 +2520,7 @@ section {
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #2563eb 0%, #00a8ff 100%);
+    background: linear-gradient(90deg, #1a3a6b 0%, #d32f2f 100%);
     border-radius: 2px;
     box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
@@ -2618,7 +2618,7 @@ section {
     bottom: 0;
     width: 0;
     height: 2px;
-    background: #2563eb;
+    background: #1a3a6b;
     transition: width 0.3s ease;
 }
 
@@ -2665,7 +2665,7 @@ input:focus,
 textarea:focus,
 select:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-    border-color: #2563eb;
+    border-color: #1a3a6b;
 }
 
 /* Text Refinement */
@@ -2809,7 +2809,7 @@ body {
     justify-content: center;
     width: 38px;
     height: 38px;
-    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9f 100%);
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -2898,7 +2898,7 @@ body {
 }
 
 .close-modal:hover {
-    color: #2563eb;
+    color: #1a3a6b;
     transform: rotate(90deg);
 }
 
@@ -2937,7 +2937,7 @@ body {
 .reservation-form .form-group select:focus,
 .reservation-form .form-group textarea:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: #1a3a6b;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
@@ -2953,7 +2953,7 @@ body {
 }
 
 .btn-submit {
-    background: linear-gradient(135deg, #2563eb 0%, #00a8ff 50%, #00d4ff 100%);
+    background: linear-gradient(135deg, #1a3a6b 0%, #d32f2f 50%, #00d4ff 100%);
     color: white;
     border: none;
     padding: 14px 30px;
@@ -3021,4 +3021,5 @@ body {
         font-size: 1.4rem;
     }
 }
+
 

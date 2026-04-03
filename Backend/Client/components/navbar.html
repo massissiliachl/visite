@@ -2,19 +2,24 @@
 <nav class="navbar" id="navbar">
     <div class="container">
         <div class="logo">
+            <a href="#accueil">
+                <img src="assets/images/logo.png" alt="VisitBejaia Logo" class="logo-img">
+            </a>
+            <!-- Optionnel : Garder le texte si vous voulez un fallback -->
             <h1>VisitBejaia</h1>
         </div>
         
         <ul class="nav-menu" id="navMenu">
             <li><a href="#accueil">Accueil</a></li>
-            <li><a href="#apropos">À Propos</a></li>
-            <li><a href="#destinations">Destinations</a></li>
-            <li><a href="#incontournables">Incontournables</a></li>
-          <li><a href="activites.html">Activités</a></li>
+                      <li><a href="activites.html">Activites</a></li>
+            <li><a href="hebergement.html">Hebergement</a></li>
+            <li><a href="destination.html">Incontournables</a></li>
 
-            <li><a href="hebergement.html">Hébergement</a></li>
+            <li><a href="incontournable.html">Destinations</a></li>
+
+                        <li><a href="#apropos">Ã Propos</a></li>
+
             <li><a href="#contact">Contact</a></li>
-            <li><a href="admin.html"><i class="fas fa-lock"></i> Admin</a></li>
         </ul>
         
         <div class="nav-actions">
@@ -33,12 +38,12 @@
 <style>
 /* ===== VARIABLES ===== */
 :root {
-    --primary-dark: #1e4f4a;
-    --primary-light: #2f4f4a;
-    --accent: #b68b6e;
-    --bg-light: #fcf9f5;
+    --primary-dark: #1a3a6b;
+    --primary-light: #2d5a9f;
+    --accent: #d32f2f;
+    --bg-light: #f8f9fa;
     --white: #ffffff;
-    --shadow: rgba(30, 79, 74, 0.2);
+    --shadow: rgba(26, 58, 107, 0.2);
 }
 
 /* ===== RESET DE BASE ===== */
@@ -58,7 +63,7 @@ body {
     background: rgba(255, 252, 248, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(200, 175, 150, 0.2);
+    border-bottom: 1px solid rgba(200, 200, 200, 0.2);
     position: fixed;
     top: 0;
     left: 0;
@@ -83,19 +88,37 @@ body {
 }
 
 /* ===== LOGO ===== */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espace entre logo et texte si vous gardez le h1 */
+}
+
+.logo-img {
+    height: 50px; /* Ajustez la hauteur selon votre logo */
+    width: auto;
+    max-width: 150px; /* Limite la largeur pour Ã©viter qu'elle soit trop grande */
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05); /* Petit effet au survol */
+}
+
 .logo h1 {
     font-size: 2rem;
-    background: linear-gradient(135deg, var(--primary-dark), #7a5b4b);
+    background: linear-gradient(135deg, var(--primary-dark), #d32f2f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 700;
     white-space: nowrap;
     animation: logoGlow 3s infinite alternate;
+    margin: 0; /* Supprime les marges par dÃ©faut */
 }
 
 @keyframes logoGlow {
-    0% { text-shadow: 0 0 0 rgba(182, 139, 110, 0); }
-    100% { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+    0% { text-shadow: 0 0 0 rgba(211, 47, 47, 0); }
+    100% { text-shadow: 0 0 20px rgba(211, 47, 47, 0.3); }
 }
 
 /* ===== MENU PRINCIPAL ===== */
@@ -241,7 +264,7 @@ body {
 }
 
 .hamburger:hover {
-    background: rgba(182, 139, 110, 0.1);
+    background: rgba(211, 47, 47, 0.1);
 }
 
 .hamburger span {
@@ -321,7 +344,7 @@ body {
     }
 
     .nav-menu a:hover {
-        background: rgba(182, 139, 110, 0.1);
+        background: rgba(211, 47, 47, 0.1);
     }
 
     .nav-menu a::before {
@@ -353,7 +376,7 @@ body {
         position: static;
         box-shadow: none;
         border: none;
-        background: rgba(182, 139, 110, 0.05);
+        background: rgba(211, 47, 47, 0.05);
         padding: 0;
         margin: 0.5rem 0 0 1rem;
         border-radius: 10px;
@@ -377,6 +400,14 @@ body {
     .navbar .container {
         height: 60px;
         padding: 0 15px;
+    }
+
+    .logo {
+        gap: 8px; /* RÃ©duire l'espace sur mobile */
+    }
+
+    .logo-img {
+        height: 40px; /* RÃ©duire la taille du logo sur mobile */
     }
 
     .logo h1 {
@@ -417,8 +448,17 @@ body {
 
 /* ===== PETITS MOBILES ===== */
 @media screen and (max-width: 360px) {
+    .logo {
+        gap: 5px; /* Espace minimal */
+    }
+
+    .logo-img {
+        height: 35px; /* Logo encore plus petit */
+    }
+
     .logo h1 {
         font-size: 1.2rem;
+        display: none; /* Masquer le texte sur trÃ¨s petits Ã©crans pour Ã©conomiser l'espace */
     }
 
     .voice-button {
@@ -438,7 +478,7 @@ body {
     }
 }
 
-/* ===== AJOUTER UN ESPACE POUR LE CONTENU (à cause de la navbar fixed) ===== */
+/* ===== AJOUTER UN ESPACE POUR LE CONTENU (Ã  cause de la navbar fixed) ===== */
 body {
     padding-top: 80px;
 }
@@ -554,7 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Gérer le redimensionnement de la fenêtre
+        // GÃ©rer le redimensionnement de la fenÃªtre
         window.addEventListener('resize', function() {
             if (window.innerWidth > 992) {
                 navMenu.classList.remove('active');
@@ -575,8 +615,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Gestion du bouton vocal
     if (voiceBtn) {
         voiceBtn.addEventListener('click', function() {
-            alert('Assistant vocal en cours de développement...');
+            alert('Assistant vocal en cours de dÃ©veloppement...');
         });
     }
 });
 </script>
+
+
+
+<div data-include="footer"></div>
+<script src="js/include-footer.js"></script>

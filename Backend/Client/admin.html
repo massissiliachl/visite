@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VisitBejaïa - Admin Dashboard</title>
+  <title>VisitBejaÃ¯a - Admin Dashboard</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -194,14 +194,14 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <i class="fas fa-sailboat fa-2x" style="color:var(--primary)"></i>
-      <span class="logo">VisitBejaïa</span>
+      <span class="logo">VisitBejaÃ¯a</span>
     </div>
     <nav style="margin-top:2rem;">
       <a href="#" class="nav-item active"><i class="fas fa-home"></i> Dashboard</a>
-      <a href="#" class="nav-item"><i class="fas fa-calendar-check"></i> Réservations</a>
-      <a href="#" class="nav-item"><i class="fas fa-calendar-days"></i> Disponibilités</a>
-      <a href="#" class="nav-item"><i class="fas fa-mountain"></i> Activités</a>
-      <a href="#" class="nav-item"><i class="fas fa-bed"></i> Hébergements</a>
+      <a href="#" class="nav-item"><i class="fas fa-calendar-check"></i> RÃ©servations</a>
+      <a href="#" class="nav-item"><i class="fas fa-calendar-days"></i> DisponibilitÃ©s</a>
+      <a href="#" class="nav-item"><i class="fas fa-mountain"></i> ActivitÃ©s</a>
+      <a href="#" class="nav-item"><i class="fas fa-bed"></i> HÃ©bergements</a>
       <a href="#" class="nav-item"><i class="fas fa-users"></i> Clients</a>
     </nav>
   </aside>
@@ -210,7 +210,7 @@
     <header>
       <div class="header-left">
         <button class="icon-btn menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-        <h1 class="page-title">Dashboard Admin - VisitBejaïa</h1>
+        <h1 class="page-title">Dashboard Admin - VisitBejaÃ¯a</h1>
       </div>
       <div class="header-right">
         <button class="icon-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
@@ -232,7 +232,7 @@
         <div class="stat-card">
           <i class="fas fa-plane-departure stat-icon"></i>
           <div class="stat-value" id="total">0</div>
-          <div class="stat-label">Total Réservations</div>
+          <div class="stat-label">Total RÃ©servations</div>
         </div>
         <div class="stat-card">
           <i class="fas fa-hourglass-half stat-icon" style="color:var(--warning)"></i>
@@ -242,28 +242,28 @@
         <div class="stat-card">
           <i class="fas fa-check-circle stat-icon" style="color:var(--accent)"></i>
           <div class="stat-value" id="accepted">0</div>
-          <div class="stat-label">Acceptées</div>
+          <div class="stat-label">AcceptÃ©es</div>
         </div>
         <div class="stat-card">
           <i class="fas fa-times-circle stat-icon" style="color:var(--danger)"></i>
           <div class="stat-value" id="refused">0</div>
-          <div class="stat-label">Refusées</div>
+          <div class="stat-label">RefusÃ©es</div>
         </div>
       </div>
 
       <!-- Graphique exemple -->
       <div class="chart-card">
-        <h3 style="margin-bottom:1rem;">Évolution des réservations (exemple)</h3>
+        <h3 style="margin-bottom:1rem;">Ã‰volution des rÃ©servations (exemple)</h3>
         <canvas id="reservationsChart" height="140"></canvas>
       </div>
 
-      <!-- Gestion disponibilités -->
-      <h2 style="margin:3rem 0 1rem; font-size:1.6rem; color:var(--primary);">Gestion des disponibilités</h2>
+      <!-- Gestion disponibilitÃ©s -->
+      <h2 style="margin:3rem 0 1rem; font-size:1.6rem; color:var(--primary);">Gestion des disponibilitÃ©s</h2>
 
       <div class="chart-card">
         <div style="margin-bottom:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
           <select id="activitySelect" style="padding:0.8rem; border-radius:8px; border:1px solid var(--border); min-width:240px; font-size:1rem;">
-            <option value="">Choisir une activité</option>
+            <option value="">Choisir une activitÃ©</option>
           </select>
           <button onclick="refreshCalendar()" class="btn-accept" style="padding:0.8rem 1.6rem; font-size:1rem;">
             <i class="fas fa-sync-alt"></i> Actualiser
@@ -273,8 +273,8 @@
         <div id="adminCalendar"></div>
       </div>
 
-      <!-- Réservations récentes -->
-      <h2 style="margin:3.5rem 0 1rem; font-size:1.5rem; color:var(--primary);">Réservations récentes</h2>
+      <!-- RÃ©servations rÃ©centes -->
+      <h2 style="margin:3.5rem 0 1rem; font-size:1.5rem; color:var(--primary);">RÃ©servations rÃ©centes</h2>
       <div id="reservations" style="display:grid; gap:1.4rem;"></div>
 
     </main>
@@ -301,9 +301,9 @@ if (ctx) {
   new Chart(ctx, {
     type: 'line',
     data: {
-      labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août'],
+      labels: ['Jan', 'FÃ©v', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'AoÃ»t'],
       datasets: [{
-        label: 'Réservations',
+        label: 'RÃ©servations',
         data: [12, 19, 28, 35, 42, 55, 68, 82],
         borderColor: 'rgba(29, 78, 216, 1)',
         backgroundColor: 'rgba(29, 78, 216, 0.12)',
@@ -315,7 +315,7 @@ if (ctx) {
   });
 }
 
-// Chargement des réservations
+// Chargement des rÃ©servations
 async function loadReservations() {
   try {
     const res = await fetch("http://localhost:3000/reservations");
@@ -340,21 +340,21 @@ async function loadReservations() {
             <div>
               <h3 style="margin:0; font-size:1.3rem;">${r.nom || '?'} ${r.prenom || ''}</h3>
               <div style="color:var(--text-muted); margin:0.4rem 0;">
-                <i class="fas fa-envelope"></i> ${r.email || '—'} • 
-                <i class="fas fa-phone"></i> ${r.telephone || '—'}
+                <i class="fas fa-envelope"></i> ${r.email || 'â€”'} â€¢ 
+                <i class="fas fa-phone"></i> ${r.telephone || 'â€”'}
               </div>
             </div>
             <span class="status-badge status-${r.status}">${r.status.replace("_", " ")}</span>
           </div>
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:0.8rem; margin:1rem 0;">
-            <div><strong>Activité :</strong> ${r.nom_item || '?'}</div>
+            <div><strong>ActivitÃ© :</strong> ${r.nom_item || '?'}</div>
             <div><strong>Personnes :</strong> ${r.nb_personnes || 1}</div>
             <div><strong>Prix :</strong> ${r.prix_total || 0} DZD</div>
-            <div><strong>Départ :</strong> ${r.date_depart ? new Date(r.date_depart).toLocaleDateString('fr-FR') : '—'}</div>
+            <div><strong>DÃ©part :</strong> ${r.date_depart ? new Date(r.date_depart).toLocaleDateString('fr-FR') : 'â€”'}</div>
           </div>
           <div class="action-buttons">
-            <button class="btn-accept" onclick="updateStatus(${r.id}, 'acceptee')">✔ Accepter</button>
-            <button class="btn-refuse" onclick="updateStatus(${r.id}, 'refusee')">✖ Refuser</button>
+            <button class="btn-accept" onclick="updateStatus(${r.id}, 'acceptee')">âœ” Accepter</button>
+            <button class="btn-refuse" onclick="updateStatus(${r.id}, 'refusee')">âœ– Refuser</button>
           </div>
         </div>
       `;
@@ -374,7 +374,7 @@ async function loadReservations() {
   }
 }
 
-// Mise à jour statut
+// Mise Ã  jour statut
 async function updateStatus(id, status) {
   if (!id || isNaN(id)) return alert("ID invalide");
 
@@ -384,11 +384,11 @@ async function updateStatus(id, status) {
     if (!res.ok) throw new Error(await res.text());
     loadReservations();
   } catch (err) {
-    alert("Échec mise à jour : " + err.message);
+    alert("Ã‰chec mise Ã  jour : " + err.message);
   }
 }
 
-// Gestion calendrier + blocage/déblocage
+// Gestion calendrier + blocage/dÃ©blocage
 let calendar = null;
 let currentActivity = '';
 
@@ -400,7 +400,7 @@ async function loadActivities() {
 
     const select = document.getElementById("activitySelect");
     if (select) {
-      select.innerHTML = '<option value="">Choisir une activité</option>';
+      select.innerHTML = '<option value="">Choisir une activitÃ©</option>';
       activities.forEach(act => {
         const opt = document.createElement("option");
         opt.value = act;
@@ -409,7 +409,7 @@ async function loadActivities() {
       });
     }
   } catch (err) {
-    console.error("Erreur chargement activités:", err);
+    console.error("Erreur chargement activitÃ©s:", err);
   }
 }
 
@@ -420,7 +420,7 @@ async function loadBlockedDates(activity) {
     if (!res.ok) return [];
     return await res.json(); // ex: ["2026-02-17", ...]
   } catch (err) {
-    console.error("Erreur chargement dates bloquées:", err);
+    console.error("Erreur chargement dates bloquÃ©es:", err);
     return [];
   }
 }
@@ -441,7 +441,7 @@ async function initCalendar() {
     selectable: true,
     dateClick: async function(info) {
       if (!currentActivity) {
-        alert("Sélectionne d'abord une activité dans la liste !");
+        alert("SÃ©lectionne d'abord une activitÃ© dans la liste !");
         return;
       }
 
@@ -450,20 +450,20 @@ async function initCalendar() {
       const isBlocked = blockedDates.includes(dateStr);
 
       if (isBlocked) {
-        // Débloquer
-        if (confirm(`Débloquer la date ${dateStr} pour ${currentActivity} ?`)) {
+        // DÃ©bloquer
+        if (confirm(`DÃ©bloquer la date ${dateStr} pour ${currentActivity} ?`)) {
           try {
             const res = await fetch(`http://localhost:3000/availability/block/${encodeURIComponent(currentActivity)}/${dateStr}`, {
               method: 'DELETE'
             });
             if (res.ok) {
-              alert("Date débloquée avec succès");
+              alert("Date dÃ©bloquÃ©e avec succÃ¨s");
               calendar.refetchEvents();
             } else {
-              alert("Erreur lors du déblocage");
+              alert("Erreur lors du dÃ©blocage");
             }
           } catch (err) {
-            alert("Erreur réseau : " + err.message);
+            alert("Erreur rÃ©seau : " + err.message);
           }
         }
       } else {
@@ -476,17 +476,17 @@ async function initCalendar() {
               body: JSON.stringify({
                 nom_item: currentActivity,
                 date: dateStr,
-                reason: "bloqué par admin"
+                reason: "bloquÃ© par admin"
               })
             });
             if (res.ok) {
-              alert("Date bloquée avec succès");
+              alert("Date bloquÃ©e avec succÃ¨s");
               calendar.refetchEvents();
             } else {
               alert("Erreur lors du blocage");
             }
           } catch (err) {
-            alert("Erreur réseau : " + err.message);
+            alert("Erreur rÃ©seau : " + err.message);
           }
         }
       }
@@ -499,8 +499,8 @@ async function initCalendar() {
         start: d,
         allDay: true,
         display: 'background',
-        color: '#ef4444', // rouge vif pour bloqué
-        title: 'Bloqué'
+        color: '#ef4444', // rouge vif pour bloquÃ©
+        title: 'BloquÃ©'
       }));
 
       successCallback(events);
@@ -515,17 +515,21 @@ function refreshCalendar() {
   if (calendar) calendar.refetchEvents();
 }
 
-// ───────────────────────────────────────────────
-// Initialisation complète
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Initialisation complÃ¨te
 document.addEventListener('DOMContentLoaded', async () => {
   await loadReservations();
   await loadActivities();
   await initCalendar();
 
-  // Rafraîchir quand changement d'activité
+  // RafraÃ®chir quand changement d'activitÃ©
   document.getElementById("activitySelect")?.addEventListener("change", refreshCalendar);
 });
 </script>
 
+    <script src="js/include-footer.js"></script>
+    <div data-include="footer"></div>
 </body>
 </html>
+
+

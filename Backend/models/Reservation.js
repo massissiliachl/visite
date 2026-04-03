@@ -15,6 +15,18 @@ const Reservation = sequelize.define('Reservation', {
   date_depart: { type: DataTypes.DATE },
   regimen: { type: DataTypes.STRING },
   status: { type: DataTypes.STRING, defaultValue: 'en_attente' },
+
+  // ===== CHAMPS PAIEMENT MANUEL =====
+  mode_paiement: {
+    type: DataTypes.ENUM('BaridiMob','CCP','Virement','Espèces','Autre'),
+    defaultValue: 'BaridiMob'
+  },
+  transaction_ref: { type: DataTypes.STRING, allowNull: true },
+  paiement_statut: {
+    type: DataTypes.ENUM('non_saisi','attente_validation','valide','refuse'),
+    defaultValue: 'non_saisi'
+  },
+  demandes_speciales: { type: DataTypes.TEXT },
 }, {
   tableName: 'reservations'
 });

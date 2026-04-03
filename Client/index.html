@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: #fcf9f5;
+            background: #f8f9fa;
             color: #2c3e3d;
             line-height: 1.6;
             overflow-x: hidden;
@@ -41,7 +41,7 @@
             font-size: clamp(2rem, 5vw, 3.2rem);
             text-align: center;
             margin-bottom: 1rem;
-            color: #1e4f4a;
+            color: #1a3a6b;
             position: relative;
             padding-bottom: 1.5rem;
             opacity: 0;
@@ -64,7 +64,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            background: linear-gradient(90deg, transparent, #d32f2f, transparent);
             animation: lineExpand 1s ease 0.5s forwards;
             width: 0;
         }
@@ -92,7 +92,7 @@
             background: rgba(255, 252, 248, 0.8);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(200, 175, 150, 0.2);
+            border-bottom: 1px solid rgba(200, 200, 200, 0.2);
             position: sticky;
             top: 0;
             z-index: 2000;
@@ -102,7 +102,7 @@
 
         .navbar.scrolled {
             background: rgba(255, 252, 248, 0.95);
-            box-shadow: 0 10px 30px -10px rgba(30, 79, 74, 0.2);
+            box-shadow: 0 10px 30px -10px rgba(26, 58, 107, 0.2);
         }
 
         .navbar .container {
@@ -114,7 +114,7 @@
 
         .logo h1 {
             font-size: 2rem;
-            background: linear-gradient(135deg, #1e4f4a, #7a5b4b);
+            background: linear-gradient(135deg, #1a3a6b, #d32f2f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
@@ -124,8 +124,8 @@
         }
 
         @keyframes logoGlow {
-            0% { text-shadow: 0 0 0 rgba(182, 139, 110, 0); }
-            100% { text-shadow: 0 0 20px rgba(182, 139, 110, 0.3); }
+            0% { text-shadow: 0 0 0 rgba(211, 47, 47, 0); }
+            100% { text-shadow: 0 0 20px rgba(211, 47, 47, 0.3); }
         }
 
         .nav-menu {
@@ -155,7 +155,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            background: linear-gradient(90deg, #1a3a6b, #d32f2f);
             transition: width 0.3s ease;
         }
 
@@ -164,7 +164,7 @@
         }
 
         .nav-menu a:hover {
-            color: #b68b6e;
+            color: #d32f2f;
         }
 
         .dropdown {
@@ -210,7 +210,7 @@
         }
 
         .dropdown-content a:hover {
-            background: #fcf9f5;
+            background: #f8f9fa;
         }
 
         .voice-button {
@@ -224,16 +224,16 @@
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid #e0d2c4;
-            color: #1e4f4a;
+            color: #1a3a6b;
             font-size: 1.2rem;
             flex-shrink: 0;
         }
 
         .voice-button:hover {
-            background: #1e4f4a;
+            background: #1a3a6b;
             color: white;
             transform: rotate(360deg) scale(1.1);
-            border-color: #1e4f4a;
+            border-color: #1a3a6b;
         }
 
         .hamburger {
@@ -250,7 +250,7 @@
         .hamburger span {
             width: 28px;
             height: 2px;
-            background: #1e4f4a;
+            background: #1a3a6b;
             transition: 0.3s;
             display: block;
         }
@@ -259,7 +259,7 @@
         .hero {
             position: relative;
             height: 100vh;
-            background: url("https://images.pexels.com/photos/36012522/pexels-photo-36012522.jpeg?auto=compress&cs=tinysrgb&w=1920") center center / cover no-repeat;
+            background: url("assets/images/logo1.png") center center / cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -291,7 +291,7 @@
 
         @keyframes titlePulse {
             0% { text-shadow: 0 10px 30px rgba(0, 20, 10, 0.4); }
-            100% { text-shadow: 0 20px 50px rgba(182, 139, 110, 0.6); }
+            100% { text-shadow: 0 20px 50px rgba(211, 47, 47, 0.6); }
         }
 
         .hero-description {
@@ -315,8 +315,8 @@
             border: none;
             cursor: pointer;
             background: white;
-            color: #1e4f4a;
-            box-shadow: 0 15px 30px -10px #102a26;
+            color: #1a3a6b;
+            box-shadow: 0 15px 30px -10px rgba(26, 58, 107, 0.3);
             margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
@@ -335,8 +335,8 @@
 
         .btn:hover {
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 20px 40px -8px #0f2a25;
-            background: #1e4f4a;
+            box-shadow: 0 20px 40px -8px rgba(211, 47, 47, 0.4);
+            background: #d32f2f;
             color: white;
         }
 
@@ -449,7 +449,7 @@
 
         .slide:hover {
             transform: scale(1.05) translateY(-10px);
-            box-shadow: 0 40px 50px -20px #1e4f4a;
+            box-shadow: 0 40px 50px -20px #1a3a6b;
         }
 
         .slide img, .slide-video {
@@ -466,7 +466,7 @@
 
         /* ===== INCONTOURNABLES ===== */
         .must-see-section {
-            padding: 5rem 0;
+            padding: 4rem 0;
             background: #f5efe8;
             position: relative;
             overflow: hidden;
@@ -479,7 +479,7 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, #b68b6e, transparent);
+            background: linear-gradient(90deg, transparent, #d32f2f, transparent);
             animation: lineMove 3s infinite;
         }
 
@@ -490,8 +490,65 @@
 
         .must-see-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .must-see-card {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 12px 25px -10px rgba(70, 80, 60, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardFadeIn 0.8s forwards;
+            position: relative;
+        }
+
+        .card-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 992px) {
+            .must-see-grid {
+                grid-template-columns: 1fr;
+                gap: 0.9rem;
+            }
+
+            .must-see-section {
+                padding: 2rem 0;
+            }
+
+            .must-see-card {
+                border-radius: 1.2rem;
+            }
+
+            .card-image {
+                height: 140px;
+            }
+
+            .card-content {
+                padding: 1rem;
+            }
+
+            .card-content h3 {
+                font-size: 1.2rem;
+            }
+
+            .card-content p {
+                font-size: 0.9rem;
+                -webkit-line-clamp: 2;
+            }
+
+            .card-meta {
+                font-size: 0.85rem;
+            }
         }
 
         .must-see-card {
@@ -525,7 +582,7 @@
 
         .must-see-card:hover {
             transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 40px 60px -15px #1e4f4a;
+            box-shadow: 0 40px 60px -15px #1a3a6b;
         }
 
         .card-image {
@@ -557,12 +614,23 @@
         .card-content h3 {
             font-size: 1.6rem;
             margin-bottom: 0.8rem;
-            color: #1e4f4a;
+            color: #1a3a6b;
             transition: all 0.3s ease;
         }
 
+        .card-content p {
+            color: #3f5a55;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
         .must-see-card:hover .card-content h3 {
-            color: #b68b6e;
+            color: #d32f2f;
             transform: translateX(5px);
         }
 
@@ -582,7 +650,7 @@
         }
 
         .must-see-card:hover .rating {
-            background: #1e4f4a;
+            background: #1a3a6b;
             color: white;
             transform: scale(1.05);
         }
@@ -671,7 +739,7 @@
             background: rgba(255,255,255,0.9);
             border: none;
             font-size: 1.2rem;
-            color: #1e4f4a;
+            color: #1a3a6b;
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
@@ -682,7 +750,7 @@
         }
 
         .must-modal-close:hover {
-            background: #1e4f4a;
+            background: #1a3a6b;
             color: white;
             transform: rotate(180deg) scale(1.1);
         }
@@ -710,7 +778,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            background: linear-gradient(135deg, #1a3a6b, #d32f2f);
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: 1;
@@ -718,7 +786,7 @@
 
         .must-modal-gallery-item:hover {
             transform: scale(1.05) translateY(-5px);
-            border-color: #1e4f4a;
+            border-color: #1a3a6b;
         }
 
         .must-modal-gallery-item:hover::before {
@@ -726,14 +794,14 @@
         }
 
         .must-modal-gallery-item.active {
-            border-color: #b68b6e;
-            box-shadow: 0 0 0 4px rgba(182, 139, 110, 0.3);
+            border-color: #d32f2f;
+            box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.3);
             animation: activePulse 2s infinite;
         }
 
         @keyframes activePulse {
-            0%, 100% { box-shadow: 0 0 0 4px rgba(182, 139, 110, 0.3); }
-            50% { box-shadow: 0 0 0 8px rgba(182, 139, 110, 0.1); }
+            0%, 100% { box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(211, 47, 47, 0.1); }
         }
 
         .must-modal-gallery-item img,
@@ -769,7 +837,7 @@
             inset: 0;
             border-radius: 1rem;
             padding: 2px;
-            background: linear-gradient(145deg, transparent, rgba(182, 139, 110, 0.3), transparent);
+            background: linear-gradient(145deg, transparent, rgba(211, 47, 47, 0.3), transparent);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -798,7 +866,7 @@
         .must-modal-title {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.2rem;
-            color: #1e4f4a;
+            color: #1a3a6b;
             margin-bottom: 0.5rem;
             position: relative;
             display: inline-block;
@@ -811,13 +879,13 @@
             left: 0;
             width: 60px;
             height: 3px;
-            background: linear-gradient(90deg, #1e4f4a, #b68b6e);
+            background: linear-gradient(90deg, #1a3a6b, #d32f2f);
             border-radius: 3px;
         }
 
         .must-modal-rating {
             font-size: 1.1rem;
-            color: #b68b6e;
+            color: #d32f2f;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -870,12 +938,12 @@
 
         .must-modal-detail-item i {
             width: 20px;
-            color: #1e4f4a;
+            color: #1a3a6b;
             font-size: 1rem;
         }
 
         .must-modal-btn {
-            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
             color: white;
             border: none;
             padding: 1rem 2rem;
@@ -905,15 +973,15 @@
         }
 
         .must-modal-btn:hover {
-            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            background: linear-gradient(135deg, #d32f2f, #8b6b53);
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 20px 40px -10px #b68b6e;
+            box-shadow: 0 20px 40px -10px #d32f2f;
         }
 
         /* ===== NOUVELLE SECTION DESTINATION SIMPLE (1 SEULE IMAGE) ===== */
         .destination-simple-section {
             padding: 5rem 0;
-            background: linear-gradient(135deg, #fcf9f5, #f5efe8);
+            background: linear-gradient(135deg, #f8f9fa, #f5efe8);
         }
 
         .destination-simple-container {
@@ -926,7 +994,7 @@
             position: relative;
             border-radius: 3rem;
             overflow: hidden;
-            box-shadow: 0 30px 60px -20px rgba(30, 79, 74, 0.4);
+            box-shadow: 0 30px 60px -20px rgba(26, 58, 107, 0.4);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             opacity: 0;
@@ -936,7 +1004,7 @@
 
         .destination-simple-card:hover {
             transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 40px 80px -15px #1e4f4a;
+            box-shadow: 0 40px 80px -15px #1a3a6b;
         }
 
         .destination-simple-image {
@@ -954,7 +1022,7 @@
         .destination-simple-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(30, 79, 74, 0.7) 0%, rgba(182, 139, 110, 0.7) 100%);
+            background: linear-gradient(135deg, rgba(26, 58, 107, 0.7) 0%, rgba(211, 47, 47, 0.7) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1002,7 +1070,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1e4f4a;
+            color: #1a3a6b;
             font-size: 2rem;
             transform: translateY(20px) scale(0.8);
             transition: all 0.5s ease 0.3s;
@@ -1012,7 +1080,7 @@
 
         @keyframes arrowPulse {
             0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-            50% { box-shadow: 0 20px 40px rgba(182, 139, 110, 0.6); }
+            50% { box-shadow: 0 20px 40px rgba(211, 47, 47, 0.6); }
         }
 
         .destination-simple-card:hover .destination-simple-arrow {
@@ -1020,7 +1088,7 @@
         }
 
         .destination-simple-arrow:hover {
-            background: #b68b6e;
+            background: #d32f2f;
             color: white;
             transform: rotate(360deg) scale(1.1) !important;
         }
@@ -1032,7 +1100,7 @@
             justify-content: center;
             gap: 0.8rem;
             padding: 0.8rem 2rem;
-            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
             color: white;
             border: none;
             border-radius: 50px;
@@ -1043,7 +1111,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 20px -6px #1e4f4a;
+            box-shadow: 0 8px 20px -6px #1a3a6b;
             letter-spacing: 0.3px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             z-index: 1;
@@ -1085,9 +1153,9 @@
         }
 
         .btn-discover-enhanced:hover {
-            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            background: linear-gradient(135deg, #d32f2f, #8b6b53);
             transform: translateY(-5px) scale(1.08);
-            box-shadow: 0 15px 30px -5px #b68b6e;
+            box-shadow: 0 15px 30px -5px #d32f2f;
             color: white;
         }
 
@@ -1104,7 +1172,7 @@
         .btn-small {
             display: inline-block;
             padding: 0.5rem 1.2rem;
-            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
             color: white;
             border-radius: 40px;
             text-decoration: none;
@@ -1112,13 +1180,13 @@
             font-weight: 500;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 5px 15px -5px #1e4f4a;
+            box-shadow: 0 5px 15px -5px #1a3a6b;
         }
 
         .btn-small:hover {
-            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            background: linear-gradient(135deg, #d32f2f, #8b6b53);
             transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 20px -5px #b68b6e;
+            box-shadow: 0 10px 20px -5px #d32f2f;
         }
 
         /* ===== SECTION POURQUOI NOUS ===== */
@@ -1133,7 +1201,7 @@
             position: absolute;
             width: 8px;
             height: 8px;
-            background: rgba(182, 139, 110, 0.2);
+            background: rgba(211, 47, 47, 0.2);
             border-radius: 50%;
             animation: floatDot 6s infinite ease-in-out;
         }
@@ -1168,7 +1236,7 @@
             transform: translateY(20px);
             animation: aboutFadeIn 0.8s forwards;
             border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 10px 25px -10px rgba(30, 79, 74, 0.1);
+            box-shadow: 0 10px 25px -10px rgba(26, 58, 107, 0.1);
         }
 
         .about-item:nth-child(1) { animation-delay: 0.1s; }
@@ -1186,8 +1254,8 @@
         .about-item:hover {
             background: white;
             transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 35px -15px #1e4f4a;
-            border-color: #b68b6e;
+            box-shadow: 0 20px 35px -15px #1a3a6b;
+            border-color: #d32f2f;
         }
 
         .about-icon {
@@ -1195,7 +1263,7 @@
             margin-bottom: 0.8rem;
             display: inline-block;
             animation: gentleFloat 3s infinite ease-in-out;
-            color: #1e4f4a;
+            color: #1a3a6b;
             transition: all 0.3s ease;
         }
 
@@ -1212,7 +1280,7 @@
         .about-item h3 {
             font-size: 1.3rem;
             margin-bottom: 0.3rem;
-            color: #1e4f4a;
+            color: #1a3a6b;
         }
 
         .about-item p {
@@ -1225,7 +1293,7 @@
         .about-item:hover .about-icon {
             animation: none;
             transform: scale(1.2) rotate(5deg);
-            color: #b68b6e;
+            color: #d32f2f;
         }
 
         /* ===== INSTAGRAM FEED ===== */
@@ -1267,7 +1335,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            background: linear-gradient(135deg, #1a3a6b, #d32f2f);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -1312,7 +1380,7 @@
         }
 
         .contact-info {
-            background: #fcf9f5;
+            background: #f8f9fa;
             padding: 2rem;
             border-radius: 2rem;
             border: 1px solid #ede3d9;
@@ -1382,8 +1450,8 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #1e4f4a;
-            box-shadow: 0 0 0 4px rgba(30, 79, 74, 0.1);
+            border-color: #1a3a6b;
+            box-shadow: 0 0 0 4px rgba(26, 58, 107, 0.1);
             transform: scale(1.02);
         }
 
@@ -1441,15 +1509,15 @@
 
         .close-modal:hover {
             background: #ece0d6;
-            color: #1e4f4a;
+            color: #1a3a6b;
             transform: rotate(90deg) scale(1.1);
         }
 
         .reservation-form h2 {
             font-size: 2.5rem;
-            color: #1e4f4a;
+            color: #1a3a6b;
             margin-bottom: 2rem;
-            border-left: 6px solid #b68b6e;
+            border-left: 6px solid #d32f2f;
             padding-left: 1.5rem;
         }
 
@@ -1460,7 +1528,7 @@
         }
 
         .btn-submit {
-            background: linear-gradient(135deg, #1e4f4a, #2c7a6b);
+            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
             color: white;
             border: none;
             padding: 1.3rem 2rem;
@@ -1490,14 +1558,14 @@
         }
 
         .btn-submit:hover {
-            background: linear-gradient(135deg, #b68b6e, #8b6b53);
+            background: linear-gradient(135deg, #d32f2f, #8b6b53);
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 40px -10px #b68b6e;
+            box-shadow: 0 20px 40px -10px #d32f2f;
         }
 
         /* ===== FOOTER ===== */
         .footer {
-            background: linear-gradient(135deg, #1e3a35, #15312b);
+            background: linear-gradient(135deg, #111827, #1f2937);
             color: #e5ddd2;
             padding: 4rem 0 1rem;
             border-radius: 4rem 4rem 0 0;
@@ -1557,7 +1625,7 @@
         }
 
         .social-icons a {
-            background: #31554e;
+            background: rgba(211, 47, 47, 0.3);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -1571,7 +1639,7 @@
         }
 
         .social-icons a:hover {
-            background: #b68b6e;
+            background: #d32f2f;
             color: white;
             transform: translateY(-5px);
         }
@@ -1579,7 +1647,7 @@
         .footer-bottom {
             text-align: center;
             padding: 2rem 1rem 0;
-            border-top: 1px solid #406156;
+            border-top: 1px solid rgba(211, 47, 47, 0.3);
             margin-top: 3rem;
             color: #9faa9e;
         }
@@ -1594,7 +1662,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #1e4f4a, #b68b6e);
+            background: linear-gradient(135deg, #1a3a6b, #d32f2f);
             border-radius: 5px;
         }
 
@@ -1793,6 +1861,53 @@
                 opacity: 1;
             }
         }
+
+        /* ===== ACTIVITIES CAROUSEL ===== */
+        .activities-carousel {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 2.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 1rem;
+        }
+
+        .activity-item {
+            flex: 0 0 450px;
+            min-width: 450px;
+        }
+        /* hide scrollbar */
+        .activities-carousel::-webkit-scrollbar { display: none; }
+        .activities-carousel { -ms-overflow-style: none; scrollbar-width: none; }
+        @media (max-width: 1024px) {
+            .activity-item {
+                flex: 0 0 350px;
+                min-width: 350px;
+            }
+        }
+        @media (max-width: 768px) {
+            .activities-carousel {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                overflow-y: hidden;
+                gap: 1.5rem;
+            }
+            .activity-item {
+                flex: 0 0 300px;
+                min-width: 300px;
+                margin-bottom: 0;
+            }
+        }
+        @media (max-width: 480px) {
+            .activities-carousel {
+                gap: 1rem;
+            }
+            .activity-item {
+                flex: 0 0 250px;
+                min-width: 250px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1806,7 +1921,6 @@
         <div class="hero-content">
             <h1 class="hero-title">Béjaïa : Là où la montagne embrasse la mer</h1>
             <p class="hero-description">Entre vestiges historiques et eaux cristallines, évadez-vous dans cette perle de la Méditerranée.</p>
-            <a href="#apropos" class="btn">DÉCOUVREZ NOTRE HISTOIRE</a>
             <div class="hero-stats">
                 <span class="stat-badge">Déjà plus de 10 000 visiteurs cette saison</span>
             </div>
@@ -1815,134 +1929,108 @@
         <div class="wave"></div>
     </section>
 
-    <!-- À propos -->
-    <section id="apropos" class="apropos-section">
+       <!-- Activités (avec carrousel auto-scroller) -->
+    <section id="activites" class="activities-section">
         <div class="container">
-            <h2 class="section-title">Qui Sommes-nous ?</h2>
-            <div class="apropos-content">
-                <div class="apropos-text">
-                    <p><strong>VisitBejaia</strong> est votre partenaire idéal pour explorer Béjaïa de manière authentique et inoubliable. Née d'une passion profonde pour la Méditerranée et la richesse culturelle amazighe, notre agence propose des expériences uniques et mémorables.</p>
-                    <p>Depuis plus de 10 ans, notre équipe d'experts locaux accompagne des milliers de voyageurs en quête d'aventure et d'authenticité. Nous garantissons un accès privilégié aux plus beaux sites, une logistique irréprochable et un service haut de gamme.</p>
-                    <p>📍 <strong>Localisation :</strong> Béjaïa - Côte Méditerranéenne | 🌍 <strong>Certifiée :</strong> Agence de Voyage Algérienne</p>
-                    <a href="#activites" class="btn">Découvrir nos activités</a>
-                </div>
-                <div class="apropos-media">
-                    <div class="slider">
-                        <div class="slide"><img src="assets/images/i.jpeg" alt="Bejaia paysage"></div>
-                        <div class="slide"><video autoplay loop muted class="slide-video"><source src="assets/videos/video.mp4" type="video/mp4"></video></div>
-                        <div class="slide"><img src="assets/images/i1.jpeg" alt="Activités Bejaia"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-      
-    <!-- Incontournables -->
-    <section id="incontournables" class="must-see-section">
-        <div class="container">
-            <h2 class="section-title">À Ne Pas Manquer 🏛️</h2>
-            <p class="section-subtitle">Les attractions incontournables de Béjaïa et sa région</p>
-            <div class="must-see-grid">
-                <div class="must-see-card" data-modal="grotte">
-                    <div class="card-image" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTaoxIotXyCVhTLvvoFDFp6rAMyDVI9TLx7g&s')">
+            <h2 class="section-title">Nos Activités</h2>
+            <p class="section-subtitle">Vivez des expériences inoubliables à Béjaïa</p>
+            <div class="activities-carousel">
+                <div class="activity-item destination-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600')">
                         <div class="card-overlay"></div>
                     </div>
                     <div class="card-content">
-                        <h3>Les grottes de la côte ouest</h3>
-                        <div class="card-meta">
-                            <span>3 Jours / 2 Nuits</span>
-                            <span class="rating">⭐ 4.8</span>
+                        <h3>Sortie en bateau</h3>
+                        <p>Explorez les côtes magnifiques de Béjaïa en bateau</p>
+                        <div class="card-footer">
+                            <span class="price">À partir de 5 000 DZD</span>
+                            <a href="activites.html#bateau" class="btn-discover-enhanced">
+                                <span>Découvrir</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="must-see-card" data-modal="ferme">
-                    <div class="card-image" style="background-image: url('data:image/jpeg;base64,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')">
+                <div class="activity-item destination-card">
+                    <div class="card-image" style="background-image: url('assets/images/quad.jpeg')">
                         <div class="card-overlay"></div>
                     </div>
                     <div class="card-content">
-                        <h3>Découvrir la ferme Djerba</h3>
-                        <div class="card-meta">
-                            <span>3 Jours / 2 Nuits</span>
-                            <span class="rating">⭐ 4.8</span>
+                        <h3>Quad</h3>
+                        <p>Aventure palpitante à travers les sentiers montagneux</p>
+                        <div class="card-footer">
+                            <span class="price">À partir de 6 500 DZD</span>
+                            <a href="activites.html#quad" class="btn-discover-enhanced">
+                                <span>Découvrir</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="must-see-card" data-modal="historique">
-                    <div class="card-image" style="background-image: url('assets/images/casbah.jpg')">
+                <div class="activity-item destination-card">
+                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=600')">
                         <div class="card-overlay"></div>
                     </div>
                     <div class="card-content">
-                        <h3>Visite des sites historiques</h3>
-                        <div class="card-meta">
-                            <span>2 Jours / 1 Nuit</span>
-                            <span class="rating">⭐ 4.9</span>
+                        <h3>Randonnée à Cheval</h3>
+                        <p>Parcourez les paysages pittoresques de Béjaïa</p>
+                        <div class="card-footer">
+                            <span class="price">À partir de 4 500 DZD</span>
+                            <a href="activites.html#cheval" class="btn-discover-enhanced">
+                                <span>Découvrir</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="must-see-card" data-modal="vol">
-                    <div class="card-image" style="background-image: url('assets/images/vol.jpg')">
+                <div class="activity-item destination-card">
+                    <div class="card-image" style="background-image: url('assets/images/plonge.jpg')">
                         <div class="card-overlay"></div>
                     </div>
                     <div class="card-content">
-                        <h3>Vol au-dessus de la Méditerranée</h3>
-                        <div class="card-meta">
-                            <span>1 Jour</span>
-                            <span class="rating">⭐ 4.7</span>
+                        <h3>Plongée Sous-Marine</h3>
+                        <p>Explorez le monde sous-marin de la Méditerranée</p>
+                        <div class="card-footer">
+                            <span class="price">À partir de 7 500 DZD</span>
+                            <a href="activites.html#plongee" class="btn-discover-enhanced">
+                                <span>Découvrir</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="must-see-card" data-modal="petite-casbah">
-                    <div class="card-image" style="background-image: url('assets/images/casbah.jpg')">
+                <div class="activity-item destination-card">
+                    <div class="card-image" style="background-image: url('assets/images/padlle.jpg')">
                         <div class="card-overlay"></div>
                     </div>
                     <div class="card-content">
-                        <h3>La petite Casbah de Béjaïa</h3>
-                        <div class="card-meta">
-                            <span>1 Jour</span>
-                            <span class="rating">⭐ 4.6</span>
+                        <h3>Paddle</h3>
+                        <p>Glissez sur les eaux cristallines en paddle</p>
+                        <div class="card-footer">
+                            <span class="price">À partir de 3 500 DZD</span>
+                            <a href="activites.html#paddle" class="btn-discover-enhanced">
+                                <span>Découvrir</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="must-see-card" data-modal="fort">
-                    <div class="card-image" style="background-image: url('assets/images/goraya.jpg')">
+                <div class="activity-item destination-card">
+                    <div class="card-image" style="background-image: url('assets/images/jets.jpg')">
                         <div class="card-overlay"></div>
                     </div>
                     <div class="card-content">
-                        <h3>Fort Yemma Gouraya</h3>
-                        <div class="card-meta">
-                            <span>1 Jour</span>
-                            <span class="rating">⭐ 4.7</span>
+                        <h3>Jet Ski</h3>
+                        <p>Frissons garantis en jet ski le long des côtes</p>
+                        <div class="card-footer">
+                            <span class="price">À partir de 8 500 DZD</span>
+                            <a href="activites.html#jetski" class="btn-discover-enhanced">
+                                <span>Découvrir</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="must-see-card" data-modal="paddle">
-                    <div class="card-image" style="background-image: url('data:image/jpeg;base64,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')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Initiation au paddle</h3>
-                        <div class="card-meta">
-                            <span>0.5 Jour</span>
-                            <span class="rating">⭐ 4.5</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="must-see-card" data-modal="location">
-                    <div class="card-image" style="background-image: url('data:image/jpeg;base64,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')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Location voiture ou van</h3>
-                        <div class="card-meta">
-                            <span>À la journée</span>
-                            <span class="rating">⭐ 4.6</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="must-see-text">
-                <p>Réservez vos activités avec <strong>VisitBejaia</strong> pour garantir l'accès aux principales attractions, optimiser votre logistique et profiter pleinement de vos vacances en famille ou entre amis.</p>
             </div>
         </div>
     </section>
@@ -1964,10 +2052,11 @@
         </div>
     </div>
 
+
     <!-- NOUVELLE SECTION DESTINATION SIMPLE (1 SEULE IMAGE) -->
     <section class="destination-simple-section">
         <div class="destination-simple-container">
-            <h2 class="section-title">Destination</h2>
+            <h2 class="section-title">Incontournables</h2>
             <p class="section-subtitle">Découvrez nos destinations de rêve</p>
             
             <a href="destination.html" class="destination-simple-card">
@@ -1980,6 +2069,30 @@
                     </div>
                 </div>
             </a>
+        </div>
+    </section>
+    <!-- SECTION HÉBERGEMENT -->
+    <section id="hebergement" class="accommodation-section" style="padding: 5rem 0; background: #ffffff;">
+        <div class="container">
+            <h2 class="section-title">Hébergement de Charme</h2>
+            <p class="section-subtitle">Choisissez parmi des appartements, villas et riads soigneusement sélectionnés pour votre confort à Béjaïa.</p>
+            <div class="accommodation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                    <img src="assets/images/villa4.jpg" alt="Appartement Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Appartement Vue Mer</h3>
+                    <p style="margin: 0 0 1rem; color: #4e655f;">Confort moderne, balcon panoramique et accès direct à la plage.</p>
+                </article>
+                <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                    <img src="assets/images/villa.jpg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Villa Familiale</h3>
+                    <p style="margin: 0 0 1rem; color: #4e655f;">Piscine privée, jardin ombragé et service personnalisé.</p>
+                </article>
+                <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                    <img src="assets/images/villa5.jpg" alt="Riad Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                    <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Riad Authentique</h3>
+                    <p style="margin: 0 0 1rem; color: #4e655f;">Ambiance traditionnelle, patio central et petit-déjeuner local offert.</p>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -2035,111 +2148,31 @@
         </div>
     </section>
 
-    <!-- Activités (avec bouton Découvrir amélioré) -->
-    <section id="activites" class="activities-section">
+   
+
+
+       <!-- À propos -->
+    <section id="apropos" class="apropos-section">
         <div class="container">
-            <h2 class="section-title">Nos Activités</h2>
-            <p class="section-subtitle">Vivez des expériences inoubliables à Béjaïa</p>
-            <div class="destinations-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;">
-                <div class="destination-card">
-                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Sortie en bateau</h3>
-                        <p>Explorez les côtes magnifiques de Béjaïa en bateau</p>
-                        <div class="card-footer">
-                            <span class="price">À partir de 5 000 DZD</span>
-                            <a href="activites.html#bateau" class="btn-discover-enhanced">
-                                <span>Découvrir</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
+            <h2 class="section-title">Qui Sommes-nous ?</h2>
+            <div class="apropos-content">
+                <div class="apropos-text">
+                    <p><strong>VisitBejaia</strong> est votre partenaire idéal pour explorer Béjaïa de manière authentique et inoubliable. Née d'une passion profonde pour la Méditerranée et la richesse culturelle amazighe, notre agence propose des expériences uniques et mémorables.</p>
+                    <p>Depuis plus de 10 ans, notre équipe d'experts locaux accompagne des milliers de voyageurs en quête d'aventure et d'authenticité. Nous garantissons un accès privilégié aux plus beaux sites, une logistique irréprochable et un service haut de gamme.</p>
+                    <p>📍 <strong>Localisation :</strong> Béjaïa - Côte Méditerranéenne | 🌍 <strong>Certifiée :</strong> Agence de Voyage Algérienne</p>
+                    <a href="#activites" class="btn">Découvrir nos activités</a>
                 </div>
-                <div class="destination-card">
-                    <div class="card-image" style="background-image: url('assets/images/quad.jpeg')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Quad</h3>
-                        <p>Aventure palpitante à travers les sentiers montagneux</p>
-                        <div class="card-footer">
-                            <span class="price">À partir de 6 500 DZD</span>
-                            <a href="activites.html#quad" class="btn-discover-enhanced">
-                                <span>Découvrir</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="destination-card">
-                    <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=600')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Randonnée à Cheval</h3>
-                        <p>Parcourez les paysages pittoresques de Béjaïa</p>
-                        <div class="card-footer">
-                            <span class="price">À partir de 4 500 DZD</span>
-                            <a href="activites.html#cheval" class="btn-discover-enhanced">
-                                <span>Découvrir</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="destination-card">
-                    <div class="card-image" style="background-image: url('assets/images/plonge.jpg')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Plongée Sous-Marine</h3>
-                        <p>Explorez le monde sous-marin de la Méditerranée</p>
-                        <div class="card-footer">
-                            <span class="price">À partir de 7 500 DZD</span>
-                            <a href="activites.html#plongee" class="btn-discover-enhanced">
-                                <span>Découvrir</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="destination-card">
-                    <div class="card-image" style="background-image: url('assets/images/padlle.jpg')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Paddle</h3>
-                        <p>Glissez sur les eaux cristallines en paddle</p>
-                        <div class="card-footer">
-                            <span class="price">À partir de 3 500 DZD</span>
-                            <a href="activites.html#paddle" class="btn-discover-enhanced">
-                                <span>Découvrir</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="destination-card">
-                    <div class="card-image" style="background-image: url('assets/images/jets.jpg')">
-                        <div class="card-overlay"></div>
-                    </div>
-                    <div class="card-content">
-                        <h3>Jet Ski</h3>
-                        <p>Frissons garantis en jet ski le long des côtes</p>
-                        <div class="card-footer">
-                            <span class="price">À partir de 8 500 DZD</span>
-                            <a href="activites.html#jetski" class="btn-discover-enhanced">
-                                <span>Découvrir</span>
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+                <div class="apropos-media">
+                    <div class="slider">
+                        <div class="slide"><img src="assets/images/i.jpeg" alt="Bejaia paysage"></div>
+                        <div class="slide"><video autoplay loop muted class="slide-video"><source src="assets/videos/video.mp4" type="video/mp4"></video></div>
+                        <div class="slide"><img src="assets/images/i1.jpeg" alt="Activités Bejaia"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+ 
 
     <!-- Contact -->
     <section id="contact" class="contact">
@@ -2206,25 +2239,18 @@
                 </div>
                 <div class="form-group"><label>Type d'Hébergement</label><select id="destRegimen"><option value="demi-pension">Demi-Pension</option><option value="pension-complete">Pension Complète</option><option value="chambre-seule">Chambre Seule</option><option value="tout-inclus">Tout Inclus</option></select></div>
                 <div class="form-group"><label>Demandes Spéciales</label><textarea id="destRequests" class="textarea" placeholder="Vos souhaits et préférences..."></textarea></div>
-                <div style="background:#f4f0ea;padding:1.2rem;border-radius:60px;margin-bottom:2rem;text-align:center;"><p style="margin:0;font-weight:600;color:#1e4f4a;">Prix estimé: <span id="destTotalPrice">0 DZD</span></p></div>
+                <div style="background:#f4f0ea;padding:1.2rem;border-radius:60px;margin-bottom:2rem;text-align:center;"><p style="margin:0;font-weight:600;color:#1a3a6b;">Prix estimé: <span id="destTotalPrice">0 DZD</span></p></div>
                 <button type="submit" class="btn-submit"><i class="fas fa-check"></i> Confirmer la Réservation</button>
                 <div class="form-message" id="destFormMessage"></div>
             </form>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-logo"><h3>VisitBejaia</h3><p>Votre expert en voyages authentiques à Béjaïa.</p></div>
-            <div class="footer-links"><h4>Liens</h4><ul><li><a href="#accueil">Accueil</a></li><li><a href="#apropos">À Propos</a></li><li><a href="#destinations">Destinations</a></li></ul></div>
-            <div class="footer-links"><h4>Activités</h4><ul><li><a href="#">Bateau</a></li><li><a href="#">Quad</a></li><li><a href="#">Cheval</a></li></ul></div>
-            <div class="footer-social"><h4>Suivez-nous</h4><div class="social-icons"><a href="https://web.facebook.com/visitbejaia06"><i class="fab fa-facebook-f"></i></a><a href="https://www.instagram.com/visit.bejaia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a></div></div>
-        </div>
-        <div class="footer-bottom"><p>© 2025 VisitBejaia. Tous droits réservés.</p></div>
-    </footer>
+    <!-- Footer placeholder -->
+    <div data-include="footer"></div>
     
     <script src="js/navbar.js"></script>
+    <script src="js/include-footer.js"></script>
     <script>
         // Email
         document.getElementById("contactForm").addEventListener("submit", async function(e){
@@ -2533,7 +2559,84 @@ Message : ${document.getElementById("message").value}
                 alert('Réservation confirmée !');
                 closeDestinationReservation();
             }
+
+            // ===== AUTO-SCROLL CAROUSEL =====
+            const carousel = document.querySelector('.activities-carousel');
+            if (carousel) {
+                // Déterminer la vitesse en fonction de la taille de l'écran
+                function getScrollSpeed() {
+                    if (window.innerWidth < 480) return 0.5;  // Très lent sur mobile
+                    if (window.innerWidth < 768) return 0.8;  // Lent sur tablette
+                    return 1;  // Normal sur desktop
+                }
+
+                let scrollSpeed = getScrollSpeed();
+                let isAutoScrolling = true;
+                let scrollInterval;
+
+                function startAutoScroll() {
+                    if (isAutoScrolling) return;
+                    isAutoScrolling = true;
+                    scrollSpeed = getScrollSpeed();
+                    scrollInterval = setInterval(() => {
+                        carousel.scrollLeft += scrollSpeed;
+                        // Reset to beginning when reaching the end
+                        if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 5) {
+                            carousel.scrollLeft = 0;
+                        }
+                    }, 20);
+                }
+
+                function stopAutoScroll() {
+                    isAutoScrolling = false;
+                    clearInterval(scrollInterval);
+                }
+
+                // Start auto-scroll après 1 seconde
+                setTimeout(() => {
+                    scrollSpeed = getScrollSpeed();
+                    scrollInterval = setInterval(() => {
+                        if (isAutoScrolling) {
+                            carousel.scrollLeft += scrollSpeed;
+                            if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 5) {
+                                carousel.scrollLeft = 0;
+                            }
+                        }
+                    }, 20);
+                }, 1000);
+
+                // Pause on mouse/touch enter
+                carousel.addEventListener('mouseenter', stopAutoScroll);
+                carousel.addEventListener('touchstart', stopAutoScroll);
+
+                // Resume on mouse/touch leave
+                carousel.addEventListener('mouseleave', startAutoScroll);
+                carousel.addEventListener('touchend', () => {
+                    setTimeout(startAutoScroll, 2000);
+                });
+
+                // Adapter la vitesse au redimensionnement
+                window.addEventListener('resize', () => {
+                    scrollSpeed = getScrollSpeed();
+                });
+
+                // Allow manual scrolling with wheel
+                carousel.addEventListener('wheel', (e) => {
+                    stopAutoScroll();
+                    setTimeout(startAutoScroll, 3000);
+                });
+
+                // Allow manual scrolling with touch
+                let touchStartX = 0;
+                carousel.addEventListener('touchmove', () => {
+                    stopAutoScroll();
+                });
+            }
         });
     </script>
 </body>
 </html>
+
+
+
+

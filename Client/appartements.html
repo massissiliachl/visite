@@ -11,8 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2a9d8f;
-            --primary-dark: #1e7065;
+            --primary: #1a3a6b;
+            --primary-dark: #2d5a9f;
             --light: #f8f9fa;
             --dark: #2d3436;
             --gray: #636e72;
@@ -135,8 +135,8 @@
 
     <header>
         <div class="container">
-            <h1>Nos Appartements Sélectionnés</h1>
-            <p>Appartements modernes, studios cosy ou grands logements avec vue imprenable, idéalement situés en centre-ville, bord de mer ou quartier résidentiel.</p>
+            <h1>Nos Appartements SÃ©lectionnÃ©s</h1>
+            <p>Appartements modernes, studios cosy ou grands logements avec vue imprenable, idÃ©alement situÃ©s en centre-ville, bord de mer ou quartier rÃ©sidentiel.</p>
         </div>
     </header>
 
@@ -149,16 +149,16 @@
                 <div class="appart-card">
                     <div class="appart-img" style="background-image: url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800');"></div>
                     <div class="card-body">
-                        <h3>Appartement Lumière Mer</h3>
+                        <h3>Appartement LumiÃ¨re Mer</h3>
                         <div class="location"><i class="fas fa-map-marker-alt"></i> Nice, France</div>
-                        <p class="description">Appartement rénové de 2 chambres avec balcon vue mer, à 5 min de la Promenade des Anglais.</p>
+                        <p class="description">Appartement rÃ©novÃ© de 2 chambres avec balcon vue mer, Ã  5 min de la Promenade des Anglais.</p>
                         <div class="details">
                             <div class="detail-item"><i class="fas fa-users"></i> 4 pers.</div>
                             <div class="detail-item"><i class="fas fa-bed"></i> 2 ch.</div>
                             <div class="detail-item"><i class="fas fa-wifi"></i> Wi-Fi rapide</div>
                         </div>
-                        <div class="price">Dès 135 € <small>/ nuit</small></div>
-                        <a href="#" class="btn">Voir les disponibilités</a>
+                        <div class="price">DÃ¨s 135 â‚¬ <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilitÃ©s</a>
                     </div>
                 </div>
 
@@ -174,8 +174,8 @@
                             <div class="detail-item"><i class="fas fa-bed"></i> 1 ch.</div>
                             <div class="detail-item"><i class="fas fa-mountain"></i> Vue panoramique</div>
                         </div>
-                        <div class="price">Dès 98 € <small>/ nuit</small></div>
-                        <a href="#" class="btn">Voir les disponibilités</a>
+                        <div class="price">DÃ¨s 98 â‚¬ <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilitÃ©s</a>
                     </div>
                 </div>
 
@@ -185,14 +185,14 @@
                     <div class="card-body">
                         <h3>Appartement Famille Plage</h3>
                         <div class="location"><i class="fas fa-map-marker-alt"></i> Hammamet, Tunisie</div>
-                        <p class="description">Bel appartement 3 chambres à 200 m de la plage, piscine commune et parking inclus.</p>
+                        <p class="description">Bel appartement 3 chambres Ã  200 m de la plage, piscine commune et parking inclus.</p>
                         <div class="details">
                             <div class="detail-item"><i class="fas fa-users"></i> 6 pers.</div>
                             <div class="detail-item"><i class="fas fa-bed"></i> 3 ch.</div>
-                            <div class="detail-item"><i class="fas fa-swimming-pool"></i> Piscine partagée</div>
+                            <div class="detail-item"><i class="fas fa-swimming-pool"></i> Piscine partagÃ©e</div>
                         </div>
-                        <div class="price">Dès 110 € <small>/ nuit</small></div>
-                        <a href="#" class="btn">Voir les disponibilités</a>
+                        <div class="price">DÃ¨s 110 â‚¬ <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilitÃ©s</a>
                     </div>
                 </div>
 
@@ -202,14 +202,14 @@
                     <div class="card-body">
                         <h3>Studio Cosy Vieux-Port</h3>
                         <div class="location"><i class="fas fa-map-marker-alt"></i> Marseille, France</div>
-                        <p class="description">Studio récent et lumineux au cœur du Vieux-Port, parfait pour un séjour court ou en couple.</p>
+                        <p class="description">Studio rÃ©cent et lumineux au cÅ“ur du Vieux-Port, parfait pour un sÃ©jour court ou en couple.</p>
                         <div class="details">
                             <div class="detail-item"><i class="fas fa-users"></i> 2 pers.</div>
                             <div class="detail-item"><i class="fas fa-bed"></i> Studio</div>
                             <div class="detail-item"><i class="fas fa-location-arrow"></i> Centre historique</div>
                         </div>
-                        <div class="price">Dès 79 € <small>/ nuit</small></div>
-                        <a href="#" class="btn">Voir les disponibilités</a>
+                        <div class="price">DÃ¨s 79 â‚¬ <small>/ nuit</small></div>
+                        <a href="#" class="btn">Voir les disponibilitÃ©s</a>
                     </div>
                 </div>
 
@@ -218,49 +218,21 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-logo">
-                <h3>VisitBejaia</h3>
-                <p>Votre partenaire de confiance pour découvrir Béjaïa authentique et inoubliable.</p>
-            </div>
+    <!-- Footer -->
+    <div id="footer-container"></div>
+    <script>
+        fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-container').innerHTML = data;
+        });
+    </script>
 
-            <div class="footer-links">
-                <h4>Liens rapides</h4>
-                <ul>
-                    <li><a href="index.html#accueil">Accueil</a></li>
-                    <li><a href="index.html#apropos">À Propos</a></li>
-                    <li><a href="index.html#destinations">Destinations</a></li>
-                    <li><a href="hebergement.html">Hébergement</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links">
-                <h4>Activités</h4>
-                <ul>
-                    <li><a href="#">Sortie en bateau</a></li>
-                    <li><a href="#">Randonnée quad</a></li>
-                    <li><a href="#">Randonnée cheval</a></li>
-                    <li><a href="#">Vol en parapente</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-social">
-                <h4>Suivez-nous</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p>© 2025 VisitBejaia. Tous droits réservés.</p>
-        </div>
-    </footer>
-
+    <div data-include="footer"></div>
+    <script src="js/include-footer.js"></script>
 </body>
 </html>
+
+
+
+
