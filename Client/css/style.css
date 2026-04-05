@@ -2382,7 +2382,17 @@ section {
     .must-see-text p {
         font-size: 1rem;
     }
-}.apropos-section {
+}
+
+
+
+
+
+
+
+
+
+.apropos-section {
     padding: 80px 20px;
     background: #f7f8fc;
   }
@@ -2395,8 +2405,13 @@ section {
   }
   
   .apropos-text {
-    flex: 1 1 400px;
-  }
+  padding: 20px;
+}
+
+.apropos-media img,
+.slide-video {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
   
   .apropos-text p {
     margin-bottom: 20px;
@@ -2453,11 +2468,13 @@ section {
   /* Responsive */
   @media screen and (max-width: 768px) {
     .apropos-content {
-      flex-direction: column;
       text-align: center;
     }
+    .apropos-text {
+      flex: 1 1 50%;
+    }
     .apropos-media {
-      width: 100%;
+      flex: 1 1 50%;
     }
   }
 
