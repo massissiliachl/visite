@@ -1915,103 +1915,387 @@
 
 
 /*apropos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.about-container{
-  display:flex;
-  gap:40px;
-  align-items:center;
-  flex-wrap:wrap;
-}
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+            overflow-x: hidden;
+        }
 
-/* CAROUSEL */
-.carousel{
-  position:relative;
-  width:100%;
-  max-width:500px;
-  height:320px;
-  overflow:hidden;
-  border-radius:25px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.25);
-}
+        /* Section principale */
+        .about-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            position: relative;
+        }
 
-/* PROGRESS BAR */
-.progress{
-  position:absolute;
-  top:0;
-  left:0;
-  height:3px;
-  width:0%;
-  background:white;
-  z-index:10;
-}
+        /* Effet de particules en arrière-plan */
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(79, 70, 229, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
 
-/* TRACK VERTICAL */
-.carousel-track{
-  display:flex;
-  flex-direction:column;
-  transition: transform 0.6s ease-in-out;
-}
+        .about-container {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 3rem;
+            flex-direction: row;
+            position: relative;
+            z-index: 1;
+        }
 
-/* SLIDES */
-.slide{
-  min-width:100%;
-  height:320px;
-  opacity:0.5;
-  transform:scale(0.95);
-  transition:0.6s ease;
-}
+        /* Colonne texte (gauche) - animations au scroll */
+        .about-content {
+            flex: 1;
+            min-width: 0;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.slide.active{
-  opacity:1;
-  transform:scale(1);
-}
+        .about-content.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
-.slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(6, 182, 212, 0.1));
+            color: #4f46e5;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.3px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(79, 70, 229, 0.2);
+            transition: all 0.3s ease;
+        }
 
-/* BUTTONS */
-button.prev, button.next{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(255,255,255,0.3);
-  border:none;
-  font-size:18px;
-  padding:8px 12px;
-  cursor:pointer;
-  border-radius:50%;
-  backdrop-filter:blur(10px);
-  z-index:5;
-}
+        .badge:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.25), rgba(6, 182, 212, 0.2));
+        }
 
-.prev{ top:10px; }
-.next{ bottom:10px; }
+        .about-content h2 {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #1f2937, #4f46e5, #06b6d4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1.2rem;
+            animation: gradientShift 5s ease infinite;
+            background-size: 200% 200%;
+        }
 
-/* DOTS */
-.dots{
-  position:absolute;
-  right:10px;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
 
-.dots span{
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  background:#ccc;
-  cursor:pointer;
-}
+        .description {
+            font-size: clamp(1rem, 4vw, 1.1rem);
+            line-height: 1.6;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
 
-.dots span.active{
-  background:black;
-} </style>
+        /* Liste avantages */
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            color: #1f2937;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .about-content.visible .features-list li:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateX(0); }
+        .about-content.visible .features-list li:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateX(0); }
+        .about-content.visible .features-list li:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateX(0); }
+
+        .check-icon {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #4f46e5;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .features-list li:hover .check-icon {
+            transform: scale(1.2) rotate(360deg);
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            color: white;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            padding: 0.9rem 2rem;
+            border-radius: 3rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+        }
+
+        /* ========== CARROUSEL 3D ========== */
+        .about-media {
+            flex: 1;
+            min-width: 0;
+            position: relative;
+            perspective: 1200px;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .about-media.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .carousel-3d {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: grab;
+        }
+
+        .carousel-3d:active {
+            cursor: grabbing;
+        }
+
+        .carousel-card {
+            position: absolute;
+            width: 80%;
+            height: 320px;
+            left: 10%;
+            top: 40px;
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: all 0.4s ease;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .carousel-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-card:hover {
+            transform: scale(1.05) translateZ(30px);
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-card:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Navigation du carrousel */
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4f46e5;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .dots {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 30px;
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            border-radius: 10px;
+        }
+
+        /* Carte flottante 3D */
+        .floating-card {
+            position: absolute;
+            bottom: -20px;
+            right: -15px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border: 1px solid rgba(255,255,255,0.5);
+            z-index: 20;
+            animation: float 3s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .floating-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .about-section {
+                padding: 3rem 1rem;
+            }
+            .about-container {
+                gap: 2rem;
+            }
+            .carousel-3d {
+                height: 320px;
+            }
+            .carousel-card {
+                height: 260px;
+                top: 30px;
+            }
+            .floating-card {
+                bottom: -10px;
+                right: -5px;
+                padding: 0.5rem 1rem;
+            }
+            .floating-number {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .about-container {
+                gap: 1rem;
+            }
+            .carousel-3d {
+                height: 280px;
+            }
+            .carousel-card {
+                height: 220px;
+                top: 30px;
+            }
+            .floating-card {
+                bottom: -5px;
+                right: 0;
+                padding: 0.4rem 0.8rem;
+            }
+            .floating-number {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Animation de rotation 3D au survol de la section */
+        .about-section:hover .carousel-3d {
+            transform: rotateY(5deg) rotateX(2deg);
+        }</style>
 </head>
 <body>
 
@@ -2255,46 +2539,53 @@ button.prev, button.next{
 
 
        <!-- À propos -->
-<section class="about">
-  <div class="about-container">
 
-    <!-- CARROUSEL -->
-    <div class="carousel">
-
-      <button class="prev">&#10094;</button>
-
-      <div class="progress"></div>
-
-      <div class="carousel-track" id="track">
-
-        <div class="slide">
-          <img src="assets/images/i.jpeg" />
+<section class="about-section">
+    <div class="about-container">
+        <!-- Bloc texte (GAUCHE) -->
+        <div class="about-content" id="textContent">
+            <span class="badge">🌿 À propos de nous</span>
+<h2>On ne se contente pas de montrer Béjaïa.<br>On vous fait la vivre.</h2>
+           
+<p class="description">
+    Avec Visit Béjaïa, nous réunissons nature, aventure et culture pour vous faire découvrir les meilleures activités de la région.  
+    Chaque expérience est pensée pour vous offrir des moments uniques entre mer, montagne et patrimoine.
+</p>
+<ul class="features-list">
+    <li><span class="check-icon">✓</span> Explorez des activités uniques à Béjaïa</li>
+    <li><span class="check-icon">✓</span> Vivez des expériences inoubliables</li>
+    <li><span class="check-icon">✓</span> Découvrez la région comme un local</li>
+</ul>
+            <a href="#" class="btn-primary">Découvrir nos activités →</a>
         </div>
 
-        <div class="slide">
-          <img src="assets/images/i1.jpeg" />
+        <!-- Bloc carrousel 3D (DROITE) -->
+        <div class="about-media" id="mediaContent">
+            <div class="carousel-3d" id="carousel3d">
+                <div class="carousel-card" data-index="0">
+                    <img src="assets/images/i.jpeg" alt="Équipe créative">
+                </div>
+                <div class="carousel-card" data-index="1">
+                    <img src="assets/images/i1.jpeg" alt="Atelier design">
+                </div>
+                <div class="carousel-card" data-index="2">
+                    <img src="assets/images/i1.jpeg" alt="Collaboration">
+                </div>
+                <div class="carousel-card" data-index="3">
+                    <img src="assets/images/i.jpeg" alt="Réunion créative">
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="nav-btn" id="prevBtn">←</button>
+                <div class="dots" id="dots"></div>
+                <button class="nav-btn" id="nextBtn">→</button>
+            </div>
+          <div class="floating-card">
+    <div class="floating-number">+50</div>
+    <div class="stat-label">Lieux<br>à découvrir</div>
+</div>
         </div>
-
-        <div class="slide">
-          <img src="assets/images/i.jpeg" />
-        </div>
-
-      </div>
-
-      <button class="next">&#10095;</button>
-
-      <div class="dots" id="dots"></div>
-
     </div>
-
-    <!-- TEXTE -->
-    <div class="about-text">
-      <h2>Explorez Béjaïa</h2>
-      <p>Découvrez les plus beaux paysages avec VisitBejaia.</p>
-      <a class="btn">Découvrir</a>
-    </div>
-
-  </div>
 </section>
     <!-- Contact -->
     <section id="contact" class="contact">
@@ -2383,117 +2674,127 @@ button.prev, button.next{
 /* a propos */
 
 
-const track = document.getElementById("track");
-const slides = document.querySelectorAll(".slide");
-const next = document.querySelector(".next");
-const prev = document.querySelector(".prev");
-const dotsContainer = document.getElementById("dots");
-const progress = document.querySelector(".progress");
 
-let index = 0;
-let interval;
+    // ========== ANIMATION AU SCROLL ==========
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
+    };
 
-// DOTS
-slides.forEach((_, i) => {
-  const dot = document.createElement("span");
-  if (i === 0) dot.classList.add("active");
-  dotsContainer.appendChild(dot);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
 
-  dot.addEventListener("click", () => goToSlide(i));
-});
+    observer.observe(document.getElementById('textContent'));
+    observer.observe(document.getElementById('mediaContent'));
 
-const dots = document.querySelectorAll(".dots span");
+    // ========== CARROUSEL 3D ==========
+    const carousel = document.getElementById('carousel3d');
+    const cards = document.querySelectorAll('.carousel-card');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('dots');
+    
+    let currentIndex = 0;
+    const totalCards = cards.length;
+    let isDragging = false;
+    let startX = 0;
+    let currentRotation = 0;
 
-// UPDATE
-function update() {
-  track.style.transform = `translateY(-${index * 100}%)`;
-
-  slides.forEach(s => s.classList.remove("active"));
-  slides[index].classList.add("active");
-
-  dots.forEach(d => d.classList.remove("active"));
-  dots[index].classList.add("active");
-
-  animateProgress();
-}
-
-// NEXT / PREV
-next.addEventListener("click", () => {
-  index = (index + 1) % slides.length;
-  update();
-});
-
-prev.addEventListener("click", () => {
-  index = (index - 1 + slides.length) % slides.length;
-  update();
-});
-
-// DOT CLICK
-function goToSlide(i){
-  index = i;
-  update();
-}
-
-// AUTOPLAY
-function startAutoplay(){
-  return setInterval(() => {
-    index = (index + 1) % slides.length;
-    update();
-  }, 4000);
-}
-
-// PROGRESS BAR
-function animateProgress(){
-  progress.style.transition = "none";
-  progress.style.width = "0%";
-
-  setTimeout(() => {
-    progress.style.transition = "width 4s linear";
-    progress.style.width = "100%";
-  }, 50);
-}
-
-// SWIPE MOBILE
-let startY = 0;
-
-track.addEventListener("touchstart", (e) => {
-  startY = e.touches[0].clientY;
-});
-
-track.addEventListener("touchend", (e) => {
-  let endY = e.changedTouches[0].clientY;
-  let diff = startY - endY;
-
-  if (Math.abs(diff) > 50) {
-    if (diff > 0) {
-      index = (index + 1) % slides.length;
-    } else {
-      index = (index - 1 + slides.length) % slides.length;
+    // Créer les dots
+    for (let i = 0; i < totalCards; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === currentIndex) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
     }
-    update();
-  }
-});
 
-// HOVER PAUSE
-const carousel = document.querySelector(".carousel");
+    const dots = document.querySelectorAll('.dot');
 
-carousel.addEventListener("mouseenter", () => {
-  clearInterval(interval);
-});
+    function updateCarousel() {
+        const angle = (currentIndex / totalCards) * -360;
+        currentRotation = angle;
+        
+        cards.forEach((card, index) => {
+            const cardAngle = (index / totalCards) * 360;
+            const transform = `
+                rotateY(${cardAngle + angle}deg) 
+                translateZ(250px)
+            `;
+            card.style.transform = transform;
+            card.style.opacity = '1';
+            card.style.visibility = 'visible';
+        });
+        
+        // Mettre à jour les dots
+        dots.forEach((dot, index) => {
+            if (index === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+        
+        // Animation 3D supplémentaire
+        carousel.style.transform = `rotateY(${angle}deg)`;
+    }
 
-carousel.addEventListener("mouseleave", () => {
-  interval = startAutoplay();
-});
+    function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
 
-// INIT
-update();
-interval = startAutoplay();
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalCards;
+        updateCarousel();
+    }
 
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+        updateCarousel();
+    }
 
+    // Événements de navigation
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
 
+    // Drag pour faire tourner le carrousel
+    carousel.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        carousel.style.cursor = 'grabbing';
+    });
 
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const deltaX = e.clientX - startX;
+        if (Math.abs(deltaX) > 50) {
+            if (deltaX > 0) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+            isDragging = false;
+        }
+    });
 
+    window.addEventListener('mouseup', () => {
+        isDragging = false;
+        carousel.style.cursor = 'grab';
+    });
 
+    // Initialisation
+    updateCarousel();
+
+    // Auto-rotation (optionnelle - décommentez si voulu)
+    // let autoRotate = setInterval(nextSlide, 4000);
+    // carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
+    // carousel.addEventListener('mouseleave', () => autoRotate = setInterval(nextSlide, 4000));
 // Email
         document.getElementById("contactForm").addEventListener("submit", async function(e){
             e.preventDefault();
