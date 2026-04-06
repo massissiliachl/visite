@@ -12,8 +12,7 @@ require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
-
-app.use('/reservations', reservationRoutes);
+app.use('/api/reservations', reservationRoutes);
 app.use('/availability', availabilityRoutes);
 
 // ============================
