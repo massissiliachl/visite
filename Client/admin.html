@@ -1,710 +1,829 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VisitBejaïa - Admin Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Admin Dashboard | Visit Bejaia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+        }
 
-  <!-- FullCalendar 6 -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+        /* Sidebar */
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 10;
+        }
 
-  <style>
-    :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --primary: #1d4ed8;
-      --accent: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --border: #e2e8f0;
-      --sidebar: #ffffff;
-      --shadow: 0 6px 20px rgba(0,0,0,0.08);
-    }
+        .sidebar-header {
+            padding: 1.8rem 1.5rem;
+            border-bottom: 1px solid #334155;
+        }
 
-    [data-theme="dark"] {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --primary: #60a5fa;
-      --accent: #34d399;
-      --border: #334155;
-      --sidebar: #1e293b;
-    }
+        .sidebar-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f97316, #fbbf24);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      transition: all 0.3s ease;
-    }
+        .sidebar-header p {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 0.3rem;
+        }
 
-    .layout { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.5rem;
+            margin: 0.3rem 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #cbd5e1;
+        }
 
-    .sidebar {
-      background: var(--sidebar);
-      border-right: 1px solid var(--border);
-      padding: 1.5rem 0;
-      overflow-y: auto;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-    }
+        .nav-item i {
+            width: 24px;
+            font-size: 1.2rem;
+        }
 
-    .sidebar-header {
-      padding: 0 1.5rem 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid var(--border);
-    }
+        .nav-item.active {
+            background: #f97316;
+            color: white;
+            border-radius: 12px;
+            margin: 0.3rem 1rem;
+            padding: 0.9rem 1rem;
+        }
 
-    .logo { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
+        .nav-item:hover:not(.active) {
+            background: #334155;
+            border-radius: 12px;
+            margin: 0.3rem 1rem;
+            padding: 0.9rem 1rem;
+        }
 
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0.9rem 1.5rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.25s;
-    }
+        /* Main content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem 2rem;
+        }
 
-    .nav-item:hover, .nav-item.active {
-      background: rgba(29,78,216,0.08);
-      color: var(--primary);
-    }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
+        .page-title h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
 
-    .header-left { display: flex; align-items: center; gap: 1.5rem; }
-    .menu-toggle { font-size: 1.6rem; cursor: pointer; color: var(--text-muted); }
-    .page-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        /* Contenu des pages */
+        .page-content {
+            display: none;
+        }
 
-    .header-right { display: flex; align-items: center; gap: 1.4rem; }
-    .icon-btn {
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 0.6rem;
-      border-radius: 50%;
-      transition: all 0.2s;
-    }
-    .icon-btn:hover { background: rgba(29,78,216,0.1); color: var(--primary); }
+        .page-content.active-page {
+            display: block;
+        }
 
-    main { padding: 2rem; overflow-y: auto; }
+        /* Stats cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.6rem;
-      margin-bottom: 2.5rem;
-    }
+        .stat-card {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
 
-    .stat-card {
-      background: var(--card);
-      border-radius: 1.2rem;
-      padding: 1.8rem;
-      box-shadow: var(--shadow);
-      transition: transform 0.3s;
-    }
+        .stat-card h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #64748b;
+        }
 
-    .stat-card:hover { transform: translateY(-6px); }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 0.3rem;
+        }
 
-    .stat-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary); }
-    .stat-value { font-size: 2.4rem; font-weight: 700; }
-    .stat-label { color: var(--text-muted); font-size: 1rem; }
+        .filter-bar {
+            background: white;
+            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .chart-card {
-      background: var(--card);
-      border-radius: 1.2rem;
-      padding: 1.8rem;
-      box-shadow: var(--shadow);
-      margin-bottom: 2rem;
-    }
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            gap: 0.5rem;
+        }
 
-    #adminCalendar {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: var(--card);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-    }
+        .search-box input {
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.9rem;
+            width: 220px;
+        }
 
-    .status-badge {
-      padding: 0.4rem 1.1rem;
-      border-radius: 2rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
+        .status-filter select {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid #cbd5e1;
+            background: white;
+        }
 
-    .status-en_attente { background: #fef3c7; color: #92400e; }
-    .status-acceptee  { background: #dcfce7; color: #166534; }
-    .status-refusee   { background: #fee2e2; color: #991b1b; }
+        /* Table */
+        .table-container {
+            background: white;
+            border-radius: 1.5rem;
+            overflow-x: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
 
-    .action-buttons button {
-      padding: 0.7rem 1.4rem;
-      border: none;
-      border-radius: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-right: 0.8rem;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
 
-    .btn-accept { background: var(--accent); color: white; }
-    .btn-refuse  { background: var(--danger); color: white; }
+        th {
+            text-align: left;
+            padding: 1rem 1.2rem;
+            background: #f8fafc;
+            font-weight: 600;
+            border-bottom: 1px solid #e2e8f0;
+        }
 
-    @media (max-width: 1024px) {
-      .layout { grid-template-columns: 1fr; }
-      .sidebar { position: fixed; left: -260px; width: 260px; z-index: 100; transition: left 0.3s; }
-      .sidebar.open { left: 0; }
-    }
-  </style>
+        td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.7rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-en_attente { background: #fef3c7; color: #b45309; }
+        .status-acceptee { background: #dcfce7; color: #166534; }
+        .status-refusee { background: #fee2e2; color: #991b1b; }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.3rem;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .btn-accept { color: #16a34a; }
+        .btn-accept:hover { background: #dcfce7; }
+        .btn-refuse { color: #dc2626; }
+        .btn-refuse:hover { background: #fee2e2; }
+        .btn-view { color: #3b82f6; }
+        .btn-view:hover { background: #eff6ff; }
+
+        /* Modal détails */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 1.5rem;
+            max-width: 550px;
+            width: 90%;
+            padding: 2rem;
+            position: relative;
+        }
+        .modal-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .detail-row {
+            display: flex;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .detail-label {
+            width: 130px;
+            font-weight: 600;
+            color: #475569;
+        }
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+
+        /* Style pour la page bloquer dates */
+        .bloquer-container {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .bloquer-container h2 {
+            margin-bottom: 1rem;
+            color: #0f172a;
+        }
+
+        .bloquer-container p {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+        }
+
+        .date-picker-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .date-picker-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .date-picker-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #ea580c;
+        }
+
+        .dates-bloquees {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .dates-bloquees h3 {
+            margin-bottom: 1rem;
+            color: #0f172a;
+        }
+
+        .date-tag {
+            display: inline-block;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+            margin: 0.25rem;
+            font-size: 0.85rem;
+        }
+
+        .date-tag i {
+            margin-right: 0.3rem;
+            cursor: pointer;
+            color: #dc2626;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 70px; }
+            .sidebar-header p, .sidebar-header h2 span, .nav-item span:not(i) { display: none; }
+            .sidebar-header h2 { font-size: 1rem; text-align: center; }
+            .nav-item { justify-content: center; padding: 0.9rem 0; }
+            .main-content { margin-left: 70px; }
+        }
+    </style>
 </head>
 <body>
-
-<div class="layout">
-
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <i class="fas fa-sailboat fa-2x" style="color:var(--primary)"></i>
-      <span class="logo">VisitBejaïa</span>
+<div class="admin-layout">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-umbrella-beach"></i> <span>Visit Bejaia</span></h2>
+            <p>Administration</p>
+        </div>
+        <div class="nav-item active" data-page="reservations">
+            <i class="fas fa-calendar-check"></i> <span>Réservations</span>
+        </div>
+        <div class="nav-item" data-page="bloquer">
+            <i class="fas fa-ban"></i> <span>Bloquer une date</span>
+        </div>
+        <div class="nav-item" data-page="stats">
+            <i class="fas fa-chart-line"></i> <span>Statistiques</span>
+        </div>
+        <div class="nav-item" data-page="settings">
+            <i class="fas fa-cog"></i> <span>Paramètres</span>
+        </div>
     </div>
-    <nav style="margin-top:2rem;">
-      <a href="#" class="nav-item active"><i class="fas fa-home"></i> Dashboard</a>
-      <a href="#" class="nav-item"><i class="fas fa-calendar-check"></i> Réservations</a>
-      <a href="#" class="nav-item"><i class="fas fa-calendar-days"></i> Disponibilités</a>
-      <a href="#" class="nav-item"><i class="fas fa-mountain"></i> Activités</a>
-      <a href="#" class="nav-item"><i class="fas fa-bed"></i> Hébergements</a>
-      <a href="#" class="nav-item"><i class="fas fa-users"></i> Clients</a>
-    </nav>
-  </aside>
 
-  <div style="display:flex; flex-direction:column; width:100%;">
-    <header>
-      <div class="header-left">
-        <button class="icon-btn menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-        <h1 class="page-title">Dashboard Admin - VisitBejaïa</h1>
-      </div>
-      <div class="header-right">
-        <button class="icon-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-        <button class="icon-btn"><i class="fas fa-bell"></i></button>
-        <div style="display:flex; align-items:center; gap:12px;">
-          <div style="text-align:right;">
-            <div style="font-weight:600;">Admin</div>
-            <div style="font-size:0.9rem; color:var(--text-muted);">visitbejaia.dz</div>
-          </div>
-          <i class="fas fa-user-circle fa-2x" style="color:var(--primary)"></i>
-        </div>
-      </div>
-    </header>
+    <div class="main-content">
+        <!-- Page Réservations -->
+        <div id="page-reservations" class="page-content active-page">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1><i class="fas fa-ticket-alt"></i> Gestion des réservations</h1>
+                    <p>Consultez, acceptez ou refusez les demandes clients</p>
+                </div>
+                <button id="refreshBtn" style="background:#f97316; border:none; padding:0.6rem 1.2rem; border-radius:2rem; color:white; cursor:pointer;"><i class="fas fa-sync-alt"></i> Actualiser</button>
+            </div>
 
-    <main>
+            <!-- Stats cards -->
+            <div class="stats-cards" id="statsCards">
+                <div class="stat-card"><h3>Total réservations</h3><div class="stat-number" id="totalCount">0</div></div>
+                <div class="stat-card"><h3>En attente</h3><div class="stat-number" id="pendingCount">0</div></div>
+                <div class="stat-card"><h3>Acceptées</h3><div class="stat-number" id="acceptedCount">0</div></div>
+                <div class="stat-card"><h3>Refusées</h3><div class="stat-number" id="refusedCount">0</div></div>
+            </div>
 
-      <!-- Statistiques -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <i class="fas fa-plane-departure stat-icon"></i>
-          <div class="stat-value" id="total">0</div>
-          <div class="stat-label">Total Réservations</div>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-hourglass-half stat-icon" style="color:var(--warning)"></i>
-          <div class="stat-value" id="pending">0</div>
-          <div class="stat-label">En attente</div>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-check-circle stat-icon" style="color:var(--accent)"></i>
-          <div class="stat-value" id="accepted">0</div>
-          <div class="stat-label">Acceptées</div>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-times-circle stat-icon" style="color:var(--danger)"></i>
-          <div class="stat-value" id="refused">0</div>
-          <div class="stat-label">Refusées</div>
-        </div>
-      </div>
+            <!-- Filtres -->
+            <div class="filter-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Nom, email, téléphone...">
+                </div>
+                <div class="status-filter">
+                    <select id="statusFilter">
+                        <option value="all">Tous les statuts</option>
+                        <option value="en_attente">En attente</option>
+                        <option value="acceptee">Acceptée</option>
+                        <option value="refusee">Refusée</option>
+                    </select>
+                </div>
+            </div>
 
-      <!-- Graphique exemple -->
-      <div class="chart-card">
-        <h3 style="margin-bottom:1rem;">Évolution des réservations (exemple)</h3>
-        <canvas id="reservationsChart" height="140"></canvas>
-      </div>
-
-      <!-- Gestion disponibilités -->
-      <h2 style="margin:3rem 0 1rem; font-size:1.6rem; color:var(--primary);">Gestion des disponibilités</h2>
-
-      <div class="chart-card">
-        <div style="margin-bottom:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
-          <select id="activitySelect" style="padding:0.8rem; border-radius:8px; border:1px solid var(--border); min-width:240px; font-size:1rem;">
-            <option value="">Choisir une activité</option>
-          </select>
-          <button onclick="refreshCalendar()" class="btn-accept" style="padding:0.8rem 1.6rem; font-size:1rem;">
-            <i class="fas fa-sync-alt"></i> Actualiser
-          </button>
+            <!-- Tableau -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="reservationsTableBody">
+                        <tr><td colspan="8" style="text-align:center;">Chargement...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <div id="adminCalendar"></div>
-      </div>
-
-      <!-- Réservations récentes -->
-      <h2 style="margin:3.5rem 0 1rem; font-size:1.5rem; color:var(--primary);">Réservations récentes</h2>
-      <div id="reservations" style="display:grid; gap:1.4rem;"></div>
-
-      <!-- Table des paiements à valider -->
-      <h2 style="margin:3.5rem 0 1rem; font-size:1.5rem; color:var(--primary);">Validation des paiements</h2>
-      <div class="chart-card">
-        <div style="margin-bottom:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
-          <input id="searchInput" type="text" placeholder="Rechercher..." style="padding:0.8rem; border-radius:8px; border:1px solid var(--border); min-width:200px; font-size:1rem;" oninput="filterReservations()" />
-          <select id="statusFilter" onchange="filterReservations()" style="padding:0.8rem; border-radius:8px; border:1px solid var(--border); font-size:1rem;">
-            <option value="all">Tous statuts</option>
-            <option value="en_attente">En attente</option>
-            <option value="acceptee">Acceptées</option>
-            <option value="refusee">Refusées</option>
-          </select>
-          <select id="paiementFilter" onchange="filterReservations()" style="padding:0.8rem; border-radius:8px; border:1px solid var(--border); font-size:1rem;">
-            <option value="all">Tous paiements</option>
-            <option value="non_saisi">Non saisi</option>
-            <option value="attente_validation">Attente validation</option>
-            <option value="valide">Valide</option>
-            <option value="refuse">Refusé</option>
-          </select>
+        <!-- Page Bloquer une date -->
+        <div id="page-bloquer" class="page-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1><i class="fas fa-ban"></i> Bloquer une date</h1>
+                    <p>Bloquez des dates pour lesquelles les réservations ne seront pas disponibles</p>
+                </div>
+            </div>
+            <div class="bloquer-container">
+                <h2>Bloquer une nouvelle date</h2>
+                <p>Sélectionnez une date à bloquer. Les clients ne pourront pas réserver pour cette date.</p>
+                
+                <div class="date-picker-group">
+                    <label for="blockedDate"><i class="fas fa-calendar-alt"></i> Date à bloquer :</label>
+                    <input type="date" id="blockedDate">
+                </div>
+                
+                <button class="btn-primary" onclick="blockDate()">
+                    <i class="fas fa-lock"></i> Bloquer cette date
+                </button>
+                
+                <div class="dates-bloquees">
+                    <h3><i class="fas fa-calendar-times"></i> Dates déjà bloquées</h3>
+                    <div id="blockedDatesList">
+                        <!-- Les dates bloquées seront affichées ici -->
+                        <p>Aucune date bloquée pour le moment.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div style="overflow-x:auto;">
-          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.9rem;">
-            <thead>
-              <tr style="background:var(--primary); color:white;">
-                <th style="padding:12px; border:1px solid var(--border);">Client</th>
-                <th style="padding:12px; border:1px solid var(--border);">Activité</th>
-                <th style="padding:12px; border:1px solid var(--border);">Date</th>
-                <th style="padding:12px; border:1px solid var(--border);">Pers.</th>
-                <th style="padding:12px; border:1px solid var(--border);">Mode</th>
-                <th style="padding:12px; border:1px solid var(--border);">Réf tx</th>
-                <th style="padding:12px; border:1px solid var(--border);">Acompte 30%</th>
-                <th style="padding:12px; border:1px solid var(--border);">Statut paiement</th>
-                <th style="padding:12px; border:1px solid var(--border);">Statut résa</th>
-                <th style="padding:12px; border:1px solid var(--border);">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="reservationsTableBody"></tbody>
-          </table>
+        <!-- Page Statistiques (simple) -->
+        <div id="page-stats" class="page-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1><i class="fas fa-chart-line"></i> Statistiques</h1>
+                    <p>Vue d'ensemble des performances</p>
+                </div>
+            </div>
+            <div class="stats-cards" id="statsCardsCopy">
+                <div class="stat-card"><h3>Total réservations</h3><div class="stat-number" id="statsTotalCount">0</div></div>
+                <div class="stat-card"><h3>En attente</h3><div class="stat-number" id="statsPendingCount">0</div></div>
+                <div class="stat-card"><h3>Acceptées</h3><div class="stat-number" id="statsAcceptedCount">0</div></div>
+                <div class="stat-card"><h3>Refusées</h3><div class="stat-number" id="statsRefusedCount">0</div></div>
+            </div>
         </div>
-      </div>
 
-    </main>
-  </div>
+        <!-- Page Paramètres -->
+        <div id="page-settings" class="page-content">
+            <div class="top-bar">
+                <div class="page-title">
+                    <h1><i class="fas fa-cog"></i> Paramètres</h1>
+                    <p>Configuration de l'application</p>
+                </div>
+            </div>
+            <div class="bloquer-container">
+                <h2>Configuration admin</h2>
+                <p>Vous pouvez configurer les emails admin, les notifications et autres paramètres dans le fichier .env</p>
+                <div class="date-picker-group">
+                    <label>Email de notification :</label>
+                    <input type="email" placeholder="admin@visitbejaia.com" style="width:100%; padding:0.75rem; border:1px solid #cbd5e1; border-radius:0.75rem;">
+                </div>
+                <div class="date-picker-group">
+                    <label>Notifications :</label>
+                    <select style="width:100%; padding:0.75rem; border:1px solid #cbd5e1; border-radius:0.75rem;">
+                        <option>Activer toutes les notifications</option>
+                        <option>Désactiver les notifications</option>
+                    </select>
+                </div>
+                <button class="btn-primary" onclick="alert('Paramètres sauvegardés (démo)')">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Détails -->
+<div class="modal-overlay" id="detailModal">
+    <div class="modal-card">
+        <span class="close-modal" id="closeDetailModal">&times;</span>
+        <h3><i class="fas fa-info-circle"></i> Détails réservation</h3>
+        <div id="detailContent"></div>
+    </div>
 </div>
 
 <script>
-// Theme toggle
-document.getElementById('themeToggle')?.addEventListener('click', () => {
-  const html = document.documentElement;
-  const current = html.getAttribute('data-theme');
-  html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
-  document.getElementById('themeToggle').innerHTML = current === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-});
+    // Configuration API (backend)
+    const API_BASE = 'http://localhost:3000/api';
+    let reservationsData = [];
+    
+    // Stockage des dates bloquées (localStorage pour persistance)
+    let blockedDates = [];
 
-// Sidebar mobile
-document.getElementById('menuToggle')?.addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('open');
-});
+    // Charger les dates bloquées depuis localStorage
+    function loadBlockedDates() {
+        const stored = localStorage.getItem('visitbejaia_blocked_dates');
+        if (stored) {
+            blockedDates = JSON.parse(stored);
+        } else {
+            // Dates d'exemple
+            blockedDates = ['2025-05-20', '2025-05-25'];
+            saveBlockedDates();
+        }
+        renderBlockedDates();
+    }
 
-// Chart.js exemple
-const ctx = document.getElementById('reservationsChart')?.getContext('2d');
-if (ctx) {
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août'],
-      datasets: [{
-        label: 'Réservations',
-        data: [12, 19, 28, 35, 42, 55, 68, 82],
-        borderColor: 'rgba(29, 78, 216, 1)',
-        backgroundColor: 'rgba(29, 78, 216, 0.12)',
-        tension: 0.3,
-        fill: true
-      }]
-    },
-    options: { responsive: true, plugins: { legend: { display: false } } }
-  });
-}
+    function saveBlockedDates() {
+        localStorage.setItem('visitbejaia_blocked_dates', JSON.stringify(blockedDates));
+    }
 
-// Chargement des réservations
-async function loadReservations() {
-  try {
-    const res = await fetch("http://localhost:3000/reservations");
-    if (!res.ok) throw new Error(`Erreur ${res.status}`);
-    const data = await res.json();
+    function renderBlockedDates() {
+        const container = document.getElementById('blockedDatesList');
+        if (!container) return;
+        
+        if (blockedDates.length === 0) {
+            container.innerHTML = '<p>Aucune date bloquée pour le moment.</p>';
+            return;
+        }
+        
+        container.innerHTML = blockedDates.map(date => `
+            <span class="date-tag">
+                ${new Date(date).toLocaleDateString('fr-FR')}
+                <i class="fas fa-times-circle" onclick="unblockDate('${date}')" style="cursor:pointer; margin-left:0.5rem;"></i>
+            </span>
+        `).join('');
+    }
 
-    const container = document.getElementById("reservations");
-    if (!container) return;
+    function blockDate() {
+        const dateInput = document.getElementById('blockedDate');
+        const date = dateInput.value;
+        
+        if (!date) {
+            alert('Veuillez sélectionner une date');
+            return;
+        }
+        
+        if (blockedDates.includes(date)) {
+            alert('Cette date est déjà bloquée');
+            return;
+        }
+        
+        blockedDates.push(date);
+        saveBlockedDates();
+        renderBlockedDates();
+        dateInput.value = '';
+        alert(`Date ${new Date(date).toLocaleDateString('fr-FR')} a été bloquée avec succès`);
+    }
+    
+    function unblockDate(date) {
+        if (confirm(`Débloquer la date ${new Date(date).toLocaleDateString('fr-FR')} ?`)) {
+            blockedDates = blockedDates.filter(d => d !== date);
+            saveBlockedDates();
+            renderBlockedDates();
+            alert('Date débloquée');
+        }
+    }
 
-    container.innerHTML = "";
+    // Helper pour récupérer les réservations
+    async function fetchReservations() {
+        try {
+            const response = await fetch(`${API_BASE}/reservations`);
+            if (!response.ok) throw new Error('Erreur réseau');
+            const data = await response.json();
+            reservationsData = data;
+            renderStats();
+            applyFiltersAndRender();
+            updateStatsPage();
+        } catch (error) {
+            console.warn('Backend indisponible, utilisation données mockées');
+            // Mock data pour démo / fallback
+            reservationsData = getMockReservations();
+            renderStats();
+            applyFiltersAndRender();
+            updateStatsPage();
+        }
+    }
 
-    let pending = 0, accepted = 0, refused = 0;
+    // Données mockées pour démonstration (si backend pas encore connecté)
+    function getMockReservations() {
+        return [
+            { id: 1, nom: "Benali", prenom: "Karim", email: "karim@test.com", telephone: "0555123456", nom_item: "Quad", date_depart: "2025-05-10", nb_personnes: 2, prix_total: 8000, status: "en_attente", paiement_statut: "non_saisi", transaction_ref: null, mode_paiement: "BaridiMob", demandes_speciales: "Option 45min" },
+            { id: 2, nom: "Idir", prenom: "Samia", email: "samia@test.com", telephone: "0777665544", nom_item: "Parasailing", date_depart: "2025-05-12", nb_personnes: 3, prix_total: 30000, status: "en_attente", paiement_statut: "attente_validation", transaction_ref: "TRX12345", mode_paiement: "CCP" },
+            { id: 3, nom: "Ait", prenom: "Lydia", email: "lydia@test.com", telephone: "0661122334", nom_item: "Jet Ski", date_depart: "2025-05-15", nb_personnes: 1, prix_total: 30000, status: "acceptee", paiement_statut: "valide" },
+            { id: 4, nom: "Ouali", prenom: "Mehdi", email: "mehdi@test.com", telephone: "0555988776", nom_item: "Bouée Tractée", date_depart: "2025-05-18", nb_personnes: 4, prix_total: 12000, status: "refusee" }
+        ];
+    }
 
-    data.forEach(r => {
-      if (r.status === "en_attente") pending++;
-      if (r.status === "acceptee") accepted++;
-      if (r.status === "refusee") refused++;
+    function renderStats() {
+        const total = reservationsData.length;
+        const pending = reservationsData.filter(r => r.status === 'en_attente').length;
+        const accepted = reservationsData.filter(r => r.status === 'acceptee').length;
+        const refused = reservationsData.filter(r => r.status === 'refusee').length;
+        document.getElementById('totalCount').innerText = total;
+        document.getElementById('pendingCount').innerText = pending;
+        document.getElementById('acceptedCount').innerText = accepted;
+        document.getElementById('refusedCount').innerText = refused;
+    }
+    
+    function updateStatsPage() {
+        const total = reservationsData.length;
+        const pending = reservationsData.filter(r => r.status === 'en_attente').length;
+        const accepted = reservationsData.filter(r => r.status === 'acceptee').length;
+        const refused = reservationsData.filter(r => r.status === 'refusee').length;
+        const totalEl = document.getElementById('statsTotalCount');
+        const pendingEl = document.getElementById('statsPendingCount');
+        const acceptedEl = document.getElementById('statsAcceptedCount');
+        const refusedEl = document.getElementById('statsRefusedCount');
+        if (totalEl) totalEl.innerText = total;
+        if (pendingEl) pendingEl.innerText = pending;
+        if (acceptedEl) acceptedEl.innerText = accepted;
+        if (refusedEl) refusedEl.innerText = refused;
+    }
 
-      container.innerHTML += `
-        <div class="chart-card" style="border-left:5px solid var(--primary);">
-          <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:1rem;">
-            <div>
-              <h3 style="margin:0; font-size:1.3rem;">${r.nom || '?'} ${r.prenom || ''}</h3>
-              <div style="color:var(--text-muted); margin:0.4rem 0;">
-                <i class="fas fa-envelope"></i> ${r.email || '—'} • 
-                <i class="fas fa-phone"></i> ${r.telephone || '—'}
-              </div>
-            </div>
-            <span class="status-badge status-${r.status}">${r.status.replace("_", " ")}</span>
-          </div>
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:0.8rem; margin:1rem 0;">
-            <div><strong>Activité :</strong> ${r.nom_item || '?'}</div>
-            <div><strong>Personnes :</strong> ${r.nb_personnes || 1}</div>
-            <div><strong>Prix :</strong> ${r.prix_total || 0} DZD</div>
-            <div><strong>Départ :</strong> ${r.date_depart ? new Date(r.date_depart).toLocaleDateString('fr-FR') : '—'}</div>
-          </div>
-          <div class="action-buttons">
-            <button class="btn-accept" onclick="updateStatus(${r.id}, 'acceptee')">✔ Accepter</button>
-            <button class="btn-refuse" onclick="updateStatus(${r.id}, 'refusee')">✖ Refuser</button>
-          </div>
-        </div>
-      `;
+    function applyFiltersAndRender() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const statusVal = document.getElementById('statusFilter').value;
+        let filtered = [...reservationsData];
+        if (searchTerm) {
+            filtered = filtered.filter(r => 
+                (r.nom && r.nom.toLowerCase().includes(searchTerm)) ||
+                (r.prenom && r.prenom.toLowerCase().includes(searchTerm)) ||
+                (r.email && r.email.toLowerCase().includes(searchTerm)) ||
+                (r.telephone && r.telephone.includes(searchTerm))
+            );
+        }
+        if (statusVal !== 'all') {
+            filtered = filtered.filter(r => r.status === statusVal);
+        }
+        renderTable(filtered);
+    }
+
+    function renderTable(reservations) {
+        const tbody = document.getElementById('reservationsTableBody');
+        if (!reservations.length) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Aucune réservation trouvée</td></tr>';
+            return;
+        }
+        tbody.innerHTML = reservations.map(res => {
+            const statusClass = `status-${res.status}`;
+            const statusLabel = res.status === 'en_attente' ? 'En attente' : (res.status === 'acceptee' ? 'Acceptée' : 'Refusée');
+            const fullName = `${res.nom || ''} ${res.prenom || ''}`.trim() || '—';
+            const dateFormatted = res.date_depart ? new Date(res.date_depart).toLocaleDateString('fr-FR') : '—';
+            return `
+                <tr>
+                    <td>#${res.id}</td>
+                    <td>${fullName}<br><small style="color:#64748b">${res.email || ''}</small></td>
+                    <td>${res.nom_item || '—'}</td>
+                    <td>${dateFormatted}</td>
+                    <td>${res.nb_personnes || 1}</td>
+                    <td>${(res.prix_total || 0).toLocaleString('fr-DZ')} DA</td>
+                    <td><span class="status-badge ${statusClass}">${statusLabel}</span></td>
+                    <td class="action-btns">
+                        <button class="btn-icon btn-view" onclick="viewDetails(${res.id})" title="Voir détails"><i class="fas fa-eye"></i></button>
+                        ${res.status === 'en_attente' ? `
+                            <button class="btn-icon btn-accept" onclick="updateStatus(${res.id}, 'acceptee')" title="Accepter"><i class="fas fa-check-circle"></i></button>
+                            <button class="btn-icon btn-refuse" onclick="updateStatus(${res.id}, 'refusee')" title="Refuser"><i class="fas fa-times-circle"></i></button>
+                        ` : ''}
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // Accepter / Refuser via API
+    async function updateStatus(reservationId, newStatus) {
+        if (!confirm(`Confirmer la ${newStatus === 'acceptee' ? 'validation' : 'réfutation'} de cette réservation ?`)) return;
+        try {
+            const endpoint = newStatus === 'acceptee' ? `${API_BASE}/reservations/${reservationId}/accept` : `${API_BASE}/reservations/${reservationId}/refuse`;
+            const response = await fetch(endpoint, { method: 'PUT' });
+            if (!response.ok) throw new Error('Erreur mise à jour');
+            const index = reservationsData.findIndex(r => r.id === reservationId);
+            if (index !== -1) reservationsData[index].status = newStatus;
+            renderStats();
+            applyFiltersAndRender();
+            updateStatsPage();
+            alert(`Réservation ${newStatus === 'acceptee' ? 'acceptée' : 'refusée'} avec succès.`);
+        } catch (err) {
+            console.error(err);
+            const index = reservationsData.findIndex(r => r.id === reservationId);
+            if (index !== -1) {
+                reservationsData[index].status = newStatus;
+                renderStats();
+                applyFiltersAndRender();
+                updateStatsPage();
+                alert(`(Mode démo) Réservation ${newStatus === 'acceptee' ? 'acceptée' : 'refusée'} localement.`);
+            } else {
+                alert("Erreur lors de la modification.");
+            }
+        }
+    }
+
+    // Détails modal
+    function viewDetails(id) {
+        const reservation = reservationsData.find(r => r.id === id);
+        if (!reservation) return;
+        const detailHtml = `
+            <div class="detail-row"><div class="detail-label">Client :</div><div>${reservation.nom} ${reservation.prenom}</div></div>
+            <div class="detail-row"><div class="detail-label">Email :</div><div>${reservation.email || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Téléphone :</div><div>${reservation.telephone || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Activité :</div><div>${reservation.nom_item || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Date départ :</div><div>${reservation.date_depart ? new Date(reservation.date_depart).toLocaleDateString('fr-FR') : '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Participants :</div><div>${reservation.nb_personnes}</div></div>
+            <div class="detail-row"><div class="detail-label">Prix total :</div><div>${(reservation.prix_total || 0).toLocaleString('fr-DZ')} DA</div></div>
+            <div class="detail-row"><div class="detail-label">Mode paiement :</div><div>${reservation.mode_paiement || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Transaction :</div><div>${reservation.transaction_ref || 'Non fourni'}</div></div>
+            <div class="detail-row"><div class="detail-label">Statut paiement :</div><div>${reservation.paiement_statut || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Demandes :</div><div>${reservation.demandes_speciales || 'Aucune'}</div></div>
+            <div class="detail-row"><div class="detail-label">Statut :</div><div><span class="status-badge status-${reservation.status}">${reservation.status === 'en_attente' ? 'En attente' : (reservation.status === 'acceptee' ? 'Acceptée' : 'Refusée')}</span></div></div>
+        `;
+        document.getElementById('detailContent').innerHTML = detailHtml;
+        document.getElementById('detailModal').classList.add('active');
+    }
+
+    // Navigation entre pages
+    function showPage(pageName) {
+        // Cacher toutes les pages
+        document.querySelectorAll('.page-content').forEach(page => {
+            page.classList.remove('active-page');
+        });
+        // Afficher la page sélectionnée
+        const activePage = document.getElementById(`page-${pageName}`);
+        if (activePage) {
+            activePage.classList.add('active-page');
+        }
+        
+        // Mettre à jour le titre dans la top-bar
+        const pageTitles = {
+            'reservations': 'Gestion des réservations',
+            'bloquer': 'Bloquer une date',
+            'stats': 'Statistiques',
+            'settings': 'Paramètres'
+        };
+        const titleEl = document.querySelector('.page-title h1');
+        if (titleEl && pageTitles[pageName]) {
+            const icons = {
+                'reservations': '<i class="fas fa-ticket-alt"></i>',
+                'bloquer': '<i class="fas fa-ban"></i>',
+                'stats': '<i class="fas fa-chart-line"></i>',
+                'settings': '<i class="fas fa-cog"></i>'
+            };
+            titleEl.innerHTML = `${icons[pageName]} ${pageTitles[pageName]}`;
+        }
+        
+        // Recharger les stats si on va sur la page stats
+        if (pageName === 'stats') {
+            updateStatsPage();
+        }
+    }
+
+    // Event listeners
+    document.getElementById('searchInput')?.addEventListener('input', applyFiltersAndRender);
+    document.getElementById('statusFilter')?.addEventListener('change', applyFiltersAndRender);
+    document.getElementById('refreshBtn')?.addEventListener('click', () => fetchReservations());
+    document.getElementById('closeDetailModal')?.addEventListener('click', () => document.getElementById('detailModal').classList.remove('active'));
+    document.getElementById('detailModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('detailModal')) document.getElementById('detailModal').classList.remove('active'); });
+    
+    // Navigation tabs
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            item.classList.add('active');
+            const page = item.dataset.page;
+            showPage(page);
+        });
     });
 
-    document.getElementById("total").textContent = data.length;
-    document.getElementById("pending").textContent = pending;
-    document.getElementById("accepted").textContent = accepted;
-    document.getElementById("refused").textContent = refused;
+    // Initial load
+    loadBlockedDates();
+    fetchReservations();
 
-  } catch (err) {
-    console.error("Erreur loadReservations:", err);
-    const container = document.getElementById("reservations");
-    if (container) {
-      container.innerHTML = `<p style="color:var(--danger); text-align:center; padding:3rem;">Erreur : ${err.message}</p>`;
-    }
-  }
-}
-
-// Mise à jour statut
-async function updateStatus(id, status) {
-  if (!id || isNaN(id)) return alert("ID invalide");
-
-  const endpoint = status === 'acceptee' ? 'accept' : 'refuse';
-  try {
-    const res = await fetch(`http://localhost:3000/reservations/${id}/${endpoint}`, { method: "PUT" });
-    if (!res.ok) throw new Error(await res.text());
-    loadReservations();
-  } catch (err) {
-    alert("Échec mise à jour : " + err.message);
-  }
-}
-
-// Gestion calendrier + blocage/déblocage
-let calendar = null;
-let currentActivity = '';
-
-async function loadActivities() {
-  try {
-    const res = await fetch("http://localhost:3000/reservations");
-    const data = await res.json();
-    const activities = [...new Set(data.map(r => r.nom_item).filter(Boolean))];
-
-    const select = document.getElementById("activitySelect");
-    if (select) {
-      select.innerHTML = '<option value="">Choisir une activité</option>';
-      activities.forEach(act => {
-        const opt = document.createElement("option");
-        opt.value = act;
-        opt.textContent = act.charAt(0).toUpperCase() + act.slice(1);
-        select.appendChild(opt);
-      });
-    }
-  } catch (err) {
-    console.error("Erreur chargement activités:", err);
-  }
-}
-
-async function loadBlockedDates(activity) {
-  if (!activity) return [];
-  try {
-    const res = await fetch(`http://localhost:3000/availability/${encodeURIComponent(activity)}`);
-    if (!res.ok) return [];
-    return await res.json(); // ex: ["2026-02-17", ...]
-  } catch (err) {
-    console.error("Erreur chargement dates bloquées:", err);
-    return [];
-  }
-}
-
-async function initCalendar() {
-  const calendarEl = document.getElementById('adminCalendar');
-  if (!calendarEl) return console.warn("Calendrier introuvable");
-
-  calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek'
-    },
-    locale: 'fr',
-    height: 'auto',
-    selectable: true,
-    dateClick: async function(info) {
-      if (!currentActivity) {
-        alert("Sélectionne d'abord une activité dans la liste !");
-        return;
-      }
-
-      const dateStr = info.dateStr;
-      const blockedDates = await loadBlockedDates(currentActivity);
-      const isBlocked = blockedDates.includes(dateStr);
-
-      if (isBlocked) {
-        // Débloquer
-        if (confirm(`Débloquer la date ${dateStr} pour ${currentActivity} ?`)) {
-          try {
-            const res = await fetch(`http://localhost:3000/availability/block/${encodeURIComponent(currentActivity)}/${dateStr}`, {
-              method: 'DELETE'
-            });
-            if (res.ok) {
-              alert("Date débloquée avec succès");
-              calendar.refetchEvents();
-            } else {
-              alert("Erreur lors du déblocage");
-            }
-          } catch (err) {
-            alert("Erreur réseau : " + err.message);
-          }
-        }
-      } else {
-        // Bloquer
-        if (confirm(`Bloquer la date ${dateStr} pour ${currentActivity} ?`)) {
-          try {
-            const res = await fetch("http://localhost:3000/availability/block", {
-              method: 'POST',
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                nom_item: currentActivity,
-                date: dateStr,
-                reason: "bloqué par admin"
-              })
-            });
-            if (res.ok) {
-              alert("Date bloquée avec succès");
-              calendar.refetchEvents();
-            } else {
-              alert("Erreur lors du blocage");
-            }
-          } catch (err) {
-            alert("Erreur réseau : " + err.message);
-          }
-        }
-      }
-    },
-    events: async function(fetchInfo, successCallback) {
-      if (!currentActivity) return successCallback([]);
-
-      const blocked = await loadBlockedDates(currentActivity);
-      const events = blocked.map(d => ({
-        start: d,
-        allDay: true,
-        display: 'background',
-        color: '#ef4444', // rouge vif pour bloqué
-        title: 'Bloqué'
-      }));
-
-      successCallback(events);
-    }
-  });
-
-  calendar.render();
-}
-
-function refreshCalendar() {
-  currentActivity = document.getElementById("activitySelect")?.value || '';
-  if (calendar) calendar.refetchEvents();
-}
-
-// Variables globales pour la table des réservations
-let allReservations = [];
-
-// Chargement des réservations pour la table détaillée
-async function loadReservationsTable() {
-  try {
-    const res = await fetch("http://localhost:3000/reservations");
-    if (!res.ok) throw new Error(`Erreur ${res.status}`);
-    allReservations = await res.json();
-    renderReservationsTable(allReservations);
-  } catch (err) {
-    console.error("Erreur loadReservationsTable:", err);
-    const tbody = document.getElementById("reservationsTableBody");
-    if (tbody) {
-      tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; padding:2rem; color:var(--danger);">Erreur : ${err.message}</td></tr>`;
-    }
-  }
-}
-
-// Rendu de la table des réservations
-function renderReservationsTable(reservations) {
-  const tbody = document.getElementById("reservationsTableBody");
-  if (!tbody) return;
-
-  tbody.innerHTML = '';
-
-  if (reservations.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:2rem;">Aucune réservation</td></tr>';
-    return;
-  }
-
-  reservations.forEach(r => {
-    const date = r.date_depart ? new Date(r.date_depart).toLocaleDateString('fr-FR') : 'N/A';
-    const acompte = (r.acompte_30pct || 0).toLocaleString('fr-DZ') + ' DZD';
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td style="padding:12px; border:1px solid var(--border);">${r.nom} ${r.prenom}</td>
-      <td style="padding:12px; border:1px solid var(--border);">${r.nom_item || '-'}</td>
-      <td style="padding:12px; border:1px solid var(--border);">${date}</td>
-      <td style="padding:12px; border:1px solid var(--border); text-align:center;">${r.nb_personnes}</td>
-      <td style="padding:12px; border:1px solid var(--border);">${r.mode_paiement || '-'}</td>
-      <td style="padding:12px; border:1px solid var(--border); font-weight:bold; color:var(--primary);">${r.transaction_ref || '-'}</td>
-      <td style="padding:12px; border:1px solid var(--border); text-align:right;">${acompte}</td>
-      <td style="padding:12px; border:1px solid var(--border);">
-        <span style="padding:4px 8px; border-radius:12px; font-size:0.8rem; font-weight:600; ${r.paiement_statut === 'valide' ? 'background:#dcfce7; color:#166534;' : 'background:#fef3c7; color:#92400e;'}">
-          ${r.paiement_statut || 'non_saisi'}
-        </span>
-      </td>
-      <td style="padding:12px; border:1px solid var(--border);">
-        <span style="padding:4px 8px; border-radius:12px; font-size:0.8rem; font-weight:600; ${r.status === 'acceptee' ? 'background:#dcfce7; color:#166534;' : r.status === 'refusee' ? 'background:#fee2e2; color:#991b1b;' : 'background:#fef3c7; color:#92400e;'}">
-          ${r.status || 'en_attente'}
-        </span>
-      </td>
-      <td style="padding:12px; border:1px solid var(--border);">
-        <button style="padding:6px 10px; background:var(--accent); color:white; border:none; border-radius:6px; cursor:pointer; margin-right:4px;" onclick="validatePayment(${r.id})">Valider</button>
-        <button style="padding:6px 10px; background:var(--danger); color:white; border:none; border-radius:6px; cursor:pointer;" onclick="refusePayment(${r.id})">Refuser</button>
-      </td>
-    `;
-    tbody.appendChild(row);
-  });
-}
-
-// Validation paiement
-async function validatePayment(id) {
-  await updateReservationStatus(id, { paiement_statut: 'valide', status: 'acceptee' });
-}
-
-// Refus paiement
-async function refusePayment(id) {
-  await updateReservationStatus(id, { paiement_statut: 'refuse', status: 'refusee' });
-}
-
-// Mise à jour statut réservation
-async function updateReservationStatus(id, updates) {
-  try {
-    // D'abord mettre à jour le statut de paiement
-    if (updates.paiement_statut) {
-      const res1 = await fetch(`http://localhost:3000/reservations/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ paiement_statut: updates.paiement_statut })
-      });
-      if (!res1.ok) throw new Error('Erreur mise à jour paiement');
-    }
-
-    // Ensuite mettre à jour le statut de réservation
-    if (updates.status) {
-      const endpoint = updates.status === 'acceptee' ? 'accept' : 'refuse';
-      const res2 = await fetch(`http://localhost:3000/reservations/${id}/${endpoint}`, {
-        method: 'PUT'
-      });
-      if (!res2.ok) throw new Error('Erreur mise à jour réservation');
-    }
-
-    // Recharger les données
-    await loadReservations();
-    await loadReservationsTable();
-
-  } catch (err) {
-    alert('Erreur mise à jour : ' + err.message);
-  }
-}
-
-// Filtrage de la table
-function filterReservations() {
-  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-  const statusFilter = document.getElementById('statusFilter').value;
-  const paiementFilter = document.getElementById('paiementFilter').value;
-
-  const filtered = allReservations.filter(r => {
-    const matchesSearch = [r.nom, r.prenom, r.nom_item, r.transaction_ref, r.email].join(' ').toLowerCase().includes(searchTerm);
-    const matchesStatus = statusFilter === 'all' || r.status === statusFilter;
-    const matchesPaiement = paiementFilter === 'all' || r.paiement_statut === paiementFilter;
-
-    return matchesSearch && matchesStatus && matchesPaiement;
-  });
-
-  renderReservationsTable(filtered);
-}
-
-// ───────────────────────────────────────────────
-// Initialisation complète
-document.addEventListener('DOMContentLoaded', async () => {
-  await loadReservations();
-  await loadReservationsTable();
-  await loadActivities();
-  await initCalendar();
-
-  // Rafraîchir quand changement d'activité
-  document.getElementById("activitySelect")?.addEventListener("change", refreshCalendar);
-});
+    // Exposer les fonctions globalement
+    window.updateStatus = updateStatus;
+    window.viewDetails = viewDetails;
+    window.blockDate = blockDate;
+    window.unblockDate = unblockDate;
 </script>
-
-<!-- Footer -->
-<div id="footer-container"></div>
-<script>
-    fetch('footer.html')
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('footer-container').innerHTML = data;
-    });
-</script>
-
-    <div data-include="footer"></div>
-    <script src="js/include-footer.js"></script>
 </body>
 </html>
-
-
-
-

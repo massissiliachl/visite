@@ -2,8 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>À propos - Carrousel 3D & animations wow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Visite Béjaïa | Agence Aventure - Quad & Parapente 3D</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,553 +16,667 @@
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 30% 10%, #0a0f05, #030603);
             overflow-x: hidden;
-        }
-
-        /* Section principale */
-        .about-section {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 5rem 2rem;
+            color: #fff;
             position: relative;
         }
 
-        /* Effet de particules en arrière-plan */
-        .about-section::before {
-            content: '';
-            position: absolute;
+        /* Canvas 3D plein écran responsive */
+        #canvas-container {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(79, 70, 229, 0.03) 0%, transparent 50%);
+            width: 100%;
+            height: 100%;
+            z-index: 0;
             pointer-events: none;
         }
 
-        .about-container {
-            display: flex;
-            flex-wrap: nowrap;
-            align-items: center;
-            gap: 3rem;
-            flex-direction: row;
+        /* Section principale avec padding responsive */
+        .about-section {
             position: relative;
-            z-index: 1;
+            z-index: 2;
+            padding: clamp(40px, 8vw, 100px) clamp(15px, 5vw, 60px);
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        /* Colonne texte (gauche) - animations au scroll */
-        .about-content {
-            flex: 1;
-            min-width: 0;
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Header responsive */
+        .section-header {
+            text-align: center;
+            margin-bottom: clamp(40px, 8vw, 80px);
         }
 
-        .about-content.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .badge {
+        .section-tag {
             display: inline-block;
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(6, 182, 212, 0.1));
-            color: #4f46e5;
-            font-weight: 600;
-            font-size: 0.85rem;
-            padding: 0.4rem 1rem;
-            border-radius: 2rem;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.3px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(79, 70, 229, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .badge:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, rgba(79, 70, 229, 0.25), rgba(6, 182, 212, 0.2));
-        }
-
-        .about-content h2 {
-            font-size: clamp(1.8rem, 5vw, 3rem);
+            background: linear-gradient(135deg, #ff2200, #ff6600, #ffaa00);
+            color: white;
+            font-size: clamp(0.7rem, 3vw, 0.9rem);
             font-weight: 800;
-            line-height: 1.2;
-            background: linear-gradient(135deg, #1f2937, #4f46e5, #06b6d4);
-            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: clamp(2px, 1vw, 4px);
+            padding: clamp(6px, 2vw, 12px) clamp(15px, 4vw, 30px);
+            border-radius: 50px;
+            margin-bottom: clamp(15px, 4vw, 30px);
+            box-shadow: 0 0 30px rgba(255,68,0,0.5);
+            animation: tagPulse 1.5s infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes tagPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(255,68,0,0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 40px rgba(255,68,0,0.9); transform: scale(1.03); }
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-weight: 900;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffffff, #ffaa44, #ff4400, #ff2200);
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
-            margin-bottom: 1.2rem;
-            animation: gradientShift 5s ease infinite;
-            background-size: 200% 200%;
+            margin-bottom: clamp(10px, 3vw, 20px);
+            text-shadow: 0 0 40px rgba(255,68,0,0.3);
+            animation: titleGlow 3s ease-in-out infinite;
+            line-height: 1.2;
         }
 
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(255,68,0,0.3)); }
+            50% { filter: drop-shadow(0 0 25px rgba(255,68,0,0.7)); }
         }
 
-        .description {
-            font-size: clamp(1rem, 4vw, 1.1rem);
-            line-height: 1.6;
-            color: #4b5563;
-            margin-bottom: 2rem;
+        .section-subtitle {
+            font-size: clamp(0.9rem, 4vw, 1.3rem);
+            color: rgba(255,255,255,0.9);
+            max-width: 700px;
+            margin: 0 auto;
+            backdrop-filter: blur(5px);
+            padding: 0 10px;
         }
 
-        /* Liste avantages */
-        .features-list {
-            list-style: none;
-            margin-bottom: 2rem;
+        /* Grille responsive */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(30px, 5vw, 60px);
+            align-items: center;
+            margin-bottom: clamp(50px, 10vw, 100px);
         }
 
-        .features-list li {
+        /* Carte image responsive */
+        .about-image {
+            position: relative;
+            border-radius: clamp(20px, 5vw, 40px);
+            overflow: hidden;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
+            border: 2px solid rgba(255,68,0,0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
+        }
+
+        .about-image:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255,68,0,0.8);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5), 0 0 30px rgba(255,68,0,0.3);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            aspect-ratio: 4/3;
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: clamp(10px, 3vw, 25px);
+            left: clamp(10px, 3vw, 25px);
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(15px);
+            border: 1px solid #ff6600;
+            border-radius: clamp(15px, 4vw, 25px);
+            padding: clamp(10px, 2.5vw, 18px) clamp(15px, 4vw, 28px);
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            font-weight: 500;
-            color: #1f2937;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: clamp(8px, 2vw, 18px);
+            animation: badgeGlow 2s infinite;
         }
 
-        .about-content.visible .features-list li:nth-child(1) { transition-delay: 0.1s; opacity: 1; transform: translateX(0); }
-        .about-content.visible .features-list li:nth-child(2) { transition-delay: 0.2s; opacity: 1; transform: translateX(0); }
-        .about-content.visible .features-list li:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateX(0); }
+        @keyframes badgeGlow {
+            0%, 100% { border-color: #ff6600; box-shadow: 0 0 10px rgba(255,102,0,0.3); }
+            50% { border-color: #ff3300; box-shadow: 0 0 20px rgba(255,51,0,0.7); }
+        }
 
-        .check-icon {
-            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
+        .experience-badge .number {
+            font-size: clamp(1.3rem, 5vw, 2.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffaa44, #ff4400);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .experience-badge .text {
+            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+        }
+
+        /* Contenu glassmorphique responsive */
+        .about-content {
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(20px);
+            border-radius: clamp(20px, 5vw, 40px);
+            padding: clamp(20px, 5vw, 45px);
+            border: 1px solid rgba(255,68,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .about-content h3 {
+            font-size: clamp(1.3rem, 5vw, 2.5rem);
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff, #ffaa44, #ff6600);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: clamp(15px, 4vw, 25px);
+            line-height: 1.3;
+        }
+
+        .about-content p {
+            color: rgba(255,255,255,0.9);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: clamp(0.85rem, 3vw, 1.05rem);
+        }
+
+        /* Features grid responsive */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: clamp(12px, 3vw, 18px);
+            margin: clamp(20px, 5vw, 35px) 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(255,68,0,0.12), rgba(255,102,0,0.05));
+            padding: clamp(10px, 2.5vw, 14px);
+            border-radius: clamp(12px, 3vw, 20px);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,102,0,0.2);
+        }
+
+        .feature-item:hover {
+            background: linear-gradient(135deg, rgba(255,68,0,0.3), rgba(255,102,0,0.15));
+            transform: translateX(5px);
+            border-color: rgba(255,102,0,0.6);
+        }
+
+        .feature-icon {
+            width: clamp(40px, 10vw, 52px);
+            height: clamp(40px, 10vw, 52px);
+            background: linear-gradient(135deg, #ff4400, #ff7700);
+            border-radius: clamp(12px, 3vw, 18px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-size: clamp(0.85rem, 3vw, 1rem);
+            font-weight: 700;
+            color: #ffaa55;
+        }
+
+        .feature-text p {
+            font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+            margin: 0;
+        }
+
+        /* Bouton responsive */
+        .btn-about {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            color: #4f46e5;
-            font-weight: bold;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        .features-list li:hover .check-icon {
-            transform: scale(1.2) rotate(360deg);
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            gap: 12px;
+            background: linear-gradient(135deg, #ff4400, #ff7700, #ffaa00);
             color: white;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            background: linear-gradient(135deg, #1f2937, #374151);
-            color: white;
-            padding: 0.9rem 2rem;
-            border-radius: 3rem;
+            padding: clamp(12px, 3.5vw, 16px) clamp(25px, 6vw, 40px);
+            border-radius: 60px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn-primary:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
-        }
-
-        /* ========== CARROUSEL 3D ========== */
-        .about-media {
-            flex: 1;
-            min-width: 0;
-            position: relative;
-            perspective: 1200px;
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .about-media.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .carousel-3d {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: grab;
-        }
-
-        .carousel-3d:active {
-            cursor: grabbing;
-        }
-
-        .carousel-card {
-            position: absolute;
-            width: 80%;
-            height: 320px;
-            left: 10%;
-            top: 40px;
-            background: white;
-            border-radius: 1.5rem;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            transition: all 0.4s ease;
-            backface-visibility: hidden;
-            transform-style: preserve-3d;
-        }
-
-        .carousel-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .carousel-card:hover {
-            transform: scale(1.05) translateZ(30px);
-            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
-        }
-
-        .carousel-card:hover img {
-            transform: scale(1.1);
-        }
-
-        /* Navigation du carrousel */
-        .carousel-nav {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .nav-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #4f46e5;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-btn:hover {
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
-            color: white;
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
-        }
-
-        .dots {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #cbd5e1;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            width: 30px;
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
-            border-radius: 10px;
-        }
-
-        /* Carte flottante 3D */
-        .floating-card {
-            position: absolute;
-            bottom: -20px;
-            right: -15px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            border-radius: 1rem;
-            padding: 0.8rem 1.2rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            border: 1px solid rgba(255,255,255,0.5);
-            z-index: 20;
-            animation: float 3s ease-in-out infinite;
-            transform-origin: center;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(2deg); }
-        }
-
-        .floating-number {
-            font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #4f46e5, #06b6d4);
-            background-clip: text;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(255,68,0,0.4);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-about:active {
+            transform: scale(0.98);
+        }
+
+        @media (min-width: 768px) {
+            .btn-about:hover {
+                gap: 18px;
+                transform: translateY(-3px);
+                box-shadow: 0 15px 35px rgba(255,68,0,0.6);
+            }
+        }
+
+        /* Valeurs cards responsive */
+        .values-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: clamp(20px, 4vw, 35px);
+            justify-content: center;
+            margin: clamp(40px, 8vw, 80px) 0;
+        }
+
+        .value-card {
+            flex: 1;
+            min-width: 220px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(15px);
+            padding: clamp(25px, 6vw, 40px) clamp(15px, 4vw, 25px);
+            border-radius: clamp(20px, 5vw, 35px);
+            text-align: center;
+            border: 1px solid rgba(255,102,0,0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+            .value-card:hover {
+                transform: translateY(-15px) scale(1.03);
+                background: rgba(255,68,0,0.2);
+                border-color: #ff6600;
+                box-shadow: 0 25px 45px rgba(0,0,0,0.4);
+            }
+        }
+
+        .value-card:active {
+            transform: scale(0.98);
+        }
+
+        .value-icon {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            background: linear-gradient(135deg, #ffaa44, #ff4400);
             -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .value-card h4 {
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .value-card p {
+            font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+            line-height: 1.5;
+        }
+
+        /* Team preview responsive */
+        .team-preview {
+            margin-top: clamp(50px, 10vw, 100px);
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(15px);
+            padding: clamp(30px, 6vw, 60px) clamp(20px, 5vw, 40px);
+            border-radius: clamp(30px, 6vw, 50px);
+            border: 1px solid rgba(255,102,0,0.4);
+        }
+
+        .team-preview h3 {
+            font-size: clamp(1.2rem, 5vw, 2.2rem);
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff, #ffaa44);
+            -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
         }
 
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 768px) {
-            .about-section {
-                padding: 3rem 1rem;
-            }
-            .about-container {
-                gap: 2rem;
-            }
-            .carousel-3d {
-                height: 320px;
-            }
-            .carousel-card {
-                height: 260px;
-                top: 30px;
-            }
-            .floating-card {
-                bottom: -10px;
-                right: -5px;
-                padding: 0.5rem 1rem;
-            }
-            .floating-number {
-                font-size: 1.3rem;
+        .team-preview p {
+            font-size: clamp(0.85rem, 3vw, 1.05rem);
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        .team-icons {
+            display: flex;
+            justify-content: center;
+            gap: clamp(15px, 5vw, 35px);
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .team-icons i {
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+            background: linear-gradient(135deg, #ff6600, #ffaa00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .team-icons i:hover {
+                transform: translateY(-8px) scale(1.2);
+                filter: drop-shadow(0 0 15px #ff6600);
             }
         }
 
-        @media (max-width: 550px) {
-            .about-container {
-                gap: 1rem;
-            }
-            .carousel-3d {
-                height: 280px;
-            }
-            .carousel-card {
-                height: 220px;
-                top: 30px;
-            }
-            .floating-card {
-                bottom: -5px;
-                right: 0;
-                padding: 0.4rem 0.8rem;
-            }
-            .floating-number {
-                font-size: 1.1rem;
-            }
+        .team-quote {
+            margin-top: 25px;
+            font-size: clamp(0.9rem, 4vw, 1.4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffaa44, #ff4400);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        /* Animation de rotation 3D au survol de la section */
-        .about-section:hover .carousel-3d {
-            transform: rotateY(5deg) rotateX(2deg);
+        /* Animation scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Ajustements pour très petits écrans */
+        @media (max-width: 480px) {
+            .feature-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .experience-badge {
+                padding: 8px 15px;
+            }
+            .section-tag {
+                white-space: normal;
+                font-size: 0.65rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<section class="about-section">
-    <div class="about-container">
-        <!-- Bloc texte (GAUCHE) -->
-        <div class="about-content" id="textContent">
-            <span class="badge">✨ Notre histoire</span>
-            <h2>On ne se contente pas de faire du beau.<br>On crée des expériences.</h2>
-            <p class="description">
-                Depuis 2020, nous réunissons créativité, technologie et authenticité pour aider les marques à révéler leur potentiel. 
-                Chaque projet est une aventure humaine où le design rencontre la performance.
+    <div id="canvas-container"></div>
+
+    <section class="about-section">
+        <div class="section-header reveal">
+            <div class="section-tag">🔥 PRÊT À VIBRER ? 🔥</div>
+            <h1 class="section-title">VISITE BÉJAÏA<br><span style="color:#ff4400;">L'AVENTURE XXL</span></h1>
+            <p class="section-subtitle">
+                Quad qui déchire, parapente qui envole... On t'emmène là où les sensations sont roi !
             </p>
-            <ul class="features-list">
-                <li><span class="check-icon">✓</span> Design sur-mesure & innovant</li>
-                <li><span class="check-icon">✓</span> Équipe passionnée & réactive</li>
-                <li><span class="check-icon">✓</span> Résultats mesurables & durables</li>
-            </ul>
-            <a href="#" class="btn-primary">Découvrir notre univers →</a>
         </div>
 
-        <!-- Bloc carrousel 3D (DROITE) -->
-        <div class="about-media" id="mediaContent">
-            <div class="carousel-3d" id="carousel3d">
-                <div class="carousel-card" data-index="0">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&h=400&fit=crop" alt="Équipe créative">
-                </div>
-                <div class="carousel-card" data-index="1">
-                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Atelier design">
-                </div>
-                <div class="carousel-card" data-index="2">
-                    <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=500&h=400&fit=crop" alt="Collaboration">
-                </div>
-                <div class="carousel-card" data-index="3">
-                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4b92?w=500&h=400&fit=crop" alt="Réunion créative">
+        <div class="about-grid">
+            <div class="about-image reveal">
+                <img src="https://images.pexels.com/photos/1870417/pexels-photo-1870417.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Quad Aventure Béjaïa" loading="lazy">
+                <div class="experience-badge">
+                    <div class="number">12 ANS</div>
+                    <div class="text">d'adrénaline<br>en Kabylie</div>
                 </div>
             </div>
-            <div class="carousel-nav">
-                <button class="nav-btn" id="prevBtn">←</button>
-                <div class="dots" id="dots"></div>
-                <button class="nav-btn" id="nextBtn">→</button>
-            </div>
-            <div class="floating-card">
-                <div class="floating-number">+120</div>
-                <div class="stat-label">Projets<br>réalisés</div>
+            <div class="about-content reveal">
+                <h3>On est pas une agence... On est une famille de barjots !</h3>
+                <p>
+                    🏍️ <strong style="color:#ff8844;">Quad 4x4</strong> : moteur qui crache, terre qui vole, montagnes à tomber.<br><br>
+                    🪂 <strong style="color:#ff8844;">Parapente tandem</strong> : envole-toi au-dessus de la baie des Hammadides.<br><br>
+                    🏔️ <strong style="color:#ff8844;">Et encore +</strong> : rando extrême, canyoning, bivouac...
+                </p>
+                <div class="features-list">
+                    <div class="feature-item"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><div class="feature-text"><h4>Sécurité TOP</h4><p>Matos neuf, assurance</p></div></div>
+                    <div class="feature-item"><div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div><div class="feature-text"><h4>Guides locaux</h4><p>On connaît chaque caillou</p></div></div>
+                    <div class="feature-item"><div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div><div class="feature-text"><h4>Quad 500cc</h4><p>Puissance & confiance</p></div></div>
+                    <div class="feature-item"><div class="feature-icon"><i class="fas fa-camera"></i></div><div class="feature-text"><h4>GoPro offerte</h4><p>Souvenirs épiques</p></div></div>
+                </div>
+                <a href="#" class="btn-about">JE VEUX VIVRE ÇA ! <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
-    </div>
-</section>
 
-<script>
-    // ========== ANIMATION AU SCROLL ==========
-    const observerOptions = {
-        threshold: 0.2,
-        rootMargin: '0px 0px -100px 0px'
-    };
+        <div class="values-section">
+            <div class="value-card reveal"><div class="value-icon"><i class="fas fa-motorcycle"></i></div><h4>Quad Puissant</h4><p>Moteurs 500cc, suspension renforcée, pneus tout-terrain.</p></div>
+            <div class="value-card reveal"><div class="value-icon"><i class="fas fa-parachute-box"></i></div><h4>Parapente de folie</h4><p>Tandem avec moniteurs pro. Vue imprenable sur Béjaïa.</p></div>
+            <div class="value-card reveal"><div class="value-icon"><i class="fas fa-fire"></i></div><h4>Sensation Garantie</h4><p>On rembourse si t'as pas eu assez d'adrénaline !</p></div>
+        </div>
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+        <div class="team-preview reveal">
+            <h3>💪 L'ÉQUIPE QUI DÉCHIRE TOUT</h3>
+            <p>Mécaniciens, pilotes de parapente, guides de choc... On vit pour ça !</p>
+            <div class="team-icons">
+                <i class="fas fa-motorcycle"></i>
+                <i class="fas fa-parachute-box"></i>
+                <i class="fas fa-mountain"></i>
+                <i class="fas fa-campground"></i>
+                <i class="fas fa-skull"></i>
+            </div>
+            <div class="team-quote">
+                "ON T'EMMÈNE LÀ OÙ TON CŒUR S'ARRÊTE DE BATTRE !"
+            </div>
+        </div>
+    </section>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
             }
-        });
-    }, observerOptions);
-
-    observer.observe(document.getElementById('textContent'));
-    observer.observe(document.getElementById('mediaContent'));
-
-    // ========== CARROUSEL 3D ==========
-    const carousel = document.getElementById('carousel3d');
-    const cards = document.querySelectorAll('.carousel-card');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const dotsContainer = document.getElementById('dots');
-    
-    let currentIndex = 0;
-    const totalCards = cards.length;
-    let isDragging = false;
-    let startX = 0;
-    let currentRotation = 0;
-
-    // Créer les dots
-    for (let i = 0; i < totalCards; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (i === currentIndex) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(i));
-        dotsContainer.appendChild(dot);
-    }
-
-    const dots = document.querySelectorAll('.dot');
-
-    function updateCarousel() {
-        const angle = (currentIndex / totalCards) * -360;
-        currentRotation = angle;
-        
-        cards.forEach((card, index) => {
-            const cardAngle = (index / totalCards) * 360;
-            const transform = `
-                rotateY(${cardAngle + angle}deg) 
-                translateZ(250px)
-            `;
-            card.style.transform = transform;
-            card.style.opacity = '1';
-            card.style.visibility = 'visible';
-        });
-        
-        // Mettre à jour les dots
-        dots.forEach((dot, index) => {
-            if (index === currentIndex) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-        
-        // Animation 3D supplémentaire
-        carousel.style.transform = `rotateY(${angle}deg)`;
-    }
-
-    function goToSlide(index) {
-        currentIndex = index;
-        updateCarousel();
-    }
-
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % totalCards;
-        updateCarousel();
-    }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-        updateCarousel();
-    }
-
-    // Événements de navigation
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-
-    // Drag pour faire tourner le carrousel
-    carousel.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX;
-        carousel.style.cursor = 'grabbing';
-    });
-
-    window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        const deltaX = e.clientX - startX;
-        if (Math.abs(deltaX) > 50) {
-            if (deltaX > 0) {
-                prevSlide();
-            } else {
-                nextSlide();
-            }
-            isDragging = false;
         }
-    });
+    </script>
 
-    window.addEventListener('mouseup', () => {
-        isDragging = false;
-        carousel.style.cursor = 'grab';
-    });
+    <script type="module">
+        import * as THREE from 'three';
 
-    // Initialisation
-    updateCarousel();
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = null;
+        scene.fog = new THREE.FogExp2(0x030603, 0.008);
 
-    // Auto-rotation (optionnelle - décommentez si voulu)
-    // let autoRotate = setInterval(nextSlide, 4000);
-    // carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
-    // carousel.addEventListener('mouseleave', () => autoRotate = setInterval(nextSlide, 4000));
-</script>
+        // Caméra responsive
+        const getCameraDistance = () => {
+            return window.innerWidth < 768 ? 14 : 12;
+        };
 
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, getCameraDistance());
+        camera.lookAt(0, 0.5, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0x000000, 0);
+        container.appendChild(renderer.domElement);
+
+        const mainGroup = new THREE.Group();
+        scene.add(mainGroup);
+
+        // === QUAD OPTIMISÉ ===
+        const quadGroup = new THREE.Group();
+
+        // Corps
+        const bodyGeo = new THREE.BoxGeometry(1.2, 0.4, 2.0);
+        const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff4400, metalness: 0.85, roughness: 0.25, emissive: 0x331100 });
+        const body = new THREE.Mesh(bodyGeo, bodyMat);
+        body.position.y = 0.2;
+        quadGroup.add(body);
+
+        // Réservoir
+        const tankGeo = new THREE.CylinderGeometry(0.45, 0.45, 0.55, 10);
+        const tankMat = new THREE.MeshStandardMaterial({ color: 0xcc3300, metalness: 0.9 });
+        const tank = new THREE.Mesh(tankGeo, tankMat);
+        tank.position.set(0, 0.55, 0.5);
+        quadGroup.add(tank);
+
+        // Guidon
+        const handleGeo = new THREE.BoxGeometry(0.65, 0.06, 0.06);
+        const handleMat = new THREE.MeshStandardMaterial({ color: 0xccccdd, metalness: 0.95 });
+        const handleBar = new THREE.Mesh(handleGeo, handleMat);
+        handleBar.position.set(0, 0.68, 0.75);
+        quadGroup.add(handleBar);
+
+        // Roues
+        const wheelGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.32, 24);
+        const tireMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.9 });
+        const wheelPos = [[-0.75, 0.15, 0.9], [0.75, 0.15, 0.9], [-0.75, 0.15, -0.9], [0.75, 0.15, -0.9]];
+        wheelPos.forEach(pos => {
+            const wheel = new THREE.Mesh(wheelGeo, tireMat);
+            wheel.position.set(pos[0], pos[1], pos[2]);
+            wheel.rotation.z = Math.PI / 2;
+            quadGroup.add(wheel);
+        });
+
+        // Phares LED
+        const lightMat = new THREE.MeshStandardMaterial({ color: 0xffaa66, emissive: 0xff4400, emissiveIntensity: 0.6 });
+        const lightL = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), lightMat);
+        lightL.position.set(-0.4, 0.38, 1.08);
+        const lightR = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), lightMat);
+        lightR.position.set(0.4, 0.38, 1.08);
+        quadGroup.add(lightL, lightR);
+
+        mainGroup.add(quadGroup);
+        quadGroup.position.y = -0.35;
+        quadGroup.scale.set(0.8, 0.8, 0.8);
+
+        // === PARAPENTE ===
+        const paraGroup = new THREE.Group();
+        
+        const wingGeo = new THREE.SphereGeometry(1.3, 40, 40, 0, Math.PI * 2, 0, Math.PI / 2.2);
+        const wingMat = new THREE.MeshStandardMaterial({ color: 0xff6600, metalness: 0.1, roughness: 0.5, transparent: true, opacity: 0.88 });
+        const wing = new THREE.Mesh(wingGeo, wingMat);
+        wing.scale.set(2.0, 0.1, 1.4);
+        wing.position.y = 2.6;
+        paraGroup.add(wing);
+        
+        // Pilote
+        const pilotBody = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.5, 6), new THREE.MeshStandardMaterial({ color: 0xdd4422 }));
+        pilotBody.position.y = -0.1;
+        paraGroup.add(pilotBody);
+        
+        paraGroup.position.set(2.8, 1.0, 1.2);
+        mainGroup.add(paraGroup);
+
+        // === PARTICULES LÉGÈRES (optimisées) ===
+        const particleCount = Math.min(800, Math.floor(window.innerWidth / 1.5));
+        const fireGeo = new THREE.BufferGeometry();
+        const firePos = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+            firePos[i*3] = (Math.random() - 0.5) * 14;
+            firePos[i*3+1] = Math.random() * 5;
+            firePos[i*3+2] = (Math.random() - 0.5) * 12;
+        }
+        fireGeo.setAttribute('position', new THREE.BufferAttribute(firePos, 3));
+        const fireMat = new THREE.PointsMaterial({ color: 0xff4400, size: 0.05, transparent: true, blending: THREE.AdditiveBlending });
+        const fireParticles = new THREE.Points(fireGeo, fireMat);
+        scene.add(fireParticles);
+
+        // Particules poussière
+        const dustCount = Math.min(500, Math.floor(window.innerWidth));
+        const dustGeo = new THREE.BufferGeometry();
+        const dustPos = new Float32Array(dustCount * 3);
+        for (let i = 0; i < dustCount; i++) {
+            dustPos[i*3] = (Math.random() - 0.5) * 3.5;
+            dustPos[i*3+1] = Math.random() * 1.5;
+            dustPos[i*3+2] = (Math.random() - 0.5) * 3.5 - 1.5;
+        }
+        dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+        const dustMat = new THREE.PointsMaterial({ color: 0xaa8844, size: 0.04, transparent: true, opacity: 0.5 });
+        const dustParticles = new THREE.Points(dustGeo, dustMat);
+        quadGroup.add(dustParticles);
+
+        // Lumières
+        const ambient = new THREE.AmbientLight(0x222222);
+        scene.add(ambient);
+        
+        const mainLight = new THREE.DirectionalLight(0xffaa66, 1);
+        mainLight.position.set(5, 8, 4);
+        scene.add(mainLight);
+        
+        const backLight = new THREE.PointLight(0xff4400, 0.6);
+        backLight.position.set(0, 1, -4.5);
+        scene.add(backLight);
+
+        // Animation
+        let time = 0;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.016;
+            
+            // Quad rotation + micro vibration
+            quadGroup.rotation.y = time * 0.6;
+            quadGroup.position.y = -0.35 + Math.sin(time * 12) * 0.006;
+            
+            // Parapente flottant
+            paraGroup.position.y = 0.8 + Math.sin(time * 1.2) * 0.12;
+            paraGroup.rotation.z = Math.sin(time * 0.9) * 0.1;
+            wing.rotation.x = Math.sin(time * 1.5) * 0.06;
+            
+            // Effet feu particules
+            fireMat.color.setHSL(0.07, 1, 0.55 + Math.sin(time * 4) * 0.1);
+            
+            // Phares clignotants
+            const intensity = 0.5 + Math.sin(time * 18) * 0.4;
+            lightL.material.emissiveIntensity = intensity;
+            lightR.material.emissiveIntensity = intensity;
+            backLight.intensity = 0.5 + Math.sin(time * 3) * 0.3;
+            
+            // Rotation particules
+            fireParticles.rotation.y += 0.005;
+            
+            // Caméra responsive
+            const targetDistance = getCameraDistance();
+            camera.position.x += (Math.sin(time * 0.15) * 0.3 - camera.position.x) * 0.05;
+            camera.position.y += (2.2 + Math.sin(time * 0.2) * 0.1 - camera.position.y) * 0.05;
+            camera.position.z += (targetDistance - camera.position.z) * 0.02;
+            camera.lookAt(0, 0.3, 0);
+            
+            renderer.render(scene, camera);
+        }
+        
+        animate();
+
+        // Gestion resize responsive
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            // Réajuster la distance caméra
+            camera.position.z = getCameraDistance();
+        });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        function checkReveal() {
+            reveals.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('resize', checkReveal);
+        checkReveal();
+    </script>
 </body>
 </html>
