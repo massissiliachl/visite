@@ -504,7 +504,8 @@
     </style>
 </head>
 <body>
-
+    <!-- Navigation -->
+    <div id="navbar-placeholder"></div>
     <canvas id="canvas-3d"></canvas>
     
     <section class="hero-section" id="heroSection">
@@ -573,52 +574,15 @@
     <div id="loading" class="loading-overlay"><div class="spinner"></div></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/navbar.js"></script>
+
+    <!-- Footer placeholder -->
+    <div data-include="footer"></div>
     
+    <script src="js/include-footer.js"></script>
     <script>
         console.log("=== APPLICATION DÉMARRÉE ===");
         
-        // 3D Background (simplifié pour la lisibilité)
-        (function init3D() {
-            const canvas = document.getElementById('canvas-3d');
-            if (!canvas) return;
-            const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0xfaf9f8);
-            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            
-            const group = new THREE.Group();
-            const colors = [0xf97316, 0xfb923c, 0xfbbf24, 0xfdba74];
-            for (let i = 0; i < 60; i++) {
-                const size = Math.random() * 0.35 + 0.1;
-                const mat = new THREE.MeshStandardMaterial({ color: colors[Math.floor(Math.random() * colors.length)], emissive: 0x331100 });
-                const sphere = new THREE.Mesh(new THREE.SphereGeometry(size, 16, 16), mat);
-                sphere.position.x = (Math.random() - 0.5) * 35;
-                sphere.position.y = (Math.random() - 0.5) * 20;
-                sphere.position.z = (Math.random() - 0.5) * 25 - 15;
-                group.add(sphere);
-            }
-            scene.add(group);
-            scene.add(new THREE.DirectionalLight(0xffaa77, 1));
-            scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-            camera.position.z = 14;
-            let time = 0;
-            function animate() {
-                requestAnimationFrame(animate);
-                time += 0.005;
-                group.rotation.y = time * 0.15;
-                group.rotation.x = Math.sin(time * 0.2) * 0.1;
-                renderer.render(scene, camera);
-            }
-            animate();
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        })();
-
         // Scroll animation
         const heroSection = document.getElementById('heroSection');
         const filterSection = document.getElementById('filterSection');
