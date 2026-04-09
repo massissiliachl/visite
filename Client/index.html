@@ -2121,24 +2121,43 @@
         }
 
         .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2rem;
-        }
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 1rem 0 2rem;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 
-        .activity-card {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 2rem;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
-            position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: cardFadeIn 0.6s ease forwards;
-        }
+    /* cacher scrollbar */
+    scrollbar-width: none;
+}
 
+.activities-grid::-webkit-scrollbar {
+    display: none;
+}
+
+.activity-card {
+    flex: 0 0 340px;
+    scroll-snap-align: start;
+
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 2rem;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+    position: relative;
+
+    opacity: 0;
+    transform: translateY(30px);
+    animation: cardFadeIn 0.6s ease forwards;
+}
+
+.activity-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 50px -20px rgba(249, 115, 22, 0.25);
+}
         @keyframes cardFadeIn {
             to {
                 opacity: 1;
@@ -2441,6 +2460,16 @@
         font-size: 1.8rem;
     }
 }   
+@media (max-width: 768px) {
+    .activity-card {
+        flex: 0 0 85%;
+    }
+
+    .activities-grid {
+        gap: 1rem;
+        padding: 1rem;
+    }
+}
         </style>
 </head>
 
