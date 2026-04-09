@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -217,6 +217,18 @@
             opacity: 0;
             transform: translateY(30px);
             animation: cardFadeIn 0.6s ease forwards;
+        }
+
+        .card-media {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         @keyframes cardFadeIn {
@@ -608,14 +620,14 @@
 
         // Activités
         const activitiesCatalog = [
-            { id: "visite", name: "Visite Guidée", basePrice: 6000, category: "culture", icon: "fa-landmark", desc: "Découvrez Béjaïa historique : Gouraya, Casbah, cascade.", hasChild: false },
-            { id: "parapente", name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", desc: "Baptême parapente, atterrissage plage, sensations uniques.", hasChild: false },
-            { id: "quad", name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", desc: "Circuit sur les hauteurs de Boulimat.", hasChild: true, childPrice: 1000, options: [{label:"30 min", price:3000},{label:"45 min", price:4000}] },
-            { id: "cheval", name: "Randonnée à Cheval", basePrice: 2500, category: "terre", icon: "fa-horse", desc: "Entre mer et montagne dans le parc de Gouraya.", hasChild: false },
-            { id: "parasailing", name: "Parasailing", basePrice: 10000, category: "mer", icon: "fa-parachute-box", desc: "Envolez-vous au-dessus de la mer.", hasChild: false },
-            { id: "bouee", name: "Bouée Tractée", basePrice: 3000, category: "mer", icon: "fa-water", desc: "Adrénaline et fous rires garantis.", hasChild: false },
-            { id: "jetski", name: "Jet Ski", basePrice: 30000, category: "mer", icon: "fa-jet-fighter", desc: "Sensations fortes en liberté (1h).", hasChild: false },
-            { id: "bateau", name: "Excursion Bateau", basePrice: 20000, category: "mer", icon: "fa-ship", desc: "Découvrez île de Nizla, grotte des pirates.", hasChild: false }
+            { id: "visite", name: "Visite Guidée", basePrice: 6000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Découvrez Béjaïa historique : Gouraya, Casbah, cascade.", hasChild: false },
+            { id: "parapente", name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "assets/images/vol parapente.jpg", desc: "Baptême parapente, atterrissage plage, sensations uniques.", hasChild: false },
+            { id: "quad", name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", image: "assets/images/quad.jpeg", desc: "Circuit sur les hauteurs de Boulimat.", hasChild: true, childPrice: 1000, options: [{label:"30 min", price:3000},{label:"45 min", price:4000}] },
+            { id: "cheval", name: "Randonnée à Cheval", basePrice: 2500, category: "terre", icon: "fa-horse", image: "assets/images/chev.jpg", desc: "Entre mer et montagne dans le parc de Gouraya.", hasChild: false },
+            { id: "parasailing", name: "Parasailing", basePrice: 10000, category: "mer", icon: "fa-parachute-box", image: "assets/images/vol.jpg", desc: "Envolez-vous au-dessus de la mer.", hasChild: false },
+            { id: "bouee", name: "Bouée Tractée", basePrice: 3000, category: "mer", icon: "fa-water", image: "assets/images/tr.jpg", desc: "Adrénaline et fous rires garantis.", hasChild: false },
+            { id: "jetski", name: "Jet Ski", basePrice: 30000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jet.jpg", desc: "Sensations fortes en liberté (1h).", hasChild: false },
+            { id: "bateau", name: "Excursion Bateau", basePrice: 20000, category: "mer", icon: "fa-ship", image: "assets/images/grotte.jpg", desc: "Découvrez île de Nizla, grotte des pirates.", hasChild: false }
         ];
 
         let currentAct = { id: '', name: '', pricePerAdult: 0, hasChild: false, childPrice: 0 };
@@ -639,6 +651,9 @@
                     </div>`;
                 }
                 return `<div class="activity-card">
+                    <div class="card-media">
+                        <img src="${act.image}" alt="${act.name}" loading="lazy" onerror="this.src='assets/images/all.jpg'">
+                    </div>
                     <div class="card-header"><div class="icon-circle"><i class="fas ${act.icon}"></i></div><div class="price-badge">${act.id === "quad" ? "Dès 3000 DA" : act.basePrice.toLocaleString('fr-DZ') + " DA"}</div></div>
                     <h3 class="card-title">${act.name}</h3>
                     <p class="card-desc">${act.desc}</p>
