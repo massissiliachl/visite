@@ -58,18 +58,20 @@
 
         /* ===== HERO ===== */
         /* ===== HERO with reliable background image (high-res Unsplash) ===== */
+       
+         /* ===== HERO SPECTACULAIRE ===== */
+     
         .page-hero {
-            height: 40vh;
-            min-height: 300px;
-            background: linear-gradient(135deg, rgba(26, 58, 107, 0.85), rgba(20, 40, 35, 0.8)), url('https://images.unsplash.com/photo-1587925358603-c2eea5305bbc?q=80&w=2070&auto=format');
-            background-size: cover;
-            background-position: center 30%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-            width: 100%;
+            height: 100vh;
+    background-image: url("assets/images/i.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
         }
 
         .page-hero h1 {
@@ -82,7 +84,14 @@
             opacity: 0.9;
             animation: fadeInUp 1s 0.2s both;
         }
-
+.hero-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -237,93 +246,193 @@
         }
 
         /* ===== SECTION PARTENARIAT ===== */
-        .partnership {
-            background: #f5efe8;
-            padding: 5rem 0;
-            margin: 2rem 0 0;
-            border-radius: 4rem 4rem 0 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-        }
+       .partnership {
+    background: linear-gradient(135deg, #f8f9fa, #eef3f2);
+    padding: 5rem 0;
+    margin-top: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
 
-        .partnership::before {
-            content: 'âœ¦';
-            position: absolute;
-            top: 20px;
-            left: 5%;
-            font-size: 4rem;
-            color: rgba(211, 47, 47, 0.15);
-            animation: float 8s infinite alternate;
-        }
+    /* animation entrée */
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUpSection 1s ease forwards;
+}
 
-        .partnership::after {
-            content: 'âœ¦';
-            position: absolute;
-            bottom: 20px;
-            right: 5%;
-            font-size: 5rem;
-            color: rgba(26, 58, 107, 0.1);
-            animation: float 10s infinite alternate-reverse;
-        }
+/* animation apparition section */
+@keyframes fadeUpSection {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(-20px) rotate(5deg); }
-        }
+/* décor animé */
+.partnership::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(26, 58, 107, 0.08);
+    border-radius: 50%;
+    top: -100px;
+    left: -100px;
+    filter: blur(30px);
+    animation: float1 6s ease-in-out infinite;
+}
 
-        .partnership h3 {
-            font-size: 2rem;
-            color: #1a3a6b;
-            letter-spacing: 2px;
-            font-weight: 500;
-        }
+.partnership::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: rgba(211, 47, 47, 0.06);
+    border-radius: 50%;
+    bottom: -80px;
+    right: -80px;
+    filter: blur(25px);
+    animation: float2 7s ease-in-out infinite;
+}
 
-        .partnership h4 {
-            font-size: 2.5rem;
-            color: #d32f2f;
-            margin: 0.5rem 0 2rem;
-            font-weight: 700;
-        }
+/* mouvements doux */
+@keyframes float1 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(20px); }
+}
 
-        .partnership p {
-            max-width: 900px;
-            margin: 0 auto 2.5rem;
-            font-size: 1.15rem;
-            color: #3f5a55;
-            line-height: 1.8;
-            background: rgba(255,255,255,0.6);
-            padding: 2rem 3rem;
-            border-radius: 3rem;
-            backdrop-filter: blur(4px);
-        }
+@keyframes float2 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
 
-        .partners-logos {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
+.partnership .container {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+}
 
-        .partners-logos span {
-            background: white;
-            padding: 0.8rem 2.2rem;
-            border-radius: 60px;
-            font-weight: 600;
-            color: #1a3a6b;
-            box-shadow: 0 10px 20px -8px rgba(0,0,0,0.1);
-            border: 1px solid #dccfc2;
-            transition: all 0.3s;
-        }
+.partnership h3 {
+    font-size: 1.2rem;
+    color: #1a3a6b;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
 
-        .partners-logos span:hover {
-            background: #1a3a6b;
-            color: white;
-            transform: scale(1.05);
-            border-color: #1a3a6b;
-        }
+    animation: fadeIn 1s ease 0.2s both;
+}
 
+.partnership h4 {
+    font-size: 2.5rem;
+    color: #2c3e3d;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+
+    animation: fadeIn 1s ease 0.4s both;
+}
+
+/* animation fade simple */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.partnership p {
+    font-size: 1.1rem;
+    color: #4a5a58;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    background: rgba(255,255,255,0.7);
+    padding: 1.5rem 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease;
+
+    animation: fadeIn 1s ease 0.6s both;
+}
+
+.partnership p:hover {
+    transform: translateY(-5px);
+}
+
+/* PARTENAIRES */
+.partners-logos {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    animation: fadeIn 1s ease 0.8s both;
+}
+
+.partners-logos span {
+    background: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    color: #1a3a6b;
+    border: 1px solid rgba(26,58,107,0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.partners-logos span:hover {
+    background: #1a3a6b;
+    color: white;
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+    .partnership {
+        padding: 3.5rem 1rem;
+    }
+
+    .partnership h4 {
+        font-size: 1.8rem;
+    }
+
+    .partnership p {
+        font-size: 1rem;
+        padding: 1.2rem;
+    }
+
+    .partners-logos {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .partners-logos span {
+        width: 85%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .partnership h4 {
+        font-size: 1.5rem;
+    }
+
+    .partnership p {
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+
+    .partners-logos span {
+        width: 100%;
+        font-size: 0.85rem;
+    }
+}
         /* ===== FOOTER ===== */
         .footer {
             background: #1e3a35;
@@ -635,6 +744,8 @@
     <!-- Hero -->
     <section class="page-hero">
         <div class="container">
+            <img src="https://dia-algerie.com/wp-content/uploads/2021/03/cap-carbon.jpg" alt="Béjaïa plage" class="hero-bg-image" id="heroImage" onerror="this.src='https://via.placeholder.com/1920x1080?text=Bejaia'">
+
             <h1>Explorez Bejaia</h1>
             <p>Des lieux d'exception entre mer et montagne</p>
         </div>
@@ -878,25 +989,24 @@ de l’écosystème et la sécurité des visiteurs.
 
 </div>
 
-</section>  <!-- Section Partenariat (en franÃ§ais) -->
-    <section class="partnership">
-        <div class="container">
-            <h3>Partenariat & Collaboration</h3>
-            <h4>La collaboration, moteur de notre action</h4>
-            <p>
-                Chez VisitBejaia, nous croyons fermement en la force de la collaboration pour l'innovation culturelle et la promotion durable du patrimoine. Nous travaillons en Ã©troite collaboration avec des institutions culturelles et des musÃ©es via l'OGEBC (Office de Gestion et d'Exploitation des Biens Culturels), l'organisme national officiel chargÃ© de la promotion culturelle et de la prÃ©servation du patrimoine en AlgÃ©rie.
-                <br><br>
-                Nous avons Ã©galement Ã  cÅ“ur de soutenir et d'accompagner :
-            </p>
-            <div class="partners-logos">
-               <span>Ministère de la Culture</span>
-<span>Parc National de Gouraya</span>
-<span>Fondation du Patrimoine</span>
-<span>Université de Béjaïa</span>
-            </div>
-        </div>
-    </section>
+<section class="partnership">
+    <div class="container">
+        <h3>Notre mission</h3>
+        <h4>Valoriser le patrimoine de Béjaïa</h4>
 
+        <p>
+            VisitBejaia est un guide touristique en ligne dédié à la découverte de la richesse culturelle, historique et naturelle de Béjaïa. Notre objectif est de mettre en valeur les sites emblématiques de la région et de faciliter l’accès à l’information pour les visiteurs.
+        </p>
+
+        <p>
+            Nous nous appuyons sur des sources fiables ainsi que sur des collaborations avec des acteurs locaux afin de proposer un contenu authentique, utile et accessible à tous.
+        </p>
+
+        <p>
+            Que vous soyez touriste ou habitant, notre guide vous accompagne pour explorer Béjaïa et profiter pleinement de ses paysages, de son histoire et de ses trésors cachés.
+        </p>
+    </div>
+</section>
     <!-- Footer -->
     <div data-include="footer"></div>
     
