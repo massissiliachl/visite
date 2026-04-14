@@ -61,38 +61,158 @@
        
          /* ===== HERO SPECTACULAIRE ===== */
      
-        .page-hero {
-            height: 100vh;
-    background-image: url("assets/images/i.jpeg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    position: relative;
-        }
+         .page-hero {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        overflow: hidden;
+    }
 
-        .page-hero h1 {
-            font-size: clamp(2.5rem, 7vw, 4.5rem);
-            animation: fadeInDown 1s ease;
-        }
+    /* Image de fond avec overlay */
+    .hero-bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        animation: zoomIn 25s ease-out infinite alternate;
+    }
 
-        .page-hero p {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s 0.2s both;
+    @keyframes zoomIn {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.15); }
+    }
+
+    /* Overlay dégradé plus riche */
+    .page-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%);
+        z-index: 1;
+    }
+
+    /* Contenu centré */
+    .hero-content {
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        padding: 0 20px;
+    }
+
+    .page-hero h1 {
+        font-size: clamp(2.5rem, 8vw, 5.5rem);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-shadow: 3px 3px 15px rgba(0,0,0,0.4);
+        animation: fadeInDown 1s ease;
+        letter-spacing: 2px;
+    }
+
+    .page-hero p {
+        font-size: clamp(1rem, 4vw, 1.4rem);
+        opacity: 0.95;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 8px rgba(0,0,0,0.3);
+        animation: fadeInUp 1s 0.2s both;
+    }
+
+    /* Bouton CTA ajouté */
+    .hero-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(135deg, #d32f2f, #b71c1c);
+        color: white;
+        text-decoration: none;
+        padding: 14px 32px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(211, 47, 47, 0.4);
+        animation: fadeInUp 1s 0.4s both;
+        border: none;
+        cursor: pointer;
+    }
+
+    .hero-btn:hover {
+        background: linear-gradient(135deg, #b71c1c, #8e0000);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(211, 47, 47, 0.6);
+        gap: 15px;
+    }
+
+    .hero-btn i {
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .hero-btn:hover i {
+        transform: translateX(5px);
+    }
+
+    /* Flèche de scroll */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        animation: bounce 2s infinite;
+        cursor: pointer;
+    }
+
+    .scroll-indicator a {
+        color: white;
+        font-size: 1.8rem;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+    }
+
+    .scroll-indicator a:hover {
+        opacity: 1;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-btn {
+            padding: 12px 24px;
+            font-size: 0.9rem;
         }
-.hero-bg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-        @keyframes fadeInDown {
+        
+        .scroll-indicator {
+            bottom: 20px;
+        }
+        
+        .scroll-indicator a {
+            font-size: 1.4rem;
+        }
+    }        @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
@@ -734,7 +854,7 @@
             }
         }
 
-
+//hero 
 
 
 
@@ -772,20 +892,30 @@
   <!-- Navigation -->
     <div id="navbar-placeholder"></div>
     <!-- Hero -->
-    <section class="page-hero">
-        <div class="container">
-            <img src="assets/images/djebla.jpeg" alt="Béjaïa plage" class="hero-bg-image" id="heroImage" onerror="this.src='https://via.placeholder.com/1920x1080?text=Bejaia'">
+ <!-- HTML Hero Section -->
+<section class="page-hero">
+    <img src="https://dia-algerie.com/wp-content/uploads/2021/03/cap-carbon.jpg" alt="Béjaïa" class="hero-bg-image">
 
-            <h1>Explorez Bejaia</h1>
-            <p>Des lieux d'exception entre mer et montagne</p>
-        </div>
-    </section>
+    <div class="hero-content">
+        <h1>Explorez Béjaïa</h1>
+        <p>Des lieux d'exception entre mer et montagne</p>
 
+        <a href="#destinations" class="hero-btn">
+            Découvrir
+            <i class="fas fa-arrow-down"></i>
+        </a>
+    </div>
+
+    <div class="scroll-indicator">
+        <a href="#destinations">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </div>
+</section>
     <!-- Blocs destinations : image et texte toujours cÃ´te Ã  cÃ´te -->
-  <section class="destinations-section container">
-
+    <section id="destinations" class="destinations-section container">
 <!-- CAP SIGLI -->
-<div class="desti-bloc">
+<div class="desti-bloc reverse">
 
     <div class="desti-image"
       style="background-image: url('assets/images/capsigli.jpeg');">
@@ -839,10 +969,10 @@
   </div>
 
   <!-- village djebla -->
-<div class="desti-bloc reverse">
+<div class="desti-bloc ">
 
     <div class="desti-image"
-      style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee');">
+      style="background-image: url('assets/images/djebla.jpeg');">
     </div>
   
     <div class="desti-text">
@@ -898,7 +1028,10 @@
 <div class="desti-image" style="background-image: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTExMWFRUXFxoXFxgYGB0aGhcgGhsaGBgbHRoaHSggGholGx4YIjEhJSorLi4uGB8zODMtNygtLisBCgoKDg0OGhAQGi0fHyUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLTcrN//AABEIAK4BIgMBIgACEQEDEQH/xAAbAAACAwEBAQAAAAAAAAAAAAAEBQIDBgEAB//EAEIQAAECBAQDBQcBBgUEAgMAAAECEQADITEEEkFRBWFxEyKBkaEGMkKxwdHw4RQVI1KS8TNTYnLSFkOCsiTCB4Oi/8QAGAEAAwEBAAAAAAAAAAAAAAAAAAECAwT/xAAiEQEBAAICAgMBAAMAAAAAAAAAAQIREiEDMRNBUWEiMnH/2gAMAwEAAhEDEQA/ADQTEyoxViZ6RQMOZP3gGZjpYvNQOq0/eO3k4eNMVYhIimZjBoPOFx4lI/z5f9Y+kVnjOHSKzH/2pWT6JMTc5+q4UzTiFap+cESVZrAwpHtLhzUmZ4S1B+uZoiv2ol6SZxHRAHquJ+T+rnjO9ucchD/1QPhw6/FSR8nise00wUGHSG3mE+mQQvlh/E0gPXyMS7QigMZRftTiLiXJA3Ocn/2EUq9oMSbqls1kob1Uo/KJ+WK+KtetSj8VIpWwuQOpaMt/1FPZgR5J+ghfjOKTZxAWRkBezVY/rtaFfJFTxtzJmpUWStJLWCgadL7RXPx0lBKVzUJIqQVAGtRSMFJx5lKBlqKVMQW5tT09BFi/4n8RaipRcKJ5ZfoRE/L0ueHtsF8dwwLdoD0BP0iv/qXDXdR/8T1jDqSMwAPmb9IKlgFwAL1J8BSkT8tV8EbSX7UYcAFl/wBDWbc84Z8O4gnEJKpaVMCU1YaCrAmkfP5uFKUDNQlzq5o7/m0aT2SmkJUEBRGbSrPvtaHjnvJOeEmO2r/ZcyWFz6P1gCdgZgUU3Y7PHVz5rgJdzZ3H2i6fKmsnLQkuqrgX1May6rD2E/d9XUTb8vHP3eHu351hjhcOopcmu0clySS5SQOZ35DWK2WorlYECyg2mtr+UW9gKVvW0dElSVd1IysXc12NTEyFAaBvz86wh6ZT23ws4oCUJzS2KlENewB/NDGCkhQYt3sxbc+JN9qRu/b2aSmX3jkr7pB7wNcw/wBrsLPGQK0oJIdZUCzhg1g+5DWsYwy9qa3hPFsOFJlZlqKj7/wuQCTWrO7/AIYXe2OLlImpmSCFTEockpCmJ3BFCE77+Wb/AG5UvKUe8lSlZ9nADAWpU+MGy8alZzTACSkBTpDEAggaM9Bu0Fy6TC3iOKBJWNQCe6BVmJYWJZ/GBpiCUizAb7/nzg3iGJBUqgyrU5ADMQksR4k3gXA4TOQjMBnIADEm5BLC8EFVTEEEHQVpaDuBLScQCQ1Cw8P1jTcO4FhGZU2eo0c5UpGhdhm21MM8HhcBJWChKypJcPVqNQGmnnC2vHC7EYDgXaJzksDRmr6tBSPZ6WP5lF2A9381jyuNItmmjZso5NaBJnEULP8AjYkWFOzF+iXhba6Gz/Z2S9EqBajmnjGexnBZiApZcoBYG3i20Fe0fBFpKeznLWCHdavWgHLTWB5GIPZplH3QGNb1c8q9IqFYVudk/wBMeh8Fy/5fl9o9DSzSMOBqKaZUA/8AoIklRFjXlVmv1gjIXOjEu9WajW0avSJHCagMdW5/pGW62mMUJn094/nlEVTH+IjqSXbakF9mblg3INtFXYcrVHXcQtq4xR23hyP5eJCcdB5x0oqaJfZ282EeSlZFBXTunfS0GxxRJewHgz+g/GiyYpJcWIdSVlwJoeoZVlDTdjqIsRgls9q8g+tnJsINwWBVLmy3mhQJANwwUrvJqA9dbVisU5dEyio7/nKIYJa+1Sklgt0EaEKSQB/VlPhDHEYBkubjl9/GLMNhEnJMBPdWhQroCCHamkGN7PKdEwW7ObwLNmKSVgVPZuOZExB6+6FecXccxiJM8S0y/cUA9GJPW4beGPEML3ZaktUzEf1SpjeDhMVPactaL0rBQg5Tmq/m4N9jeG+FmpGHUkpKTnd1AMRlAIfWrGFPFllORlAOkKc6AjUv+PDfgc9U+UpDpXkYd2t3vXkPKEf4UyMEVFyoVNGeGCOHkEkPegY83qRWjRphKSkIZLMw9Ymicxskh9qjT6Rltrss/da1KdvEkfrz8obcDwJkvmGooNGdjzPlGH9l+NzErxImLVMVmSBmJLMVgttpGwk8VC0A1ergKax3H5WNcZrJnld4tBLmB9Ta1B1/tWI4nHhIsVKLMl28noKvUwswkxShRIASsVq9ab7NFRnramZ3ajvcfrHRpybvo7TNBCQVZVEB0g2N2B1rFkvM4qTVy+lWYbwjwiTnBUFAuPeBHz1hliMOM2Y5UAAKUVEAl3Gu2wgl0LjtYh0uVrJYsHGg17prT+0A8d9pJeGGUjMS7EgcuXOPYTGpzqScqtqEsGepsxILHekZP2i4AuZMK0uoqCSmWAXHdAIPiG+8TcrroaR457Udp3ZcoAn3qOSCA4A+E9GhJj8SZihMVQskNtlABvqWinGr7FakKlhKxQp1FGrW7Qvmze8+o1jG7pOzsUHs4e228RkTnB2FftFHyO+rPHksElzXwiiXLmK1rtB3s/ObFSSKEF02LMkkctIhglZgkEEGpBKXDWvexNa6bQy4bKSieEhgVFRBatEk6+6G+RiZVTFpZcsAMLdY4hDOW5RZKlvT5QRMw3Ivrt4C0OxsBUNNI5LQMw0av1gkyi0dCe982/OcIHYWZmGQSASl011ZiB4pIHnAWDwSveM2UAat2cqn9QfzgSVjloZKLN3g1DUgU0P5pBsvikpR/iSg/wDMCUmniYJdK1sX2Q/zkf0SftHop/acLvN//j/lHYfL+lpnFy1gPlzBQcMHbKSlmJuCCmu1Igc5PuANYlVeVLQ/nSxcAuATlX3r1N9CSfMxIJKCbhOhAISz6HKAfB4xbkC0KLOkJ6JUQp9Xs/3iIlqJASFku50HKhqI0QkOCUi4rqw6XERwKAFVBrfVz+P94Njj0ToWoEd1hYE9SWMRxE4u5OWltdrdYE4viFDMl1B65SQKUBcc6xSVLZJSCoFnYOo+JDDm92hlsfOWexmlKgFCWpQZiQRZnDa2MZf2dnrVPJUtaiA4zKJ12do1HD8MVOGKSpxVrEKNwOkZLhSzLnJcEEpIrSt9el4vGqmMsu254+AnNSjlqXfnCzhUxgpJfKUnXUOfD9YL44sKTLNSShCqf7QD6vWFKp6gBow1vs9BCu9on+pB7bLAxK91MsHRjDuRj3ly0kNlnyT0BWAR0YmKuJ4RE4Slr7xEpAAq1AxoL94G51gaZJ0QltRUA90uLHfeNbjdseU0p4lNzSkILuJWQ9Q4+cS//HmPEszgTRQQfIq+8WzsCFKUrQqUpJBOpJFDoaUhf7NcPUFK7QKT3RpesK4U5nPb6IMQhSaEUIdvDS7RHF8UCCQkBSiyXNvRmFdYQS8GNFkbAuPpaHMrhpSxICQbuc1eRVY9BETxVfy4sXhcAtMyeSGClHK1fiJt0MNESpnZJbMFBRcAkUvpGlRhXAASpRuFKt4P9oCney8+YszM+XYUYDa8azC+2N8m5pRLmqQkKUVBRSQ5WwdwzlVIYyQVlJ7XMSO8ErCglVKOk2NfIxzC8DQpkTJ0p61VmG+xpaCf3FlcywCHbMkrAPiYrSf6knCqKv8AEUwB1NetYiJbWUrqqp016xxOEUD7qh/+z5umOGUr+Vb8lA9HcdINU9q8QlTAgFReocvb1gRE6YhTnOAQzOQzbWMMQlYZkrzDmPm0SxIUtOUomqq7ApbrVoXGjkyvtMorCGAJzKNamwvF3ApASFPlcqTm0aho5AbV4dr4UL5Jtb+7/wAqwLPwCUsck/wSPpMMLjS3NhJReYtSXAISKP8AC/neITySU1LAvvpTWkWyyoEJ7OaA7P2ZJarFmbbXWL1SU0DTb1PYKYUPPp5wcT2BVxBKnQlRzJBBor7VuLQZw8HuBVQAzMBQDQaRQOGISoqSF5jUns1/I28IJw0ohab1e6SG0q9IXFWzWWAmofrEionkL/hiBPOFHHePS8NlC0qWToGoPE+kLRnS2FzTWBZRdQSNdNTp9oW8H4zKxObKkpykOFM9daaXEGImlE1JAfKQetRSJ0B6cAqX/iDIpZyhzQ1FA2rt5xHsS5GUuz/L7iNhxFOZCsoSSRY2qAQ/KFnEsAJikZSmWkHKcoq7AoTaoH1iV6ZQj/SPzxjkPz7Lzf8AOQeoI9NI9AHxLtFZgpSiWI3r94+v+y2IK8PLDE5EsLEOgFJcq0LPePji03dvnH072MxJVhloc1ylg1XCQzm1QqsXlOi+1uLKiTLTMq9C5IO7sPdAvpsTowk4lJTmIYg5RfvKGgYtarOS0UzeALAPfyOKnNmArUMwIYbXeukHYTDSUIUArvkipS6i1mv1/KYbjabLsbNlpmK7RFTunM4uA+lYrncRZJCUXDMQABWPcVkFRBSpnDkUfa4Ff1hYcLf3ln0840x8cy7Rl5OPSSuIrzBWcgjRAbW1IQzsIvtM2VRGcqsbEU6XjSJwy2Zkop1PqIoXwYrf+KpXVP2MazxyekTzVdhpXaSJRXOEsBLEGhNSoXL0Cm8IonYXDiy853Kvu0Vj2XmH3VJ6V+0WJ9lJ1wAT1EXP+Mtb+1U5CFZRmOQAjKksC5JuBWpJgvgnD05055bocgt4ZX1ZntFA9m8Sm8snoUn0BMWy+Fzh8C3/ANp+gg5DgcYjhwEwmUlkn4Qmg8TUxNWGSkDOgVIAfUnl69AYU/xkXMxPmIF46FTpJQrOosSgFRHeylL3axIrvB8h/G0HBTLnpUpMlAyzFSyHc90s9N7w7EttEDR9eUfI/YrGTZGJJAKgEqQoVbly94AV3j6TN4yiigkqqoHM6bA65TcgD/yfSLRejjsj/KDBEtDfC3SEcnjMtS2FAKOxOZ3FGsKDn3hzhph+LFKs0rMoh70Sk0dyRz3flCpyiwh/hJ9fnE5iSr3gT1rHcNNWslc1Tk2AsN6m+lWaLSv8cfWJ5K0HGGToI5+zDaCDM3ceX3iSa7/nSDcAUYJJ0j37vTFszHSxQzB6n1AZ4gcdL/zB+eEG4ekBw9O0S/Yk7esTGLl/5ifEgfOJ/tMo/wDcR/Un7wbg0oOETsPOOfsKYLQpJspJ8RE8gNiINjQVGDRtAvHcElMhZFGY+oh1LwsAe08v/wCOUtVSkgeHe+kLY6YoEtGS9ru9MSLMCBzoSz7Xjaowy9qbuKeDxjPaVChiMhFQP/qC9OR9YnR42KPYfDET5p+HswPEqBHoDG3l4XMZhDdxOY+G3i0ZH2XChPUS4GQ7/wAyWfw+cbLBgKCzrlYbm/6RMPK9m0nH5cHMWCHRUAnYClN2ir2fx3bMopITmK+8GqKAjcU0e0JcbLKZKj/pt4xH2GmESJlWdQtzSmEG5TxGU1/Qx6ECkFzbyj0BbfGcPwtarAnoPG9rRt/YXCzZS8pGlNT3SVWHInyg1fDyS6WYEsCG8HEdw8ickuhSUmwU7s9Ca0sTpBtdg7GibnV3nQDchh1vfnCeZPQlZK5iMzaElzYsEiPYjhZUe+Zs1RuHp52HR4c8N9lFe8rLKubhauXIUhTxbF8tn0Vy+IGWUNKJQVAOVDmHAqRrWNbMwYFQPGJ4T2fwyVJOXtVJBAKjmABJNvdJcmtYcowo1YxvMdMuXLtljJTqDFkuV6aQ6xeHlgVOUekVSEINiC0MgsmQ92i9MvnBQliO5RAalErqIkJbRZkeOiWBpASIMeCd28o8A5IFxfk9osSloNnpi/ZTAiVxDHSiKKyzEvsVKUPD+IB/4xrpmERqlJ6gfaKZXD0JmqnVMxQykkk0pQPYUFIJNYq520uMAK4LhyXMmU++RL+bQbKwiAKfeLUp8YieUFo0tAb4vOsRmSQr4i+9fvaIjzjyknoIjjD2h+yqA/xK6cuUBYrh81TfxEluofqINzkaxJB3hcIfKgJGDmJFknxf5xJecV7AkizKS3zfwaDFTGGkQTMGprBwg5FM3FYr/JPggH6GFs+bNNDJUDuZZ+0agz21j3bF+kLgfJj1pWP+2pO/dUDE+zdYSHJZ394+Fnja4fOekHEBmLGF8Z8mOwGFnLzABaMp+LMEqNtvURPGy5qEEzZxJuAASzWqUlr8o1ZHIRVOwyFAhSXBvBw0W2HwmOu5UTS5e+tEfOB8aETZmdRqBlJKU1aujF9HjWr9n8O1EEdFKHo8VD2ekioBB6v83ipMishFglCSVBKEArACmCkuKtV1Bw/6QRPxYKqpyFuo82Dw1VwofzKHiP8AjFU7hgIuT1h9psgRcsEJBp3ndv1pp9IsmjIfedwCWGtq6vQ3rFIQuUanPLZi+nUfnhBqJKVpJRX/AEk/I6eMRlj+CZfoXtj+D9I9EOzmimVX9Jj0Rqr3CQcYmsVMhRDO6BvU0Z+7VuUE/vw/FJcf6VkNo5SSddt4Xq4YpTsxBdFb94EODFhwSu6VC6Qsm3vB8r6EFw2kC90xw3HpGbvSZjFxZKk+D19HDwZKx2FUWQtiRmsQGNXeEWFkgTBmA7wVlGgOnm14WdjQXOUlLf7SUtdrMfGATKt3h55f+HOYbZgT5GsFpxGIa4I5j7R86RmKhsaMSPl6RajEqlkFJyhgGG/eCiDvQG4g3T6v02k8LKnICiHY/oaiKwlL/wATQtRgN61BJd2qIzaeJTCzqVlernlqHPXx85rWs0Dh6EB2Y2ajiNJll+s7Mfx9AwUuSpLidWtGGmWjUANRrV4H7dLgBQJIemvh4jzhDwvA9nLWorJcuQ9sqFkXBJ91PKLlrTJdSmCEqYsHPv5RqP8AKEPkXE+Q528DE8vWEP77w60hKVhgGAYimlxFEuZV0Ti3JX6xPNfBbP46E4wSMrOwJPRwfWNCUx86xMlSsQqYpfdDLKlXpVujxqsJxWaUg/wyObj5RHj8nvZTGnBl70jiRtC399t7yAf9qv0icrjUvVKx4D7xrzxLhTAJeJKltA6eLSTTtG6uPmKxYmeg+6oHoQT4sYfKUtVwmKFOf1gqZLNyRyisocOft5QyDhVWiWcA28/tHl9P1itMgqNBAEFTMxoCen2iyXhF6g+sNMHhMu3QaecFsBrE7VIVowZezdYLlYRIi9xETNg2ekwI8YqMx4gue0GxpeTESYFOJ5xX+1jcQbIWojaIGIpmco9mhbPSKhFSkRObMgGasxWyqxcsPQ/rAqsExzIOU7fCfDSIAEG5rzgiSiZ4dR9YadK/2xWssk9I9BnYq2EdgLizSEFsxKWLBgDXwNTX63ERnp7gUGIKQ4oSrw1vp4QqErv51KUVNQvQaOBaOJngEJBsGBNdGFOkZ8VbElCStKszqo4NGYc/lEOIYNASqZmAK1O1A5AHeYFrMHgKXimemZZPeqWGpAe4f6RfMngsBcPShB0DixYAADkIXE9gTiZaU51lnLMAXq/5rFvZlTKDZcimLGrlBGnLbWsC47BdoAlIZxU2tZwOTiCuHyFykZcxVbk2tOXKFYJf1Lh8s5iDYgW6tbWC1YFTl0qc0A+u41inC4pSVggFNSHO3qAPHSIY3is8kpSlIdwC+YEc21Z9YYOMBi1GerDqAbIg3q5WlJ0Ld0qfoYM4g65SktVSX0ZylStW+KaPGMROlzlLMwqdRYUcCjkNXnF8niGJQaKUw5vbrrSDs9luJWU92oKTUOKevIwXKnEy9a7fnKCuIYSs1nAFfd25C20LykJBr9f0aM/JP8ehtbPnmwJYuGc6mo9IvkcTnJASC4vUAjnW7wBPUO6omqkgnkSPuYng5pBDhxt1jPGaqd2HEviajeW5f4bWfeloKRxlIDKQQdWUD8wPUwpQoJK1paiXAqwJ7v1imcgkuWqz1+X6xvqLmVaTDcXwxdyQW+INvZjBaTJUwC01Zu8AfWMc4JtRrVgnC4bMosogsDdqO55+EKzRzOtZiJC0kCWo2c5TQeL3io4ycm6yetfnGWE7Kq+U8qVFKeUEDiUwMQTSlSTztaHqnzn21UnjixRSEqHiPkYPw/tGhP8A2SDuC/0+sZBHG1EkZUlg9U1saUIqTrFqfaRIvK0qx6aECDdH+LYH2klqF1J8KelYvw3EcO79s52NPmPrGGRxkFQAkzasxYMXJDAkgE09RD2Rw1LEqPLp4ihMHOjjjWvwBE05klK0jQFyfAW38OceM8FKppRkSglCEzAlBUQcpKrvWwPWmmNKEhm184WcR9oJ0tcmUhlpdcwZkZwcgDUzAtV6KuH3hzL9Rnhfp9FKUggPmEtGeYQPed2Fw1iaEWhbj05Eywf8ReZZrZCdcuhBUgMTvGK4b7YTE4eSeyk5J85sqAtBAdbge+CDl0Tqbu8NeJcXVMKllnUlKQlJ90AOQ+UZsyifhDClY06Zayl7OpMpSgCAwIBBPOL5eHAqVZun3hN7OLKJZzOXU4BNqAa718obGYVVFByt6QaqpkKXMb7QOqaYjlYDM45x4S7MXfcOPSFo9vZlHSOHDPd4927a0e/4Y6pJN4NBJCpSfhry/vFK+IKNg3rEVUilR3HygJL9pX/NHI4429I7Ae2LLkPcHY/WOYeWEs5cv4OaPXbflAfEeGyU1lTVBVCQFBVC/eoAQOZhdL4lOQQCp9GUATyL7eMTKVOsY6Q4oVD8tz8Y8EKSkOKkBvtfSFsvjv8AmSy41HzYwVKx8ldpgST/ADOCPpDAleIqEir0Ufm0dnzyE5m1pt+scMkhJIqKVBu1KRzC4c31en40ILMISfeIA8K+dN4FnTAfhB2esHTKD+3qDeAhKc7QwpkSVuSFVIYPp0b+0GowRUTnXXQh6AeNotSkJS7j0uNHenTpAQWrVXOmupiOWINDNS6jlegTU+9vYevyeFGLmIJLpLmoYCm7gMD+Wi2ZiiEkjXfTr+fOBJeckqfnXl6AdeUVqU7XMbLBVlCWLOGFqctBEJeLSGJYWJDWd/OLMLNIKnDlTh3Y6b0AH5yXT0l1AgKAfoz6NEXAD5ZSrOk/GGuajVmDv9ouyXKiSS3MavXyrzhekEswYu/SnJjSGOFcgHNWwDitW3pWkVpUoZQam1t22ZngkgJlLKQSrIpKQzkvS7UNYrmpWhJXTcg5gXJDaMerwbgSQHUE6WIVzAATUwrs+g2PUcxLd0nNYuHqH9YrS7vVn84tx80FTZk1vmoRtTTXaKjQKSaUGtTqGa+8VEVFSRUuHA6N4tAaprIoav4+9F6waBxXS0FYqWhaylCgxSMrDlQMBejQ6Rv7E4UzFGYpuxlA31W1GB2Be2ojUJBX3SrKAAQmgIfdhU8oB4OBIkolhScqAyjXvLNSRyd/IbRA4wKU5qlNhudPzpHPct12YYax7TxspsoJCSpmGw5lqmA8Pws4hAUF5WOUAp0AFb3jnEZ38RANMozPdnJ9L+Qhp7Mh5Z5LI62+d438ftzeTsrxHswsZchACDmSK0NQ4DMDU23jkjhswKGfw1r0jUl/ywgUgO5fwrzjbcYcahIYACobkfO348ELUSwsLlvmXN4isB30FSWicnEAgijlr+uvSJW724Z2AUTzrvFikKB+FgG+/rEiASLBhYNVg+oGsSSkN3vl/eA3JaWsKefziWa8SUyRqcujNyiEshhpvAFM69IHVKe5baL5gqXL1jirc+kSarJy9RHItDR6AmLxHsgvMFSFy5zOEMcpS70ILuWN3H1jOYrCrk0xEtSHokkEuz2r+NB+CVPQpgpUtSXL16M51/WG0r2rxMpQ7QdqCHBaunk1RTcwaiO2WmBJAIL/AINzzjk7D50/6qsSGPJ/TzjUz8dhJxOX/wCOss5yhSLue4WdT63PhFmM4FIWHkzjnvlKRl60IIGtjoINHyZNOFKSciymzGof9InJ4ziEFiQpv5g4tT3TtDdHs1jA4ydok6oLkUcd01AtWEfEZBlryGhvlPvDdwa6QtHs2wvGM5ZUs5mJodhz6eMErnkEWrWgfUDSEnDzTMygelQ9G/PGG2JSVSgAqpAqO6QG0Zh+jRh5crLDTxXeLqLNqaA73N/1gPEEq7z0fT8tb8MAomqRIY94spKH0JJJI87neKJ+OWjKCnQd57nkLUINYMb++yPcHIJfb5x2fKzpaWWyFi416vt5wJgONyx3ZgUKCpqb0bzNYaBWHVVE1yrcFPPkMxe7GN+xuFs0qCcxYAUOUE01uaaV/tAcySaKQXdmd7XcjzhvOwCs1nSqg5iw021iCZJFCkgCv3q340B+waUn4tauGDWtQ0+1g8WSManMwT3gO6TUJ/N4hPUFGrXq7M70Ymn63iS6VCXAsrQk6h7/AHId4Sl83EJYOT3HJBYgksH52b8UDBeKORgRlIZh1Bryow6GFq54Sk0cX58vCJzwVBw4FA2/L85wxsUsDKwUHbatRroW0hfnUQXXYhm1ryoImSU0sXd+sRlE5nagctbTu13doAvw89pgKjmZmJqGvQ7h/XaCsGFdogNTOH3DKf6c4VSZpBSAp7AU56ePzh0ZZQnNmBYkEdATdnpqeYgpRq5GPSoUQkqfOxDO5U1b1aC8PIlqQtZowqAaCmh108oyHCpynUC7HQgUcF6mup+0HScQBnSKggWdn0tQi12qfPKxpMqjj55UrRyGFNQ3pGl9mF9xaUEuFAqYt7wDenzMZssAJhqxu1+6g0/N4c+xWbtZj/EH65S1OgIHgY0jOtIZZYu9f73BgSZhVPQggWr53H1g+aCKOAaXiirMT5RUo0HElQSXS5JqxHjbm0Sly0PY0GvrpvFiJm/nFgmAWYw9kiHCS5Jc08K6RyXMqxqBf+8dmrCmoKf3MQQgbtBs1mcqq710/Qx5w4r5iOgfgjpPe5QEEyl3c6xJfT6RPLFc6cEgDrSAOZOceiImc/lHoAxC+JqZOYZ8uYZtGUxIdqKDPX+aKJOISpSFMB8JSsUFFAHa5+UJOHLmLSVKC8qiSVJqK0UHuAzCG8iSpSQMpJJOQIArdhlUqvukNzFN5tTqBsVKAUWSCl2qB9PDrFABSSULUjpo22kEYcpU6XUFu+VihW2tRXfR4fcO4KFlKpoKkZM3datO6PEQ4WynB8fxMkEpOYUHrtWv5vDKbx5Ewk4iQHUKkywogCgCT8OtQecM5EuUjDdkGCszuzqIK2ez6BNLUhVxNIdYCaOAwfugFqHmPlD7HVCiVhSErkoKVEkFOckD+py7HfWJ450JABzJ90Ampds1DqCRb7ulMgdp3gxIPJjduXWC8NNWHAUDd8zKFCDfQ0Fv0jCzd7a4ya7U8USqvdy5gxrYhiQ48PTaB5klaigyxnm5aEGoygu2jCtep1i5SjMKFGiQ+a5JIq9agcvvBnBpZ7dHwZlLSFCoAEla3F7lnc77PCmGrE5ToqI7YJK2SpEtKSpx3iHOY12o/I8ouncKUmX2js5oEg2sahxoR0i7hvC15UTUy5YDuS7rmZv5gR3Q9Q1jbaGuIxE2Wj/C7pABCT3d3Iu96vfpGx6Z+SZ6GKc4BtSlOlIOlcfWmkxAV6HlUUhngcdlV2hJDbmjihbuljTlUxXi8iyPdCg5OamYkpsoGnWsLZaDrxsqYxqhi5ffSsD8SkFReWvMNWLgfWHHEfZxC0lacqCAVMC4ZrtlvfzjO4rhk6WolVTcF3fnT5c4JRYNRgmSe6rNStxQV5ueW0UrKkgUcm/NrmlhA6eIzkalmse95awRK40CDmQHtQ+FjDAHFIXeursPHw/KaQNLWpfdZnP3vq1/IxpcJj5ZHvFL1YlgTapsYoXhnIKfP8/POAiNCFpOYgEP4AXP5zhvwqehSioBkgGpp3mYt60gGfIWslLsh3VSttNzyfWNFwD2dlYwokIUUJQ+dh3wxq5qx0fcxJi+G4Ja0qmITmQQQFHKMxFGBoSKaDSsVSsAoLyqGUKarbBz3tBRqnS8bbGy5SMsqUGRLSAkNQAU3rT6wk4rMRLw8xZsVAJfcnK4F6feJbep2S8TmZlS5KHARrSpUO8aaAOGhhwQ5ZwULJGVI5WJPX6Qj4ags/xLDB9A9T0b5RoOHgJ8KCNsY58rv00kqekqU5JLjXYN+dIuLGjkaQjwJYsTVy/On6w4Qpk667W+kStw4Y2zP1iBkEUt0MX5jEStrwwoEurn5RIUFPnBCJlHpHZpH8oPg/OAKM5iP7Umtah/SITJaCo0A5/pFcrCJDso60LGHoOKxCik3FtBFVwOT6t6mLjhnF0mzafKK58lRbuluRCvleALkrH4RHogmSWF/KPQDT5nLk5cwQopBLqSX5VDm0TlzylZBbZzah7rPanKIyZrzBnJytXKA9HFNHpBGIUMxAJLMoEgdbVDwkmOBVmUhK0mYxy0Nk0zE6WLRozixmJUD3jQAHQjwysbxnMBiUy1ZWUyg1GLWs4/0/3hlLnNNWhfeBorxqCOdW/Kmys1RRlvJDEFRKslxUKJNNbHRrGFGLmgzDW+mVhRqVqNngjh+LSO0llJPZqcKJr3iB5vr/aAsUghakkscqQphSp0s1oUy+xOwc2QSvKjLUEm9A5LA8j+NSIcOwNfeBSSQ6XI1vT5Po8LsdPUZygglJsS99T+c4M4bi800oZqGt1Cla00ceMQ0GTJyUqzISQbMQSFUYkXfemkF8IwBGLlgsQF94WcLQpNhQpcvEZaSqYC5/w0zGc/F0/KwzwE1K8TKUHzdpLd2q6gB6fXeNMfaMvTC4PGzU4hUsLolSko2ACqBgdwKw+wvGKpE2QFhNCBrcMS5eu/9kczBg4rEUDpWtnejkl6aw6lqeX2hAbKCWoSBmB8aesKzs5kYqxsnELAcJClB81AmxO/xBQ5BQ5xDEcNSXMrLlLvm3DKo1AWawpm2hSnD9w7+8DrdUWYaQVJCgouKgG1A5tqw+UJe4uWJqQUTZeYIcyy3eQ9SA9DR6H0rEEYqWpOUpClFkulLE11SKFq1G/jBQ4yoJyrAV3ionWoL13cvb6Q2w6ETQVZWoimozE2OjgMdbHlC6g0zM3huUd6hJdJTVm0O3KpimZgpRypWspUoZge6E2DAu4FX1h3isGQjuHKGSW0Zw9N8yhrYcqicWSEB1AFTVO9C50rTn1guUhXGkv7rWEFRII5EUd/l9YGw4mBQCH7xABcpqbE8qXg7CpUElUzKTmJTluE1IBME8OlZ0maW7rgb2+0FqftZKkCaUSwCspNSdS9QwFWNA2kfWeBcBThZLAATJlZigyd8qX2Ds/WMr7FcOEkKnGqgbCgdTnawCacy+zOZvHFAkkqJAch6XanOvpGfJvh49TYjE4IAXIatvE69aR869qsV2k5KB/hyxvd6knnp5xrvafjBRIQwYzAWIahNX8Kxglyyya1UyX2aNcZ2z8mRjg1UzGj0S1GA/PSH3CcOVd5yQ9KAfK8LMKkMAQDQDa0aLhdgkABhQ615xrbNaYzG72vwWGFyxJrSDk4SxJYa/mkWIlb+LRDGTSO6N683ETpaMxQD1Pk5rz2vFOZJvT05R0kUAd452lWIHL5Qgs7KzKs3PX80iNcxIqH5iPISyn2FK+PjHFouRt4wB2W9a6Hn9IiAUgkZTfRh0+sUg3Hmeu35vF6T3We7NSznrD2aaFEiwvzMdmrYBhodCGv6RVPSwFNzeLTOypSDWj6c38aH0gCQmnn5n/jHoG7Xb89Y9CD/9k=');"></div>
 
 <div class="desti-text">
-<h2>Musée Bordj Moussa</h2>
+<h2 class="title">
+    <i class="fas fa-location-dot"></i>
+    Musée Bordj Moussa
+  </h2>
 
 <p>
 Le Musée Bordj Moussa est l’un des monuments historiques les plus importants
@@ -927,7 +1060,23 @@ la route menant vers les hauteurs de la ville. Pour les plus sportifs, il est
 offrant de superbes points de vue.
 </p>
 
+<!-- 🔴 lien Google Maps SANS bouton carré -->
+<a 
+  href="https://www.google.com/maps/dir/?api=1&destination=Bordj+Moussa+Béjaïa+Algeria" 
+  target="_blank"
+  class="map-link"
+>
+  <i class="fas fa-location-dot"></i>
+  Voir l’itinéraire
+</a>
 
+<!-- MAP -->
+<div class="map-container">
+  <iframe
+    src="https://www.google.com/maps?q=Bordj%20Moussa%20Béjaïa%20Algeria&output=embed"
+    loading="lazy">
+  </iframe>
+</div>
 
 </div>
 
@@ -940,8 +1089,10 @@ offrant de superbes points de vue.
 <div class="desti-image" style="background-image: url('https://www.bejaia-guidedepoche.com/images/CouvertureLieu/158/_thumb2/123-050.jpg');"></div>
 
 <div class="desti-text">
-<h2>Musée du Parc National de Gouraya</h2>
-
+<h2 class="title">
+    <i class="fas fa-location-dot"></i>
+    Musée du Parc National de Gouraya
+  </h2>
 <p>
 Le Musée du Parc National de Gouraya est un espace dédié à la découverte
 de la biodiversité et du patrimoine naturel de la région de Béjaïa.
@@ -970,7 +1121,24 @@ Parc National de Gouraya, non loin du Pic des Singes. Il est accessible
 depuis le centre-ville de Béjaïa en voiture ou en taxi, en suivant la
 route menant au parc. Il est également possible d’y accéder à pied lors
 d’une randonnée à l’intérieur du parc.
-</p></div>
+</p>
+<!-- 🔴 lien Google Maps SANS bouton carré -->
+<a 
+  href="https://www.google.com/maps/dir/?api=1&destination=Parc+National+de+Gouraya+Béjaïa+Algeria" 
+  target="_blank"
+  class="map-link"
+>
+  <i class="fas fa-location-dot"></i>
+  Voir l’itinéraire
+</a>
+
+<!-- MAP -->
+<div class="map-container">
+  <iframe
+    src="https://www.google.com/maps?q=Parc%20National%20de%20Gouraya%20Béjaïa%20Algeria&output=embed"
+    loading="lazy">
+  </iframe>
+</div></div>
 </div>
 
 
@@ -981,8 +1149,10 @@ d’une randonnée à l’intérieur du parc.
 
 <div class="desti-text">
 
-<h2>Cap Carbon</h2>
-
+    <h2 class="title">
+        <i class="fas fa-location-dot"></i>
+        Cap carbon
+      </h2>
 <p>
 Cap Carbon est l’un des sites naturels les plus impressionnants de Béjaïa.
 Situé dans le Parc National de Gouraya, il est célèbre pour abriter l’une
@@ -1010,7 +1180,25 @@ du Pic des Singes, puis de continuer vers Cap Carbon. Le site est accessible
 en voiture, en taxi ou à pied pour les amateurs de randonnée. Tout au long
 du trajet, plusieurs points de vue permettent d’admirer la baie de Béjaïa
 et la mer Méditerranée.
-</p></div>
+</p>
+
+<!-- 🔴 lien Google Maps SANS bouton carré -->
+<a 
+  href="https://www.google.com/maps/dir/?api=1&destination=Cap+Carbon+Béjaïa+Algeria" 
+  target="_blank"
+  class="map-link"
+>
+  <i class="fas fa-location-dot"></i>
+  Voir l’itinéraire
+</a>
+
+<!-- MAP -->
+<div class="map-container">
+  <iframe
+    src="https://www.google.com/maps?q=Cap%20Carbon%20Béjaïa%20Algeria&output=embed"
+    loading="lazy">
+  </iframe>
+</div></div>
 
 </div>
 
@@ -1021,7 +1209,10 @@ et la mer Méditerranée.
 <div class="desti-image" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoAhJN8KSysPrEXUOmBAO36AmCs0n4SXPS2g&s');"></div>
 
 <div class="desti-text">
-<h2>Les Aiguades</h2>
+    <h2 class="title">
+        <i class="fas fa-location-dot"></i>
+        Les Aiguades
+      </h2>
 
 <p>
 Les Aiguades sont une source naturelle d’eau douce située à proximité
@@ -1050,7 +1241,25 @@ il suffit de suivre la route en direction de Cap Carbon. Les Aiguades
 se trouvent sur le chemin et sont facilement accessibles en voiture
 ou en taxi. Le site peut également être atteint à pied pour les amateurs
 de balade, en profitant des magnifiques paysages tout au long du trajet.
-</p></div>
+</p>
+
+<!-- 🔴 lien Google Maps SANS bouton carré -->
+<a 
+  href="https://www.google.com/maps/dir/?api=1&destination=Les+Aiguades+Béjaïa+Algeria" 
+  target="_blank"
+  class="map-link"
+>
+  <i class="fas fa-location-dot"></i>
+  Voir l’itinéraire
+</a>
+
+<!-- MAP -->
+<div class="map-container">
+  <iframe
+    src="https://www.google.com/maps?q=Les%20Aiguades%20Béjaïa%20Algeria&output=embed"
+    loading="lazy">
+  </iframe>
+</div></div>
 
 </div>
 
@@ -1061,8 +1270,9 @@ de balade, en profitant des magnifiques paysages tout au long du trajet.
 <div class="desti-image" style="background-image: url('https://www.bejaia-guidedepoche.com/images/CouvertureLieu/145/223062-pic-des-singes-bejaia.jpg');"></div>
 
 <div class="desti-text">
-<h2>Pic des Singes</h2>
-
+    <h2 class="title">
+        <i class="fas fa-location-dot"></i>
+        Pic des Singes      </h2>
 
 <p>
 Le Pic des Singes est l’un des sites touristiques les plus emblématiques
@@ -1095,7 +1305,24 @@ Pour les amateurs de randonnée, il est également possible d’y accéder
 <strong>Conseil :</strong> Il est recommandé de respecter l’environnement
 et de ne pas nourrir les singes afin de préserver l’équilibre naturel
 de l’écosystème et la sécurité des visiteurs.
-</p></div>
+</p>
+<!-- 🔴 lien Google Maps SANS bouton carré -->
+<a 
+  href="https://www.google.com/maps/dir/?api=1&destination=Les+Aiguades+Béjaïa+Algeria" 
+  target="_blank"
+  class="map-link"
+>
+  <i class="fas fa-location-dot"></i>
+  Voir l’itinéraire
+</a>
+
+<!-- MAP -->
+<div class="map-container">
+  <iframe
+    src="https://www.google.com/maps?q=Les%20Aiguades%20Béjaïa%20Algeria&output=embed"
+    loading="lazy">
+  </iframe>
+</div></div>
 
 </div>
 
