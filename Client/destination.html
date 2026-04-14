@@ -733,6 +733,36 @@
                 font-size: 0.65rem;
             }
         }
+
+
+
+
+
+
+        //localisation google maps
+        .map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #e53935; /* rouge */
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+}
+
+.map-btn:hover {
+  background: #c62828; /* rouge foncé */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(198, 40, 40, 0.4);
+}
+
+.map-btn i {
+  font-size: 16px;
+}
     </style>
     <!-- AmÃ©liorations de design modernes -->
     <link rel="stylesheet" href="css/design-improvements.css">
@@ -744,7 +774,7 @@
     <!-- Hero -->
     <section class="page-hero">
         <div class="container">
-            <img src="https://dia-algerie.com/wp-content/uploads/2021/03/cap-carbon.jpg" alt="Béjaïa plage" class="hero-bg-image" id="heroImage" onerror="this.src='https://via.placeholder.com/1920x1080?text=Bejaia'">
+            <img src="assets/images/djebla.jpeg" alt="Béjaïa plage" class="hero-bg-image" id="heroImage" onerror="this.src='https://via.placeholder.com/1920x1080?text=Bejaia'">
 
             <h1>Explorez Bejaia</h1>
             <p>Des lieux d'exception entre mer et montagne</p>
@@ -754,37 +784,113 @@
     <!-- Blocs destinations : image et texte toujours cÃ´te Ã  cÃ´te -->
   <section class="destinations-section container">
 
-<!-- PARC GOURAYA -->
+<!-- CAP SIGLI -->
 <div class="desti-bloc">
 
-<div class="desti-image" style="background-image: url('https://www.liberte-algerie.com/data/upload/08-04-2020/6%20pic%20des%20singes%20dr%20(Copier).jpg');"></div>
+    <div class="desti-image"
+      style="background-image: url('assets/images/capsigli.jpeg');">
+    </div>
+  
+    <div class="desti-text">
+  
+      <h2 class="title">
+        <i class="fas fa-location-dot"></i>
+        Cap Sigli
+      </h2>
+  
+      <p>
+        Le Cap Sigli est un site naturel situé sur la côte ouest de Béjaïa,
+        connu pour ses falaises impressionnantes et ses paysages sauvages donnant sur la Méditerranée.
+      </p>
+  
+      <p>
+        <strong>Localisation :</strong> situé entre Béjaïa et Jijel, Cap Sigli est un cap rocheux
+        offrant une vue panoramique exceptionnelle sur la mer.
+      </p>
+  
+      <p>
+        <strong>Historique :</strong> cette zone côtière a longtemps été un repère naturel pour les pêcheurs
+        et un point stratégique sur la côte algérienne, tout en restant peu urbanisée.
+      </p>
+  
+      <p>
+        Aujourd’hui, c’est un lieu idéal pour la randonnée, la photographie et la découverte de la nature sauvage.
+      </p>
+  
+      <!-- 🔴 lien Google Maps SANS bouton carré -->
+      <a 
+        href="https://www.google.com/maps/dir/?api=1&destination=Cap+Sigli+Algeria" 
+        target="_blank"
+        class="map-link"
+      >
+        <i class="fas fa-location-dot"></i>
+        Voir l’itinéraire
+      </a>
+  
+      <!-- MAP -->
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps?q=Cap%20Sigli%20Algeria&output=embed"
+          loading="lazy">
+        </iframe>
+      </div>
+  
+    </div>
+  </div>
 
-<div class="desti-text">
-<h2>Parc National de Gouraya</h2> <p>
-      Le Parc National de Gouraya est situé dans la ville de Béjaïa, au nord de l’Algérie,
-      au bord de la mer Méditerranée. Créé en 1984, ce parc naturel est un véritable trésor
-      écologique qui abrite une grande diversité de paysages : forêts denses, falaises
-      spectaculaires et une faune riche, dont des espèces rares et protégées.
-      En 2004, il a été classé Réserve de biosphère par l’UNESCO.
-    </p>
+  <!-- village djebla -->
+<div class="desti-bloc reverse">
 
-    <p>
-      Les visiteurs peuvent découvrir plusieurs sites incontournables tels que le Fort de
-      Gouraya, le célèbre Pic des Singes, ou encore le Cap Carbon avec son phare perché
-      sur des falaises impressionnantes. Le parc est idéal pour la randonnée, la photographie
-      et l’observation des singes magots.
-    </p>
-
-    <p>
-      <strong>Comment y arriver :</strong> Depuis le centre-ville de Béjaïa, suivez la route
-      en direction du Pic des Singes. Le parc est accessible en voiture, en taxi ou à pied
-      pour les amateurs de randonnée. Une fois sur place, plusieurs sentiers balisés permettent
-      d’explorer les différents sites du parc tout en profitant de magnifiques vues sur la
-      baie de Béjaïa.
-    </p>
-
-</div>
-
+    <div class="desti-image"
+      style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee');">
+    </div>
+  
+    <div class="desti-text">
+  
+      <h2 class="title">
+        <i class="fas fa-location-dot"></i>
+        Village Djebla
+      </h2>
+  
+      <p>
+        Le village Djebla est un village kabyle situé dans la wilaya de Béjaïa,
+        entouré de montagnes et de paysages naturels exceptionnels.
+      </p>
+  
+      <p>
+        <strong>Localisation :</strong> situé dans une zone montagneuse de Béjaïa,
+        accessible par des routes rurales offrant des vues panoramiques magnifiques.
+      </p>
+  
+      <p>
+        <strong>Historique :</strong> comme beaucoup de villages kabyles, Djebla repose sur une culture amazighe ancienne,
+        basée sur l’agriculture, la solidarité et les traditions locales.
+      </p>
+  
+      <p>
+        Aujourd’hui, c’est un endroit calme et authentique idéal pour la randonnée et la découverte culturelle.
+      </p>
+  
+      <!-- 🔴 lien Google Maps SANS bouton carré -->
+      <a 
+        href="https://www.google.com/maps/dir/?api=1&destination=Village+Djebla+Béjaïa+Algeria" 
+        target="_blank"
+        class="map-link"
+      >
+        <i class="fas fa-location-dot"></i>
+        Voir l’itinéraire
+      </a>
+  
+      <!-- MAP -->
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps?q=Village%20Djebla%20Béjaïa%20Algeria&output=embed"
+          loading="lazy">
+        </iframe>
+      </div>
+  
+    </div>
+  </div>
 </div>
 <!-- MUSÃ‰E BORDJ MOUSSA -->
 <div class="desti-bloc reverse">
@@ -820,11 +926,15 @@ la route menant vers les hauteurs de la ville. Pour les plus sportifs, il est
 également possible d’y accéder à pied, en profitant d’une agréable montée
 offrant de superbes points de vue.
 </p>
+
+
+
 </div>
+
 </div>
 
 
-<!-- MUSÃ‰E DU PARC NATIONAL DE GOURAYA -->
+<!-- MUSEE DU PARC NATIONAL DE GOURAYA -->
 <div class="desti-bloc">
 
 <div class="desti-image" style="background-image: url('https://www.bejaia-guidedepoche.com/images/CouvertureLieu/158/_thumb2/123-050.jpg');"></div>
