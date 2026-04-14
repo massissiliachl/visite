@@ -36,66 +36,7 @@
             font-weight: 700;
         }
 
-        /* ===== NAVIGATION ===== */
-        .navbar {
-            background: rgba(255, 252, 248, 0.95);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(211, 47, 47, 0.2);
-            width: 100%;
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #1a3a6b, #d32f2f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            white-space: nowrap;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #2f4f4a;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-            position: relative;
-            white-space: nowrap;
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #d32f2f;
-            transition: width 0.3s;
-        }
-
-        .nav-menu a:hover {
-            color: #d32f2f;
-        }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
+        
 
         .hamburger {
             display: none;
@@ -501,7 +442,6 @@
                 font-size: 1.1rem;
             }
         }
-
         @media (max-width: 900px) {
             .desti-bloc, .desti-bloc.reverse {
                 gap: 1.5rem;
