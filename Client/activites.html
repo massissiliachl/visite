@@ -122,13 +122,6 @@
             color: transparent;
         }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.95);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
         .scroll-indicator {
             position: absolute;
             bottom: 30px;
@@ -207,21 +200,22 @@
         }
 
         .activity-card {
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             border-radius: 2rem;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             border: 1px solid rgba(0, 0, 0, 0.05);
             box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
-            position: relative;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: cardFadeIn 0.6s ease forwards;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 480px;
         }
 
         .card-media {
             height: 220px;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .card-media img {
@@ -229,74 +223,70 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.5s ease;
         }
 
-        @keyframes cardFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .activity-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 30px 50px -20px rgba(249, 115, 22, 0.25);
+        .activity-card:hover .card-media img {
+            transform: scale(1.08);
         }
 
         .card-header {
-            padding: 1.8rem 1.8rem 1rem;
+            padding: 1.5rem 1.5rem 0.8rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .icon-circle {
-            width: 75px;
-            height: 75px;
+            width: 65px;
+            height: 65px;
             background: linear-gradient(135deg, #fff5eb, #ffe6d5);
-            border-radius: 1.5rem;
+            border-radius: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
-            color: #1d3ddb;
+            font-size: 1.8rem;
+            color: #f97316;
             transition: 0.3s;
         }
 
         .price-badge {
-            background: linear-gradient(135deg, #a90303, #fef3c7);
+            background: linear-gradient(135deg, #f97316, #fbbf24);
             padding: 0.5rem 1.2rem;
             border-radius: 50px;
             font-weight: 800;
             font-size: 1rem;
-            color: #334155;
+            color: white;
         }
 
         .card-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            padding: 0 1.8rem;
-            margin-bottom: 0.5rem;
+            padding: 0 1.5rem;
+            margin: 0.5rem 0 0.3rem;
             font-family: 'Playfair Display', serif;
+            color: #1e293b;
         }
 
         .card-desc {
-            padding: 0 1.8rem;
+            padding: 0 1.5rem;
             color: #64748b;
             font-size: 0.9rem;
             line-height: 1.6;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
         }
 
         .btn-book {
-            margin: 1.5rem 1.8rem 1.8rem;
+            margin: auto 1.5rem 1.5rem 1.5rem;
             background: linear-gradient(95deg, #a90303, #a90303);
             border: none;
-            padding: 1rem;
+            padding: 0.9rem;
             border-radius: 3rem;
             font-weight: 700;
             color: white;
-            width: calc(100% - 3.6rem);
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
@@ -304,6 +294,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            flex-shrink: 0;
         }
 
         .btn-book:hover {
@@ -332,7 +323,7 @@
 
         .modal-container {
             background: white;
-            max-width: 550px;
+            max-width: 650px;
             width: 90%;
             border-radius: 2rem;
             padding: 2rem;
@@ -379,6 +370,119 @@
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
             border-color: #a90303;
+        }
+
+        .options-modal {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .options-modal label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .options-modal select {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            border: 1px solid #e2e8f0;
+            background: white;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        /* Style spécifique pour les options bateau avec sous-options */
+        .bateau-offre {
+            background: white;
+            border-radius: 0.8rem;
+            padding: 0.8rem;
+            margin-bottom: 0.8rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .bateau-offre-title {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bateau-offre-title i {
+            color: #f97316;
+        }
+
+        .bateau-capacite {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-left: 1.5rem;
+        }
+
+        .bateau-capacite label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .bateau-capacite input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .price-detail {
+            color: #a90303;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        .option-bouee {
+            margin-top: 0.5rem;
+            margin-left: 1.5rem;
+            padding: 0.5rem;
+            background: #fef3c7;
+            border-radius: 0.5rem;
+        }
+
+        .option-bouee label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        .child-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            margin-top: 10px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .child-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .child-option label {
+            cursor: pointer;
+            margin-bottom: 0;
+            font-weight: 500;
+            color: #475569;
         }
 
         .price-summary {
@@ -493,12 +597,6 @@
             transform: scale(1.1);
         }
 
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            .card-title { font-size: 1.3rem; }
-            .icon-circle { width: 55px; height: 55px; font-size: 1.6rem; }
-        }
-
         .error-message {
             color: #dc2626;
             font-size: 0.75rem;
@@ -514,56 +612,68 @@
             border-color: #dc2626;
         }
 
-
-
-
-
-        //info msg erreur
-
-
-
         .info-box {
-    margin: 12px 0;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
+            margin: 0 0 20px 0;
+            border-radius: 12px;
+            padding: 14px 16px;
+            background: #fff5f5;
+            border-left: 4px solid #dc2626;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+        }
 
-.info-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+        .info-warning {
+            background: #fff5f5;
+            border-left: 4px solid #dc2626;
+        }
 
-/* styles par type */
-.info-warning {
-    background: #fff1f2;
-    color: #b91c1c;
-    border-left: 4px solid #dc2626;
-}
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #991b1b;
+        }
 
-.info-info {
-    background: #eff6ff;
-    color: #1d4ed8;
-    border-left: 4px solid #3b82f6;
-}
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
 
-.info-success {
-    background: #ecfdf5;
-    color: #047857;
-    border-left: 4px solid #10b981;
-}
+        .big-dot {
+            color: #dc2626;
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            line-height: 1;
+        }
 
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .activities-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .activity-card { min-height: auto; }
+            .card-title { font-size: 1.3rem; }
+            .icon-circle { width: 55px; height: 55px; font-size: 1.5rem; }
+            .price-badge { font-size: 0.85rem; padding: 0.4rem 1rem; }
+            .card-header { padding: 1.2rem 1.2rem 0.5rem; }
+            .card-desc { padding: 0 1.2rem; font-size: 0.85rem; }
+            .btn-book { margin: auto 1.2rem 1.2rem 1.2rem; padding: 0.8rem; font-size: 0.9rem; }
+            .modal-container { padding: 1.5rem; width: 95%; }
+            .modal-header h3 { font-size: 1.4rem; }
+            .hero-content h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
+            .hero-badge { font-size: 0.75rem; padding: 0.4rem 1rem; }
+            .filter-btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 1.6rem; bottom: 1rem; right: 1rem; }
+        }
 
-
+        @media (max-width: 480px) {
+            .filter-section { gap: 0.7rem; }
+            .filter-btn { padding: 0.4rem 1rem; font-size: 0.75rem; }
+            .card-media { height: 180px; }
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <div id="navbar-placeholder"></div>
     <canvas id="canvas-3d"></canvas>
     
@@ -589,7 +699,6 @@
             <button class="filter-btn" data-filter="terre">⛰️ Terre & Sensations</button>
             <button class="filter-btn" data-filter="culture">🏛️ Culture & Détente</button>
         </div>
-
         <div class="activities-grid" id="activitiesGrid"></div>
     </div>
 
@@ -602,7 +711,106 @@
                 <button style="background:none; border:none; font-size:2rem; cursor:pointer; color:#94a3b8;" id="closeModalBtn">&times;</button>
             </div>
             <form id="reservationForm">
-                <div class="info-box" id="activityNote"></div> <br>
+                <div class="info-box" id="activityNote"></div>
+                
+                <!-- Options Quad -->
+                <div id="quadOptions" class="options-modal" style="display: none;">
+                    <label>⏱️ Choisissez votre formule :</label>
+                    <select id="quadSelect">
+                        <option value="3000">🏍️ 30 minutes - 3000 DA</option>
+                        <option value="4000">🏍️ 45 minutes - 4000 DA</option>
+                    </select>
+                    <div class="child-option">
+                        <input type="checkbox" id="quadChild">
+                        <label>👶 Enfant derrière (+1000 DA)</label>
+                    </div>
+                </div>
+
+                <!-- Options Parapente -->
+                <div id="parapenteOptions" class="options-modal" style="display: none;">
+                    <label>🎥 Choisissez votre formule vidéo :</label>
+                    <select id="parapenteSelect">
+                        <option value="6000">🎬 Vidéo GoPro 4K - 6000 DA</option>
+                        <option value="7000">🎬 Vidéo GoPro 5.3K - 7000 DA</option>
+                        <option value="8000">🎬 Vidéo Insta 360 - 8000 DA</option>
+                    </select>
+                </div>
+
+                <!-- Options Jet Ski -->
+                <div id="jetskiOptions" class="options-modal" style="display: none;">
+                    <label>⏱️ Choisissez la durée :</label>
+                    <select id="jetskiSelect">
+                        <option value="30000">🚤 1h00 - 30000 DA</option>
+                        <option value="40000">🚤 1h30 - 40000 DA</option>
+                    </select>
+                </div>
+
+                <!-- Options Bateau détaillées -->
+                <div id="bateauOptions" class="options-modal" style="display: none;">
+                    <label>⛵ Choisissez votre offre :</label>
+                    
+                    <!-- Offre Découverte -->
+                    <div class="bateau-offre">
+                        <div class="bateau-offre-title">
+                            <i class="fas fa-ship"></i> Offre Découverte (1h30/2h)
+                        </div>
+                        <div class="bateau-capacite">
+                            <label>
+                                <input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5">
+                                ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7">
+                                ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9">
+                                ⚓ Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Offre Évasion -->
+                    <div class="bateau-offre">
+                        <div class="bateau-offre-title">
+                            <i class="fas fa-umbrella-beach"></i> Offre Évasion (3h/3h30) + Brunch
+                        </div>
+                        <div class="bateau-capacite">
+                            <label>
+                                <input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5">
+                                ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7">
+                                ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
+                            </label>
+                        </div>
+                        <div class="option-bouee">
+                            <label>
+                                <input type="checkbox" id="boueeOption">
+                                🚤 + Bouée tractée (5000 DA supplémentaire)
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Offre Détente -->
+                    <div class="bateau-offre">
+                        <div class="bateau-offre-title">
+                            <i class="fas fa-fire"></i> Offre Détente (4h30/5h) + Barbecue + Bouée
+                        </div>
+                        <div class="bateau-capacite">
+                            <label>
+                                <input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5">
+                                ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7">
+                                ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group" id="fullNameGroup">
                     <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et Prénom)</span></label>
                     <input type="text" id="fullName" placeholder="Ex: Visit Bejaia" required>
@@ -611,17 +819,17 @@
                 <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
                 <div class="form-group"><label>Téléphone *</label><input type="tel" id="phone" required></div>
                 <div class="form-group"><label>Date souhaitée *</label><input type="date" id="date" required></div>
-                <div class="form-group"><label>Adultes *</label><input type="number" id="adults" min="1" value="1" required></div>
                 <div class="form-group" id="childGroup" style="display:none;"><label>Enfants <span id="childExtraLabel"></span></label><input type="number" id="children" min="0" value="0"></div>
-<div class="form-group">
-    <label>Mode de paiement</label>
-    <select id="paymentMethod">
-        <option value="BaridiMob">BaridiMob</option>
-        <option value="CCP">CCP</option>
-        <option value="Virement">Virement</option>
-        <option value="PayPal"> PayPal (Confirmation WhatsApp)</option>
-    </select>
-</div>                <div class="form-group"><label>Référence transaction</label><input type="text" id="transactionRef" placeholder="ex: 123456"></div>
+                <div class="form-group">
+                    <label>Mode de paiement</label>
+                    <select id="paymentMethod">
+                        <option value="BaridiMob">BaridiMob</option>
+                        <option value="CCP">CCP</option>
+                        <option value="Virement">Virement</option>
+                        <option value="PayPal">PayPal (Confirmation WhatsApp)</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Référence transaction</label><input type="text" id="transactionRef" placeholder="ex: 123456"></div>
                 <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
                 <div class="price-summary"><strong>💰 Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>🔖 Acompte 30% : <span id="depositAmount">0 DA</span></small></div>
                 <button type="submit" class="btn-submit">✅ Confirmer la réservation</button>
@@ -634,15 +842,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/navbar.js"></script>
-
-    <!-- Footer placeholder -->
     <div data-include="footer"></div>
-    
     <script src="js/include-footer.js"></script>
     <script>
         console.log("=== APPLICATION DÉMARRÉE ===");
         
-        // Scroll animation
         const heroSection = document.getElementById('heroSection');
         const filterSection = document.getElementById('filterSection');
         let heroHidden = false;
@@ -665,53 +869,153 @@
             window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
         });
 
-        // Activités
         const activitiesCatalog = [
-            { id: "visite",activityNote: [ "Le prix englobe uniquement la visite guidée et non le transport",
-                "Prix dégressif à partir de la deuxième personne"
-            ], name: "Visite Guidée", basePrice: 6000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Découvrez Béjaïa historique : Gouraya, Casbah, cascade.", hasChild: false },
-            { id: "parapente",activityNote: [
-  "non remboursable",
-  "arriver 15 min avant",
-  "pièce d'identité obligatoire"
-], name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "assets/images/vol parapente.jpg", desc: "Baptême parapente, atterrissage plage, sensations uniques.", hasChild: false },
-            { id: "quad", name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", image: "assets/images/quad.jpeg", desc: "Circuit sur les hauteurs de Boulimat.", hasChild: true, childPrice: 1000, options: [{label:"30 min", price:3000},{label:"45 min", price:4000}] },
-            { id: "cheval", name: "Randonnée à Cheval", basePrice: 2500, category: "terre", icon: "fa-horse", image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", desc: "Entre mer et montagne dans le parc de Gouraya.", hasChild: false },
-            { id: "parasailing", name: "Parasailinf", basePrice: 10000, category: "mer", icon: "fa-parachute-box", image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", desc: "Envolez-vous au-dessus de la mer.", hasChild: false },
-            { id: "bouee", name: "Bouée Tractée", basePrice: 3000, category: "mer", icon: "fa-water", image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", desc: "Adrénaline et fous rires garantis.", hasChild: false },
-            { id: "jetski", name: "Jet Ski", basePrice: 30000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jetski.jpeg", desc: "Sensations fortes en liberté (1h).", hasChild: false },
-            { id: "bateau", name: "Excursion Bateau", basePrice: 20000, category: "mer", icon: "fa-ship", image: "assets/images/i.jpeg", desc: "Découvrez île de Nizla, grotte des pirates.", hasChild: false }
+            { 
+                id: "visite", 
+                activityNote: [ 
+                    "Le prix englobe que la visite guidée et non le transport.",
+                    "Prix dégressif à partir de la deuxième personne."
+                ], 
+                name: "Visite Guidée", 
+                basePrice: 6000, 
+                category: "culture", 
+                icon: "fa-landmark", 
+                image: "assets/images/casbah.jpg", 
+                desc: "Partez à la découverte de Bejaia historique et nature à faire les plus beaux spots de bejaia de gouraya à la cascade en passant par la casbah, faites le tour avec un guide amoureux de la ville et connaisseur de tout les recoins et les histoires.", 
+                hasChild: false 
+            },
+            { 
+                id: "quad", 
+                activityNote: [
+                    "Baskets et lunettes recommandées",
+                    "Casque quad fourni",
+                    "1 adulte sur 1 quad et conduite à partir de 16 ans",
+                    "Le guide se réserve le droit de vous reprendre le quad si vous respectez pas ces consignes sans être remboursé."
+                ], 
+                name: "Randonnée Quad", 
+                basePrice: 3000, 
+                category: "terre", 
+                icon: "fa-motorcycle", 
+                image: "assets/images/quad.jpeg", 
+                desc: "Randonnée quad ( pas de course ) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. à partir de 13h30 sans réservation premier arrivé première sortie.", 
+                hasChild: true, 
+                childPrice: 1000
+            },
+            { 
+                id: "parapente", 
+                activityNote: [
+                    "Moniteur diplômé et reconnu.",
+                    "les vols se font en total sécurité.",
+                    "moyens de sécurité fournis.",
+                    "les vols peuvent être annulés à la dernière minute si les conditions changent.",
+                    "les vols peuvent être annulés si vous êtes pas à l'écoute du moniteur."
+                ], 
+                name: "Parapente", 
+                basePrice: 6000, 
+                category: "terre", 
+                icon: "fa-parachute-box", 
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", 
+                desc: "envoyez vous en l'air avec un baptême en parapente sur le plus beau spot de vol en parapente d'algerie, avec un atterrissage sur la plage.", 
+                hasChild: false
+            },
+            { 
+                id: "cheval", 
+                activityNote: [
+                    "la randonnées se font sur une colline sur un chemin forestier qui surplombe la mer et non sur une plage",
+                    "les randonnées se font soit le matin ou en fin d'apres midi par respect a la santé de l'animal.",
+                    "picnique interdit au sein de la ferme.",
+                    "1 personne sur un cheval."
+                ],
+                name: "Randonnée à Cheval", 
+                basePrice: 2500, 
+                category: "terre", 
+                icon: "fa-horse", 
+                image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", 
+                desc: "Entre Le bleu de la Méditerranée et le vert du parc national de gouraya, laissez vous contemplez les beaux paysages de la kabyle à cheval pour une randonnée inoubliable d'environ 30 min.", 
+                hasChild: false 
+            },
+            { 
+                id: "parasailing", 
+                activityNote: [
+                    "l'activité peut être annulé si changement de météo.",
+                    "les réservations sont faite que pour les créneaux du matin, les après-midi premier arrivé premier sortie"
+                ],
+                name: "Parasailing", 
+                basePrice: 10000, 
+                category: "mer", 
+                icon: "fa-parachute-box", 
+                image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", 
+                desc: "Pas besoin d'être un expert pour voler. Juste l'envie de voir l'hoRozon autrement. Le parachute ascensionnel : 100 % sensation, 0% d'effort, 1000 souvenirs inoubliables.", 
+                hasChild: false 
+            },
+            { 
+                id: "bouee", 
+                activityNote: [
+                    "Réservation confirmé avec payement à l'avance.",
+                    "Gilet fournis et obligatoire."
+                ],
+                name: "Bouée Tractée", 
+                basePrice: 3000, 
+                category: "mer", 
+                icon: "fa-water", 
+                image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", 
+                desc: "Pour un moment plein de souvenir et de fou rire offrez-vous l'activité plein de sensation et d'adrénaline en famille ou entre amis.", 
+                hasChild: false 
+            },
+            { 
+                id: "jetski", 
+                activityNote: [
+                    "Activité seulement en supplément de la sortie bateau.",
+                    "pieces d'identité obligatoire en garantie de toute casse.",
+                    "piece d'identité restituer si aucune casse ou paiement de casse du à la location.",
+                    "aucun remboursement si arrêt de l'activité ou jet ski retourner",
+                    "activité interdite à toute personne alcoolisé."
+                ],
+                name: "Jet Ski", 
+                basePrice: 30000, 
+                category: "mer", 
+                icon: "fa-jet-fighter", 
+                image: "assets/images/jetski.jpeg", 
+                desc: "Offrez vous le plein de sensations en totale liberté avec l'activité jet-ski.", 
+                hasChild: false
+            },
+            { 
+                id: "bateau", 
+                activityNote: [
+                    "Alcool interdit sur le bateau",
+                    "Circuit classique : île de nizla, grotte de la patte d'éléphant, grotte des pirates, pointe sainte Anne, cap carbon avec un arrêt de 15/20 min pour nager.",
+                    "Offre découverte : 1h30/2h - Circuit classique",
+                    "Offre évasion : 3h/3h30 - Circuit classique + grottes de gouraya + tamelaht + snorkelling + brunch",
+                    "Offre détente : 4h30/5h - Circuit complet + barbecue + bouée tractée"
+                ], 
+                name: "Excursion Bateau", 
+                basePrice: 20000, 
+                category: "mer", 
+                icon: "fa-ship", 
+                image: "assets/images/i.jpeg", 
+                desc: "Circuit classique : île de nizla, grotte de la patte d'éléphant, grotte des pirates, pointe sainte Anne, cap carbon avec un arrêt de 15/20 min pour nager.", 
+                hasChild: false
+            }
         ];
 
         let currentAct = { id: '', name: '', pricePerAdult: 0, hasChild: false, childPrice: 0 };
+        let boueeAdded = false;
 
         function renderCards(filter = "all") {
             const grid = document.getElementById("activitiesGrid");
             const filtered = filter === "all" ? activitiesCatalog : activitiesCatalog.filter(a => a.category === filter);
-            grid.innerHTML = filtered.map((act, idx) => {
-                let optsHtml = "";
-                if (act.id === "quad") {
-                    optsHtml = `<div class="options-group" style="padding:0 1.5rem; margin:1rem 0; background:#f8fafc; border-radius:1rem; margin-left:1.8rem; margin-right:1.8rem;">
-                        <div class="option-item" style="display:flex; justify-content:space-between; padding:0.7rem 0; border-bottom:1px solid #e2e8f0;">
-                            <label><input type="radio" name="quadOpt_${idx}" value="3000" checked> 🏍️ 30 minutes - 3000 DA</label>
-                        </div>
-                        <div class="option-item" style="display:flex; justify-content:space-between; padding:0.7rem 0;">
-                            <label><input type="radio" name="quadOpt_${idx}" value="4000"> 🏍️ 45 minutes - 4000 DA</label>
-                        </div>
-                        <div class="child-extra" style="display:flex; align-items:center; gap:0.8rem; padding:0.7rem 0;">
-                            <input type="checkbox" class="childQuadCheck" data-idx="${idx}"> <label>👶 Enfant derrière (+1000 DA)</label>
-                        </div>
-                    </div>`;
-                }
+            grid.innerHTML = filtered.map((act) => {
                 return `<div class="activity-card">
                     <div class="card-media">
                         <img src="${act.image}" alt="${act.name}" loading="lazy" onerror="this.src='assets/images/all.jpg'">
                     </div>
-                    <div class="card-header"><div class="icon-circle"><i class="fas ${act.icon}"></i></div><div class="price-badge">${act.id === "quad" ? "Dès 3000 DA" : act.basePrice.toLocaleString('fr-DZ') + " DA"}</div></div>
+                    <div class="card-header">
+                        <div class="icon-circle"><i class="fas ${act.icon}"></i></div>
+                        <div class="price-badge">${act.basePrice.toLocaleString('fr-DZ') + " DA"}</div>
+                    </div>
                     <h3 class="card-title">${act.name}</h3>
                     <p class="card-desc">${act.desc}</p>
-                    ${optsHtml}
-                    <button class="btn-book" data-id="${act.id}" data-name="${act.name}" data-price="${act.basePrice}" data-idx="${idx}"><i class="fas fa-calendar-check"></i> Réserver</button>
+                    <button class="btn-book" data-id="${act.id}" data-name="${act.name}" data-price="${act.basePrice}"><i class="fas fa-calendar-check"></i> Réserver</button>
                 </div>`;
             }).join('');
 
@@ -723,12 +1027,7 @@
                     let hasChild = false;
                     let childPrice = 0;
                     if (id === 'quad') {
-                        const idx = btn.dataset.idx;
-                        const card = btn.closest('.activity-card');
-                        const selected = card.querySelector(`input[name="quadOpt_${idx}"]:checked`);
-                        price = selected ? parseInt(selected.value) : 3000;
-                        const childCheck = card.querySelector('.childQuadCheck');
-                        hasChild = childCheck ? childCheck.checked : false;
+                        hasChild = true;
                         childPrice = 1000;
                     }
                     openModal(id, name, price, hasChild, childPrice);
@@ -737,60 +1036,148 @@
         }
 
         function openModal(id, name, price, hasChild, childPrice) {
-    currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
+            currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
+            boueeAdded = false;
 
-    document.getElementById("modalTitle").innerHTML = `📅 Réserver · ${name}`;
+            document.getElementById("modalTitle").innerHTML = `📅 Réserver · ${name}`;
 
-    // 🔥 AJOUT ICI
-    const act = activitiesCatalog.find(a => a.id === id);
-    const noteBox = document.getElementById("activityNote");
-    if (act && act.activityNote) {
+            // Masquer toutes les options
+            document.getElementById("quadOptions").style.display = "none";
+            document.getElementById("parapenteOptions").style.display = "none";
+            document.getElementById("jetskiOptions").style.display = "none";
+            document.getElementById("bateauOptions").style.display = "none";
 
-let notes = act.activityNote;
+            // Afficher les options selon l'activité
+            if (id === "quad") {
+                document.getElementById("quadOptions").style.display = "block";
+                document.getElementById("quadSelect").value = "3000";
+                document.getElementById("quadChild").checked = false;
+                currentAct.pricePerAdult = 3000;
+                currentAct.hasChild = false;
+            } else if (id === "parapente") {
+                document.getElementById("parapenteOptions").style.display = "block";
+                document.getElementById("parapenteSelect").value = "6000";
+                currentAct.pricePerAdult = 6000;
+            } else if (id === "jetski") {
+                document.getElementById("jetskiOptions").style.display = "block";
+                document.getElementById("jetskiSelect").value = "30000";
+                currentAct.pricePerAdult = 30000;
+            } else if (id === "bateau") {
+                document.getElementById("bateauOptions").style.display = "block";
+                // Sélectionner la première option par défaut
+                const firstRadio = document.querySelector('input[name="bateauOption"]');
+                if (firstRadio) {
+                    firstRadio.checked = true;
+                    currentAct.pricePerAdult = parseInt(firstRadio.value);
+                }
+            }
 
-// 🔥 si c'est une string → on transforme en tableau
-if (!Array.isArray(notes)) {
-    notes = [notes];
-}
+            // Affichage des notes
+            const act = activitiesCatalog.find(a => a.id === id);
+            const noteBox = document.getElementById("activityNote");
+            if (act && act.activityNote) {
+                let notes = act.activityNote;
+                if (!Array.isArray(notes)) notes = [notes];
+                noteBox.innerHTML = notes.map(note => `<div class="info-item"><span class="big-dot">●</span> ${note}</div>`).join("");
+                noteBox.className = "info-box info-warning";
+            } else {
+                noteBox.innerHTML = "";
+                noteBox.className = "info-box";
+            }
 
-noteBox.innerHTML = notes.map(note => `
-  <div class="info-item">
-    <span class="big-dot">●</span> ${note}
-</div>
-`).join("");
+            const childGroup = document.getElementById("childGroup");
+            if (hasChild) {
+                childGroup.style.display = "block";
+                document.getElementById("childExtraLabel").innerHTML = `(+${childPrice} DA/enfant)`;
+            } else {
+                childGroup.style.display = "none";
+            }
 
-noteBox.className = "info-box info-warning";
-
-} else {
-noteBox.innerHTML = "";
-noteBox.className = "info-box";
-}
-
-    const childGroup = document.getElementById("childGroup");
-
-    if (hasChild) {
-        childGroup.style.display = "block";
-        document.getElementById("childExtraLabel").innerHTML = `(+${childPrice} DA/enfant)`;
-    } else {
-        childGroup.style.display = "none";
-    }
-
-    document.getElementById("adults").value = 1;
-    document.getElementById("children").value = 0;
-
-    updateTotal();
-    document.getElementById("modalOverlay").classList.add("active");
-}
+            document.getElementById("children").value = 0;
+            updateTotal();
+            document.getElementById("modalOverlay").classList.add("active");
+        }
 
         function updateTotal() {
-            let adults = parseInt(document.getElementById("adults").value) || 1;
             let children = parseInt(document.getElementById("children").value) || 0;
-            let total = currentAct.pricePerAdult * adults;
-            if (currentAct.hasChild) total += children * currentAct.childPrice;
+            let total = currentAct.pricePerAdult;
+            
+            // Ajouter les enfants pour Quad
+            if (currentAct.id === 'quad' && currentAct.hasChild) {
+                total += children * 1000;
+            }
+            
+            // Ajouter la bouée pour l'offre évasion bateau
+            if (currentAct.id === 'bateau' && boueeAdded) {
+                total += 5000;
+            }
+            
             const deposit = Math.round(total * 0.3);
             document.getElementById("totalPriceDisplay").innerHTML = total.toLocaleString('fr-DZ') + " DA";
             document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
         }
+
+        // Écouteurs pour les options Quad
+        document.getElementById("quadSelect")?.addEventListener('change', function() {
+            if (currentAct.id === 'quad') {
+                currentAct.pricePerAdult = parseInt(this.value);
+                updateTotal();
+            }
+        });
+
+        document.getElementById("quadChild")?.addEventListener('change', function(e) {
+            if (currentAct.id === 'quad') {
+                currentAct.hasChild = e.target.checked;
+                const childGroup = document.getElementById("childGroup");
+                if (currentAct.hasChild) {
+                    childGroup.style.display = "block";
+                    document.getElementById("childExtraLabel").innerHTML = `(+1000 DA/enfant)`;
+                } else {
+                    childGroup.style.display = "none";
+                    document.getElementById("children").value = 0;
+                }
+                updateTotal();
+            }
+        });
+
+        // Écouteurs pour les options Parapente
+        document.getElementById("parapenteSelect")?.addEventListener('change', function() {
+            if (currentAct.id === 'parapente') {
+                currentAct.pricePerAdult = parseInt(this.value);
+                updateTotal();
+            }
+        });
+
+        // Écouteurs pour les options Jet Ski
+        document.getElementById("jetskiSelect")?.addEventListener('change', function() {
+            if (currentAct.id === 'jetski') {
+                currentAct.pricePerAdult = parseInt(this.value);
+                updateTotal();
+            }
+        });
+
+        // Écouteurs pour les options Bateau
+        document.querySelectorAll('input[name="bateauOption"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (currentAct.id === 'bateau') {
+                    currentAct.pricePerAdult = parseInt(this.value);
+                    // Réinitialiser la bouée si on change d'offre
+                    const offre = this.getAttribute('data-offre');
+                    if (offre !== 'evasion') {
+                        document.getElementById("boueeOption").checked = false;
+                        boueeAdded = false;
+                    }
+                    updateTotal();
+                }
+            });
+        });
+
+        document.getElementById("boueeOption")?.addEventListener('change', function(e) {
+            if (currentAct.id === 'bateau') {
+                boueeAdded = e.target.checked;
+                updateTotal();
+            }
+        });
 
         function showToast(msg, type = "success") {
             const toast = document.getElementById("toast");
@@ -806,7 +1193,6 @@ noteBox.className = "info-box";
             else loader.classList.remove("active");
         }
 
-        // Fonction pour valider que le nom contient au moins un espace (nom + prénom)
         function validateFullName(fullName) {
             const trimmed = fullName.trim();
             const parts = trimmed.split(/\s+/);
@@ -816,40 +1202,21 @@ noteBox.className = "info-box";
         async function sendReservation(payload) {
             const API_URL = 'http://localhost:3000/api/reservations';
             console.log("Envoi à l'API:", payload);
-            
             try {
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
                 const data = await response.json();
-                console.log("Réponse API:", response.status, data);
-                
-                if (!response.ok) {
-                    throw new Error(data.message || data.error || `Erreur ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error(data.message || data.error || `Erreur ${response.status}`);
                 return { success: true, data: data, apiResponse: true };
-                
             } catch (error) {
                 console.error("Erreur API:", error);
-                
-                // Sauvegarde locale
                 const localReservations = JSON.parse(localStorage.getItem('bejaia_reservations') || '[]');
-                const newReservation = {
-                    ...payload,
-                    id: Date.now(),
-                    created_at: new Date().toISOString(),
-                    saved_locally: true
-                };
+                const newReservation = { ...payload, id: Date.now(), created_at: new Date().toISOString(), saved_locally: true };
                 localReservations.push(newReservation);
                 localStorage.setItem('bejaia_reservations', JSON.stringify(localReservations));
-                
                 return { success: true, local: true, data: newReservation };
             }
         }
@@ -858,12 +1225,10 @@ noteBox.className = "info-box";
             document.getElementById("modalOverlay").classList.remove("active");
         }
 
-        // Validation en temps réel du champ nom complet
         document.getElementById("fullName").addEventListener("input", function(e) {
             const isValid = validateFullName(e.target.value);
             const group = document.getElementById("fullNameGroup");
             const errorDiv = document.getElementById("fullNameError");
-            
             if (!isValid && e.target.value.trim().length > 0) {
                 group.classList.add("error");
                 errorDiv.classList.add("show");
@@ -873,137 +1238,100 @@ noteBox.className = "info-box";
             }
         });
 
-      // Remplacer la fonction submit existante par celle-ci
-document.getElementById("reservationForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    
-    const fullName = document.getElementById("fullName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const date = document.getElementById("date").value;
-    const adults = parseInt(document.getElementById("adults").value);
-    const children = parseInt(document.getElementById("children").value) || 0;
-    const payment = document.getElementById("paymentMethod").value;
-    const transRef = document.getElementById("transactionRef").value.trim();
-    const special = document.getElementById("specialRequests").value;
-
-    // Validation du nom complet
-    if (!validateFullName(fullName)) {
-        showToast("⚠️ Veuillez entrer votre NOM et PRÉNOM complets", "warning");
-        return;
-    }
-
-    if (!email || !phone || !date || !adults) {
-        showToast("Veuillez remplir tous les champs obligatoires", "error");
-        return;
-    }
-
-    // Calcul du total
-    let total = currentAct.pricePerAdult * adults;
-    if (currentAct.hasChild) total += children * currentAct.childPrice;
-    const deposit = Math.round(total * 0.3);
-    
-    // Séparation du nom
-    const nameParts = fullName.split(/\s+/);
-    const nom = nameParts[0];
-    const prenom = nameParts.slice(1).join(" ");
-
-    // 🔥 SI L'UTILISATEUR CHOISIT PAYPAL - REDIRECTION DIRECTE VERS WHATSAPP
-    if (payment === "PayPal") {
-        // Construire le message WhatsApp
-        const message = `🏖️ *NOUVELLE RÉSERVATION PAYPAL - VISIT BEJAIA* 🏖️
-
-👤 *Client:* ${nom} ${prenom}
-📧 *Email:* ${email}
-📞 *Téléphone:* ${phone}
-
-🎯 *Activité:* ${currentAct.name}
-📅 *Date souhaitée:* ${date}
-👥 *Personnes:* ${adults + children} (${adults} adultes${children > 0 ? `, ${children} enfants` : ''})
-
-💰 *Montant total:* ${total.toLocaleString('fr-DZ')} DA
-💵 *Acompte 30%:* ${deposit.toLocaleString('fr-DZ')} DA
-
-💳 *Mode de paiement:* PAYPAL
-
-📝 *Demandes spéciales:* ${special || 'Aucune'}
-
-⏰ *Réservation faite le:* ${new Date().toLocaleString('fr-FR')}
-
-🔔 *Action:* Client va effectuer le paiement PayPal. Veuillez confirmer la réservation.`;
-
-        // Encoder le message pour URL WhatsApp
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappNumber = "33619501708"; // Votre numéro
-        
-        // Rediriger vers WhatsApp
-        window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-        
-        // Fermer le modal
-        closeModal();
-        
-        // Réinitialiser le formulaire
-        document.getElementById("reservationForm").reset();
-        document.getElementById("adults").value = 1;
-        document.getElementById("children").value = 0;
-        updateTotal();
-        
-        return; // Arrêter l'exécution ici
-    }
-
-    // POUR LES AUTRES MODES DE PAIEMENT (BaridiMob, CCP, Virement)
-    setLoading(true);
-
-    const payload = {
-        nom: nom,
-        prenom: prenom,
-        email: email,
-        telephone: phone,
-        date_depart: date,
-        nb_personnes: adults + children,
-        nom_item: currentAct.name,
-        type_reservation: "activite",
-        prix_total: total,
-        acompte_30pct: deposit,
-        mode_paiement: payment,
-        transaction_ref: transRef || null,
-        demandes_speciales: special || null,
-        status: "en_attente",
-        paiement_statut: transRef ? "attente_validation" : "non_saisi"
-    };
-
-    try {
-        const result = await sendReservation(payload);
-        setLoading(false);
-        
-        if (result.success) {
-            const message = result.local ? 
-                "✅ Réservation sauvegardée localement" :
-                "✅ Réservation confirmée !";
-            showToast(`${message} - Total: ${total.toLocaleString('fr-DZ')} DA`, "success");
+        document.getElementById("reservationForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
             
-            setTimeout(() => {
+            const fullName = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+            const date = document.getElementById("date").value;
+            const children = parseInt(document.getElementById("children").value) || 0;
+            const payment = document.getElementById("paymentMethod").value;
+            const transRef = document.getElementById("transactionRef").value.trim();
+            const special = document.getElementById("specialRequests").value;
+
+            if (!validateFullName(fullName)) {
+                showToast("⚠️ Veuillez entrer votre NOM et PRÉNOM complets", "warning");
+                return;
+            }
+            if (!email || !phone || !date) {
+                showToast("Veuillez remplir tous les champs obligatoires", "error");
+                return;
+            }
+
+            let total = currentAct.pricePerAdult;
+            if (currentAct.id === 'quad' && currentAct.hasChild) {
+                total += children * 1000;
+            }
+            if (currentAct.id === 'bateau' && boueeAdded) {
+                total += 5000;
+            }
+            
+            const deposit = Math.round(total * 0.3);
+            
+            const nameParts = fullName.split(/\s+/);
+            const nom = nameParts[0];
+            const prenom = nameParts.slice(1).join(" ");
+
+            // Récupérer l'option sélectionnée pour le bateau
+            let selectedOption = "";
+            if (currentAct.id === 'bateau') {
+                const selectedRadio = document.querySelector('input[name="bateauOption"]:checked');
+                if (selectedRadio) {
+                    const offre = selectedRadio.getAttribute('data-offre');
+                    const capacite = selectedRadio.getAttribute('data-capacite');
+                    selectedOption = `Offre ${offre} - ${capacite} personnes`;
+                    if (boueeAdded) selectedOption += " + Bouée tractée";
+                }
+            }
+
+            if (payment === "PayPal") {
+                const message = `🏖️ *NOUVELLE RÉSERVATION PAYPAL - VISIT BEJAIA* 🏖️\n\n👤 *Client:* ${nom} ${prenom}\n📧 *Email:* ${email}\n📞 *Téléphone:* ${phone}\n\n🎯 *Activité:* ${currentAct.name}\n${selectedOption ? `📋 *Option:* ${selectedOption}\n` : ''}📅 *Date souhaitée:* ${date}\n👥 *Personnes:* ${children > 0 ? children + ' enfant(s)' : '1 personne'}\n\n💰 *Montant total:* ${total.toLocaleString('fr-DZ')} DA\n💵 *Acompte 30%:* ${deposit.toLocaleString('fr-DZ')} DA\n\n💳 *Mode de paiement:* PAYPAL\n\n📝 *Demandes spéciales:* ${special || 'Aucune'}\n\n⏰ *Réservation faite le:* ${new Date().toLocaleString('fr-FR')}`;
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappNumber = "33619501708";
+                window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
                 closeModal();
                 document.getElementById("reservationForm").reset();
-                document.getElementById("adults").value = 1;
                 document.getElementById("children").value = 0;
                 updateTotal();
-            }, 2000);
-        } else {
-            showToast("❌ Erreur lors de la réservation", "error");
-        }
-    } catch (error) {
-        console.error("Erreur:", error);
-        setLoading(false);
-        showToast("❌ Erreur: " + error.message, "error");
-    }
-});
+                return;
+            }
 
-document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+            setLoading(true);
+            const payload = {
+                nom, prenom, email, telephone: phone, date_depart: date,
+                nb_personnes: 1 + children, nom_item: currentAct.name + (selectedOption ? ` (${selectedOption})` : ''), type_reservation: "activite",
+                prix_total: total, acompte_30pct: deposit, mode_paiement: payment,
+                transaction_ref: transRef || null, demandes_speciales: special || null,
+                status: "en_attente", paiement_statut: transRef ? "attente_validation" : "non_saisi"
+            };
+
+            try {
+                const result = await sendReservation(payload);
+                setLoading(false);
+                if (result.success) {
+                    const message = result.local ? "✅ Réservation sauvegardée localement" : "✅ Réservation confirmée !";
+                    showToast(`${message} - Total: ${total.toLocaleString('fr-DZ')} DA`, "success");
+                    setTimeout(() => {
+                        closeModal();
+                        document.getElementById("reservationForm").reset();
+                        document.getElementById("children").value = 0;
+                        updateTotal();
+                    }, 2000);
+                } else {
+                    showToast("❌ Erreur lors de la réservation", "error");
+                }
+            } catch (error) {
+                console.error("Erreur:", error);
+                setLoading(false);
+                showToast("❌ Erreur: " + error.message, "error");
+            }
+        });
+
+        document.getElementById("closeModalBtn").addEventListener("click", closeModal);
         document.getElementById("modalOverlay").addEventListener("click", (e) => { 
             if (e.target === document.getElementById("modalOverlay")) closeModal(); 
         });
-        document.getElementById("adults").addEventListener("input", updateTotal);
         document.getElementById("children").addEventListener("input", updateTotal);
 
         document.querySelectorAll(".filter-btn").forEach(btn => {
