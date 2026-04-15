@@ -513,6 +513,53 @@
         .form-group.error input {
             border-color: #dc2626;
         }
+
+
+
+
+
+        //info msg erreur
+
+
+
+        .info-box {
+    margin: 12px 0;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* styles par type */
+.info-warning {
+    background: #fff1f2;
+    color: #b91c1c;
+    border-left: 4px solid #dc2626;
+}
+
+.info-info {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-left: 4px solid #3b82f6;
+}
+
+.info-success {
+    background: #ecfdf5;
+    color: #047857;
+    border-left: 4px solid #10b981;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -555,6 +602,7 @@
                 <button style="background:none; border:none; font-size:2rem; cursor:pointer; color:#94a3b8;" id="closeModalBtn">&times;</button>
             </div>
             <form id="reservationForm">
+                <div class="info-box" id="activityNote"></div> <br>
                 <div class="form-group" id="fullNameGroup">
                     <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et Prénom)</span></label>
                     <input type="text" id="fullName" placeholder="Ex: Massissilia Chalal" required>
@@ -619,8 +667,14 @@
 
         // Activités
         const activitiesCatalog = [
-            { id: "visite", name: "Visite Guidée", basePrice: 6000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Découvrez Béjaïa historique : Gouraya, Casbah, cascade.", hasChild: false },
-            { id: "parapente", name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "assets/images/vol parapente.jpg", desc: "Baptême parapente, atterrissage plage, sensations uniques.", hasChild: false },
+            { id: "visite",activityNote: [ "Le prix englobe uniquement la visite guidée et non le transport",
+                "Prix dégressif à partir de la deuxième personne"
+            ], name: "Visite Guidée", basePrice: 6000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Découvrez Béjaïa historique : Gouraya, Casbah, cascade.", hasChild: false },
+            { id: "parapente",activityNote: [
+  "non remboursable",
+  "arriver 15 min avant",
+  "pièce d'identité obligatoire"
+], name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "assets/images/vol parapente.jpg", desc: "Baptême parapente, atterrissage plage, sensations uniques.", hasChild: false },
             { id: "quad", name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", image: "assets/images/quad.jpeg", desc: "Circuit sur les hauteurs de Boulimat.", hasChild: true, childPrice: 1000, options: [{label:"30 min", price:3000},{label:"45 min", price:4000}] },
             { id: "cheval", name: "Randonnée à Cheval", basePrice: 2500, category: "terre", icon: "fa-horse", image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", desc: "Entre mer et montagne dans le parc de Gouraya.", hasChild: false },
             { id: "parasailing", name: "Parasailinf", basePrice: 10000, category: "mer", icon: "fa-parachute-box", image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", desc: "Envolez-vous au-dessus de la mer.", hasChild: false },
@@ -683,21 +737,50 @@
         }
 
         function openModal(id, name, price, hasChild, childPrice) {
-            currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
-            document.getElementById("modalTitle").innerHTML = `📅 Réserver · ${name}`;
-            const childGroup = document.getElementById("childGroup");
-            if (hasChild) {
-                childGroup.style.display = "block";
-                document.getElementById("childExtraLabel").innerHTML = `(+${childPrice} DA/enfant)`;
-            } else childGroup.style.display = "none";
-            document.getElementById("adults").value = 1;
-            document.getElementById("children").value = 0;
-            document.getElementById("fullName").value = "";
-            document.getElementById("fullName").classList.remove("error");
-            document.getElementById("fullNameError").classList.remove("show");
-            updateTotal();
-            document.getElementById("modalOverlay").classList.add("active");
-        }
+    currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
+
+    document.getElementById("modalTitle").innerHTML = `📅 Réserver · ${name}`;
+
+    // 🔥 AJOUT ICI
+    const act = activitiesCatalog.find(a => a.id === id);
+    const noteBox = document.getElementById("activityNote");
+    if (act && act.activityNote) {
+
+let notes = act.activityNote;
+
+// 🔥 si c'est une string → on transforme en tableau
+if (!Array.isArray(notes)) {
+    notes = [notes];
+}
+
+noteBox.innerHTML = notes.map(note => `
+  <div class="info-item">
+    <span class="big-dot">●</span> ${note}
+</div>
+`).join("");
+
+noteBox.className = "info-box info-warning";
+
+} else {
+noteBox.innerHTML = "";
+noteBox.className = "info-box";
+}
+
+    const childGroup = document.getElementById("childGroup");
+
+    if (hasChild) {
+        childGroup.style.display = "block";
+        document.getElementById("childExtraLabel").innerHTML = `(+${childPrice} DA/enfant)`;
+    } else {
+        childGroup.style.display = "none";
+    }
+
+    document.getElementById("adults").value = 1;
+    document.getElementById("children").value = 0;
+
+    updateTotal();
+    document.getElementById("modalOverlay").classList.add("active");
+}
 
         function updateTotal() {
             let adults = parseInt(document.getElementById("adults").value) || 1;
@@ -832,7 +915,7 @@ document.getElementById("reservationForm").addEventListener("submit", async (e) 
 
 👤 *Client:* ${nom} ${prenom}
 📧 *Email:* ${email}
-📱 *Téléphone:* ${phone}
+📞 *Téléphone:* ${phone}
 
 🎯 *Activité:* ${currentAct.name}
 📅 *Date souhaitée:* ${date}
