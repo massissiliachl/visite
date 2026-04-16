@@ -8,8 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.text())
         .then(html => {
             placeholders.forEach(ph => {
-                ph.innerHTML = html;
-            });
+                ph.outerHTML = html;            });
         })
         .catch(err => console.error('Échec chargement du footer :', err));
 });

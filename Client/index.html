@@ -2705,139 +2705,139 @@
     <a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 id="modalTitle">Réserver</h3>
-                <button style="background:none; border:none; font-size:2rem; cursor:pointer; color:#94a3b8;" id="closeModalBtn">&times;</button>
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 id="modalTitle">Réserver</h3>
+            <button style="background:none; border:none; font-size:2rem; cursor:pointer; color:#94a3b8;" id="closeModalBtn">&times;</button>
+        </div>
+        <form id="reservationForm">
+            <div class="info-box" id="activityNote"></div>
+            
+            <!-- Options Quad -->
+            <div id="quadOptions" class="options-modal" style="display: none;">
+                <label>⏱️ Choisissez votre formule :</label>
+                <select id="quadSelect">
+                    <option value="3000">🏍️ 30 minutes - 3000 DA</option>
+                    <option value="4000">🏍️ 45 minutes - 4000 DA</option>
+                </select>
+                <div class="child-option">
+                    <input type="checkbox" id="quadChild">
+                    <label>👶 Enfant derrière (+1000 DA)</label>
+                </div>
             </div>
-            <form id="reservationForm">
-                <div class="info-box" id="activityNote"></div>
+
+            <!-- Options Parapente -->
+            <div id="parapenteOptions" class="options-modal" style="display: none;">
+                <label>🎥 Choisissez votre formule vidéo :</label>
+                <select id="parapenteSelect">
+                    <option value="6000">🎬 Vidéo GoPro 4K - 6000 DA</option>
+                    <option value="7000">🎬 Vidéo GoPro 5.3K - 7000 DA</option>
+                    <option value="8000">🎬 Vidéo Insta 360 - 8000 DA</option>
+                </select>
+            </div>
+
+            <!-- Options Jet Ski -->
+            <div id="jetskiOptions" class="options-modal" style="display: none;">
+                <label>⏱️ Choisissez la durée :</label>
+                <select id="jetskiSelect">
+                    <option value="30000">🚤 1h00 - 30000 DA</option>
+                    <option value="40000">🚤 1h30 - 40000 DA</option>
+                </select>
+            </div>
+
+            <!-- Options Bateau détaillées -->
+            <div id="bateauOptions" class="options-modal" style="display: none;">
+                <label>⛵ Choisissez votre offre :</label>
                 
-                <!-- Options Quad -->
-                <div id="quadOptions" class="options-modal" style="display: none;">
-                    <label>⏱️ Choisissez votre formule :</label>
-                    <select id="quadSelect">
-                        <option value="3000">🏍️ 30 minutes - 3000 DA</option>
-                        <option value="4000">🏍️ 45 minutes - 4000 DA</option>
-                    </select>
-                    <div class="child-option">
-                        <input type="checkbox" id="quadChild">
-                        <label>👶 Enfant derrière (+1000 DA)</label>
+                <!-- Offre Découverte -->
+                <div class="bateau-offre">
+                    <div class="bateau-offre-title">
+                        <i class="fas fa-ship"></i> Offre Découverte (1h30/2h)
+                    </div>
+                    <div class="bateau-capacite">
+                        <label>
+                            <input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5">
+                            ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7">
+                            ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9">
+                            ⚓ Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
+                        </label>
                     </div>
                 </div>
-    
-                <!-- Options Parapente -->
-                <div id="parapenteOptions" class="options-modal" style="display: none;">
-                    <label>🎥 Choisissez votre formule vidéo :</label>
-                    <select id="parapenteSelect">
-                        <option value="6000">🎬 Vidéo GoPro 4K - 6000 DA</option>
-                        <option value="7000">🎬 Vidéo GoPro 5.3K - 7000 DA</option>
-                        <option value="8000">🎬 Vidéo Insta 360 - 8000 DA</option>
-                    </select>
-                </div>
-    
-                <!-- Options Jet Ski -->
-                <div id="jetskiOptions" class="options-modal" style="display: none;">
-                    <label>⏱️ Choisissez la durée :</label>
-                    <select id="jetskiSelect">
-                        <option value="30000">🚤 1h00 - 30000 DA</option>
-                        <option value="40000">🚤 1h30 - 40000 DA</option>
-                    </select>
-                </div>
-    
-                <!-- Options Bateau détaillées -->
-            <!-- Options Bateau détaillées -->
-<div id="bateauOptions" class="options-modal" style="display: none;">
-    <label>⛵ Choisissez votre offre :</label>
-    
-    <!-- Offre Découverte -->
-    <div class="bateau-offre">
-        <div class="bateau-offre-title">
-            <i class="fas fa-ship"></i> Offre Découverte (1h30/2h)
-        </div>
-        <div class="bateau-capacite">
-            <label>
-                <input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5">
-                ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
-            </label>
-            <label>
-                <input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7">
-                ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
-            </label>
-            <label>
-                <input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9">
-                ⚓ Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
-            </label>
-        </div>
-    </div>
 
-    <!-- Offre Évasion -->
-    <div class="bateau-offre">
-        <div class="bateau-offre-title">
-            <i class="fas fa-umbrella-beach"></i> Offre Évasion (3h/3h30) + Brunch
-        </div>
-        <div class="bateau-capacite">
-            <label>
-                <input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5">
-                ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
-            </label>
-            <label>
-                <input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7">
-                ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
-            </label>
-        </div>
-        <div class="option-bouee">
-            <label>
-                <input type="checkbox" id="boueeOption">
-                🚤 + Bouée tractée (5000 DA supplémentaire)
-            </label>
-        </div>
-    </div>
+                <!-- Offre Évasion -->
+                <div class="bateau-offre">
+                    <div class="bateau-offre-title">
+                        <i class="fas fa-umbrella-beach"></i> Offre Évasion (3h/3h30) + Brunch
+                    </div>
+                    <div class="bateau-capacite">
+                        <label>
+                            <input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5" data-bouee="true">
+                            ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7" data-bouee="false">
+                            ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
+                        </label>
+                    </div>
+                    <div class="option-bouee" id="boueeOptionContainer" style="display: none;">
+                        <label>
+                            <input type="checkbox" id="boueeOption">
+                            🚤 + Bouée tractée (5000 DA supplémentaire)
+                        </label>
+                    </div>
+                </div>
 
-    <!-- Offre Détente -->
-    <div class="bateau-offre">
-        <div class="bateau-offre-title">
-            <i class="fas fa-fire"></i> Offre Détente (4h30/5h) + Barbecue + Bouée
-        </div>
-        <div class="bateau-capacite">
-            <label>
-                <input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5">
-                ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
-            </label>
-            <label>
-                <input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7">
-                ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
-            </label>
-        </div>
+                <!-- Offre Détente -->
+                <div class="bateau-offre">
+                    <div class="bateau-offre-title">
+                        <i class="fas fa-fire"></i> Offre Détente (4h30/5h) + Barbecue + Bouée
+                    </div>
+                    <div class="bateau-capacite">
+                        <label>
+                            <input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5">
+                            ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7">
+                            ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="fullNameGroup">
+                <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et Prénom)</span></label>
+                <input type="text" id="fullName" placeholder="Ex: Visit Bejaia" required>
+                <div class="error-message" id="fullNameError">⚠️ Veuillez entrer votre NOM et PRÉNOM (séparés par un espace)</div>
+            </div>
+            <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
+            <div class="form-group"><label>Téléphone *</label><input type="tel" id="phone" required></div>
+            <div class="form-group"><label>Date souhaitée *</label><input type="date" id="date" required></div>
+            <div class="form-group"><label>Adultes *</label><input type="number" id="adults" min="1" value="1" required></div>
+            <div class="form-group" id="childGroup" style="display:none;"><label>Enfants <span id="childExtraLabel"></span></label><input type="number" id="children" min="0" value="0"></div>
+            <div class="form-group">
+                <label>Mode de paiement</label>
+                <select id="paymentMethod">
+                    <option value="BaridiMob">BaridiMob</option>
+                    <option value="CCP">CCP</option>
+                    <option value="Virement">Virement</option>
+                    <option value="PayPal">PayPal (Confirmation WhatsApp)</option>
+                </select>
+            </div>
+            <div class="form-group"><label>Référence transaction</label><input type="text" id="transactionRef" placeholder="ex: 123456"></div>
+            <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
+            <div class="price-summary"><strong>💰 Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>🔖 Acompte 30% : <span id="depositAmount">0 DA</span></small></div>
+            <button type="submit" class="btn-submit">✅ Confirmer la réservation</button>
+        </form>
     </div>
 </div>
-                <div class="form-group" id="fullNameGroup">
-                    <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et Prénom)</span></label>
-                    <input type="text" id="fullName" placeholder="Ex: Visit Bejaia" required>
-                    <div class="error-message" id="fullNameError">⚠️ Veuillez entrer votre NOM et PRÉNOM (séparés par un espace)</div>
-                </div>
-                <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
-                <div class="form-group"><label>Téléphone *</label><input type="tel" id="phone" required></div>
-                <div class="form-group"><label>Date souhaitée *</label><input type="date" id="date" required></div>
-                <div class="form-group"><label>Adultes *</label><input type="number" id="adults" min="1" value="1" required></div>
-                <div class="form-group" id="childGroup" style="display:none;"><label>Enfants <span id="childExtraLabel"></span></label><input type="number" id="children" min="0" value="0"></div>
-                <div class="form-group">
-                    <label>Mode de paiement</label>
-                    <select id="paymentMethod">
-                        <option value="BaridiMob">BaridiMob</option>
-                        <option value="CCP">CCP</option>
-                        <option value="Virement">Virement</option>
-                        <option value="PayPal">PayPal (Confirmation WhatsApp)</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Référence transaction</label><input type="text" id="transactionRef" placeholder="ex: 123456"></div>
-                <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
-                <div class="price-summary"><strong>💰 Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>🔖 Acompte 30% : <span id="depositAmount">0 DA</span></small></div>
-                <button type="submit" class="btn-submit">✅ Confirmer la réservation</button>
-            </form>
-        </div>
-    </div>
     <div id="toast" class="toast-notification"></div>
     <div id="loading" class="loading-overlay"><div class="spinner"></div></div>
 
@@ -3033,7 +3033,7 @@
                         <div class="info-icon">✉️</div>
                         <div>
                             <h4>Email</h4>
-                            <p>visitebejaia@gmail.com</p>
+                            <p>visit.bougie@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -3085,17 +3085,9 @@
     <div data-include="footer"></div>
     
     <script src="js/include-footer.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+      
 
     <script>
-
-
-
-
-
-
-/* a propos */
-
 
 
     // ========== ANIMATION AU SCROLL ==========
@@ -3831,14 +3823,14 @@ function openModal(id, name, price, hasChild, childPrice) {
         document.getElementById("jetskiOptions").style.display = "block";
         document.getElementById("jetskiSelect").value = "30000";
         currentAct.pricePerAdult = 30000;
-    } else if (id === "bateau") {
-        document.getElementById("bateauOptions").style.display = "block";
-        const firstRadio = document.querySelector('input[name="bateauOption"]');
-        if (firstRadio) {
-            firstRadio.checked = true;
-            currentAct.pricePerAdult = parseInt(firstRadio.value);
-        }
+     } else if (id === "bateau") {
+    document.getElementById("bateauOptions").style.display = "block";
+    const firstRadio = document.querySelector('input[name="bateauOption"]:checked');
+    if (firstRadio) {
+        currentAct.pricePerAdult = parseInt(firstRadio.value);
+        toggleBoueeOption(); // <-- AJOUTER CETTE LIGNE
     }
+}
     
     // AFFICHER LES NOTES EN ROUGE EN HAUT
     displayRedNotesAtTop();
@@ -3901,27 +3893,36 @@ function displayRedNotesAtTop() {
     }
 }
 
-// Écouteurs pour les options Quad
-document.getElementById("quadSelect")?.addEventListener('change', function() {
-    if (currentAct.id === 'quad') {
-        currentAct.pricePerAdult = parseInt(this.value);
-        updateTotal();
-    }
-});
+document.addEventListener("DOMContentLoaded", () => {
 
-document.getElementById("quadChild")?.addEventListener('change', function(e) {
-    if (currentAct.id === 'quad') {
-        currentAct.hasChild = e.target.checked;
-        const childGroup = document.getElementById("childGroup");
-        if (currentAct.hasChild) {
-            childGroup.style.display = "block";
-            document.getElementById("childExtraLabel").innerHTML = `(+1000 DA/enfant)`;
-        } else {
-            childGroup.style.display = "none";
-            document.getElementById("children").value = 0;
+    // Quad - sélection durée/prix
+    document.getElementById("quadSelect")?.addEventListener("change", function () {
+        if (currentAct.id === "quad") {
+            currentAct.pricePerAdult = parseInt(this.value);
+            updateTotal();
         }
-        updateTotal();
-    }
+    });
+
+    // Quad - enfant
+    document.getElementById("quadChild")?.addEventListener("change", function (e) {
+        if (currentAct.id === "quad") {
+
+            currentAct.hasChild = e.target.checked;
+
+            const childGroup = document.getElementById("childGroup");
+
+            if (currentAct.hasChild) {
+                childGroup.style.display = "block";
+                document.getElementById("childExtraLabel").innerHTML = "(+1000 DA/enfant)";
+            } else {
+                childGroup.style.display = "none";
+                document.getElementById("children").value = 0;
+            }
+
+            updateTotal();
+        }
+    });
+
 });
 
 // Écouteurs pour les options Parapente
@@ -3941,54 +3942,92 @@ document.getElementById("jetskiSelect")?.addEventListener('change', function() {
 });
 
 // Écouteurs pour les options Bateau
-document.querySelectorAll('input[name="bateauOption"]').forEach(radio => {
+// ===== ÉCOUTEURS POUR LES OPTIONS BATEAU =====
+const bateauRadios = document.querySelectorAll('input[name="bateauOption"]');
+const boueeContainer = document.getElementById('boueeOptionContainer');
+const boueeCheckbox = document.getElementById('boueeOption');
+
+function toggleBoueeOption() {
+    const selectedRadio = document.querySelector('input[name="bateauOption"]:checked');
+    
+    if (selectedRadio) {
+        const offre = selectedRadio.getAttribute('data-offre');
+        const capacite = selectedRadio.getAttribute('data-capacite');
+        
+        if (offre === 'evasion' && capacite === '5') {
+            boueeContainer.style.display = 'block';
+        } else {
+            boueeContainer.style.display = 'none';
+            if (boueeCheckbox) {
+                boueeCheckbox.checked = false;
+                boueeAdded = false;
+            }
+        }
+    } else {
+        boueeContainer.style.display = 'none';
+    }
+}
+
+bateauRadios.forEach(radio => {
     radio.addEventListener('change', function() {
         if (currentAct.id === 'bateau') {
             currentAct.pricePerAdult = parseInt(this.value);
-            const offre = this.getAttribute('data-offre');
-            if (offre !== 'evasion') {
-                document.getElementById("boueeOption").checked = false;
-                boueeAdded = false;
-            }
+            toggleBoueeOption();
             updateTotal();
         }
     });
 });
 
-document.getElementById("boueeOption")?.addEventListener('change', function(e) {
-    if (currentAct.id === 'bateau') {
-        boueeAdded = e.target.checked;
-        updateTotal();
-    }
-});
+if (boueeCheckbox) {
+    boueeCheckbox.addEventListener('change', function(e) {
+        if (currentAct.id === 'bateau') {
+            boueeAdded = e.target.checked;
+            updateTotal();
+        }
+    });
+}
 
 function updateTotal() {
-    let adults = parseInt(document.getElementById("adults").value) || 1;
-    let children = parseInt(document.getElementById("children").value) || 0;
-    let total = currentAct.pricePerAdult * adults;
-    
-    if (currentAct.id === 'quad' && currentAct.hasChild) {
-        total += children * 1000;
-    }
-    
-    if (currentAct.id === 'bateau' && boueeAdded) {
-        total += 5000;
-    }
-    
-    const deposit = Math.round(total * 0.3);
-    document.getElementById("totalPriceDisplay").innerHTML = total.toLocaleString('fr-DZ') + " DA";
-    document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
-}
-        function updateTotal() {
-            let adults = parseInt(document.getElementById("adults").value) || 1;
             let children = parseInt(document.getElementById("children").value) || 0;
-            let total = currentAct.pricePerAdult * adults;
-            if (currentAct.hasChild) total += children * currentAct.childPrice;
+            let total = currentAct.pricePerAdult;
+            
+            // Ajouter les enfants pour Quad
+            if (currentAct.id === 'quad' && currentAct.hasChild) {
+                total += children * 1000;
+            }
+            
+            // Ajouter la bouée pour l'offre évasion bateau
+            if (currentAct.id === 'bateau' && boueeAdded) {
+                total += 5000;
+            }
+            
             const deposit = Math.round(total * 0.3);
             document.getElementById("totalPriceDisplay").innerHTML = total.toLocaleString('fr-DZ') + " DA";
             document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
         }
 
+        // Écouteurs pour les options Quad
+        document.getElementById("quadSelect")?.addEventListener('change', function() {
+            if (currentAct.id === 'quad') {
+                currentAct.pricePerAdult = parseInt(this.value);
+                updateTotal();
+            }
+        });
+
+        document.getElementById("quadChild")?.addEventListener('change', function(e) {
+            if (currentAct.id === 'quad') {
+                currentAct.hasChild = e.target.checked;
+                const childGroup = document.getElementById("childGroup");
+                if (currentAct.hasChild) {
+                    childGroup.style.display = "block";
+                    document.getElementById("childExtraLabel").innerHTML = `(+1000 DA/enfant)`;
+                } else {
+                    childGroup.style.display = "none";
+                    document.getElementById("children").value = 0;
+                }
+                updateTotal();
+            }
+        });
         function showToast(msg, type = "success") {
             const toast = document.getElementById("toast");
             toast.textContent = msg;
@@ -4084,13 +4123,22 @@ function updateTotal() {
                 return;
             }
 
-            if (!email || !phone || !date || !adults) {
+            if (!email || !phone || !date || !adults  ) {
                 showToast("Veuillez remplir tous les champs obligatoires", "error");
                 return;
             }
 
             let total = currentAct.pricePerAdult * adults;
-            if (currentAct.hasChild) total += children * currentAct.childPrice;
+
+// Ajout des enfants pour le Quad
+if (currentAct.id === 'quad' && currentAct.hasChild) {
+    total += children * 1000;
+}
+
+// Ajout de la bouée tractée (5000 DA) pour l'offre Évasion 5 personnes
+if (currentAct.id === 'bateau' && boueeAdded) {
+    total += 5000;
+}
             const deposit = Math.round(total * 0.3);
             
             const nameParts = fullName.split(/\s+/);
@@ -4197,7 +4245,7 @@ function updateTotal() {
 
  
 
-</Script>
+</script>
 
 <!-- MODALE DE DÉTAIL ACTIVITÉ -->
 <div id="activityDetailModal" class="activity-modal-overlay">
