@@ -2,14 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Visit Béjaïa | Destinations & Activités - Agence de voyage</title>
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- AOS Library (Animate on Scroll) -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisitBejaia - Les Trésors de Béjaïa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,458 +14,1052 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: #fefaf5;
+            font-family: 'Montserrat', sans-serif;
+            background: #f8f9fa;
+            color: #1a2a3a;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        /* Loader animation */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0a2b1e;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-        .loader p {
-            color: #f5b042;
-            font-size: 1.8rem;
-            font-weight: 600;
-            letter-spacing: 4px;
-            animation: pulse 1.2s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.3; transform: scale(0.95);}
-            100% { opacity: 1; transform: scale(1.05);}
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
         }
 
-        /* Sticky Navbar */
+        /* Navigation */
         .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(16px);
-            background: rgba(255, 250, 240, 0.85);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            padding: 1rem 6%;
+            z-index: 2000;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            transition: all 0.3s;
+            height: 80px;
         }
-        .logo {
-            font-size: 1.9rem;
-            font-weight: 800;
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(130deg, #1e6f47, #e68a2e);
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #1a3a6b, #e63946);
             -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
         }
-        .nav-links {
+
+        .nav-menu {
             display: flex;
             gap: 2rem;
             list-style: none;
-        }
-        .nav-links a {
-            text-decoration: none;
-            font-weight: 600;
-            color: #2c3a2b;
-            transition: 0.2s;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            color: #e67e22;
-        }
-        .btn-book {
-            background: #e67e22;
-            color: white !important;
-            padding: 0.5rem 1.6rem;
-            border-radius: 40px;
-            transition: 0.2s;
-        }
-        .btn-book:hover {
-            background: #c55f11;
-            transform: scale(1.02);
+            align-items: center;
         }
 
-        /* HERO avec vagues SVG */
+        .nav-menu a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #1a3a6b, #e63946);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: #e63946;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 2001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2px;
+            background: #1a3a6b;
+            transition: 0.3s;
+            display: block;
+        }
+
+        /* Hero */
         .hero {
             position: relative;
-            background: linear-gradient(135deg, #153e2c, #2a6e4b);
-            min-height: 85vh;
+            min-height: 50vh;
+            background: linear-gradient(135deg, #1a3a6b 0%, #2d5a9f 50%, #1a3a6b 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: white;
+        }
+
+        .hero-content {
+            padding: 80px 20px;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section */
+        .section-header {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #1a3a6b;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #1a3a6b, #e63946);
+            border-radius: 3px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 25px auto 0;
+        }
+
+        /* Filtres */
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 40px 0 50px;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: #e63946;
+            color: #e63946;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 10px 20px -8px rgba(26, 58, 107, 0.4);
+        }
+
+        /* Grille des cartes */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Carte */
+        .destination-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardAppear 0.6s ease forwards;
+        }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .destination-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 50px -20px rgba(230, 57, 70, 0.3);
+        }
+
+        /* Image */
+        .card-image {
+            position: relative;
+            height: 260px;
             overflow: hidden;
         }
-        .hero-content {
-            z-index: 2;
-            max-width: 800px;
-            padding: 2rem;
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
-        .hero-content h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            font-family: 'Space Grotesk', sans-serif;
-            animation: fadeSlideDown 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+
+        .destination-card:hover .card-image img {
+            transform: scale(1.08);
         }
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-top: 1rem;
-            animation: fadeSlideUp 0.8s 0.2s both;
-        }
-        .hero .wave {
+
+        /* Overlay gradient */
+        .image-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
-            line-height: 0;
-            z-index: 1;
-        }
-        @keyframes fadeSlideDown {
-            from { opacity: 0; transform: translateY(-40px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-        @keyframes fadeSlideUp {
-            from { opacity: 0; transform: translateY(40px);}
-            to { opacity: 1; transform: translateY(0);}
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
         }
 
-        /* Sections */
-        section {
-            padding: 5rem 6%;
+        /* Badge catégorie */
+        .card-category {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            padding: 6px 14px;
+            border-radius: 30px;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            z-index: 2;
         }
-        .section-title {
-            text-align: center;
-            font-size: 2.8rem;
-            font-weight: 800;
-            font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(120deg, #1e6f47, #e68a2e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
+
+        /* Contenu */
+        .card-content {
+            padding: 22px;
         }
-        .section-sub {
-            text-align: center;
-            color: #5a6e5a;
-            margin-bottom: 3rem;
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a3a6b;
+            transition: color 0.3s ease;
+        }
+
+        .destination-card:hover .card-title {
+            color: #e63946;
+        }
+
+        .card-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #e63946;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .card-description {
+            color: #6c757d;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn-explore {
+            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-explore:hover {
+            background: linear-gradient(135deg, #e63946, #c1121f);
+            transform: translateX(5px);
+        }
+
+        /* Animation au scroll */
+        .destination-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .destination-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: white;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 28px;
+            padding: 30px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: #1a3a6b;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #adb5bd;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #e63946;
+            transform: rotate(90deg);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-description {
+            color: #495057;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-feature {
+            background: #f8f9fa;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #1a3a6b;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #94a3b8;
+            padding: 50px 0 20px;
+            margin-top: 60px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+        }
+
+        .footer-logo h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 20px;
             font-size: 1.1rem;
         }
 
-        /* Grille destinations effet 3D + glass */
-        .dest-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+        .footer-links ul {
+            list-style: none;
         }
-        .dest-card {
-            background: rgba(255, 255, 245, 0.75);
-            backdrop-filter: blur(5px);
-            border-radius: 2rem;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
-            border: 1px solid rgba(230,138,46,0.3);
-            transform-style: preserve-3d;
+
+        .footer-links li {
+            margin-bottom: 12px;
         }
-        .dest-card:hover {
-            transform: translateY(-15px) rotateX(3deg);
-            box-shadow: 0 30px 40px -12px rgba(0,0,0,0.25);
-            border-color: #e68a2e;
-        }
-        .dest-img {
-            height: 250px;
-            background-size: cover;
-            background-position: center;
-            transition: transform 0.6s;
-        }
-        .dest-card:hover .dest-img {
-            transform: scale(1.05);
-        }
-        .dest-info {
-            padding: 1.6rem;
-        }
-        .dest-info h3 {
-            font-size: 1.7rem;
-            font-weight: 700;
-        }
-        .price {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #e67e22;
-            margin: 0.6rem 0;
-        }
-        .btn-explore {
-            display: inline-block;
-            margin-top: 0.5rem;
-            background: transparent;
-            border: 2px solid #e67e22;
-            padding: 0.5rem 1.6rem;
-            border-radius: 40px;
-            font-weight: 600;
-            transition: 0.3s;
+
+        .footer-links a {
+            color: #94a3b8;
             text-decoration: none;
-            color: #e67e22;
-        }
-        .btn-explore:hover {
-            background: #e67e22;
-            color: white;
-            transform: translateX(6px);
+            transition: color 0.3s ease;
         }
 
-        /* Activités grille flottante */
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
-        }
-        .activity-card {
-            background: white;
-            border-radius: 2rem;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s;
-            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05);
-            border-bottom: 3px solid #f0bc7a;
-        }
-        .activity-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: #fffaf0;
-            border-bottom-color: #e67e22;
-        }
-        .activity-icon {
-            font-size: 3rem;
-            color: #e67e22;
-            margin-bottom: 1rem;
+        .footer-links a:hover {
+            color: #e63946;
         }
 
-        /* Compteur animé */
-        .counter-section {
-            background: linear-gradient(145deg, #1f4a33, #0f2f20);
-            border-radius: 3rem;
-            margin: 2rem 6%;
-            padding: 3rem 2rem;
-            color: white;
+        .social-icons {
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 2rem;
-            text-align: center;
-        }
-        .counter-item h3 {
-            font-size: 2.8rem;
-            font-weight: 800;
+            gap: 15px;
         }
 
-        /* CTA et footer */
-        .cta-glow {
-            background: radial-gradient(circle at 10% 30%, #ffd7a5, #e6a157);
-            text-align: center;
-            padding: 3rem;
-            border-radius: 3rem;
-            margin: 2rem 6%;
+        .social-icons a {
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
         }
-        footer {
-            background: #0e1f18;
-            padding: 2rem 6%;
+
+        .social-icons a:hover {
+            background: #e63946;
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
             text-align: center;
-            color: #ccc;
+            padding-top: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #128C7E;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
         /* Responsive */
-        @media (max-width: 780px) {
-            .navbar {
+        @media (max-width: 992px) {
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: white;
                 flex-direction: column;
-                gap: 0.8rem;
+                padding: 30px;
+                gap: 20px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+                z-index: 1999;
             }
-            .hero-content h1 {
-                font-size: 2.5rem;
+
+            .nav-menu.active {
+                display: flex;
             }
-            .section-title {
-                font-size: 2rem;
+
+            .hamburger {
+                display: flex;
             }
-            .counter-item h3 {
-                font-size: 2rem;
+
+            .destinations-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                text-align: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .destinations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 220px;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="loader" id="loader">
-    <p>✈️ VISIT BÉJAÏA ✨</p>
+<!-- Navigation -->
+<div class="navbar" id="navbar">
+    <div class="container">
+        <div class="logo">
+            <h1>VisitBejaia</h1>
+        </div>
+        <button class="hamburger" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="index.html#activites">Activités</a></li>
+            <li><a href="index.html#hebergement">Hébergement</a></li>
+            <li><a href="destination.html">Destinations</a></li>
+            <li><a href="index.html#apropos">À Propos</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </div>
 </div>
 
-<nav class="navbar">
-    <div class="logo">🌊 Visit Béjaïa</div>
-    <ul class="nav-links">
-        <li><a href="#">Accueil</a></li>
-        <li><a href="#" class="active">Destinations</a></li>
-        <li><a href="#">Activités</a></li>
-        <li><a href="#">Offres</a></li>
-        <li><a href="#" class="btn-book">Réserver <i class="fas fa-arrow-right"></i></a></li>
-    </ul>
-</nav>
-
-<div class="hero">
+<!-- Hero -->
+<section class="hero">
     <div class="hero-content">
-        <h1>Béjaïa · L'âme méditerranéenne</h1>
-        <p>Entre plages secrètes, montagnes sacrées et ruelles pleines d'histoire — vivez l'Algérie autrement.</p>
-    </div>
-    <div class="wave">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="width:100%; display:block;">
-            <path fill="#fefaf5" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,186.7C384,192,480,224,576,229.3C672,235,768,213,864,192C960,171,1056,149,1152,154.7C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-        </svg>
-    </div>
-</div>
-
-<section>
-    <h2 class="section-title" data-aos="fade-up">✨ Destinations exclusives ✨</h2>
-    <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Explorez les joyaux d'Algérie avec nous</p>
-    <div class="dest-grid">
-        <div class="dest-card" data-aos="zoom-in-up" data-aos-delay="0">
-            <div class="dest-img" style="background-image: url('https://images.unsplash.com/photo-1598971639058-fab6c3109b3e?w=800&auto=format');"></div>
-            <div class="dest-info">
-                <h3>🏝️ Béjaïa · La Perle</h3>
-                <p>Cap Carbon, plages d'Aiguades, Yemma Gouraya.</p>
-                <div class="price">À partir de 179€</div>
-                <a href="#" class="btn-explore">Explorer →</a>
-            </div>
-        </div>
-        <div class="dest-card" data-aos="zoom-in-up" data-aos-delay="100">
-            <div class="dest-img" style="background-image: url('https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&auto=format');"></div>
-            <div class="dest-info">
-                <h3>🏛️ Alger · Casbah & Modernité</h3>
-                <p>Balade authentique et Notre-Dame d'Afrique.</p>
-                <div class="price">À partir de 210€</div>
-                <a href="#" class="btn-explore">Explorer →</a>
-            </div>
-        </div>
-        <div class="dest-card" data-aos="zoom-in-up" data-aos-delay="200">
-            <div class="dest-img" style="background-image: url('https://images.unsplash.com/photo-1594391825496-36a0e58fc934?w=800&auto=format');"></div>
-            <div class="dest-info">
-                <h3>🏜️ Djemila · Trésor Romain</h3>
-                <p>UNESCO, ruines à couper le souffle.</p>
-                <div class="price">À partir de 139€</div>
-                <a href="#" class="btn-explore">Explorer →</a>
-            </div>
-        </div>
-        <div class="dest-card" data-aos="zoom-in-up" data-aos-delay="300">
-            <div class="dest-img" style="background-image: url('https://images.unsplash.com/photo-1509316785289-025e5b846faa?w=800&auto=format');"></div>
-            <div class="dest-info">
-                <h3>🏜️ Tassili · Désert étoilé</h3>
-                <p>Randonnée & art rupestre, nuit sous les étoiles.</p>
-                <div class="price">À partir de 490€</div>
-                <a href="#" class="btn-explore">Explorer →</a>
-            </div>
-        </div>
-        <div class="dest-card" data-aos="zoom-in-up" data-aos-delay="400">
-            <div class="dest-img" style="background-image: url('https://images.unsplash.com/photo-1594391825496-36a0e58fc934?w=800&auto=format');"></div>
-            <div class="dest-info">
-                <h3>🌉 Constantine · Ponts suspendus</h3>
-                <p>Gorges du Rhummel, vue vertigineuse.</p>
-                <div class="price">À partir de 189€</div>
-                <a href="#" class="btn-explore">Explorer →</a>
-            </div>
-        </div>
-        <div class="dest-card" data-aos="zoom-in-up" data-aos-delay="500">
-            <div class="dest-img" style="background-image: url('https://images.unsplash.com/photo-1586444248902-2f1f0b9b2a9b?w=800&auto=format');"></div>
-            <div class="dest-info">
-                <h3>🎵 Oran · Le Bahia</h3>
-                <p>Santa Cruz, corniche andalouse.</p>
-                <div class="price">À partir de 195€</div>
-                <a href="#" class="btn-explore">Explorer →</a>
-            </div>
-        </div>
+        <h1 class="hero-title">Les Trésors de Béjaïa</h1>
+        <p class="hero-description">Découvrez les lieux d'exception qui font la richesse de notre région</p>
     </div>
 </section>
 
-<!-- Activités incroyables -->
-<section style="background: #fff7ed; border-radius: 3rem; margin: 1rem 4%;">
-    <h2 class="section-title" data-aos="fade-right">🔥 Activités immersives</h2>
-    <p class="section-sub" data-aos="fade-left">Vivez Béjaïa comme jamais</p>
-    <div class="activities-grid">
-        <div class="activity-card" data-aos="flip-left"><div class="activity-icon"><i class="fas fa-hiking"></i></div><h4>Rando Djurdjura</h4><p>Cascades & cèdres centenaires</p></div>
-        <div class="activity-card" data-aos="flip-left" data-aos-delay="100"><div class="activity-icon"><i class="fas fa-ship"></i></div><h4>Croisière Grottes Marines</h4><p>Eaux turquoises, criques secrètes</p></div>
-        <div class="activity-card" data-aos="flip-left" data-aos-delay="200"><div class="activity-icon"><i class="fas fa-utensils"></i></div><h4>Cuisine kabyle</h4><p>Atelier traditionnel & dégustation</p></div>
-        <div class="activity-card" data-aos="flip-left" data-aos-delay="300"><div class="activity-icon"><i class="fas fa-diving-mask"></i></div><h4>Plongée à Aiguades</h4><p>Fonds marins protégés</p></div>
-        <div class="activity-card" data-aos="flip-left" data-aos-delay="400"><div class="activity-icon"><i class="fas fa-camera"></i></div><h4>Photo Tour Cap Carbon</h4><p>Coucher de soleil magique</p></div>
-        <div class="activity-card" data-aos="flip-left" data-aos-delay="500"><div class="activity-icon"><i class="fas fa-mountain"></i></div><h4>Via Ferrata Gouraya</h4><p>Adrénaline et panorama</p></div>
+<div class="container">
+    <div class="section-header">
+        <h2 class="section-title">Nos Destinations</h2>
+        <p class="section-subtitle">Entre mer et montagne, explorez les plus beaux sites de Béjaïa</p>
     </div>
-</section>
 
-<!-- Compteur animé -->
-<div class="counter-section" data-aos="zoom-in">
-    <div class="counter-item"><h3 id="counterDest">0</h3><p>Destinations</p></div>
-    <div class="counter-item"><h3 id="counterActiv">0</h3><p>Activités</p></div>
-    <div class="counter-item"><h3 id="counterHappy">0</h3><p>Voyageurs heureux</p></div>
+    <div class="filter-section">
+        <button class="filter-btn active" data-filter="all">✨ Tous les lieux</button>
+        <button class="filter-btn" data-filter="nature">🌿 Nature & Montagne</button>
+        <button class="filter-btn" data-filter="plage">🏖️ Plages & Mer</button>
+        <button class="filter-btn" data-filter="historique">🏛️ Historique & Culture</button>
+    </div>
+
+    <div class="destinations-grid" id="destinationsGrid"></div>
 </div>
 
-<div class="cta-glow" data-aos="fade-up">
-    <h2 style="color:#2c3a2b;">✈️ Prêt à réserver votre aventure ?</h2>
-    <p style="margin:1rem 0">Offres exclusives pour Béjaïa et circuits sur mesure.</p>
-    <a href="#" style="background:#2c3a2b; color:white; padding:0.8rem 2rem; border-radius:50px; text-decoration:none; font-weight:bold;">Réserver maintenant →</a>
+<!-- WhatsApp -->
+<a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Modal Détail -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3 id="modalTitle">Détail</h3>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <img id="modalImage" class="modal-image" src="" alt="">
+        <p id="modalDescription" class="modal-description"></p>
+        <div id="modalFeatures" class="modal-features"></div>
+    </div>
 </div>
 
-<footer>
-    <div style="font-size:1.8rem; margin-bottom:1rem;">
-        <i class="fab fa-instagram"></i> <i class="fab fa-facebook"></i> <i class="fab fa-tiktok"></i>
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <h3>VisitBejaia</h3>
+            <p>Là où la montagne embrasse la mer</p>
+        </div>
+        <div class="footer-links">
+            <h4>Liens rapides</h4>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="index.html#activites">Activités</a></li>
+                <li><a href="index.html#hebergement">Hébergement</a></li>
+                <li><a href="destination.html">Destinations</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Contact</h4>
+            <ul>
+                <li>📞 +213 555 123 456</li>
+                <li>✉️ visit.bougie@gmail.com</li>
+                <li>📍 Béjaïa, Algérie</li>
+            </ul>
+        </div>
+        <div class="footer-social">
+            <h4>Suivez-nous</h4>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
     </div>
-    <p>© 2025 Visit Béjaïa — Agence de voyage & découverte | Design wow & animations</p>
+    <div class="footer-bottom">
+        <p>&copy; 2024 VisitBejaia. Tous droits réservés.</p>
+    </div>
 </footer>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    // Loader
-    window.addEventListener('load', () => {
-        const loader = document.getElementById('loader');
-        setTimeout(() => {
-            loader.style.opacity = '0';
-            loader.style.visibility = 'hidden';
-        }, 800);
-    });
-    AOS.init({
-        duration: 800,
-        once: true,
-        offset: 100
+    // 20+ lieux magnifiques de Béjaïa
+    const destinations = [
+        {
+            id: 1,
+            name: "Parc National de Gouraya",
+            category: "nature",
+            location: "Béjaïa",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLT4m7vux9_UR0j5cF18-GfNBLQm5gu_cSMw&s",
+            description: "Un écrin de verdure surplombant la mer Méditerranée. Sentiers de randonnée, vues panoramiques et une biodiversité exceptionnelle vous attendent.",
+            features: ["Randonnée", "Panorama", "Faune et flore", "Aire de pique-nique"]
+        },
+        {
+            id: 2,
+            name: "Cap Carbon",
+            category: "nature",
+            location: "Béjaïa",
+            image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+            description: "Un des plus beaux caps de la Méditerranée. Son phare emblématique offre une vue à couper le souffle sur la baie de Béjaïa.",
+            features: ["Phare historique", "Vue mer", "Coucher de soleil", "Photo exceptionnelle"]
+        },
+        {
+            id: 3,
+            name: "Pic des Singes",
+            category: "nature",
+            location: "Forêt d'Akfadou",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+            description: "Rencontrez les célèbres singes magots dans leur habitat naturel. Une expérience unique au cœur de la magnifique forêt d'Akfadou.",
+            features: ["Observation singes", "Forêt dense", "Randonnée", "Pique-nique"]
+        },
+        {
+            id: 4,
+            name: "Plage de Tichy",
+            category: "plage",
+            location: "Tichy",
+            image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+            description: "Une plage de sable fin aux eaux cristallines, idéale pour la baignade et les sports nautiques. Très prisée des familles.",
+            features: ["Sable fin", "Eaux cristallines", "Sports nautiques", "Restaurants"]
+        },
+        {
+            id: 5,
+            name: "Plage des Aiguades",
+            category: "plage",
+            location: "Béjaïa",
+            image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80",
+            description: "Une plage sauvage et préservée, encadrée par des falaises. Un cadre idyllique pour une journée de détente.",
+            features: ["Cadre sauvage", "Falaises", "Eaux claires", "Tranquillité"]
+        },
+        {
+            id: 6,
+            name: "La Casbah de Béjaïa",
+            category: "historique",
+            location: "Béjaïa centre",
+            image: "https://images.unsplash.com/photo-1549893074-4bc9fbb0f8f8?w=800&q=80",
+            description: "Flânez dans les ruelles pittoresques de la vieille ville. Découvrez l'architecture ottomane et l'artisanat local.",
+            features: ["Architecture ottomane", "Ruelles typiques", "Artisanat", "Histoire"]
+        },
+        {
+            id: 7,
+            name: "Fort Yemma Gouraya",
+            category: "historique",
+            location: "Mont Gouraya",
+            image: "https://images.unsplash.com/photo-1549893074-4bc9fbb0f8f8?w=800&q=80",
+            description: "Un fort historique qui surplombe majestueusement la baie. Témoin de l'histoire riche de la région.",
+            features: ["Histoire", "Panorama", "Architecture militaire", "Visite guidée"]
+        },
+        {
+            id: 8,
+            name: "Grotte des Pirates",
+            category: "nature",
+            location: "Côte Ouest",
+            image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&q=80",
+            description: "Excursion en bateau vers ces grottes marines légendaires. Une aventure inoubliable entre mer et mystère.",
+            features: ["Excursion bateau", "Grottes marines", "Baignade", "Aventure"]
+        },
+        {
+            id: 9,
+            name: "Cascade de Kefrida",
+            category: "nature",
+            location: "Kefrida",
+            image: "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&q=80",
+            description: "Une magnifique cascade au cœur de la montagne. Parfait pour une randonnée rafraîchissante.",
+            features: ["Randonnée", "Cascade", "Baignade naturelle", "Pique-nique"]
+        },
+        {
+            id: 10,
+            name: "Source chaude de Hammam",
+            category: "nature",
+            location: "Amizour",
+            image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80",
+            description: "Des sources d'eau chaude naturelles réputées pour leurs vertus thérapeutiques. Détente et bien-être garantis.",
+            features: ["Thermalisme", "Détente", "Bien-être", "Soins"]
+        },
+        {
+            id: 11,
+            name: "Pont de Beni Aissi",
+            category: "historique",
+            location: "Beni Aissi",
+            image: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=800&q=80",
+            description: "Un pont naturel spectaculaire creusé par l'érosion. Un site géologique unique en Algérie.",
+            features: ["Pont naturel", "Géologie", "Randonnée", "Photo unique"]
+        },
+        {
+            id: 12,
+            name: "Village de Beni Ksila",
+            category: "historique",
+            location: "Beni Ksila",
+            image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+            description: "Un village de montagne authentique, avec ses maisons en pierre et son artisanat traditionnel kabyle.",
+            features: ["Authenticité", "Artisanat", "Accueil chaleureux", "Gastronomie"]
+        },
+        {
+            id: 13,
+            name: "Plage de la Brise",
+            category: "plage",
+            location: "Boulimat",
+            image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+            description: "Une petite crique intime, parfaite pour ceux qui recherchent calme et tranquillité.",
+            features: ["Crique intime", "Tranquillité", "Sable fin", "Eaux turquoise"]
+        },
+        {
+            id: 14,
+            name: "Mont Takoucht",
+            category: "nature",
+            location: "Takoucht",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+            description: "Un sommet mythique offrant une vue imprenable sur toute la région. Paradis des randonneurs.",
+            features: ["Randonnée", "Panorama", "Faune", "Flore"]
+        },
+        {
+            id: 15,
+            name: "Musée du Bordj",
+            category: "historique",
+            location: "Béjaïa",
+            image: "https://images.unsplash.com/photo-1549893074-4bc9fbb0f8f8?w=800&q=80",
+            description: "Un musée fascinant retraçant l'histoire de Béjaïa, de l'antiquité à nos jours.",
+            features: ["Histoire", "Archéologie", "Collections", "Visite guidée"]
+        },
+        {
+            id: 16,
+            name: "Ile de Nizla",
+            category: "plage",
+            location: "Béjaïa",
+            image: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&q=80",
+            description: "Une petite île accessible en bateau, avec des eaux cristallines parfaites pour la plongée.",
+            features: ["Excursion bateau", "Plongée", "Eaux cristallines", "Dépaysement"]
+        },
+        {
+            id: 17,
+            name: "Col de Tirourda",
+            category: "nature",
+            location: "Tirourda",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+            description: "Un col de montagne spectaculaire, offrant des paysages à couper le souffle.",
+            features: ["Route panoramique", "Montagne", "Photographie", "Randonnée"]
+        },
+        {
+            id: 18,
+            name: "Phare du Cap Carbon",
+            category: "historique",
+            location: "Cap Carbon",
+            image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+            description: "Le phare emblématique de Béjaïa, un monument chargé d'histoire.",
+            features: ["Phare", "Histoire maritime", "Vue panoramique", "Coucher de soleil"]
+        },
+        {
+            id: 19,
+            name: "Forêt de Boulimat",
+            category: "nature",
+            location: "Boulimat",
+            image: "https://images.unsplash.com/photo-1441974231531-c622288db351?w=800&q=80",
+            description: "Une forêt luxuriante idéale pour les balades et les pique-niques en famille.",
+            features: ["Balade", "Pique-nique", "Ombre", "Détente"]
+        },
+        {
+            id: 20,
+            name: "Rocher de Coco",
+            category: "nature",
+            location: "Béjaïa",
+            image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+            description: "Un rocher emblématique qui surplombe la mer, spot photo incontournable.",
+            features: ["Spot photo", "Panorama", "Mer", "Coucher de soleil"]
+        },
+        {
+            id: 21,
+            name: "Jardin d'Essai du Hamma",
+            category: "nature",
+            location: "Béjaïa",
+            image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&q=80",
+            description: "Un jardin botanique magnifique avec une collection exceptionnelle de plantes.",
+            features: ["Botanique", "Promenade", "Détente", "Famille"]
+        },
+        {
+            id: 22,
+            name: "Village des Artisans",
+            category: "historique",
+            location: "Béjaïa",
+            image: "https://images.unsplash.com/photo-1549893074-4bc9fbb0f8f8?w=800&q=80",
+            description: "Découvrez le savoir-faire local à travers la poterie, la vannerie et la bijouterie traditionnelle.",
+            features: ["Artisanat", "Souvenirs", "Culture", "Authentique"]
+        }
+    ];
+
+    // Rendu des cartes
+    function renderDestinations(filter = "all") {
+        const grid = document.getElementById("destinationsGrid");
+        if (!grid) return;
+
+        const filtered = filter === "all" ? destinations : destinations.filter(d => d.category === filter);
+
+        grid.innerHTML = filtered.map((dest, index) => `
+            <div class="destination-card" data-category="${dest.category}" style="animation-delay: ${index * 0.03}s">
+                <div class="card-image">
+                    <img src="${dest.image}" alt="${dest.name}" loading="lazy">
+                    <div class="image-overlay"></div>
+                    <span class="card-category">
+                        ${dest.category === "nature" ? "🌿 Nature" : dest.category === "plage" ? "🏖️ Plage" : "🏛️ Historique"}
+                    </span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${dest.name}</h3>
+                    <div class="card-location">
+                        <i class="fas fa-map-marker-alt"></i> ${dest.location}
+                    </div>
+                    <p class="card-description">${dest.description.substring(0, 100)}${dest.description.length > 100 ? '...' : ''}</p>
+                    <div class="card-footer">
+                        <button class="btn-explore" data-id="${dest.id}">
+                            <i class="fas fa-info-circle"></i> Découvrir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.destination-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Événements boutons
+        document.querySelectorAll('.btn-explore').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.dataset.id);
+                const destination = destinations.find(d => d.id === id);
+                if (destination) {
+                    openModal(destination);
+                }
+            });
+        });
+    }
+
+    // Ouvrir modal
+    function openModal(dest) {
+        document.getElementById("modalTitle").innerHTML = dest.name;
+        document.getElementById("modalImage").src = dest.image;
+        document.getElementById("modalDescription").innerHTML = dest.description;
+        document.getElementById("modalFeatures").innerHTML = dest.features.map(f => 
+            `<span class="modal-feature"><i class="fas fa-check-circle" style="color:#e63946; margin-right:5px;"></i> ${f}</span>`
+        ).join('');
+        document.getElementById("modalOverlay").classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+
+    // Navigation mobile
+    const hamburger = document.getElementById("hamburgerBtn");
+    const navMenu = document.getElementById("navMenu");
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+            const spans = hamburger.querySelectorAll("span");
+            if (navMenu.classList.contains("active")) {
+                spans[0].style.transform = "rotate(45deg) translate(6px, 6px)";
+                spans[1].style.opacity = "0";
+                spans[2].style.transform = "rotate(-45deg) translate(6px, -6px)";
+            } else {
+                spans[0].style.transform = "none";
+                spans[1].style.opacity = "1";
+                spans[2].style.transform = "none";
+            }
+        });
+    }
+
+    // Scroll navbar
+    window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.remove("scrolled");
+        }
     });
 
-    // Compteur animé
-    function animateCounter(id, start, end, duration) {
-        let obj = document.getElementById(id);
-        let range = end - start;
-        let current = start;
-        let increment = range / (duration / 16);
-        let timer = setInterval(() => {
-            current += increment;
-            if (current >= end) {
-                obj.innerText = end;
-                clearInterval(timer);
-            } else {
-                obj.innerText = Math.floor(current);
-            }
-        }, 16);
-    }
-    const observerCounter = new IntersectionObserver((entries) => {
-        if(entries[0].isIntersecting){
-            animateCounter('counterDest', 0, 24, 1800);
-            animateCounter('counterActiv', 0, 36, 1800);
-            animateCounter('counterHappy', 0, 1250, 2000);
-            observerCounter.disconnect();
-        }
-    }, {threshold:0.5});
-    observerCounter.observe(document.querySelector('.counter-section'));
+    // Initialisation
+    document.addEventListener("DOMContentLoaded", () => {
+        renderDestinations("all");
+
+        // Filtres
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                renderDestinations(btn.dataset.filter);
+            });
+        });
+
+        // Modal events
+        document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+        document.getElementById("modalOverlay").addEventListener("click", (e) => {
+            if (e.target === document.getElementById("modalOverlay")) closeModal();
+        });
+    });
 </script>
 </body>
 </html>
