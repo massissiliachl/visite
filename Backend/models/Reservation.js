@@ -78,7 +78,12 @@ const Reservation = sequelize.define('Reservation', {
 
   demandes_speciales: {
     type: DataTypes.TEXT
-  }
+  },
+
+  payment_proof: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
 }, {
   tableName: 'reservations'
 });
