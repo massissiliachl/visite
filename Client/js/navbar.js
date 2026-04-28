@@ -148,7 +148,7 @@ function initializeNavbar() {
     if (voiceBtn) {
         voiceBtn.addEventListener('click', function() {
             if (typeof window.speak === 'function') {
-window.speak("Bonjour et bienvenue sur Visite Bijaïa. Nous sommes ravis de vous accompagner dans la découverte des plus beaux lieux de Bijaïa. Bonne visite !");            } else {
+window.speak("Bonjour et bienvenue. Nous sommes ravis de vous accompagner dans la découverte des plus beaux lieux de Bijaya ...");            } else {
                 alert('Assistant vocal en cours de développement...');
             }
         });
