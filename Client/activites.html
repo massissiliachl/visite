@@ -372,6 +372,34 @@
             border-color: #a90303;
         }
 
+        .bank-details {
+            background: #fff7eb;
+            border: 1px solid #fcd5a0;
+            border-radius: 1rem;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #1f2937;
+        }
+
+        .bank-details label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+            color: #991b1b;
+        }
+
+        .bank-details .bank-detail-line {
+            margin: 0.25rem 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .bank-details small {
+            display: block;
+            margin-top: 0.75rem;
+            color: #475569;
+        }
+
         .options-modal {
             background: linear-gradient(135deg, #f8fafc, #f1f5f9);
             border-radius: 1rem;
@@ -829,7 +857,25 @@
                         <option value="PayPal">PayPal (Confirmation WhatsApp)</option>
                     </select>
                 </div>
+                <div class="form-group bank-details" id="bankDetails">
+                    <label>Coordonnées bancaires pour virement</label>
+                    <div class="bank-detail-line"><strong>Nom / Raison sociale :</strong> MREI BETTOUCHE BILAL</div>
+                    <div class="bank-detail-line"><strong>Adresse :</strong> BAT C RÉSIDENCE BELLE COURT LOT N04 BOULEVARD SOUMMAM N°32, BEJAIA 06000</div>
+                    <div class="bank-detail-line"><strong>Banque :</strong> CITIBANK BEJAIA - Agence BEJAIA LIBERTÉ (00133)</div>
+                    <div class="bank-detail-line"><strong>Code banque :</strong> 005</div>
+                    <div class="bank-detail-line"><strong>N° de compte :</strong> 00133000011952</div>
+                    <div class="bank-detail-line"><strong>Clé RIB :</strong> 77</div>
+                    <div class="bank-detail-line"><strong>BIC / SWIFT :</strong> BDLDOZALXXX</div>
+                    <small>Envoyez le virement à ce compte et saisissez la référence de transaction ci-dessous.</small>
+                </div>
                 <div class="form-group"><label>Référence transaction</label><input type="text" id="transactionRef" placeholder="ex: 123456"></div>
+                <div class="form-group" id="paymentProofGroup">
+                    <label>Preuve de paiement (capture ou scan) *</label>
+                    <input type="file" id="paymentProof" accept="image/*" capture="environment">
+                    <small style="display:block;margin-top:0.45rem;color:#4e655f;">
+                        Formats acceptés: JPG, PNG, WEBP (max 5 Mo)
+                    </small>
+                </div>
                 <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
                 <div class="price-summary"><strong>💰 Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>🔖 Acompte 30% : <span id="depositAmount">0 DA</span></small></div>
                 <button type="submit" class="btn-submit">✅ Confirmer la réservation</button>
@@ -1199,6 +1245,34 @@
             return parts.length >= 2 && parts[0].length > 0 && parts[1].length > 0;
         }
 
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error("Impossible de lire le fichier de preuve"));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updatePaymentProofVisibility() {
+            const paymentSelect = document.getElementById("paymentMethod");
+            const proofGroup = document.getElementById("paymentProofGroup");
+            const proofInput = document.getElementById("paymentProof");
+            const bankDetails = document.getElementById("bankDetails");
+            if (!paymentSelect || !proofGroup || !proofInput) return;
+
+            const isProofRequired = paymentSelect.value === "CCP" || paymentSelect.value === "BaridiMob";
+            proofGroup.style.display = isProofRequired ? "block" : "none";
+            proofInput.required = isProofRequired;
+            if (bankDetails) {
+                bankDetails.style.display = "block";
+            }
+
+            if (!isProofRequired) {
+                proofInput.value = "";
+            }
+        }
+
         async function sendReservation(payload) {
             const API_URL = 'http://localhost:3000/api/reservations';
             console.log("Envoi à l'API:", payload);
@@ -1249,6 +1323,7 @@
             const payment = document.getElementById("paymentMethod").value;
             const transRef = document.getElementById("transactionRef").value.trim();
             const special = document.getElementById("specialRequests").value;
+            const paymentProofFile = document.getElementById("paymentProof")?.files?.[0] || null;
 
             if (!validateFullName(fullName)) {
                 showToast("⚠️ Veuillez entrer votre NOM et PRÉNOM complets", "warning");
@@ -1257,6 +1332,41 @@
             if (!email || !phone || !date) {
                 showToast("Veuillez remplir tous les champs obligatoires", "error");
                 return;
+            }
+
+            // Vérifier si la date est bloquée
+            try {
+                const blockedResponse = await fetch(`http://localhost:3000/availability/${encodeURIComponent(currentAct.name)}`);
+                if (blockedResponse.ok) {
+                    const blockedDates = await blockedResponse.json();
+                    if (blockedDates.includes(date)) {
+                        showToast(`❌ La date ${date} est bloquée pour cette activité. Veuillez choisir une autre date.`, "error");
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.warn("Impossible de vérifier les dates bloquées:", error);
+                // Continue sans bloquer si l'API n'est pas disponible
+            }
+
+            const proofRequired = payment === "CCP" || payment === "BaridiMob";
+            if (proofRequired && !paymentProofFile) {
+                showToast("Ajoutez une capture/scanner comme preuve de paiement", "warning");
+                return;
+            }
+
+            if (paymentProofFile) {
+                const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+                if (!allowedTypes.includes(paymentProofFile.type)) {
+                    showToast("Format image non supporté (JPG, PNG, WEBP uniquement)", "error");
+                    return;
+                }
+
+                const maxSizeInBytes = 5 * 1024 * 1024;
+                if (paymentProofFile.size > maxSizeInBytes) {
+                    showToast("Image trop volumineuse (max 5 Mo)", "error");
+                    return;
+                }
             }
 
             let total = currentAct.pricePerAdult;
@@ -1272,6 +1382,7 @@
             const nameParts = fullName.split(/\s+/);
             const nom = nameParts[0];
             const prenom = nameParts.slice(1).join(" ");
+            const paymentProofBase64 = paymentProofFile ? await fileToBase64(paymentProofFile) : null;
 
             // Récupérer l'option sélectionnée pour le bateau
             let selectedOption = "";
@@ -1303,7 +1414,8 @@
                 nb_personnes: 1 + children, nom_item: currentAct.name + (selectedOption ? ` (${selectedOption})` : ''), type_reservation: "activite",
                 prix_total: total, acompte_30pct: deposit, mode_paiement: payment,
                 transaction_ref: transRef || null, demandes_speciales: special || null,
-                status: "en_attente", paiement_statut: transRef ? "attente_validation" : "non_saisi"
+                status: "en_attente", paiement_statut: transRef ? "attente_validation" : "non_saisi",
+                payment_proof: paymentProofBase64
             };
 
             try {
@@ -1316,6 +1428,7 @@
                         closeModal();
                         document.getElementById("reservationForm").reset();
                         document.getElementById("children").value = 0;
+                        updatePaymentProofVisibility();
                         updateTotal();
                     }, 2000);
                 } else {
@@ -1332,6 +1445,7 @@
         document.getElementById("modalOverlay").addEventListener("click", (e) => { 
             if (e.target === document.getElementById("modalOverlay")) closeModal(); 
         });
+        document.getElementById("paymentMethod").addEventListener("change", updatePaymentProofVisibility);
         document.getElementById("children").addEventListener("input", updateTotal);
 
         document.querySelectorAll(".filter-btn").forEach(btn => {
@@ -1343,6 +1457,7 @@
         });
 
         document.getElementById("date").min = new Date().toISOString().split('T')[0];
+        updatePaymentProofVisibility();
         renderCards("all");
         
         setTimeout(() => { 

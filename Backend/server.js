@@ -11,7 +11,8 @@ const app = express();
 require("dotenv").config();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '25mb' }));
+app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 app.use('/api/reservations', reservationRoutes);
 app.use('/availability', availabilityRoutes);
 
@@ -79,7 +80,9 @@ app.get("/", (req, res) => res.send("Backend VisitBejaia OK"));
 const PORT = process.env.PORT || 3000;
 
 sequelize.sync()
-    .then(() => {
+    .then(async () => {
+        await sequelize.query(`ALTER TABLE reservations ADD COLUMN IF NOT EXISTS payment_proof TEXT`);
+        await sequelize.query(`ALTER TABLE reservations ALTER COLUMN payment_proof TYPE TEXT`);
         console.log("Tables synchronisées");
 
         app.listen(PORT, () => {

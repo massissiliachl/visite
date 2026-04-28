@@ -147,7 +147,10 @@ function initializeNavbar() {
     // Bouton vocal
     if (voiceBtn) {
         voiceBtn.addEventListener('click', function() {
-            alert('Assistant vocal en cours de développement...');
+            if (typeof window.speak === 'function') {
+window.speak("Bonjour et bienvenue sur Visite Bijaïa. Nous sommes ravis de vous accompagner dans la découverte des plus beaux lieux de Bijaïa. Bonne visite !");            } else {
+                alert('Assistant vocal en cours de développement...');
+            }
         });
     }
 }

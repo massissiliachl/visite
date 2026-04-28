@@ -1,4 +1,5 @@
 const Reservation = require('../models/Reservation');
+const Blocked = require('../models/Blocked');
 
 // ➤ CREATE reservation
 
@@ -38,6 +39,14 @@ exports.createReservation = async (req, res) => {
       });
     }
 
+    const modePaiement = (data.mode_paiement || "").trim();
+    const requiresProof = modePaiement === "BaridiMob" || modePaiement === "CCP";
+    if (requiresProof && !data.payment_proof) {
+      return res.status(400).json({
+        message: "La preuve de paiement (capture/scanner) est obligatoire pour BaridiMob/CCP"
+      });
+    }
+
     // Nettoyer les données (enlever les espaces inutiles)
     const cleanData = {
       nom: data.nom.trim(),
@@ -52,13 +61,29 @@ exports.createReservation = async (req, res) => {
       acompte_30pct: parseFloat(data.acompte_30pct) || 0,
       date_depart: data.date_depart,
       status: data.status || "en_attente",
-      mode_paiement: data.mode_paiement || "BaridiMob",
+      mode_paiement: modePaiement || "BaridiMob",
       transaction_ref: data.transaction_ref || null,
       paiement_statut: data.paiement_statut || "non_saisi",
-      demandes_speciales: data.demandes_speciales || null
+      demandes_speciales: data.demandes_speciales || null,
+      payment_proof: data.payment_proof || null
     };
 
     console.log("Données nettoyées:", cleanData);
+
+    // Vérifier si la date est bloquée pour cette activité
+    if (cleanData.nom_item && cleanData.date_depart) {
+      const blocked = await Blocked.findOne({
+        where: {
+          nom_item: cleanData.nom_item,
+          date: cleanData.date_depart
+        }
+      });
+      if (blocked) {
+        return res.status(400).json({
+          message: `La date ${cleanData.date_depart} est bloquée pour l'activité ${cleanData.nom_item}. Veuillez choisir une autre date.`
+        });
+      }
+    }
 
     const reservation = await Reservation.create(cleanData);
     
@@ -161,6 +186,53 @@ exports.updateReservation = async (req, res) => {
       data: reservation
     });
 
+  } catch (error) {
+    res.status(500).json({
+      message: "Erreur serveur",
+      error: error.message
+    });
+  }
+};
+
+// ➤ UPDATE status acceptee/refusee (admin)
+exports.updateReservationStatus = async (req, res) => {
+  try {
+    console.log("=== UPDATE STATUS ADMIN ===", {
+      id: req.params.id,
+      status: req.body?.status
+    });
+
+    const reservation = await Reservation.findByPk(req.params.id);
+
+    if (!reservation) {
+      return res.status(404).json({ message: "Introuvable" });
+    }
+
+    const { status } = req.body;
+    if (!['acceptee', 'refusee', 'en_attente'].includes(status)) {
+      return res.status(400).json({ message: "Statut invalide" });
+    }
+
+    let paiement_statut = reservation.paiement_statut;
+    if (status === 'acceptee') {
+      paiement_statut = 'valide';
+    } else if (status === 'refusee') {
+      paiement_statut = 'refuse';
+    } else if (status === 'en_attente') {
+      paiement_statut = reservation.transaction_ref ? 'attente_validation' : 'non_saisi';
+    }
+
+    await reservation.update({ status, paiement_statut });
+
+    res.json({
+      message: "Statut de réservation mis à jour",
+      data: {
+        id: reservation.id,
+        status: reservation.status,
+        paiement_statut: reservation.paiement_statut,
+        updatedAt: reservation.updatedAt
+      }
+    });
   } catch (error) {
     res.status(500).json({
       message: "Erreur serveur",

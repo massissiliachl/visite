@@ -24,7 +24,7 @@
         
         <div class="nav-actions">
             <div class="voice-button" id="voiceBtn" title="Assistante vocale">
-                <i class="fas fa-robot"></i>
+                <i class="fas fa-microphone-lines"></i>
             </div>
             <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
                 <span></span>
@@ -223,27 +223,38 @@ body {
 }
 
 .voice-button {
-    background: #f3ede7;
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid #e0d2c4;
-    color: var(--primary-dark);
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
+        background: linear-gradient(135deg, #3b50a0, #5d7ee0);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        border: none;
+        color: #ffffff;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+        box-shadow: 0 10px 24px rgba(33, 52, 123, 0.18);
+    }
 
-.voice-button:hover {
-    background: var(--primary-dark);
-    color: var(--white);
-    transform: rotate(360deg) scale(1.1);
-    border-color: var(--primary-dark);
-}
+    .voice-button:hover {
+        background: linear-gradient(135deg, #243b85, #4471d8);
+        transform: scale(1.08);
+        box-shadow: 0 14px 30px rgba(33, 52, 123, 0.24);
+    }
+
+    .voice-button.speaking {
+        background: linear-gradient(135deg, #e63946, #ff6b6b);
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
 
 /* ===== HAMBURGER MENU ===== */
 .hamburger {
@@ -421,8 +432,8 @@ body {
     }
 
     .voice-button {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         font-size: 1rem;
     }
 

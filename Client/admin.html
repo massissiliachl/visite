@@ -190,6 +190,13 @@
             border: 1px solid #e2e8f0;
         }
 
+        .table-section-title {
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -269,6 +276,8 @@
             width: 90%;
             padding: 2rem;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-card h3 {
             font-size: 1.5rem;
@@ -290,6 +299,27 @@
             right: 1.2rem;
             font-size: 1.6rem;
             cursor: pointer;
+        }
+
+        .proof-preview {
+            margin-top: 0.5rem;
+            max-width: 100%;
+            max-height: 240px;
+            border-radius: 0.8rem;
+            border: 1px solid #e2e8f0;
+            object-fit: contain;
+            background: #f8fafc;
+            cursor: zoom-in;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transform-origin: center;
+        }
+
+        .proof-preview.zoomed {
+            transform: scale(1.8);
+            cursor: zoom-out;
+            z-index: 20;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
         }
 
         /* Style pour la page bloquer dates */
@@ -443,8 +473,32 @@
                     <thead>
                         <tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
                     </thead>
-                    <tbody id="reservationsTableBody">
+                    <tbody id="pendingTableBody">
                         <tr><td colspan="8" style="text-align:center;">Chargement...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="table-section-title"><i class="fas fa-check-circle" style="color:#16a34a;"></i> Réservations acceptées</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="acceptedTableBody">
+                        <tr><td colspan="8" style="text-align:center;">Aucune réservation acceptée</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="table-section-title"><i class="fas fa-times-circle" style="color:#dc2626;"></i> Réservations refusées</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="refusedTableBody">
+                        <tr><td colspan="8" style="text-align:center;">Aucune réservation refusée</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -455,12 +509,25 @@
             <div class="top-bar">
                 <div class="page-title">
                     <h1><i class="fas fa-ban"></i> Bloquer une date</h1>
-                    <p>Bloquez des dates pour lesquelles les réservations ne seront pas disponibles</p>
+                    <p>Bloquez des dates pour lesquelles les réservations ne seront pas disponibles selon l'activité</p>
                 </div>
             </div>
             <div class="bloquer-container">
                 <h2>Bloquer une nouvelle date</h2>
-                <p>Sélectionnez une date à bloquer. Les clients ne pourront pas réserver pour cette date.</p>
+                <p>Sélectionnez une activité et une date à bloquer. Les clients ne pourront pas réserver pour cette date et cette activité.</p>
+                
+                <div class="date-picker-group">
+                    <label for="activitySelect"><i class="fas fa-list"></i> Activité :</label>
+                    <select id="activitySelect" style="width:100%; padding:0.75rem; border:1px solid #cbd5e1; border-radius:0.75rem; margin-bottom:1rem;">
+                        <option value="">Choisir une activité</option>
+                        <option value="Quad">Quad</option>
+                        <option value="Parapente">Parapente</option>
+                        <option value="Jetski">Jetski</option>
+                        <option value="Bateau">Bateau</option>
+                        <option value="Randonnée">Randonnée</option>
+                        <option value="VTT">VTT</option>
+                    </select>
+                </div>
                 
                 <div class="date-picker-group">
                     <label for="blockedDate"><i class="fas fa-calendar-alt"></i> Date à bloquer :</label>
@@ -475,7 +542,7 @@
                     <h3><i class="fas fa-calendar-times"></i> Dates déjà bloquées</h3>
                     <div id="blockedDatesList">
                         <!-- Les dates bloquées seront affichées ici -->
-                        <p>Aucune date bloquée pour le moment.</p>
+                        <p>Sélectionnez une activité pour voir les dates bloquées.</p>
                     </div>
                 </div>
             </div>
@@ -539,70 +606,122 @@
     const API_BASE = 'http://localhost:3000/api';
     let reservationsData = [];
     
-    // Stockage des dates bloquées (localStorage pour persistance)
-    let blockedDates = [];
+    // Stockage des dates bloquées par activité
+    let blockedDatesByActivity = {};
 
-    // Charger les dates bloquées depuis localStorage
-    function loadBlockedDates() {
-        const stored = localStorage.getItem('visitbejaia_blocked_dates');
-        if (stored) {
-            blockedDates = JSON.parse(stored);
-        } else {
-            // Dates d'exemple
-            blockedDates = ['2025-05-20', '2025-05-25'];
-            saveBlockedDates();
-        }
-        renderBlockedDates();
-    }
-
-    function saveBlockedDates() {
-        localStorage.setItem('visitbejaia_blocked_dates', JSON.stringify(blockedDates));
-    }
-
-    function renderBlockedDates() {
-        const container = document.getElementById('blockedDatesList');
-        if (!container) return;
-        
-        if (blockedDates.length === 0) {
-            container.innerHTML = '<p>Aucune date bloquée pour le moment.</p>';
+    // Charger les dates bloquées pour une activité
+    async function loadBlockedDates(activity) {
+        if (!activity) {
+            document.getElementById('blockedDatesList').innerHTML = '<p>Sélectionnez une activité pour voir les dates bloquées.</p>';
             return;
         }
         
-        container.innerHTML = blockedDates.map(date => `
-            <span class="date-tag">
-                ${new Date(date).toLocaleDateString('fr-FR')}
-                <i class="fas fa-times-circle" onclick="unblockDate('${date}')" style="cursor:pointer; margin-left:0.5rem;"></i>
-            </span>
-        `).join('');
+        try {
+            const response = await fetch(`http://localhost:3000/availability/${encodeURIComponent(activity)}`);
+            if (response.ok) {
+                const blockedDates = await response.json();
+                blockedDatesByActivity[activity] = blockedDates;
+                renderBlockedDates(activity);
+            } else {
+                console.error('Erreur chargement dates bloquées');
+                blockedDatesByActivity[activity] = [];
+                renderBlockedDates(activity);
+            }
+        } catch (error) {
+            console.error('Erreur réseau:', error);
+            blockedDatesByActivity[activity] = [];
+            renderBlockedDates(activity);
+        }
     }
 
-    function blockDate() {
-        const dateInput = document.getElementById('blockedDate');
-        const date = dateInput.value;
+    // Bloquer une date pour une activité
+    async function blockDate() {
+        const activity = document.getElementById('activitySelect').value;
+        const date = document.getElementById('blockedDate').value;
+        
+        if (!activity) {
+            alert('Veuillez sélectionner une activité');
+            return;
+        }
         
         if (!date) {
             alert('Veuillez sélectionner une date');
             return;
         }
         
-        if (blockedDates.includes(date)) {
-            alert('Cette date est déjà bloquée');
+        try {
+            const response = await fetch('http://localhost:3000/availability/block', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    nom_item: activity,
+                    date: date,
+                    reason: 'Bloqué par admin'
+                })
+            });
+            
+            if (response.ok) {
+                alert('Date bloquée avec succès');
+                document.getElementById('blockedDate').value = '';
+                loadBlockedDates(activity);
+            } else {
+                const error = await response.json();
+                alert('Erreur: ' + (error.error || 'Impossible de bloquer la date'));
+            }
+        } catch (error) {
+            console.error('Erreur réseau:', error);
+            alert('Erreur réseau lors du blocage');
+        }
+    }
+
+    // Afficher les dates bloquées pour une activité
+    function renderBlockedDates(activity) {
+        const container = document.getElementById('blockedDatesList');
+        const dates = blockedDatesByActivity[activity] || [];
+        
+        if (dates.length === 0) {
+            container.innerHTML = '<p>Aucune date bloquée pour cette activité.</p>';
             return;
         }
         
-        blockedDates.push(date);
-        saveBlockedDates();
-        renderBlockedDates();
-        dateInput.value = '';
-        alert(`Date ${new Date(date).toLocaleDateString('fr-FR')} a été bloquée avec succès`);
+        let html = '<div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">';
+        dates.forEach(date => {
+            html += `
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: #fee2e2; color: #991b1b; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.9rem;">
+                    <i class="fas fa-ban"></i>
+                    ${new Date(date).toLocaleDateString('fr-FR')}
+                    <button onclick="unblockDate('${activity}', '${date}')" style="background: none; border: none; color: #991b1b; cursor: pointer; margin-left: 0.5rem;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
     }
-    
-    function unblockDate(date) {
-        if (confirm(`Débloquer la date ${new Date(date).toLocaleDateString('fr-FR')} ?`)) {
-            blockedDates = blockedDates.filter(d => d !== date);
-            saveBlockedDates();
-            renderBlockedDates();
-            alert('Date débloquée');
+
+    // Débloquer une date
+    async function unblockDate(activity, date) {
+        if (!confirm(`Débloquer la date ${new Date(date).toLocaleDateString('fr-FR')} pour ${activity} ?`)) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`http://localhost:3000/availability/block/${encodeURIComponent(activity)}/${date}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                alert('Date débloquée avec succès');
+                loadBlockedDates(activity);
+            } else {
+                alert('Erreur lors du déblocage');
+            }
+        } catch (error) {
+            console.error('Erreur réseau:', error);
+            alert('Erreur réseau lors du déblocage');
         }
     }
 
@@ -664,7 +783,6 @@
 
     function applyFiltersAndRender() {
         const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        const statusVal = document.getElementById('statusFilter').value;
         let filtered = [...reservationsData];
         if (searchTerm) {
             filtered = filtered.filter(r => 
@@ -674,19 +792,10 @@
                 (r.telephone && r.telephone.includes(searchTerm))
             );
         }
-        if (statusVal !== 'all') {
-            filtered = filtered.filter(r => r.status === statusVal);
-        }
-        renderTable(filtered);
+        renderTables(filtered);
     }
 
-    function renderTable(reservations) {
-        const tbody = document.getElementById('reservationsTableBody');
-        if (!reservations.length) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Aucune réservation trouvée</td></tr>';
-            return;
-        }
-        tbody.innerHTML = reservations.map(res => {
+    function getRowHtml(res) {
             const statusClass = `status-${res.status}`;
             const statusLabel = res.status === 'en_attente' ? 'En attente' : (res.status === 'acceptee' ? 'Acceptée' : 'Refusée');
             const fullName = `${res.nom || ''} ${res.prenom || ''}`.trim() || '—';
@@ -706,18 +815,51 @@
                             <button class="btn-icon btn-accept" onclick="updateStatus(${res.id}, 'acceptee')" title="Accepter"><i class="fas fa-check-circle"></i></button>
                             <button class="btn-icon btn-refuse" onclick="updateStatus(${res.id}, 'refusee')" title="Refuser"><i class="fas fa-times-circle"></i></button>
                         ` : ''}
+                        <button class="btn-icon btn-refuse" onclick="deleteReservation(${res.id})" title="Supprimer"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             `;
-        }).join('');
+    }
+
+    function renderTables(reservations) {
+        const pending = reservations.filter(r => r.status === 'en_attente');
+        const accepted = reservations.filter(r => r.status === 'acceptee');
+        const refused = reservations.filter(r => r.status === 'refusee');
+
+        const pendingBody = document.getElementById('pendingTableBody');
+        const acceptedBody = document.getElementById('acceptedTableBody');
+        const refusedBody = document.getElementById('refusedTableBody');
+
+        pendingBody.innerHTML = pending.length
+            ? pending.map(getRowHtml).join('')
+            : '<tr><td colspan="8" style="text-align:center;">Aucune réservation en attente</td></tr>';
+
+        acceptedBody.innerHTML = accepted.length
+            ? accepted.map(getRowHtml).join('')
+            : '<tr><td colspan="8" style="text-align:center;">Aucune réservation acceptée</td></tr>';
+
+        refusedBody.innerHTML = refused.length
+            ? refused.map(getRowHtml).join('')
+            : '<tr><td colspan="8" style="text-align:center;">Aucune réservation refusée</td></tr>';
     }
 
     // Accepter / Refuser via API
     async function updateStatus(reservationId, newStatus) {
         if (!confirm(`Confirmer la ${newStatus === 'acceptee' ? 'validation' : 'réfutation'} de cette réservation ?`)) return;
         try {
-            const endpoint = newStatus === 'acceptee' ? `${API_BASE}/reservations/${reservationId}/accept` : `${API_BASE}/reservations/${reservationId}/refuse`;
-            const response = await fetch(endpoint, { method: 'PUT' });
+            const endpoint = newStatus === 'acceptee'
+                ? `${API_BASE}/reservations/${reservationId}/accept`
+                : `${API_BASE}/reservations/${reservationId}/refuse`;
+
+            let response = await fetch(endpoint, { method: 'PUT' });
+            // Fallback pour compatibilité si endpoint direct indisponible
+            if (!response.ok && (response.status === 404 || response.status === 405)) {
+                response = await fetch(`${API_BASE}/reservations/${reservationId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+            }
             if (!response.ok) throw new Error('Erreur mise à jour');
             const index = reservationsData.findIndex(r => r.id === reservationId);
             if (index !== -1) reservationsData[index].status = newStatus;
@@ -727,16 +869,23 @@
             alert(`Réservation ${newStatus === 'acceptee' ? 'acceptée' : 'refusée'} avec succès.`);
         } catch (err) {
             console.error(err);
-            const index = reservationsData.findIndex(r => r.id === reservationId);
-            if (index !== -1) {
-                reservationsData[index].status = newStatus;
-                renderStats();
-                applyFiltersAndRender();
-                updateStatsPage();
-                alert(`(Mode démo) Réservation ${newStatus === 'acceptee' ? 'acceptée' : 'refusée'} localement.`);
-            } else {
-                alert("Erreur lors de la modification.");
-            }
+            alert("Erreur lors de la modification. Vérifiez que le backend est démarré.");
+        }
+    }
+
+    async function deleteReservation(reservationId) {
+        if (!confirm("Supprimer définitivement cette réservation ?")) return;
+        try {
+            const response = await fetch(`${API_BASE}/reservations/${reservationId}`, { method: 'DELETE' });
+            if (!response.ok) throw new Error('Erreur suppression');
+            reservationsData = reservationsData.filter(r => r.id !== reservationId);
+            renderStats();
+            applyFiltersAndRender();
+            updateStatsPage();
+            alert("Réservation supprimée.");
+        } catch (error) {
+            console.error(error);
+            alert("Erreur suppression. Vérifiez que le backend est démarré.");
         }
     }
 
@@ -744,19 +893,42 @@
     function viewDetails(id) {
         const reservation = reservationsData.find(r => r.id === id);
         if (!reservation) return;
+
+        const safeStatusLabel = reservation.status === 'en_attente'
+            ? 'En attente'
+            : (reservation.status === 'acceptee' ? 'Acceptée' : 'Refusée');
+        const createdAt = reservation.createdAt ? new Date(reservation.createdAt).toLocaleString('fr-FR') : '—';
+        const updatedAt = reservation.updatedAt ? new Date(reservation.updatedAt).toLocaleString('fr-FR') : '—';
+        const paymentProofHtml = reservation.payment_proof
+            ? `
+                <a href="${reservation.payment_proof}" target="_blank" rel="noopener noreferrer">
+                    Ouvrir la capture dans un nouvel onglet
+                </a>
+                <br>
+                <img src="${reservation.payment_proof}" alt="Preuve de paiement" class="proof-preview">
+              `
+            : 'Aucune capture envoyée';
+
         const detailHtml = `
+            <div class="detail-row"><div class="detail-label">ID :</div><div>#${reservation.id ?? '—'}</div></div>
             <div class="detail-row"><div class="detail-label">Client :</div><div>${reservation.nom} ${reservation.prenom}</div></div>
             <div class="detail-row"><div class="detail-label">Email :</div><div>${reservation.email || '—'}</div></div>
             <div class="detail-row"><div class="detail-label">Téléphone :</div><div>${reservation.telephone || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Adresse :</div><div>${reservation.adresse || '—'}</div></div>
             <div class="detail-row"><div class="detail-label">Activité :</div><div>${reservation.nom_item || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Type :</div><div>${reservation.type_reservation || '—'}</div></div>
             <div class="detail-row"><div class="detail-label">Date départ :</div><div>${reservation.date_depart ? new Date(reservation.date_depart).toLocaleDateString('fr-FR') : '—'}</div></div>
             <div class="detail-row"><div class="detail-label">Participants :</div><div>${reservation.nb_personnes}</div></div>
             <div class="detail-row"><div class="detail-label">Prix total :</div><div>${(reservation.prix_total || 0).toLocaleString('fr-DZ')} DA</div></div>
+            <div class="detail-row"><div class="detail-label">Acompte 30% :</div><div>${(reservation.acompte_30pct || 0).toLocaleString('fr-DZ')} DA</div></div>
             <div class="detail-row"><div class="detail-label">Mode paiement :</div><div>${reservation.mode_paiement || '—'}</div></div>
             <div class="detail-row"><div class="detail-label">Transaction :</div><div>${reservation.transaction_ref || 'Non fourni'}</div></div>
             <div class="detail-row"><div class="detail-label">Statut paiement :</div><div>${reservation.paiement_statut || '—'}</div></div>
+            <div class="detail-row"><div class="detail-label">Capture :</div><div>${paymentProofHtml}</div></div>
             <div class="detail-row"><div class="detail-label">Demandes :</div><div>${reservation.demandes_speciales || 'Aucune'}</div></div>
-            <div class="detail-row"><div class="detail-label">Statut :</div><div><span class="status-badge status-${reservation.status}">${reservation.status === 'en_attente' ? 'En attente' : (reservation.status === 'acceptee' ? 'Acceptée' : 'Refusée')}</span></div></div>
+            <div class="detail-row"><div class="detail-label">Statut :</div><div><span class="status-badge status-${reservation.status}">${safeStatusLabel}</span></div></div>
+            <div class="detail-row"><div class="detail-label">Créée le :</div><div>${createdAt}</div></div>
+            <div class="detail-row"><div class="detail-label">Mise à jour :</div><div>${updatedAt}</div></div>
         `;
         document.getElementById('detailContent').innerHTML = detailHtml;
         document.getElementById('detailModal').classList.add('active');
@@ -805,6 +977,11 @@
     document.getElementById('closeDetailModal')?.addEventListener('click', () => document.getElementById('detailModal').classList.remove('active'));
     document.getElementById('detailModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('detailModal')) document.getElementById('detailModal').classList.remove('active'); });
     
+    // Activity select change listener
+    document.getElementById('activitySelect')?.addEventListener('change', (e) => {
+        loadBlockedDates(e.target.value);
+    });
+    
     // Navigation tabs
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -816,14 +993,19 @@
     });
 
     // Initial load
-    loadBlockedDates();
     fetchReservations();
 
     // Exposer les fonctions globalement
     window.updateStatus = updateStatus;
+    window.deleteReservation = deleteReservation;
     window.viewDetails = viewDetails;
     window.blockDate = blockDate;
     window.unblockDate = unblockDate;
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('proof-preview')) return;
+        e.target.classList.toggle('zoomed');
+    });
 </script>
 </body>
 </html>

@@ -81,7 +81,7 @@ const Reservation = sequelize.define('Reservation', {
   },
 
   payment_proof: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT('long'),
     allowNull: true
   },
 }, {
