@@ -81,8 +81,6 @@ const PORT = process.env.PORT || 3000;
 
 sequelize.sync()
     .then(async () => {
-        await sequelize.query(`ALTER TABLE reservations ADD COLUMN IF NOT EXISTS payment_proof TEXT`);
-        await sequelize.query(`ALTER TABLE reservations ALTER COLUMN payment_proof TYPE TEXT`);
         console.log("Tables synchronisées");
 
         app.listen(PORT, () => {
