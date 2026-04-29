@@ -2241,7 +2241,7 @@ Message : ${document.getElementById("message").value}
                 `
             };
             try {
-                await fetch("http://localhost:3000/send-email", {
+                await fetch("https://visitebougi.onrender.com/send-email", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)

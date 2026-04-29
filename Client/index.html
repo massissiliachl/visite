@@ -3267,7 +3267,7 @@ Message : ${document.getElementById("message").value}
                 `
             };
             try {
-                await fetch("http://localhost:3000/send-email", {
+                await fetch("https://visitebougi.onrender.com/send-email", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
@@ -4094,7 +4094,7 @@ function updateTotal() {
         }
 
         async function sendReservation(payload) {
-            const API_URL = 'http://localhost:3000/api/reservations';
+            const API_URL = 'https://visitebougi.onrender.com/api/reservations';
             console.log("Envoi à l'API:", payload);
             
             try {
@@ -4176,7 +4176,7 @@ function updateTotal() {
 
             // Vérifier si la date est bloquée
             try {
-                const blockedResponse = await fetch(`http://localhost:3000/availability/${encodeURIComponent(currentAct.name)}`);
+                const blockedResponse = await fetch(`https://visitebougi.onrender.com/availability/${encodeURIComponent(currentAct.name)}`);
                 if (blockedResponse.ok) {
                     const blockedDates = await blockedResponse.json();
                     if (blockedDates.includes(date)) {

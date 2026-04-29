@@ -1727,7 +1727,7 @@
 
         async function getBlockedDates(activityId) {
             try {
-                const res = await fetch(`http://localhost:3000/availability/${encodeURIComponent(activityId)}`);
+                const res = await fetch(`https://visitebougi.onrender.com/availability/${encodeURIComponent(activityId)}`);
                 if (!res.ok) {
                     console.warn("Impossible de charger les dates bloquÃ©es");
                     return [];
@@ -1864,7 +1864,7 @@
             };
 
             try {
-                const res = await fetch('http://localhost:3000/reservations', {
+                const res = await fetch('https://visitebougi.onrender.com/reservations', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)

@@ -101,7 +101,7 @@ function validateFullName(fullName) {
 }
 
 async function sendReservation(payload) {
-    const API_URL = 'http://localhost:3000/api/reservations';
+    const API_URL = 'https://visitebougi.onrender.com/api/reservations';
     console.log("Envoi à l'API:", payload);
     
     try {

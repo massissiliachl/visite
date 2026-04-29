@@ -1269,7 +1269,7 @@
         }
 
         async function sendReservation(payload) {
-            const API_URL = 'http://localhost:3000/api/reservations';
+            const API_URL = 'https://visitebougi.onrender.com/api/reservations';
             console.log("Envoi à l'API:", payload);
             try {
                 const response = await fetch(API_URL, {
@@ -1331,7 +1331,7 @@
 
             // Vérifier si la date est bloquée
             try {
-                const blockedResponse = await fetch(`http://localhost:3000/availability/${encodeURIComponent(currentAct.name)}`);
+                const blockedResponse = await fetch(`https://visitebougi.onrender.com/availability/${encodeURIComponent(currentAct.name)}`);
                 if (blockedResponse.ok) {
                     const blockedDates = await blockedResponse.json();
                     if (blockedDates.includes(date)) {
