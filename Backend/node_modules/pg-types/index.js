@@ -45,3 +45,4 @@ textParsers.init(function(oid, converter) {
 binaryParsers.init(function(oid, converter) {
   typeParsers.binary[oid] = converter;
 });
+

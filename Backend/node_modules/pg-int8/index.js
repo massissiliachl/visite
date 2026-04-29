@@ -98,3 +98,4 @@ function readInt8(buffer) {
 }
 
 module.exports = readInt8;
+

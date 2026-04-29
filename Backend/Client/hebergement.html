@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HÃ©bergements de luxe - VisitBejaia</title>
+    <title>Hébergements de luxe - VisitBejaia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -413,7 +413,7 @@
             to { opacity: 1; }
         }
 
-        /* Grille des hÃ©bergements avec effet masonry */
+        /* Grille des hébergements avec effet masonry */
         .hebergement-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -803,7 +803,7 @@
             box-shadow: 0 15px 30px rgba(26, 58, 107, 0.3);
         }
 
-        /* Galerie d'images amÃ©liorÃ©e */
+        /* Galerie d'images améliorée */
         .modal-gallery {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -1129,7 +1129,7 @@
             margin-top: 0.3rem;
         }
 
-        /* Modale de rÃ©servation amÃ©liorÃ©e */
+        /* Modale de réservation améliorée */
         .booking-modal {
             display: none;
             position: fixed;
@@ -1340,7 +1340,7 @@
             50% { transform: translateX(5px); }
         }
 
-        /* Footer amÃ©liorÃ© */
+        /* Footer amélioré */
         .footer {
             background: linear-gradient(135deg, #1e3a35, #15312b);
             color: #e5ddd2;
@@ -1669,7 +1669,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Scrollbar personnalisÃ©e */
+        /* Scrollbar personnalisée */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -1746,8 +1746,8 @@
     <section class="hero">
         <div class="particles" id="particles"></div>
         <div class="hero-content">
-            <h1 class="hero-title">SÃ©jours d'exception Ã  BÃ©jaÃ¯a</h1>
-            <p class="hero-description">Des villas de luxe avec piscine privÃ©e aux appartements de charme avec vue mer, trouvez le havre de paix idÃ©al pour vos vacances mÃ©diterranÃ©ennes.</p>
+            <h1 class="hero-title">Séjours d'exception à Béjaïa</h1>
+            <p class="hero-description">Des villas de luxe avec piscine privée aux appartements de charme avec vue mer, trouvez le havre de paix idéal pour vos vacances méditerranéennes.</p>
         </div>
         <div class="hero-overlay"></div>
         <div class="wave"></div>
@@ -1775,18 +1775,18 @@
                 <select id="sortSelect" class="sort-select">
                     <option value="default">Trier par</option>
                     <option value="price-asc">Prix croissant</option>
-                    <option value="price-desc">Prix dÃ©croissant</option>
-                    <option value="popular">PopularitÃ©</option>
+                    <option value="price-desc">Prix décroissant</option>
+                    <option value="popular">Popularité</option>
                 </select>
             </div>
         </div>
-        <div class="results-count" id="resultsCount">10 hÃ©bergements disponibles</div>
+        <div class="results-count" id="resultsCount">10 hébergements disponibles</div>
     </section>
 
-    <!-- Grille des hÃ©bergements -->
+    <!-- Grille des hébergements -->
     <div class="hebergement-grid" id="hebergementGrid"></div>
 
-    <!-- Modale hÃ©bergement -->
+    <!-- Modale hébergement -->
     <div class="modal-hebergement" id="hebergementModal">
         <div class="modal-content">
             <button class="modal-close"><i class="fas fa-times"></i></button>
@@ -1800,34 +1800,34 @@
             <div class="modal-body">
                 <h2 id="modalTitle" class="modal-title"></h2>
                 <div class="modal-location" id="modalLocation"></div>
-                <div class="modal-availability" id="modalAvailability">âœ“ Disponible pour vos dates</div>
+                <div class="modal-availability" id="modalAvailability">✓ Disponible pour vos dates</div>
                 <p id="modalDescription" class="modal-description"></p>
                 <div class="modal-features" id="modalFeatures"></div>
                 <div class="modal-price" id="modalPrice"></div>
-                <button class="modal-booking-btn" id="modalBookingBtn">RÃ©server maintenant</button>
+                <button class="modal-booking-btn" id="modalBookingBtn">Réserver maintenant</button>
                 
                 <div class="similar-properties">
-                    <h4>HÃ©bergements similaires</h4>
+                    <h4>Hébergements similaires</h4>
                     <div class="similar-grid" id="similarProperties"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modale de rÃ©servation -->
+    <!-- Modale de réservation -->
     <div class="booking-modal" id="bookingModal">
         <div class="booking-content">
             <button class="booking-close"><i class="fas fa-times"></i></button>
-            <h2 class="booking-title" id="bookingTitle">RÃ©server</h2>
+            <h2 class="booking-title" id="bookingTitle">Réserver</h2>
             
             <form class="booking-form" id="bookingForm" onsubmit="handleBookingSubmit(event)">
                 <div class="form-row">
                     <div class="form-group">
-                        <label>ArrivÃ©e</label>
+                        <label>Arrivée</label>
                         <input type="date" id="checkIn" required>
                     </div>
                     <div class="form-group">
-                        <label>DÃ©part</label>
+                        <label>Départ</label>
                         <input type="date" id="checkOut" required>
                     </div>
                 </div>
@@ -1866,14 +1866,14 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>TÃ©lÃ©phone</label>
+                    <label>Téléphone</label>
                     <input type="tel" id="phone" placeholder="+213 XXX XX XX XX" required>
                 </div>
                 
                 <div class="total-price" id="totalPrice">Total: 0 DZD</div>
                 
                 <button type="submit" class="booking-submit">
-                    <i class="fas fa-check"></i> Confirmer la rÃ©servation
+                    <i class="fas fa-check"></i> Confirmer la réservation
                 </button>
             </form>
         </div>
@@ -1884,29 +1884,29 @@
           <script src="js/navbar.js"></script>\n    <script src="js/include-footer.js"></script>
 
     <script>
-        // DonnÃ©es des hÃ©bergements avec images de haute qualitÃ©
+        // Données des hébergements avec images de haute qualité
         const properties = [
             // Villas
             {
                 id: 'villa1',
                 title: "Villa Azur",
-                location: "Tichy, BÃ©jaÃ¯a",
-                description: "Villa d'exception en premiÃ¨re ligne mer avec piscine chauffÃ©e Ã  dÃ©bordement, 5 chambres et vue panoramique.",
-                longDescription: "Villa d'exception en premiÃ¨re ligne mer avec piscine chauffÃ©e Ã  dÃ©bordement. Profitez de 5 chambres lumineuses avec salle de bain privative, d'un grand salon panoramique, d'une cuisine haut de gamme Ã©quipÃ©e et d'une terrasse de 120 mÂ² avec vue imprenable sur la MÃ©diterranÃ©e. Le jardin tropical et l'accÃ¨s direct Ã  la plage privÃ©e complÃ¨tent ce tableau idyllique.",
+                location: "Tichy, Béjaïa",
+                description: "Villa d'exception en première ligne mer avec piscine chauffée à débordement, 5 chambres et vue panoramique.",
+                longDescription: "Villa d'exception en première ligne mer avec piscine chauffée à débordement. Profitez de 5 chambres lumineuses avec salle de bain privative, d'un grand salon panoramique, d'une cuisine haut de gamme équipée et d'une terrasse de 120 m² avec vue imprenable sur la Méditerranée. Le jardin tropical et l'accès direct à la plage privée complètent ce tableau idyllique.",
                 price: 28000,
                 type: 'villa',
                 capacity: 10,
                 bedrooms: 5,
                 rating: 4.9,
                 popular: true,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸŠ Piscine', 'â­ Luxe'],
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '⭐ Luxe'],
                 features: [
                     { icon: "fa-bed", text: "5 chambres doubles" },
                     { icon: "fa-users", text: "10 personnes" },
-                    { icon: "fa-swimmer", text: "Piscine privÃ©e chauffÃ©e" },
-                    { icon: "fa-wifi", text: "Wi-Fi haut dÃ©bit" },
-                    { icon: "fa-umbrella-beach", text: "AccÃ¨s plage privÃ©e" },
-                    { icon: "fa-car", text: "Parking privÃ©" }
+                    { icon: "fa-swimmer", text: "Piscine privée chauffée" },
+                    { icon: "fa-wifi", text: "Wi-Fi haut débit" },
+                    { icon: "fa-umbrella-beach", text: "Accès plage privée" },
+                    { icon: "fa-car", text: "Parking privé" }
                 ],
                 images: [
                     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200",
@@ -1918,20 +1918,20 @@
             {
                 id: 'villa2',
                 title: "Villa Gouraya",
-                location: "Gouraya, BÃ©jaÃ¯a",
-                description: "Villa moderne avec piscine privÃ©e, jardin luxuriant et 4 chambres spacieuses. IdÃ©ale pour les familles.",
-                longDescription: "Villa moderne avec piscine privÃ©e et jardin luxuriant. 4 chambres spacieuses, salon avec vue sur la montagne, cuisine entiÃ¨rement Ã©quipÃ©e. IdÃ©ale pour des vacances en famille ou entre amis dans un cadre calme et verdoyant.",
+                location: "Gouraya, Béjaïa",
+                description: "Villa moderne avec piscine privée, jardin luxuriant et 4 chambres spacieuses. Idéale pour les familles.",
+                longDescription: "Villa moderne avec piscine privée et jardin luxuriant. 4 chambres spacieuses, salon avec vue sur la montagne, cuisine entièrement équipée. Idéale pour des vacances en famille ou entre amis dans un cadre calme et verdoyant.",
                 price: 22000,
                 type: 'villa',
                 capacity: 8,
                 bedrooms: 4,
                 rating: 4.8,
                 popular: false,
-                ambiance: ['ðŸ”ï¸ Vue montagne', 'ðŸŒ³ Jardin', 'ðŸŠ Piscine'],
+                ambiance: ['🏔️ Vue montagne', '🌳 Jardin', '🏊 Piscine'],
                 features: [
                     { icon: "fa-bed", text: "4 chambres doubles" },
                     { icon: "fa-users", text: "8 personnes" },
-                    { icon: "fa-swimmer", text: "Piscine privÃ©e" },
+                    { icon: "fa-swimmer", text: "Piscine privée" },
                     { icon: "fa-wifi", text: "Wi-Fi" },
                     { icon: "fa-tree", text: "Jardin luxuriant" },
                     { icon: "fa-car", text: "Parking" }
@@ -1946,23 +1946,23 @@
             {
                 id: 'villa3',
                 title: "Villa Cap Carbon",
-                location: "Cap Carbon, BÃ©jaÃ¯a",
+                location: "Cap Carbon, Béjaïa",
                 description: "Villa de luxe avec vue imprenable sur la mer et les falaises. Piscine, 6 chambres et prestations haut de gamme.",
-                longDescription: "Villa de luxe avec vue imprenable sur la mer et les falaises. Piscine extÃ©rieure, salon panoramique, 6 chambres avec salles de bain privatives. DÃ©coration moderne et matÃ©riaux haut de gamme pour un sÃ©jour d'exception.",
+                longDescription: "Villa de luxe avec vue imprenable sur la mer et les falaises. Piscine extérieure, salon panoramique, 6 chambres avec salles de bain privatives. Décoration moderne et matériaux haut de gamme pour un séjour d'exception.",
                 price: 35000,
                 type: 'villa',
                 capacity: 12,
                 bedrooms: 6,
                 rating: 5.0,
                 popular: true,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸŠ Piscine', 'â­ Prestige'],
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '⭐ Prestige'],
                 features: [
                     { icon: "fa-bed", text: "6 chambres doubles" },
                     { icon: "fa-users", text: "12 personnes" },
                     { icon: "fa-swimmer", text: "Piscine" },
                     { icon: "fa-wifi", text: "Wi-Fi" },
                     { icon: "fa-eye", text: "Vue panoramique" },
-                    { icon: "fa-car", text: "Parking privÃ©" }
+                    { icon: "fa-car", text: "Parking privé" }
                 ],
                 images: [
                     "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200",
@@ -1974,22 +1974,22 @@
             {
                 id: 'villa4',
                 title: "Villa des Pins",
-                location: "Tichy, BÃ©jaÃ¯a",
-                description: "Villa traditionnelle avec jardin mÃ©diterranÃ©en, piscine et accÃ¨s direct Ã  la plage.",
-                longDescription: "Villa traditionnelle au charme authentique avec jardin mÃ©diterranÃ©en, piscine et accÃ¨s direct Ã  la plage. 3 chambres confortables, grande terrasse ombragÃ©e et cadre paisible pour des vacances en famille.",
+                location: "Tichy, Béjaïa",
+                description: "Villa traditionnelle avec jardin méditerranéen, piscine et accès direct à la plage.",
+                longDescription: "Villa traditionnelle au charme authentique avec jardin méditerranéen, piscine et accès direct à la plage. 3 chambres confortables, grande terrasse ombragée et cadre paisible pour des vacances en famille.",
                 price: 18000,
                 type: 'villa',
                 capacity: 6,
                 bedrooms: 3,
                 rating: 4.6,
                 popular: false,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸŒ³ Jardin', 'ðŸ–ï¸ Plage'],
+                ambiance: ['🌊 Vue mer', '🌳 Jardin', '🏖️ Plage'],
                 features: [
                     { icon: "fa-bed", text: "3 chambres" },
                     { icon: "fa-users", text: "6 personnes" },
                     { icon: "fa-swimmer", text: "Piscine" },
                     { icon: "fa-wifi", text: "Wi-Fi" },
-                    { icon: "fa-umbrella-beach", text: "AccÃ¨s plage" },
+                    { icon: "fa-umbrella-beach", text: "Accès plage" },
                     { icon: "fa-tree", text: "Jardin" }
                 ],
                 images: [
@@ -2002,20 +2002,20 @@
             {
                 id: 'villa5',
                 title: "Villa Mediterraneo",
-                location: "Aiguades, BÃ©jaÃ¯a",
-                description: "Villa contemporaine avec vue mer, piscine Ã  dÃ©bordement et spa.",
-                longDescription: "Villa contemporaine avec vue mer, piscine Ã  dÃ©bordement et spa. 4 chambres de luxe, salle de sport, home cinÃ©ma et terrasse panoramique. Le summum du luxe et du confort.",
+                location: "Aiguades, Béjaïa",
+                description: "Villa contemporaine avec vue mer, piscine à débordement et spa.",
+                longDescription: "Villa contemporaine avec vue mer, piscine à débordement et spa. 4 chambres de luxe, salle de sport, home cinéma et terrasse panoramique. Le summum du luxe et du confort.",
                 price: 42000,
                 type: 'villa',
                 capacity: 8,
                 bedrooms: 4,
                 rating: 5.0,
                 popular: true,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸŠ Piscine', 'ðŸ’† Spa'],
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '💆 Spa'],
                 features: [
                     { icon: "fa-bed", text: "4 chambres luxe" },
                     { icon: "fa-users", text: "8 personnes" },
-                    { icon: "fa-swimmer", text: "Piscine dÃ©bordement" },
+                    { icon: "fa-swimmer", text: "Piscine débordement" },
                     { icon: "fa-spa", text: "Spa" },
                     { icon: "fa-dumbbell", text: "Salle de sport" },
                     { icon: "fa-wifi", text: "Wi-Fi" }
@@ -2030,16 +2030,16 @@
             {
                 id: 'villa6',
                 title: "Villa Bella Vista",
-                location: "Boulimat, BÃ©jaÃ¯a",
-                description: "Villa provenÃ§ale avec vue panoramique sur la baie de BÃ©jaÃ¯a.",
-                longDescription: "Villa provenÃ§ale avec vue panoramique sur la baie de BÃ©jaÃ¯a. 3 chambres, piscine, grand jardin et terrasses ombragÃ©es. L'endroit parfait pour se ressourcer en famille.",
+                location: "Boulimat, Béjaïa",
+                description: "Villa provençale avec vue panoramique sur la baie de Béjaïa.",
+                longDescription: "Villa provençale avec vue panoramique sur la baie de Béjaïa. 3 chambres, piscine, grand jardin et terrasses ombragées. L'endroit parfait pour se ressourcer en famille.",
                 price: 15000,
                 type: 'villa',
                 capacity: 6,
                 bedrooms: 3,
                 rating: 4.5,
                 popular: false,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸŒ³ Jardin', 'ðŸ· Charme'],
+                ambiance: ['🌊 Vue mer', '🌳 Jardin', '🍷 Charme'],
                 features: [
                     { icon: "fa-bed", text: "3 chambres" },
                     { icon: "fa-users", text: "6 personnes" },
@@ -2060,16 +2060,16 @@
             {
                 id: 'appart1',
                 title: "Appartement Vue Mer",
-                location: "Centre-ville, BÃ©jaÃ¯a",
-                description: "Appartement lumineux avec balcon vue mer, 2 chambres, cuisine Ã©quipÃ©e. IdÃ©al pour un sÃ©jour romantique.",
-                longDescription: "Appartement lumineux avec balcon vue mer, 2 chambres, cuisine Ã©quipÃ©e et salon confortable. IdÃ©al pour un sÃ©jour romantique ou en famille. SituÃ© en plein centre, proche de toutes les commoditÃ©s.",
+                location: "Centre-ville, Béjaïa",
+                description: "Appartement lumineux avec balcon vue mer, 2 chambres, cuisine équipée. Idéal pour un séjour romantique.",
+                longDescription: "Appartement lumineux avec balcon vue mer, 2 chambres, cuisine équipée et salon confortable. Idéal pour un séjour romantique ou en famille. Situé en plein centre, proche de toutes les commodités.",
                 price: 9500,
                 type: 'appartement',
                 capacity: 4,
                 bedrooms: 2,
                 rating: 4.7,
                 popular: false,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸ™ï¸ Centre-ville', 'ðŸŒ… Balcon'],
+                ambiance: ['🌊 Vue mer', '🏙️ Centre-ville', '🌅 Balcon'],
                 features: [
                     { icon: "fa-bed", text: "2 chambres" },
                     { icon: "fa-users", text: "4 personnes" },
@@ -2088,23 +2088,23 @@
             {
                 id: 'appart2',
                 title: "Le Corail",
-                location: "Port, BÃ©jaÃ¯a",
+                location: "Port, Béjaïa",
                 description: "Appartement design avec vue sur le port, 3 chambres et terrasse.",
-                longDescription: "Appartement design avec vue sur le port, 3 chambres et terrasse amÃ©nagÃ©e. DÃ©coration moderne, Ã©quipements haut de gamme et emplacement privilÃ©giÃ© en bord de mer.",
+                longDescription: "Appartement design avec vue sur le port, 3 chambres et terrasse aménagée. Décoration moderne, équipements haut de gamme et emplacement privilégié en bord de mer.",
                 price: 12000,
                 type: 'appartement',
                 capacity: 6,
                 bedrooms: 3,
                 rating: 4.8,
                 popular: true,
-                ambiance: ['ðŸŒŠ Vue port', 'â­ Design', 'ðŸŒ… Terrasse'],
+                ambiance: ['🌊 Vue port', '⭐ Design', '🌅 Terrasse'],
                 features: [
                     { icon: "fa-bed", text: "3 chambres" },
                     { icon: "fa-users", text: "6 personnes" },
                     { icon: "fa-terrace", text: "Terrasse" },
                     { icon: "fa-wifi", text: "Wi-Fi" },
                     { icon: "fa-snowflake", text: "Climatisation" },
-                    { icon: "fa-utensils", text: "Cuisine Ã©quipÃ©e" }
+                    { icon: "fa-utensils", text: "Cuisine équipée" }
                 ],
                 images: [
                     "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200",
@@ -2116,20 +2116,20 @@
             {
                 id: 'appart3',
                 title: "Les Terrasses de Tichy",
-                location: "Tichy, BÃ©jaÃ¯a",
-                description: "RÃ©sidence calme avec piscine, appartement 2 piÃ¨ces vue mer.",
-                longDescription: "RÃ©sidence calme avec piscine, appartement 2 piÃ¨ces vue mer. IdÃ©al pour un couple ou une petite famille. AccÃ¨s Ã  la piscine de la rÃ©sidence et Ã  la plage Ã  5 minutes Ã  pied.",
+                location: "Tichy, Béjaïa",
+                description: "Résidence calme avec piscine, appartement 2 pièces vue mer.",
+                longDescription: "Résidence calme avec piscine, appartement 2 pièces vue mer. Idéal pour un couple ou une petite famille. Accès à la piscine de la résidence et à la plage à 5 minutes à pied.",
                 price: 8000,
                 type: 'appartement',
                 capacity: 3,
                 bedrooms: 1,
                 rating: 4.5,
                 popular: false,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸŠ Piscine', 'ðŸŒ´ RÃ©sidence'],
+                ambiance: ['🌊 Vue mer', '🏊 Piscine', '🌴 Résidence'],
                 features: [
                     { icon: "fa-bed", text: "1 chambre + salon" },
                     { icon: "fa-users", text: "3 personnes" },
-                    { icon: "fa-swimmer", text: "Piscine rÃ©sidence" },
+                    { icon: "fa-swimmer", text: "Piscine résidence" },
                     { icon: "fa-wifi", text: "Wi-Fi" },
                     { icon: "fa-snowflake", text: "Climatisation" },
                     { icon: "fa-umbrella-beach", text: "Proche plage" }
@@ -2144,20 +2144,20 @@
             {
                 id: 'appart4',
                 title: "Le Penthouse",
-                location: "Centre-ville, BÃ©jaÃ¯a",
-                description: "Superbe penthouse avec terrasse panoramique et vue Ã  360Â° sur la baie.",
-                longDescription: "Superbe penthouse avec terrasse panoramique de 80mÂ² et vue Ã  360Â° sur la baie de BÃ©jaÃ¯a. 3 chambres, salon luxueux, cuisine amÃ©ricaine haut de gamme. L'appartement le plus exclusif du centre-ville.",
+                location: "Centre-ville, Béjaïa",
+                description: "Superbe penthouse avec terrasse panoramique et vue à 360° sur la baie.",
+                longDescription: "Superbe penthouse avec terrasse panoramique de 80m² et vue à 360° sur la baie de Béjaïa. 3 chambres, salon luxueux, cuisine américaine haut de gamme. L'appartement le plus exclusif du centre-ville.",
                 price: 18000,
                 type: 'appartement',
                 capacity: 6,
                 bedrooms: 3,
                 rating: 5.0,
                 popular: true,
-                ambiance: ['ðŸŒŠ Vue mer', 'ðŸ™ï¸ Centre-ville', 'â­ Luxe', 'ðŸŒ… Terrasse'],
+                ambiance: ['🌊 Vue mer', '🏙️ Centre-ville', '⭐ Luxe', '🌅 Terrasse'],
                 features: [
                     { icon: "fa-bed", text: "3 chambres" },
                     { icon: "fa-users", text: "6 personnes" },
-                    { icon: "fa-terrace", text: "Terrasse 80mÂ²" },
+                    { icon: "fa-terrace", text: "Terrasse 80m²" },
                     { icon: "fa-wifi", text: "Wi-Fi" },
                     { icon: "fa-snowflake", text: "Climatisation centrale" },
                     { icon: "fa-eye", text: "Vue panoramique" }
@@ -2176,7 +2176,7 @@
         let currentImages = [];
         let filteredProperties = [...properties];
 
-        // CrÃ©er des particules pour le hero
+        // Créer des particules pour le hero
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             if (!particlesContainer) return;
@@ -2235,17 +2235,17 @@
                 });
             }
 
-            // Afficher les hÃ©bergements
+            // Afficher les hébergements
             displayProperties(properties);
             
-            // Initialiser les Ã©couteurs de filtres
+            // Initialiser les écouteurs de filtres
             initFilters();
             
-            // Initialiser les dates par dÃ©faut pour la rÃ©servation
+            // Initialiser les dates par défaut pour la réservation
             initBookingDates();
         });
 
-        // Afficher les hÃ©bergements avec animation
+        // Afficher les hébergements avec animation
         function displayProperties(propertiesToShow) {
             const grid = document.getElementById('hebergementGrid');
             grid.innerHTML = '';
@@ -2281,7 +2281,7 @@
                         <p class="card-description">${prop.description}</p>
                         <div class="card-footer">
                             <span class="card-price">${prop.price.toLocaleString()} DZD <small>/nuit</small></span>
-                            <button class="btn-small" onclick="openPropertyModal('${prop.id}')">DÃ©tails</button>
+                            <button class="btn-small" onclick="openPropertyModal('${prop.id}')">Détails</button>
                         </div>
                     </div>
                 `;
@@ -2290,7 +2290,7 @@
             });
             
             document.getElementById('resultsCount').textContent = 
-                `${propertiesToShow.length} hÃ©bergement${propertiesToShow.length > 1 ? 's' : ''} disponibles`;
+                `${propertiesToShow.length} hébergement${propertiesToShow.length > 1 ? 's' : ''} disponibles`;
         }
 
         // Initialiser les filtres
@@ -2352,7 +2352,7 @@
             }, 300);
         }
 
-        // Ouvrir la modale d'un hÃ©bergement
+        // Ouvrir la modale d'un hébergement
         function openPropertyModal(propertyId) {
             const property = properties.find(p => p.id === propertyId);
             if (!property) return;
@@ -2368,17 +2368,17 @@
             document.getElementById('modalDescription').textContent = property.longDescription;
             document.getElementById('modalPrice').innerHTML = `${property.price.toLocaleString()} DZD <small>/ nuit</small>`;
             
-            // DisponibilitÃ© alÃ©atoire pour l'exemple
+            // Disponibilité aléatoire pour l'exemple
             const available = Math.random() > 0.3;
             document.getElementById('modalAvailability').innerHTML = available ? 
                 '<i class="fas fa-check-circle"></i> Disponible pour vos dates' : 
-                '<i class="fas fa-exclamation-circle"></i> DerniÃ¨res disponibilitÃ©s';
+                '<i class="fas fa-exclamation-circle"></i> Dernières disponibilités';
             document.getElementById('modalAvailability').style.background = available ? 
                 'linear-gradient(135deg, #e8f5e9, #c8e6c9)' : 
                 'linear-gradient(135deg, #fff3e0, #ffe0b2)';
             document.getElementById('modalAvailability').style.color = available ? '#2e7d32' : '#bf360c';
             
-            // CaractÃ©ristiques
+            // Caractéristiques
             const featuresContainer = document.getElementById('modalFeatures');
             featuresContainer.innerHTML = '';
             property.features.forEach(feature => {
@@ -2403,7 +2403,7 @@
             // Image principale
             setMainMedia(0);
             
-            // HÃ©bergements similaires
+            // Hébergements similaires
             const similar = properties
                 .filter(p => p.type === property.type && p.id !== property.id)
                 .slice(0, 3);
@@ -2443,7 +2443,7 @@
             document.getElementById('modalMainMedia').innerHTML = `<img src="${src}" alt="">`;
         }
 
-        // Initialiser les dates pour la rÃ©servation
+        // Initialiser les dates pour la réservation
         function initBookingDates() {
             const today = new Date();
             const tomorrow = new Date(today);
@@ -2485,7 +2485,7 @@
             return diffDays > 0 ? diffDays : 1;
         }
 
-        // Mettre Ã  jour le prix total
+        // Mettre à jour le prix total
         function updateTotalPrice() {
             if (!currentProperty) return;
             
@@ -2498,7 +2498,7 @@
                 const nights = calculateNights(checkIn, checkOut);
                 let total = currentProperty.price * nights;
                 
-                // SupplÃ©ment pour plus de personnes que la capacitÃ©
+                // Supplément pour plus de personnes que la capacité
                 const totalPeople = adults + children;
                 if (totalPeople > currentProperty.capacity) {
                     const extraPeople = totalPeople - currentProperty.capacity;
@@ -2510,14 +2510,14 @@
             }
         }
 
-        // Ouvrir la modale de rÃ©servation
+        // Ouvrir la modale de réservation
         function openBookingModal() {
             if (!currentProperty) return;
             
             const modal = document.getElementById('bookingModal');
-            document.getElementById('bookingTitle').textContent = `RÃ©server ${currentProperty.title}`;
+            document.getElementById('bookingTitle').textContent = `Réserver ${currentProperty.title}`;
             
-            // PrÃ©-remplir avec le nombre max de personnes
+            // Pré-remplir avec le nombre max de personnes
             const adultsSelect = document.getElementById('adults');
             for (let i = 0; i < adultsSelect.options.length; i++) {
                 const val = parseInt(adultsSelect.options[i].value);
@@ -2532,12 +2532,12 @@
             modal.classList.add('active');
         }
 
-        // Fermer la modale de rÃ©servation
+        // Fermer la modale de réservation
         function closeBookingModal() {
             document.getElementById('bookingModal').classList.remove('active');
         }
 
-        // GÃ©rer la soumission du formulaire de rÃ©servation
+        // Gérer la soumission du formulaire de réservation
         function handleBookingSubmit(event) {
             event.preventDefault();
             
@@ -2560,7 +2560,7 @@
             submitBtn.disabled = true;
             
             setTimeout(() => {
-                alert(`âœ… RÃ©servation confirmÃ©e !\n\nMerci ${formData.fullName},\nVotre rÃ©servation pour ${formData.property} a Ã©tÃ© enregistrÃ©e.\nUn email de confirmation a Ã©tÃ© envoyÃ© Ã  ${formData.email}\n\n${formData.total}`);
+                alert(`✅ Réservation confirmée !\n\nMerci ${formData.fullName},\nVotre réservation pour ${formData.property} a été enregistrée.\nUn email de confirmation a été envoyé à ${formData.email}\n\n${formData.total}`);
                 
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
@@ -2571,7 +2571,7 @@
             }, 1500);
         }
 
-        // Ã‰couteurs pour les modales
+        // Écouteurs pour les modales
         document.addEventListener('DOMContentLoaded', function() {
             // Fermeture des modales
             document.querySelector('.modal-close').addEventListener('click', () => {
@@ -2594,7 +2594,7 @@
                 }
             });
 
-            // Bouton de rÃ©servation dans la modale
+            // Bouton de réservation dans la modale
             document.getElementById('modalBookingBtn').addEventListener('click', () => {
                 openBookingModal();
             });
@@ -2602,5 +2602,6 @@
     </script>
 </body>
 </html>
+
 
 

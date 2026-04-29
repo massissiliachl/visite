@@ -163,3 +163,4 @@ NativeQuery.prototype.submit = function (client) {
     client.native.query(this.text, after)
   }
 }
+

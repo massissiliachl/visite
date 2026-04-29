@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ActivitÃ©s et Sorties - VisitBejaia</title>
+    <title>Activités et Sorties - VisitBejaia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -352,7 +352,7 @@
             to { transform: translateY(-10px); }
         }
 
-        /* ===== FILTRES ACTIVITÃ‰S ===== */
+        /* ===== FILTRES ACTIVITÉS ===== */
         .filters-section {
             padding: 3rem 20px 1rem;
             max-width: 1400px;
@@ -462,7 +462,7 @@
             to { opacity: 1; }
         }
 
-        /* ===== GRILLE ACTIVITÉS AMÉLIORÉE ===== */
+        /* ===== GRILLE ACTIVIT�S AM�LIOR�E ===== */
         .activities-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -735,7 +735,7 @@
             transform: rotate(360deg);
         }
 
-        /* ===== MODALE AMÃ‰LIORÃ‰E ===== */
+        /* ===== MODALE AMÉLIORÉE ===== */
         .reservation-modal {
             display: none;
             position: fixed;
@@ -1002,7 +1002,7 @@
             display: block;
         }
 
-        /* ===== FOOTER AMÃ‰LIORÃ‰ ===== */
+        /* ===== FOOTER AMÉLIORÉ ===== */
         .footer {
             background: linear-gradient(135deg, #1e3a35, #15312b);
             color: #e5ddd2;
@@ -1163,7 +1163,7 @@
             z-index: 2;
         }
 
-        /* ===== SCROLLBAR PERSONNALISÃ‰E ===== */
+        /* ===== SCROLLBAR PERSONNALISÉE ===== */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -1394,9 +1394,9 @@
     <section class="hero">
         <div class="particles" id="particles"></div>
         <div class="hero-content">
-            <h1>DÃ©couvrez BÃ©jaÃ¯a</h1>
+            <h1>Découvrez Béjaïa</h1>
             <p>Entre mer turquoise et falaises majestueuses</p>
-            <a href="#activites" class="btn">Explorer les activitÃ©s</a>
+            <a href="#activites" class="btn">Explorer les activités</a>
         </div>
         <div class="wave"></div>
     </section>
@@ -1415,14 +1415,14 @@
                     <i class="fas fa-hiking"></i> Terrestres
                 </button>
                 <button class="filter-btn" data-filter="aerien">
-                    <i class="fas fa-plane"></i> AÃ©riens
+                    <i class="fas fa-plane"></i> Aériens
                 </button>
             </div>
         </div>
-        <div class="results-count" id="resultsCount">8 activitÃ©s disponibles</div>
+        <div class="results-count" id="resultsCount">8 activités disponibles</div>
     </section>
 
-    <!-- ActivitÃ©s Grid -->
+    <!-- Activités Grid -->
     <div class="container" id="activites">
         <div class="activities-grid" id="activitiesGrid">
             <!-- Sortie en bateau -->
@@ -1439,55 +1439,55 @@
                         <span><i class="fas fa-water"></i> Nautique</span>
                     </div>
                     <p class="activity-description">
-                        Explorez les cÃ´tes magnifiques de BÃ©jaÃ¯a en bateau. Admirez les falaises, les grottes marines et dÃ©tendez-vous sur les plages isolÃ©es.
+                        Explorez les côtes magnifiques de Béjaïa en bateau. Admirez les falaises, les grottes marines et détendez-vous sur les plages isolées.
                     </p>
                     <div class="activity-price"><strong>5 000 DZD</strong> <small>par personne</small></div>
                     <button class="btn-reserve" onclick="openReservation('bateau', 'Sortie en Bateau', 5000)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
 
-            <!-- RandonnÃ©e Quad -->
+            <!-- Randonnée Quad -->
             <div class="activity-card" data-activity="quad" data-category="terrestre" id="quad">
                 <div class="activity-image">
-                    <img src="assets/images/quad.jpeg" alt="RandonnÃ©e quad">
+                    <img src="assets/images/quad.jpeg" alt="Randonnée quad">
                 </div>
                 <div class="activity-content">
-                    <h3 class="activity-title">RandonnÃ©e Quad</h3>
+                    <h3 class="activity-title">Randonnée Quad</h3>
                     <div class="activity-meta">
                         <span><i class="fas fa-clock"></i> 3h</span>
                         <span><i class="fas fa-users"></i> 1-4 pers.</span>
                         <span><i class="fas fa-mountain"></i> Terrestre</span>
                     </div>
                     <p class="activity-description">
-                        Vivez une aventure palpitante Ã  travers les sentiers montagneux. Guide expÃ©rimentÃ© inclus et Ã©quipement de sÃ©curitÃ© complet.
+                        Vivez une aventure palpitante à travers les sentiers montagneux. Guide expérimenté inclus et équipement de sécurité complet.
                     </p>
                     <div class="activity-price"><strong>6 500 DZD</strong> <small>par personne</small></div>
-                    <button class="btn-reserve" onclick="openReservation('quad', 'RandonnÃ©e Quad', 6500)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                    <button class="btn-reserve" onclick="openReservation('quad', 'Randonnée Quad', 6500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
 
-            <!-- RandonnÃ©e Cheval -->
+            <!-- Randonnée Cheval -->
             <div class="activity-card" data-activity="cheval" data-category="terrestre" id="cheval">
                 <div class="activity-image">
-                    <img src="assets/images/chev.jpg" alt="RandonnÃ©e cheval">
+                    <img src="assets/images/chev.jpg" alt="Randonnée cheval">
                 </div>
                 <div class="activity-content">
-                    <h3 class="activity-title">RandonnÃ©e Ã  Cheval</h3>
+                    <h3 class="activity-title">Randonnée à Cheval</h3>
                     <div class="activity-meta">
                         <span><i class="fas fa-clock"></i> 2h30</span>
                         <span><i class="fas fa-users"></i> 2-6 pers.</span>
                         <span><i class="fas fa-tree"></i> Terrestre</span>
                     </div>
                     <p class="activity-description">
-                        Parcourez les paysages pittoresques de BÃ©jaÃ¯a Ã  dos de cheval. ExpÃ©rience relaxante adaptÃ©e Ã  tous les niveaux.
+                        Parcourez les paysages pittoresques de Béjaïa à dos de cheval. Expérience relaxante adaptée à tous les niveaux.
                     </p>
                     <div class="activity-price"><strong>4 500 DZD</strong> <small>par personne</small></div>
-                    <button class="btn-reserve" onclick="openReservation('cheval', 'RandonnÃ©e Ã  Cheval', 4500)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                    <button class="btn-reserve" onclick="openReservation('cheval', 'Randonnée à Cheval', 4500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
@@ -1503,36 +1503,36 @@
                     <div class="activity-meta">
                         <span><i class="fas fa-clock"></i> 1h30</span>
                         <span><i class="fas fa-users"></i> 1-2 pers.</span>
-                        <span><i class="fas fa-cloud"></i> AÃ©rien</span>
+                        <span><i class="fas fa-cloud"></i> Aérien</span>
                     </div>
                     <p class="activity-description">
-                        Envolez-vous et survolez les cÃ´tes de BÃ©jaÃ¯a en parapente. Vues panoramiques spectaculaires et sensations fortes garanties.
+                        Envolez-vous et survolez les côtes de Béjaïa en parapente. Vues panoramiques spectaculaires et sensations fortes garanties.
                     </p>
                     <div class="activity-price"><strong>8 000 DZD</strong> <small>par personne</small></div>
                     <button class="btn-reserve" onclick="openReservation('vol', 'Vol en Parapente', 8000)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
 
-            <!-- PlongÃ©e sous-marine -->
+            <!-- Plongée sous-marine -->
             <div class="activity-card" data-activity="plongee" data-category="nautique" id="plongee">
                 <div class="activity-image">
-                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600" alt="PlongÃ©e sous-marine">
+                    <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600" alt="Plongée sous-marine">
                 </div>
                 <div class="activity-content">
-                    <h3 class="activity-title">PlongÃ©e Sous-Marine</h3>
+                    <h3 class="activity-title">Plongée Sous-Marine</h3>
                     <div class="activity-meta">
                         <span><i class="fas fa-clock"></i> 3h</span>
                         <span><i class="fas fa-users"></i> 2-4 pers.</span>
                         <span><i class="fas fa-fish"></i> Nautique</span>
                     </div>
                     <p class="activity-description">
-                        Explorez le monde sous-marin de la MÃ©diterranÃ©e. DÃ©couvrez la riche faune marine et des paysages sous-marins fascinants.
+                        Explorez le monde sous-marin de la Méditerranée. Découvrez la riche faune marine et des paysages sous-marins fascinants.
                     </p>
                     <div class="activity-price"><strong>7 500 DZD</strong> <small>par personne</small></div>
-                    <button class="btn-reserve" onclick="openReservation('plongee', 'PlongÃ©e Sous-Marine', 7500)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                    <button class="btn-reserve" onclick="openReservation('plongee', 'Plongée Sous-Marine', 7500)">
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
@@ -1547,14 +1547,14 @@
                     <div class="activity-meta">
                         <span><i class="fas fa-clock"></i> 2h</span>
                         <span><i class="fas fa-users"></i> 1-6 pers.</span>
-                        <span><i class="fas fa-bolt"></i> AÃ©rien</span>
+                        <span><i class="fas fa-bolt"></i> Aérien</span>
                     </div>
                     <p class="activity-description">
-                        Glissez Ã  travers les paysages de BÃ©jaÃ¯a en tyrolienne. Frissons garantis avec vue panoramique sur les montagnes et la mer.
+                        Glissez à travers les paysages de Béjaïa en tyrolienne. Frissons garantis avec vue panoramique sur les montagnes et la mer.
                     </p>
                     <div class="activity-price"><strong>5 500 DZD</strong> <small>par personne</small></div>
                     <button class="btn-reserve" onclick="openReservation('tyrolienne', 'Tyrolienne', 5500)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
@@ -1572,11 +1572,11 @@
                         <span><i class="fas fa-water"></i> Nautique</span>
                     </div>
                     <p class="activity-description">
-                        Glissez sur les eaux cristallines en paddle. DÃ©tente et sport nautique combinÃ©s pour une expÃ©rience inoubliable.
+                        Glissez sur les eaux cristallines en paddle. Détente et sport nautique combinés pour une expérience inoubliable.
                     </p>
                     <div class="activity-price"><strong>3 500 DZD</strong> <small>par personne</small></div>
                     <button class="btn-reserve" onclick="openReservation('paddle', 'Paddle', 3500)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
@@ -1595,24 +1595,24 @@
                         <span><i class="fas fa-water"></i> Nautique</span>
                     </div>
                     <p class="activity-description">
-                        Frissons garantis en jet ski le long des cÃ´tes spectaculaires de BÃ©jaÃ¯a avec Ã©quipement de sÃ©curitÃ© complet.
+                        Frissons garantis en jet ski le long des côtes spectaculaires de Béjaïa avec équipement de sécurité complet.
                     </p>
                     <div class="activity-price"><strong>8 500 DZD</strong> <small>par personne</small></div>
                     <button class="btn-reserve" onclick="openReservation('jetski', 'Jet Ski', 8500)">
-                        <i class="fas fa-calendar-check"></i> RÃ©server
+                        <i class="fas fa-calendar-check"></i> Réserver
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- RÃ©servation Modal -->
+    <!-- Réservation Modal -->
     <div class="reservation-modal" id="reservationModal">
         <div class="reservation-form">
             <button class="close-modal" onclick="closeReservation()">
                 <i class="fas fa-times"></i>
             </button>
-            <h2 id="modalTitle">RÃ©server une ActivitÃ©</h2>
+            <h2 id="modalTitle">Réserver une Activité</h2>
             <form id="reservationForm" onsubmit="submitReservation(event)">
                 <div class="form-group">
                     <label for="fullName">Nom Complet *</label>
@@ -1625,14 +1625,14 @@
                         <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">TÃ©lÃ©phone *</label>
+                        <label for="phone">Téléphone *</label>
                         <input type="tel" id="phone" name="phone" required>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="date">Date de la RÃ©servation *</label>
+                        <label for="date">Date de la Réservation *</label>
                         <input type="date" id="date" name="date" required>
                     </div>
                     <div class="form-group">
@@ -1642,16 +1642,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="specialRequests">Demandes SpÃ©ciales</label>
-                    <textarea id="specialRequests" name="specialRequests" class="textarea" placeholder="PrÃ©cisez vos besoins particuliers..."></textarea>
+                    <label for="specialRequests">Demandes Spéciales</label>
+                    <textarea id="specialRequests" name="specialRequests" class="textarea" placeholder="Précisez vos besoins particuliers..."></textarea>
                 </div>
 
                 <div class="total-price-container">
-                    <p>Prix total estimÃ©: <span id="totalPrice">0 DZD</span></p>
+                    <p>Prix total estimé: <span id="totalPrice">0 DZD</span></p>
                 </div>
 
                 <button type="submit" class="btn-submit">
-                    <i class="fas fa-check-circle"></i> Confirmer la RÃ©servation
+                    <i class="fas fa-check-circle"></i> Confirmer la Réservation
                 </button>
 
                 <div class="form-message" id="formMessage"></div>
@@ -1663,7 +1663,7 @@
 
       <script src="js/navbar.js"></script>\n    <script src="js/include-footer.js"></script>
     <script>
-        // CrÃ©er des particules pour le hero (uniquement Ã§a Ã  garder)
+        // Créer des particules pour le hero (uniquement ça à garder)
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             if (!particlesContainer) return;
@@ -1678,12 +1678,12 @@
             }
         }
 
-        // Appeler createParticles aprÃ¨s le chargement
+        // Appeler createParticles après le chargement
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
         });
 
-        // SystÃ¨me de filtres (que vous avez dÃ©jÃ  plus haut)
+        // Système de filtres (que vous avez déjà plus haut)
         const filterButtons = document.querySelectorAll('.filter-btn');
         const activityCards = document.querySelectorAll('.activity-card');
         const resultsCount = document.getElementById('resultsCount');
@@ -1709,7 +1709,7 @@
                     }
                 });
                 
-                resultsCount.textContent = `${visibleCount} activitÃ©${visibleCount > 1 ? 's' : ''} disponible${visibleCount > 1 ? 's' : ''}`;
+                resultsCount.textContent = `${visibleCount} activité${visibleCount > 1 ? 's' : ''} disponible${visibleCount > 1 ? 's' : ''}`;
             });
         });
 
@@ -1720,22 +1720,22 @@
             dateInput.min = today.toISOString().split('T')[0];
         }
 
-        // Script de rÃ©servation (Ã  garder tel quel)
+        // Script de réservation (à garder tel quel)
         let currentActivity = '';
         let currentPrice = 0;
         let currentActivityName = '';
 
         async function getBlockedDates(activityId) {
             try {
-                const res = await fetch(`https://visitebougi.onrender.com/availability/${encodeURIComponent(activityId)}`);
+                const res = await fetch(`https://visitebejai.onrender.com/availability/${encodeURIComponent(activityId)}`);
                 if (!res.ok) {
-                    console.warn("Impossible de charger les dates bloquÃ©es");
+                    console.warn("Impossible de charger les dates bloquées");
                     return [];
                 }
                 const dates = await res.json();
                 return dates;
             } catch (err) {
-                console.error("Erreur chargement dates bloquÃ©es:", err);
+                console.error("Erreur chargement dates bloquées:", err);
                 return [];
             }
         }
@@ -1777,7 +1777,7 @@
             currentActivityName = activityName;
             currentPrice = price;
 
-            document.getElementById('modalTitle').textContent = `RÃ©server : ${activityName}`;
+            document.getElementById('modalTitle').textContent = `Réserver : ${activityName}`;
             document.getElementById('reservationModal').classList.add('active');
             document.getElementById('participants').value = 1;
             updateTotalPrice();
@@ -1838,7 +1838,7 @@
             }
             if (!isValidPhone(phone)) {
                 messageEl.className = 'form-message error';
-                messageEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> TÃ©lÃ©phone invalide';
+                messageEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Téléphone invalide';
                 return;
             }
             if (fullName.length < 3) {
@@ -1864,7 +1864,7 @@
             };
 
             try {
-                const res = await fetch('https://visitebougi.onrender.com/reservations', {
+                const res = await fetch('https://visitebejai.onrender.com/reservations', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -1876,7 +1876,7 @@
                 }
 
                 messageEl.className = 'form-message success';
-                messageEl.innerHTML = '<i class="fas fa-check-circle"></i> RÃ©servation confirmÃ©e !';
+                messageEl.innerHTML = '<i class="fas fa-check-circle"></i> Réservation confirmée !';
                 
                 const submitBtn = document.querySelector('.btn-submit');
                 submitBtn.style.transform = 'scale(1.1)';
@@ -1900,5 +1900,6 @@
 </html>
 </body>
 </html>
+
 
 

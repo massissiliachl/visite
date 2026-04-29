@@ -10,3 +10,4 @@ sequelize.authenticate()
   .catch(err => console.error("Erreur connexion :", err));
 
 module.exports = sequelize;
+

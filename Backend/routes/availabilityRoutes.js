@@ -13,3 +13,4 @@ router.post('/block', blockedController.blockDate);
 router.delete('/block/:nom_item/:date', blockedController.unblockDate);
 
 module.exports = router;
+

@@ -318,7 +318,7 @@ if (ctx) {
 // Chargement des rÃ©servations
 async function loadReservations() {
   try {
-    const res = await fetch("https://visitebougi.onrender.com/reservations");
+    const res = await fetch("https://visitebejai.onrender.com/reservations");
     if (!res.ok) throw new Error(`Erreur ${res.status}`);
     const data = await res.json();
 
@@ -380,7 +380,7 @@ async function updateStatus(id, status) {
 
   const endpoint = status === 'acceptee' ? 'accept' : 'refuse';
   try {
-    const res = await fetch(`https://visitebougi.onrender.com/reservations/${id}/${endpoint}`, { method: "PUT" });
+    const res = await fetch(`https://visitebejai.onrender.com/reservations/${id}/${endpoint}`, { method: "PUT" });
     if (!res.ok) throw new Error(await res.text());
     loadReservations();
   } catch (err) {
@@ -394,7 +394,7 @@ let currentActivity = '';
 
 async function loadActivities() {
   try {
-    const res = await fetch("https://visitebougi.onrender.com/reservations");
+    const res = await fetch("https://visitebejai.onrender.com/reservations");
     const data = await res.json();
     const activities = [...new Set(data.map(r => r.nom_item).filter(Boolean))];
 
@@ -416,7 +416,7 @@ async function loadActivities() {
 async function loadBlockedDates(activity) {
   if (!activity) return [];
   try {
-    const res = await fetch(`https://visitebougi.onrender.com/availability/${encodeURIComponent(activity)}`);
+    const res = await fetch(`https://visitebejai.onrender.com/availability/${encodeURIComponent(activity)}`);
     if (!res.ok) return [];
     return await res.json(); // ex: ["2026-02-17", ...]
   } catch (err) {
@@ -453,7 +453,7 @@ async function initCalendar() {
         // DÃ©bloquer
         if (confirm(`DÃ©bloquer la date ${dateStr} pour ${currentActivity} ?`)) {
           try {
-            const res = await fetch(`https://visitebougi.onrender.com/availability/block/${encodeURIComponent(currentActivity)}/${dateStr}`, {
+            const res = await fetch(`https://visitebejai.onrender.com/availability/block/${encodeURIComponent(currentActivity)}/${dateStr}`, {
               method: 'DELETE'
             });
             if (res.ok) {
@@ -470,7 +470,7 @@ async function initCalendar() {
         // Bloquer
         if (confirm(`Bloquer la date ${dateStr} pour ${currentActivity} ?`)) {
           try {
-            const res = await fetch("https://visitebougi.onrender.com/availability/block", {
+            const res = await fetch("https://visitebejai.onrender.com/availability/block", {
               method: 'POST',
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -531,5 +531,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     <div data-include="footer"></div>
 </body>
 </html>
+
 
 

@@ -287,7 +287,7 @@ async function submitDestinationReservation(event) {
 
   // Envoyer au backend pour stockage dans la table Reservation
   try {
-    const resp = await fetch('https://visitebougi.onrender.com/reservations', {
+    const resp = await fetch('https://visitebejai.onrender.com/reservations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

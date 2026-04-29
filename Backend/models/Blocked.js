@@ -20,3 +20,4 @@ const Blocked = sequelize.define('Blocked', {
 });
 
 module.exports = Blocked;
+
