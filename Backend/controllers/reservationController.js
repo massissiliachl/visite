@@ -71,19 +71,26 @@ exports.createReservation = async (req, res) => {
     console.log("Données nettoyées:", cleanData);
 
     // Vérifier si la date est bloquée pour cette activité
-    if (cleanData.nom_item && cleanData.date_depart) {
-      const blocked = await Blocked.findOne({
-        where: {
-          nom_item: cleanData.nom_item,
-          date: cleanData.date_depart
-        }
-      });
-      if (blocked) {
-        return res.status(400).json({
-          message: `La date ${cleanData.date_depart} est bloquée pour l'activité ${cleanData.nom_item}. Veuillez choisir une autre date.`
-        });
-      }
-    }
+   // ➤ NORMALISATION DATE (IMPORTANT)
+const cleanDate = cleanData.date_depart
+? new Date(cleanData.date_depart).toISOString().split('T')[0]
+: null;
+
+// Vérifier si la date est bloquée pour cette activité
+if (cleanData.nom_item && cleanDate) {
+const blocked = await Blocked.findOne({
+  where: {
+    nom_item: cleanData.nom_item,
+    date: cleanDate
+  }
+});
+
+if (blocked) {
+  return res.status(400).json({
+    message: `La date ${cleanDate} est bloquée pour l'activité ${cleanData.nom_item}. Veuillez choisir une autre date.`
+  });
+}
+}
 
     const reservation = await Reservation.create(cleanData);
     
