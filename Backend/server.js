@@ -37,10 +37,12 @@ const transporter = nodemailer.createTransport({
 // EMAIL ROUTE
 // ============================
 app.post("/send-email", async (req, res) => {
+  console.log("BODY REÇU =", req.body); // 👈 IMPORTANT
   try {
     const { name, email, phone, message } = req.body;
 
     await transporter.sendMail({
+
       from: `"Visit Bejaia" <${process.env.EMAIL_USER}>`,
       to: process.env.EMAIL_USER, // 📩 toujours ton Gmail
       subject: "Nouveau message depuis VisitBejaia",
