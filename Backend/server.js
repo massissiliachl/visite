@@ -38,24 +38,27 @@ const transporter = nodemailer.createTransport({
 // ============================
 app.post("/send-email", async (req, res) => {
   try {
+    const { name, email, phone, message } = req.body;
+
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: req.body.to,
-      subject: req.body.subject,
+      from: `"Visit Bejaia" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER, // 📩 toujours ton Gmail
+      subject: "Nouveau message depuis VisitBejaia",
       html: `
-        <h2>Nouveau message VisitBejaia</h2>
-        <p><strong>Nom :</strong> ${req.body.name || "N/A"}</p>
-        <p><strong>Email :</strong> ${req.body.email || "N/A"}</p>
-        <p><strong>Téléphone :</strong> ${req.body.phone || "N/A"}</p>
+        <h2>📩 Nouveau message VisitBejaia</h2>
+        <p><strong>Nom :</strong> ${name}</p>
+        <p><strong>Email :</strong> ${email}</p>
+        <p><strong>Téléphone :</strong> ${phone || "N/A"}</p>
         <hr>
-        <p>${req.body.message}</p>
+        <p>${message}</p>
       `
     });
 
-    res.json({ message: "Email envoyé" });
+    return res.json({ success: true, message: "Email envoyé" });
+
   } catch (error) {
     console.error("Erreur email :", error);
-    res.status(500).json({ error: "Erreur email" });
+    return res.status(500).json({ success: false, error: "Erreur email" });
   }
 });
 
