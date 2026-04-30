@@ -24,9 +24,7 @@ app.use("/availability", availabilityRoutes);
 // MAIL CONFIG
 // ============================
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
@@ -37,30 +35,25 @@ const transporter = nodemailer.createTransport({
 // EMAIL ROUTE
 // ============================
 app.post("/send-email", async (req, res) => {
-  console.log("BODY REÇU =", req.body); // 👈 IMPORTANT
   try {
-    const { name, email, phone, message } = req.body;
-
     await transporter.sendMail({
-
-      from: `"Visit Bejaia" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER, // 📩 toujours ton Gmail
-      subject: "Nouveau message depuis VisitBejaia",
+      from: process.env.EMAIL_USER,
+      to: req.body.to,
+      subject: req.body.subject,
       html: `
-        <h2>📩 Nouveau message VisitBejaia</h2>
-        <p><strong>Nom :</strong> ${name}</p>
-        <p><strong>Email :</strong> ${email}</p>
-        <p><strong>Téléphone :</strong> ${phone || "N/A"}</p>
+        <h2>Nouveau message VisitBejaia</h2>
+        <p><strong>Nom :</strong> ${req.body.name || "N/A"}</p>
+        <p><strong>Email :</strong> ${req.body.email || "N/A"}</p>
+        <p><strong>Téléphone :</strong> ${req.body.phone || "N/A"}</p>
         <hr>
-        <p>${message}</p>
+        <p>${req.body.message}</p>
       `
     });
 
-    return res.json({ success: true, message: "Email envoyé" });
-
+    res.json({ message: "Email envoyé" });
   } catch (error) {
     console.error("Erreur email :", error);
-    return res.status(500).json({ success: false, error: "Erreur email" });
+    res.status(500).json({ error: "Erreur email" });
   }
 });
 
