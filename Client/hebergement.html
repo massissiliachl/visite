@@ -1209,7 +1209,7 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
     console.log("Données envoyées :", data);
 
     try {
-        const res = await fetch("http://localhost:3000/api/property-reservations", {
+        const res = await fetch("https://visitebejai.onrender.com/api/property-reservations", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
