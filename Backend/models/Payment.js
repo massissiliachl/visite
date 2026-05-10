@@ -1,6 +1,6 @@
 // models/Payment.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db'); // adapte le chemin selon ta structure
+const sequelize = require("./database");// adapte le chemin selon ta structure
 
 const Payment = sequelize.define('Payment', {
   // DÉFINITION DES CHAMPS

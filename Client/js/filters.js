@@ -384,3 +384,5 @@ document.addEventListener('DOMContentLoaded', () => {
     window.advancedFilters = new AdvancedFilters();
     window.advancedFilters.filterResults();
 });
+
+

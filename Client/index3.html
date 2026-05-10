@@ -3226,7 +3226,7 @@ Message : ${document.getElementById("message").value}
                 `
             };
             try {
-                await fetch("https://visitebougi.onrender.com/send-email", {
+                await fetch("https://visitebejai.onrender.com/send-email", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
@@ -4025,7 +4025,7 @@ function updateTotal() {
         }
 
         async function sendReservation(payload) {
-            const API_URL = 'https://visitebougi.onrender.com/api/reservations';
+            const API_URL = 'https://visitebejai.onrender.com/api/reservations';
             console.log("Envoi à l'API:", payload);
             
             try {
@@ -4232,6 +4232,8 @@ if (currentAct.id === 'bateau' && boueeAdded) {
 </div>
 </body>
 </html>
+
+
 
 
 

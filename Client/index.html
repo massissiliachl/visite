@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisitBejaia - Éclat Méditerranéen</title>
+    <title>VisitBéjaïa - Éclat Méditerranéen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2704,7 +2704,9 @@
         <div class="particles" id="particles"></div>
         <div class="hero-content">
             <h1 class="hero-title">Béjaïa : Là où la montagne embrasse la mer</h1>
-            <p class="hero-description">Entre vestiges historiques et eaux cristallines, évadez-vous dans cette perle de la Méditerranée.</p>
+            <p class="hero-description">
+                Entre vestiges historiques et eaux cristallines, évadez-vous dans cette perle de la Méditerranée.
+            </p>
             <div class="hero-stats">
                 <span class="stat-badge">Déjà plus de 10 000 visiteurs cette saison</span>
             </div>
@@ -2715,21 +2717,18 @@
 <!-- Activités (avec carrousel auto-scroller) -->
  <div class="container">
         <div class="activities-header">
-            <h1><i class="fas fa-compass"></i> Nos Activités</h1>
+            <h1><i class="fas fa-compass"></i> Nos activités</h1>
             <p>Des expériences uniques à vivre à Béjaïa</p>
             <div class="section-divider"></div>
-        </div>
-
-        <div class="filter-section" id="filterSection">
-            <button class="filter-btn active" data-filter="all">✨ Toutes</button>
-            <button class="filter-btn" data-filter="mer">🌊 Nautiques</button>
-            <button class="filter-btn" data-filter="terre">⛰️ Terre & Sensations</button>
-            <button class="filter-btn" data-filter="culture">🏛️ Culture & Détente</button>
-        </div>
-
-        <div class="activities-grid" id="activitiesGrid"></div>
-    </div>
-
+            
+            <div class="filter-section" id="filterSection">
+                <button class="filter-btn active" data-filter="all">🌍 Toutes</button>
+                <button class="filter-btn" data-filter="mer">🌊 Nautiques</button>
+                <button class="filter-btn" data-filter="terre">🏞️ Terre & sensations</button>
+                <button class="filter-btn" data-filter="culture">🏛️ Culture & détente</button>
+            </div>
+            
+            <div class="activities-grid" id="activitiesGrid"></div>
     <a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <!-- Modal -->
@@ -2744,39 +2743,39 @@
             
             <!-- Options Quad -->
             <div id="quadOptions" class="options-modal" style="display: none;">
-                <label>⏱️ Choisissez votre formule :</label>
+                <label> Choisissez votre formule :</label>
                 <select id="quadSelect">
-                    <option value="3000">🏍️ 30 minutes - 3000 DA</option>
-                    <option value="4000">🏍️ 45 minutes - 4000 DA</option>
+                    <option value="3000">30 minutes - 3000 DA</option>
+                    <option value="4000">45 minutes - 4000 DA</option>
                 </select>
                 <div class="child-option">
                     <input type="checkbox" id="quadChild">
-                    <label>👶 Enfant derrière (+1000 DA)</label>
+                    <label>Enfant à l'arrière (+1000 DA)</label>
                 </div>
             </div>
 
             <!-- Options Parapente -->
             <div id="parapenteOptions" class="options-modal" style="display: none;">
-                <label>🎥 Choisissez votre formule vidéo :</label>
+                <label>Choisissez votre formule vidéo :</label>
                 <select id="parapenteSelect">
-                    <option value="6000">🎬 Vidéo GoPro 4K - 6000 DA</option>
-                    <option value="7000">🎬 Vidéo GoPro 5.3K - 7000 DA</option>
-                    <option value="8000">🎬 Vidéo Insta 360 - 8000 DA</option>
+                    <option value="6000">Vidéo GoPro 4K - 6000 DA</option>
+                    <option value="7000">Vidéo GoPro 5,3K - 7000 DA</option>
+                    <option value="8000">Vidéo Insta 360 - 8000 DA</option>
                 </select>
             </div>
 
             <!-- Options Jet Ski -->
             <div id="jetskiOptions" class="options-modal" style="display: none;">
-                <label>⏱️ Choisissez la durée :</label>
+                <label> Choisissez la durée :</label>
                 <select id="jetskiSelect">
-                    <option value="30000">🚤 1h00 - 30000 DA</option>
-                    <option value="40000">🚤 1h30 - 40000 DA</option>
+                    <option value="30000"> 1h00 - 30000 DA</option>
+                    <option value="40000"> 1h30 - 40000 DA</option>
                 </select>
             </div>
 
-            <!-- Options Bateau détaillées -->
+            <!-- Options bateau détaillées -->
             <div id="bateauOptions" class="options-modal" style="display: none;">
-                <label>⛵ Choisissez votre offre :</label>
+                <label>Choisissez votre offre :</label>
                 
                 <!-- Offre Découverte -->
                 <div class="bateau-offre">
@@ -2786,15 +2785,15 @@
                     <div class="bateau-capacite">
                         <label>
                             <input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5">
-                            ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
+                             Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
                         </label>
                         <label>
                             <input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7">
-                            ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
+                             Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
                         </label>
                         <label>
                             <input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9">
-                            ⚓ Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
+                            Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
                         </label>
                     </div>
                 </div>
@@ -2807,17 +2806,17 @@
                     <div class="bateau-capacite">
                         <label>
                             <input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5" data-bouee="true">
-                            ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
+                            Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
                         </label>
                         <label>
                             <input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7" data-bouee="false">
-                            ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
+                            Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
                         </label>
                     </div>
                     <div class="option-bouee" id="boueeOptionContainer" style="display: none;">
                         <label>
                             <input type="checkbox" id="boueeOption">
-                            🚤 + Bouée tractée (5000 DA supplémentaire)
+                             + Bouée tractée (5000 DA supplémentaire)
                         </label>
                     </div>
                 </div>
@@ -2830,20 +2829,20 @@
                     <div class="bateau-capacite">
                         <label>
                             <input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5">
-                            ⚓ Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
+                            Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
                         </label>
                         <label>
                             <input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7">
-                            ⚓ Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
+                            Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
                         </label>
                     </div>
                 </div>
             </div>
 
             <div class="form-group" id="fullNameGroup">
-                <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et Prénom)</span></label>
-                <input type="text" id="fullName" placeholder="Ex: Visit Bejaia" required>
-                <div class="error-message" id="fullNameError">⚠️ Veuillez entrer votre NOM et PRÉNOM (séparés par un espace)</div>
+                <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et prénom)</span></label>
+                <input type="text" id="fullName" placeholder="Ex: Visit Béjaïa" required>
+                <div class="error-message" id="fullNameError">❗ Veuillez entrer votre nom et prénom (séparés par un espace)</div>
             </div>
             <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
             <div class="form-group"><label>Téléphone *</label><input type="tel" id="phone" required></div>
@@ -2862,7 +2861,7 @@
             <div class="form-group bank-details" id="bankDetails">
                 <label>Coordonnées pour virement</label>
                 <div class="bank-detail-line"><strong>Code banque :</strong> 005</div>
-                <div class="bank-detail-line"><strong>N° de compte :</strong> 00133000011952  Clé RIB :</strong> 77  BDL</div>
+                <div class="bank-detail-line"><strong>N° de compte :</strong> 00133000011952  <strong>Clé RIB :</strong> 77  BDL</div>
                 <small>Envoyez le virement à ce compte et saisissez la référence de transaction ci-dessous.</small>
             </div>
             <div class="form-group"><label>Référence transaction</label>
@@ -2872,12 +2871,12 @@
                 <label>Preuve de paiement (capture ou scan) *</label>
                 <input type="file" id="paymentProof" accept="image/*" capture="environment">
                 <small style="display:block;margin-top:0.45rem;color:#4e655f;">
-                    Formats acceptés: JPG, PNG, WEBP (max 5 Mo)
+                    Formats acceptes: JPG, PNG, WEBP (max 5 Mo)
                 </small>
             </div>
             <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
-            <div class="price-summary"><strong>💰 Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>🔖 Acompte 30% : <span id="depositAmount">0 DA</span></small></div>
-            <button type="submit" class="btn-submit">✅ Confirmer la réservation</button>
+            <div class="price-summary"><strong>Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>Acompte 30 % : <span id="depositAmount">0 DA</span></small></div>
+            <button type="submit" class="btn-submit">Confirmer la réservation</button>
         </form>
     </div>
 </div>
@@ -2886,29 +2885,36 @@
 
 
   <!-- SECTION HÉBERGEMENT -->
-    <section id="hebergement" class="accommodation-section" style="padding: 5rem 0; background: #ffffff;">
-        <div class="container">
-            <h2 class="section-title">Hébergement de Charme</h2>
-            <p class="section-subtitle">Choisissez parmi des appartements, villas et riads soigneusement sélectionnés pour votre confort à Béjaïa.</p>
-            <div class="accommodation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                    <img src="assets/images/heber/chal2.jpeg" alt="Appartement Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                    <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Appartement Vue Mer</h3>
-                    <p style="margin: 0 0 1rem; color: #4e655f;">Confort moderne, balcon panoramique et accès direct à la plage.</p>
-                </article>
-                <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                    <img src="assets/images/heber/villa6.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                    <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Villa Familiale</h3>
-                    <p style="margin: 0 0 1rem; color: #4e655f;">Piscine privée, jardin ombragé et service personnalisé.</p>
-                </article>
-                <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                    <img src="assets/images/heber/villa2.jpeg" alt="Riad Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                    <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Villa Authentique</h3>
-                    <p style="margin: 0 0 1rem; color: #4e655f;">Ambiance traditionnelle, patio central et petit-déjeuner local offert.</p>
-                </article>
-            </div>
+  <section id="hebergement" class="accommodation-section" style="padding: 5rem 0; background: #ffffff;">
+    <div class="container">
+        <h2 class="section-title">Hébergement de charme</h2>
+        <p class="section-subtitle">
+            Choisissez parmi des appartements, villas et riads soigneusement sélectionnés pour votre confort à Béjaïa.
+        </p>
+
+        <div class="accommodation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+
+            <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                <img src="assets/images/heber/chal2.jpeg" alt="Appartement Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Appartement vue mer</h3>
+                <p style="margin: 0 0 1rem; color: #4e655f;">Confort moderne, balcon panoramique et accès direct à la plage.</p>
+            </article>
+
+            <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                <img src="assets/images/heber/villa6.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Villa familiale</h3>
+                <p style="margin: 0 0 1rem; color: #4e655f;">Piscine privée, jardin ombragé et service personnalisé.</p>
+            </article>
+
+            <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
+                <img src="assets/images/heber/villa2.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Villa authentique</h3>
+                <p style="margin: 0 0 1rem; color: #4e655f;">Ambiance traditionnelle, patio central et petit-déjeuner local offert.</p>
+            </article>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- MODALE POUR INCONTOURNABLES -->
     <div class="must-modal" id="mustModal">
@@ -2933,12 +2939,14 @@
         <div class="destination-simple-container">
             <h2 class="section-title">Incontournables</h2>
             <p class="section-subtitle">Découvrez nos destinations de rêve</p>
-            
+    
             <a href="destination.html" class="destination-simple-card">
-                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&q=80" alt="Destination de rêve" class="destination-simple-image">
+                <img src="assets/images/dj.jpeg" alt="Destination de rêve" class="destination-simple-image">
+                
                 <div class="destination-simple-overlay">
-                    <h3>Explorez le monde</h3>
+                    <h3>Explorez Bejaia</h3>
                     <p>Des voyages inoubliables vous attendent</p>
+                    
                     <div class="destination-simple-arrow">
                         <i class="fas fa-arrow-right"></i>
                     </div>
@@ -2946,7 +2954,6 @@
             </a>
         </div>
     </section>
-  
     <!-- Nos Atouts -->
     <section id="pourquoi" class="about-section">
         <div class="decor-dot"></div>
@@ -2955,33 +2962,38 @@
         <div class="decor-dot"></div>
         
         <div class="container">
-            <h2 class="section-title">Pourquoi Choisir VisitBejaia ?</h2>
+            <h2 class="section-title">Pourquoi choisir VisitBejaia ?</h2>
             <p class="section-subtitle">Des valeurs qui font la différence</p>
+        
             <div class="about-grid">
+        
                 <div class="about-item">
-                    <div class="about-icon">🏆</div>
-                    <h3>Service Premium</h3>
+                    <div class="about-icon">🌟</div>
+                    <h3>Service premium</h3>
                     <p>Expérience 5 étoiles garantie</p>
                 </div>
+        
                 <div class="about-item">
-                    <div class="about-icon">🛡️</div>
+                    <div class="about-icon">🕒</div>
                     <h3>Support 24/7</h3>
                     <p>Assistance permanente</p>
                 </div>
+        
                 <div class="about-item">
                     <div class="about-icon">✅</div>
                     <h3>Réservation garantie</h3>
                     <p>Confirmation immédiate</p>
                 </div>
+        
                 <div class="about-item">
-                    <div class="about-icon">🌍</div>
+                    <div class="about-icon">🏔️</div>
                     <h3>Destinations uniques</h3>
                     <p>Experts locaux</p>
                 </div>
+        
             </div>
         </div>
-    </section>
-
+        </section>
     <!-- Instagram Feed -->
     <section class="instagram-section">
         <div class="container">
@@ -2990,7 +3002,7 @@
                 <div class="instagram-item" style="background-image: url('assets/images/jets.jpg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad.jpeg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad1.jpeg')"></div>
-                <div class="instagram-item" style="background-image: url('https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=400')"></div>
+                <div class="instagram-item" style="background-image: url('assets/images/dj.jpeg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad4.jpeg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/vol\ parapente.jpg')"></div>
                 <div class="instagram-item" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400')"></div>
@@ -3004,25 +3016,30 @@
 
        <!-- À propos -->
 
-<section class="about-section">
+<section class="about-section" id="about-section">
     <div class="about-container">
         <!-- Bloc texte (GAUCHE) -->
         <div class="about-content" id="textContent">
-            <span class="badge">🌿 À propos de nous</span>
-<h2>On ne se contente pas de montrer Béjaïa.<br>On vous fait la vivre.</h2>
-           
-<p class="description">
-    Avec Visit Béjaïa, nous réunissons nature, aventure et culture pour vous faire découvrir les meilleures activités de la région.  
-    Chaque expérience est pensée pour vous offrir des moments uniques entre mer, montagne et patrimoine.
-</p>
-<ul class="features-list">
-    <li><span class="check-icon">✓</span> Explorez des activités uniques à Béjaïa</li>
-    <li><span class="check-icon">✓</span> Vivez des expériences inoubliables</li>
-    <li><span class="check-icon">✓</span> Découvrez la région comme un local</li>
-</ul>
-            <a href="#" class="btn-primary">Découvrir nos activités →</a>
+            <span class="badge">🌍 À propos de nous</span>
+        
+            <h2>
+                On ne se contente pas de montrer Béjaïa.<br>
+                On vous fait la vivre.
+            </h2>
+        
+            <p class="description">
+                Avec Visit Béjaïa, nous réunissons nature, aventure et culture pour vous faire découvrir les meilleures activités de la région.  
+                Chaque expérience est pensée pour vous offrir des moments uniques entre mer, montagne et patrimoine.
+            </p>
+        
+            <ul class="features-list">
+                <li><span class="check-icon">✔</span> Explorez des activités uniques à Béjaïa</li>
+                <li><span class="check-icon">✔</span> Vivez des expériences inoubliables</li>
+                <li><span class="check-icon">✔</span> Découvrez la région comme un local</li>
+            </ul>
+        
+            <a href="#" class="btn-primary">Découvrir nos activités ✨</a>
         </div>
-
         <!-- Bloc carrousel 3D (DROITE) -->
         <div class="about-media" id="mediaContent">
             <div class="carousel-3d" id="carousel3d">
@@ -3040,17 +3057,18 @@
                 </div>
             </div>
             <div class="carousel-nav">
-                <button class="nav-btn" id="prevBtn">←</button>
+                <button class="nav-btn" id="prevBtn">?</button>
                 <div class="dots" id="dots"></div>
-                <button class="nav-btn" id="nextBtn">→</button>
+                <button class="nav-btn" id="nextBtn">?</button>
             </div>
           <div class="floating-card">
     <div class="floating-number">+50</div>
-    <div class="stat-label">Lieux<br>à découvrir</div>
+    <div class="stat-label">Lieux<br>a decouvrir</div>
 </div>
         </div>
     </div>
 </section>
+    <!-- Contact -->
     <!-- Contact -->
     <section id="contact" class="contact">
         <div class="container">
@@ -3062,21 +3080,21 @@
                         <div class="info-icon">📍</div>
                         <div>
                             <h4>Adresse</h4>
-                            <p>Route de l'Université, Targa Ouzemour, 06000(Roussel, en face portail OPOW ), Bejaia, Algérie</p>
+                            <p>123 Avenue de la Mer, Bejaia, Algérie</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">📞</div>
                         <div>
                             <h4>Téléphone</h4>
-                            <p>00213557664089</p>
+                            <p>+213 555 123 456</p>
                         </div>
                     </div>
                     <div class="info-item">
                         <div class="info-icon">✉️</div>
                         <div>
                             <h4>Email</h4>
-                            <p>visit.bougie@gmail.com</p>
+                            <p>visitebejaia@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -3103,21 +3121,21 @@
     <div class="reservation-modal" id="destinationReservationModal">
         <div class="reservation-form">
             <button class="close-modal" onclick="closeDestinationReservation()"><i class="fas fa-times"></i></button>
-            <h2 id="destinationModalTitle">Réserver une Destination</h2>
+            <h2 id="destinationModalTitle">Réserver une destination</h2>
             <form id="destinationReservationForm" onsubmit="submitDestinationReservation(event)">
                 <div class="form-group"><label>Nom Complet *</label><input type="text" id="destFullName" required></div>
                 <div class="form-row">
                     <div class="form-group"><label>Email *</label><input type="email" id="destEmail" required></div>
-                    <div class="form-group"><label>Téléphone *</label><input type="tel" id="destPhone" required></div>
+                    <div class="form-group"><label>Telephone *</label><input type="tel" id="destPhone" required></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Date de Départ *</label><input type="date" id="destDate" required></div>
+                    <div class="form-group"><label>Date de départ *</label><input type="date" id="destDate" required></div>
                     <div class="form-group"><label>Participants *</label><input type="number" id="destParticipants" min="1" max="20" value="1" required></div>
                 </div>
-                <div class="form-group"><label>Type d'Hébergement</label><select id="destRegimen"><option value="demi-pension">Demi-Pension</option><option value="pension-complete">Pension Complète</option><option value="chambre-seule">Chambre Seule</option><option value="tout-inclus">Tout Inclus</option></select></div>
-                <div class="form-group"><label>Demandes Spéciales</label><textarea id="destRequests" class="textarea" placeholder="Vos souhaits et préférences..."></textarea></div>
-                <div style="background:#f4f0ea;padding:1.2rem;border-radius:60px;margin-bottom:2rem;text-align:center;"><p style="margin:0;font-weight:600;color:#1a3a6b;">Prix estimé: <span id="destTotalPrice">0 DZD</span></p></div>
-                <button type="submit" class="btn-submit"><i class="fas fa-check"></i> Confirmer la Réservation</button>
+                <div class="form-group"><label>Type d'hébergement</label><select id="destRegimen"><option value="demi-pension">Demi-pension</option><option value="pension-complete">Pension complète</option><option value="chambre-seule">Chambre seule</option><option value="tout-inclus">Tout inclus</option></select></div>
+                <div class="form-group"><label>Demandes spéciales</label><textarea id="destRequests" class="textarea" placeholder="Vos souhaits et préférences..."></textarea></div>
+                <div style="background:#f4f0ea;padding:1.2rem;border-radius:60px;margin-bottom:2rem;text-align:center;"><p style="margin:0;font-weight:600;color:#1a3a6b;">Prix estimé : <span id="destTotalPrice">0 DZD</span></p></div>
+                <button type="submit" class="btn-submit"><i class="fas fa-check"></i> Confirmer la réservation</button>
                 <div class="form-message" id="destFormMessage"></div>
             </form>
         </div>
@@ -3254,7 +3272,7 @@
     // carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
     // carousel.addEventListener('mouseleave', () => autoRotate = setInterval(nextSlide, 4000));
 // Email
-        document.getElementById("contactForm").addEventListener("submit", async function(e){
+document.getElementById("contactForm").addEventListener("submit", async function(e){
             e.preventDefault();
             const data = {
                 to: "visitebejaia@gmail.com",
@@ -3267,7 +3285,7 @@ Message : ${document.getElementById("message").value}
                 `
             };
             try {
-                await fetch("https://visitebougi.onrender.com/send-email", {
+                await fetch("https://visitebejai.onrender.com/send-email", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
@@ -3277,9 +3295,7 @@ Message : ${document.getElementById("message").value}
                 alert("Erreur envoi message");
             }
         });
-
-        // Créer des particules
-        function createParticles() {
+    function createParticles() {
             const particlesContainer = document.getElementById('particles');
             if (!particlesContainer) return;
             for (let i = 0; i < 50; i++) {
@@ -3352,7 +3368,7 @@ Message : ${document.getElementById("message").value}
             const mustSeeData = {
                 grotte: {
                     title: "Les grottes de la côte ouest",
-                    rating: "⭐ 4.8 (2,345 avis)",
+                    rating: "⭐ 4.8 (2 345 avis)",
                     description: "Explorez les magnifiques grottes marines de la côte ouest de Béjaïa.",
                     details: [
                         { icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" },
@@ -3366,7 +3382,7 @@ Message : ${document.getElementById("message").value}
                 },
                 ferme: {
                     title: "Découvrir la ferme Djerba",
-                    rating: "⭐ 4.8 (1,890 avis)",
+                    rating: "⭐ 4.8 (1 890 avis)",
                     description: "Immersion dans la vie rurale traditionnelle.",
                     details: [
                         { icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" },
@@ -3380,7 +3396,7 @@ Message : ${document.getElementById("message").value}
                 },
                 historique: {
                     title: "Visite des sites historiques",
-                    rating: "⭐ 4.9 (3,102 avis)",
+                    rating: "⭐ 4.9 (3 102 avis)",
                     description: "Plongez dans l'histoire riche de Béjaïa.",
                     details: [
                         { icon: "fa-clock", text: "Durée : 2 jours / 1 nuit" },
@@ -3395,7 +3411,7 @@ Message : ${document.getElementById("message").value}
                 },
                 vol: {
                     title: "Vol au-dessus de la Méditerranée",
-                    rating: "⭐ 4.7 (1,567 avis)",
+                    rating: "⭐ 4.7 (1 567 avis)",
                     description: "Expérience unique en parapente au-dessus des eaux turquoise.",
                     details: [
                         { icon: "fa-clock", text: "Durée : 1 journée" },
@@ -3409,7 +3425,7 @@ Message : ${document.getElementById("message").value}
                 },
                 "petite-casbah": {
                     title: "La petite Casbah de Béjaïa",
-                    rating: "⭐ 4.6 (2,001 avis)",
+                    rating: "⭐ 4.6 (2 001 avis)",
                     description: "Balade dans les ruelles pittoresques.",
                     details: [
                         { icon: "fa-clock", text: "Durée : 1 journée" },
@@ -3423,7 +3439,7 @@ Message : ${document.getElementById("message").value}
                 },
                 fort: {
                     title: "Fort Yemma Gouraya",
-                    rating: "⭐ 4.7 (2,890 avis)",
+                    rating: "⭐ 4.7 (2 890 avis)",
                     description: "Vue panoramique exceptionnelle sur la baie.",
                     details: [
                         { icon: "fa-clock", text: "Durée : 1 journée" },
@@ -3620,120 +3636,118 @@ Message : ${document.getElementById("message").value}
 const activitiesCatalog = [
     { 
         id: "visite", 
-        activityNote: [ 
-            "Le prix englobe que la visite guidée et non le transport.",
-            "Prix dégressif à partir de la deuxième personne."
-        ], 
-        name: "Visite Guidée", 
-        basePrice: 6000, 
-        category: "culture", 
-        icon: "fa-landmark", 
-        image: "assets/images/casbah.jpg", 
-        desc: "Partez à la découverte de Bejaia historique et nature à faire les plus beaux spots de bejaia de gouraya à la cascade en passant par la casbah, faites le tour avec un guide amoureux de la ville et connaisseur de tout les recoins et les histoires.", 
-        hasChild: false 
-    },
+        activityNote: [
+    "Le prix inclut uniquement la visite guidée et non le transport.",
+    "Prix dégressif à partir de la deuxième personne."
+],
+name: "Visite guidée",
+basePrice: 6000,
+category: "culture",
+icon: "fa-landmark",
+image: "assets/images/casbah.jpg",
+desc: "Partez à la découverte de Bejaïa entre histoire et nature. Visitez les plus beaux spots de Béjaïa, de Gouraya à la cascade, en passant par la Casbah. Profitez d’un tour guidé avec un guide passionné, amoureux de la ville et connaisseur de tous ses recoins et de ses histoires.",
+hasChild: false},
     { 
         id: "quad", 
         activityNote: [
-            "Baskets et lunettes recommandées",
-            "Casque quad fourni",
-            "1 adulte sur 1 quad et conduite à partir de 16 ans",
-            "Le guide se réserve le droit de vous reprendre le quad si vous respectez pas ces consignes sans être remboursé."
-        ], 
+    "Baskets et lunettes recommandées",
+    "Casque quad fourni",
+    "1 adulte par quad, conduite à partir de 16 ans",
+    "Le guide se réserve le droit de vous reprendre le quad si vous ne respectez pas ces consignes, sans remboursement."
+],
         name: "Randonnée Quad", 
         basePrice: 3000, 
         category: "terre", 
         icon: "fa-motorcycle", 
         image: "assets/images/quad.jpeg", 
-        desc: "Randonnée quad ( pas de course ) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. à partir de 13h30 sans réservation premier arrivé première sortie.", 
-        hasChild: true, 
+        desc: "Randonnée en quad (pas de course) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. À partir de 13h30, sans réservation : premier arrivé, premier sorti.",        hasChild: true, 
         childPrice: 1000, 
         options: [
             {label: "30 min", price: 3000},
-            {label: "45 min (Réservation & Paiement exigée)", price: 4000}
+            {label: "45 min (Réservation & paiement exigés)", price: 4000}
         ] 
     },
     { 
         id: "parapente", 
         activityNote: [
             "Moniteur diplômé et reconnu.",
-            "les vols se font en total sécurité.",
-            "moyens de sécurité fournis.",
-            "les vols peuvent être annulés à la dernière minute si les conditions changent.",
-            "les vols peuvent être annulés si vous êtes pas à l'écoute du moniteur."
+            "Les vols se déroulent en toute sécurité.",
+            "Équipement de sécurité fourni.",
+            "Les vols peuvent être annulés à la dernière minute si les conditions changent.",
+            "Les vols peuvent être annulés si vous n'écoutez pas le moniteur."
         ], 
         name: "Parapente", 
         basePrice: 6000, 
         category: "terre", 
         icon: "fa-parachute-box", 
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", 
-        desc: "envoyez vous en l'air avec un baptême en parapente sur le plus beau spot de vol en parapente d'algerie, avec un atterrissage sur la plage.", 
+        desc: "Envoyez-vous en l'air avec un baptême en parapente sur le plus beau spot de vol en Algérie, avec un atterrissage sur la plage.", 
         hasChild: false,
         options: [
-            {label: "avec vidéo go pro 4K", price: 6000},
-            {label: "avec vidéo go pro 5,3 K", price: 7000},
-            {label: "avec vidéo insta 360", price: 8000}
+            {label: "avec vidéo GoPro 4K", price: 6000},
+            {label: "avec vidéo GoPro 5,3K", price: 7000},
+            {label: "avec vidéo Insta 360", price: 8000}
         ]
     },
     { 
         id: "cheval", 
         activityNote: [
-            "la randonnées se font sur une colline sur un chemin forestier qui surplombe la mer et non sur une plage",
-            "les randonnées se font soit le matin ou en fin d'apres midi par respect a la santé de l'animal.",
-            "picnique interdit au sein de la ferme.",
-            "1 personne sur un cheval."
+            "Les randonnées se font sur une colline et un chemin forestier surplombant la mer, et non sur une plage.",
+            "Les randonnées se déroulent le matin ou en fin d'après-midi par respect pour la santé de l'animal.",
+            "Pique-nique interdit au sein de la ferme.",
+            "1 personne par cheval."
         ],
-        name: "Randonnée à Cheval", 
+        name: "Randonnée à cheval", 
         basePrice: 2500, 
         category: "terre", 
         icon: "fa-horse", 
         image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", 
-        desc: "Entre Le bleu de la Méditerranée et le vert du parc national de gouraya, laissez vous contemplez les beaux paysages de la kabyle à cheval pour une randonnée inoubliable d'environ 30 min.", 
+        desc: "Entre le bleu de la Méditerranée et le vert du parc national de Gouraya, laissez-vous contempler les beaux paysages de la Kabylie à cheval pour une randonnée inoubliable d'environ 30 min.", 
         hasChild: false 
     },
     { 
         id: "parasailing", 
         activityNote: [
-            "l'activité peut être annulé si changement de météo.",
-            "les réservations sont faite que pour les créneaux du matin, les après-midi premier arrivé premier sortie"
+            "L'activité peut être annulée en cas de changement de météo.",
+            "Les réservations se font pour les créneaux du matin ; l'après-midi, premier arrivé, premier servi."
         ],
         name: "Parasailing", 
         basePrice: 10000, 
         category: "mer", 
         icon: "fa-parachute-box", 
         image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", 
-        desc: "Pas besoin d'être un expert pour voler. Juste l'envie de voir l'hoRozon autrement. Le parachute ascensionnel : 100 % sensation, 0% d'effort, 1000 souvenirs inoubliables.", 
+        desc: "Pas besoin d'être un expert pour voler. Juste l'envie de voir l'horizon autrement. Le parachute ascensionnel : 100 % sensation, 0 % d'effort, 1000 souvenirs inoubliables.", 
         hasChild: false 
     },
     { 
         id: "bouee", 
         activityNote: [
-            "Réservation confirmé avec payement à l'avance.",
-            "Gilet fournis et obligatoire."
+            "Réservation confirmée avec paiement à l'avance.",
+            "Gilet fourni et obligatoire."
         ],
-        name: "Bouée Tractée", 
+        name: "Bouée tractée", 
         basePrice: 3000, 
         category: "mer", 
         icon: "fa-water", 
         image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", 
-        desc: "Pour un moment plein de souvenir et de fou rire offrez-vous l'activité plein de sensation et d'adrénaline en famille ou entre amis.", 
+        desc: "Pour un moment plein de souvenirs et de fous rires, offrez-vous une activité riche en sensations et en adrénaline en famille ou entre amis.", 
         hasChild: false 
     },
     { 
         id: "jetski", 
         activityNote: [
-            "Activité seulement en supplément de la sortie bateau.",
-            "pieces d'identité obligatoire en garantie de toute casse.",
-            "piece d'identité restituer si aucune casse ou paiement de casse du à la location.",
-            "aucun remboursement si arrêt de l'activité ou jet ski retourner",
-            "activité interdite à toute personne alcoolisé."
+            "Activité proposée uniquement en complément de la sortie bateau.",
+            "Pièce d'identité obligatoire en garantie en cas de casse.",
+            "Pièce d'identité restituée si aucune casse n'est constatée ou après paiement des réparations.",
+            "Aucun remboursement en cas d'arrêt de l'activité ou de retour du jet-ski.",
+            "Activité interdite à toute personne alcoolisée."
         ],
         name: "Jet Ski", 
         basePrice: 30000, 
         category: "mer", 
         icon: "fa-jet-fighter", 
         image: "assets/images/jetski.jpeg", 
-        desc: "Offrez vous le plein de sensations en totale liberté avec l'activité jet-ski.", 
+        desc: "Offrez-vous le plein de sensations en totale liberté avec l'activité jet-ski.", 
         hasChild: false,
         options: [
             {label: "1h00", price: 30000},
@@ -3750,12 +3764,12 @@ const activitiesCatalog = [
         category: "mer", 
         icon: "fa-ship", 
         image: "assets/images/i.jpeg", 
-        desc: "Circuit classique : île de nizla, grotte de la patte d'éléphant, grotte des pirates, pointe sainte Anne, cap carbon avec un arrêt de 15/20 min pour nager.", 
+        desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", 
         hasChild: false,
         options: [
             {label: "Offre découverte (1h30/2h) - Jusqu'à 5 pers", price: 20000},
-            {label: "Offre évasion (3h/3h30) + Brunch - Jusqu'à 5 pers", price: 35000},
-            {label: "Offre détente (4h30/5h) + Barbecue - Jusqu'à 5 pers", price: 55000}
+            {label: "Offre Évasion (3h/3h30) + brunch - Jusqu'à 5 pers", price: 35000},
+            {label: "Offre Détente (4h30/5h) + barbecue - Jusqu'à 5 pers", price: 55000}
         ]
     }
 ];
@@ -3810,7 +3824,7 @@ function openModal(id, name, price, hasChild, childPrice) {
     const activity = activitiesCatalog.find(a => a.id === id);
     currentActivityNotes = activity?.activityNote || [];
     
-    document.getElementById("modalTitle").innerHTML = `📅 Réserver · ${name}`;
+    document.getElementById("modalTitle").innerHTML = `Réserver ${name}`;
     
     // Masquer toutes les options
     document.getElementById("quadOptions").style.display = "none";
@@ -3891,7 +3905,7 @@ function displayRedNotesAtTop() {
             <div class="red-notes-list">
                 ${currentActivityNotes.map(note => `
                     <div class="red-note-item">
-                        <span class="red-big-dot">●</span>
+                        <span class="red-big-dot">?</span>
                         <span class="red-note-text">${note}</span>
                     </div>
                 `).join('')}
@@ -3935,7 +3949,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateTotal();
         }
     });
-    // ✅ ICI (en dehors du change)
+    // ? ICI (en dehors du change)
     document.getElementById("children")?.addEventListener("input", updateTotal);
     document.getElementById("adults")?.addEventListener("input", updateTotal);
 });
@@ -4006,7 +4020,7 @@ function updateTotal() {
     let adults = parseInt(document.getElementById("adults").value) || 1;
     let children = parseInt(document.getElementById("children").value) || 0;
 
-    let total = currentAct.pricePerAdult * adults; // ✅ correction ici
+    let total = currentAct.pricePerAdult * adults; // ? correction ici
 
     // enfants pour Quad
     if (currentAct.id === 'quad' && currentAct.hasChild) {
@@ -4094,7 +4108,7 @@ function updateTotal() {
         }
 
         async function sendReservation(payload) {
-            const API_URL = 'https://visitebougi.onrender.com/api/reservations';
+            const API_URL = 'https://visitebejai.onrender.com/api/reservations';
             console.log("Envoi à l'API:", payload);
             
             try {
@@ -4135,7 +4149,7 @@ function updateTotal() {
             document.getElementById("modalOverlay").classList.remove("active");
         }
 
-        // Événements
+        // événements
         document.getElementById("fullName").addEventListener("input", function(e) {
             const isValid = validateFullName(e.target.value);
             const group = document.getElementById("fullNameGroup");
@@ -4165,7 +4179,7 @@ function updateTotal() {
             const paymentProofFile = document.getElementById("paymentProof")?.files?.[0] || null;
 
             if (!validateFullName(fullName)) {
-                showToast("⚠️ Veuillez entrer votre NOM et PRÉNOM complets", "warning");
+                showToast("⚠️ Veuillez entrer votre nom et prénom complets", "warning");
                 return;
             }
 
@@ -4176,7 +4190,7 @@ function updateTotal() {
 
             // Vérifier si la date est bloquée
             try {
-                const blockedResponse = await fetch(`https://visitebougi.onrender.com/availability/${encodeURIComponent(currentAct.name)}`);
+                const blockedResponse = await fetch('https://visitebejai.onrender.com/availability/${encodeURIComponent(currentAct.name)}');
                 if (blockedResponse.ok) {
                     const blockedDates = await blockedResponse.json();
                     if (blockedDates.includes(date)) {
@@ -4198,7 +4212,7 @@ function updateTotal() {
             if (paymentProofFile) {
                 const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
                 if (!allowedTypes.includes(paymentProofFile.type)) {
-                    showToast("Format image non supporté (JPG, PNG, WEBP uniquement)", "error");
+                    showToast("Format image non supporte (JPG, PNG, WEBP uniquement)", "error");
                     return;
                 }
 
@@ -4228,24 +4242,24 @@ if (currentAct.id === 'bateau' && boueeAdded) {
             const paymentProofBase64 = paymentProofFile ? await fileToBase64(paymentProofFile) : null;
 
             if (payment === "PayPal") {
-                const message = `🏖️ *NOUVELLE RÉSERVATION PAYPAL - VISIT BEJAIA* 🏖️
+                const message = `✨ *NOUVELLE RÉSERVATION PAYPAL - VISIT BÉJAÏA* ✨
 
-👤 *Client:* ${nom} ${prenom}
-📧 *Email:* ${email}
-📱 *Téléphone:* ${phone}
+• *Client:* ${nom} ${prenom}
+• *Email:* ${email}
+• *Téléphone:* ${phone}
 
-🎯 *Activité:* ${currentAct.name}
-📅 *Date souhaitée:* ${date}
-👥 *Personnes:* ${adults + children} (${adults} adultes${children > 0 ? `, ${children} enfants` : ''})
+• *Activité:* ${currentAct.name}
+• *Date souhaitée:* ${date}
+• *Personnes:* ${adults + children} (${adults} adultes${children > 0 ? `, ${children} enfants` : ''})
 
-💰 *Montant total:* ${total.toLocaleString('fr-DZ')} DA
-💵 *Acompte 30%:* ${deposit.toLocaleString('fr-DZ')} DA
+• *Montant total:* ${total.toLocaleString('fr-DZ')} DA
+• *Acompte 30 %:* ${deposit.toLocaleString('fr-DZ')} DA
 
-💳 *Mode de paiement:* PAYPAL
+• *Mode de paiement:* PAYPAL
 
-📝 *Demandes spéciales:* ${special || 'Aucune'}
+• *Demandes spéciales:* ${special || 'Aucune'}
 
-⏰ *Réservation faite le:* ${new Date().toLocaleString('fr-FR')}`;
+• *Réservation faite le:* ${new Date().toLocaleString('fr-FR')}`;
 
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappNumber = "33619501708";
@@ -4287,7 +4301,7 @@ if (currentAct.id === 'bateau' && boueeAdded) {
                     const message = result.local ? 
                         "✅ Réservation sauvegardée localement" :
                         "✅ Réservation confirmée !";
-                    showToast(`${message} - Total: ${total.toLocaleString('fr-DZ')} DA`, "success");
+                    showToast(`${message} - Total : ${total.toLocaleString('fr-DZ')} DA`, "success");
                     
                     setTimeout(() => {
                         closeModal();
@@ -4303,7 +4317,7 @@ if (currentAct.id === 'bateau' && boueeAdded) {
             } catch (error) {
                 console.error("Erreur:", error);
                 setLoading(false);
-                showToast("❌ Erreur: " + error.message, "error");
+                showToast("? Erreur: " + error.message, "error");
             }
         });
 
@@ -4342,6 +4356,8 @@ if (currentAct.id === 'bateau' && boueeAdded) {
 </div>
 </body>
 </html>
+
+
 
 
 

@@ -12,3 +12,5 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(err => console.error('Échec chargement du footer :', err));
 });
+
+

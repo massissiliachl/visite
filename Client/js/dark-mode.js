@@ -190,3 +190,5 @@ document.head.appendChild(darkModeStyleSheet);
 document.addEventListener('DOMContentLoaded', () => {
     new DarkModeManager();
 });
+
+

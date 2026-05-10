@@ -222,3 +222,5 @@ document.head.appendChild(styleSheet);
 document.addEventListener('DOMContentLoaded', () => {
     shoppingCart.updateCartUI();
 });
+
+

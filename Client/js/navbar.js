@@ -154,3 +154,4 @@ window.speak("Bonjour et bienvenue. Nous sommes ravis de vous accompagner dans l
         });
     }
 }
+

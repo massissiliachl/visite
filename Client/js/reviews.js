@@ -605,3 +605,5 @@ document.addEventListener('DOMContentLoaded', () => {
         reviewsManager.renderReviewsSection('reviews-container');
     }
 });
+
+

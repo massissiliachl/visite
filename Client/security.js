@@ -371,3 +371,5 @@ class SimpleCaptcha {
     return parseInt(answer) === correctAnswer;
   }
 }
+
+

@@ -357,3 +357,5 @@ class ChatWidget {
 document.addEventListener('DOMContentLoaded', () => {
     window.chatWidget = new ChatWidget();
 });
+
+

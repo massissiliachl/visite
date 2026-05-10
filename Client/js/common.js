@@ -101,7 +101,7 @@ function validateFullName(fullName) {
 }
 
 async function sendReservation(payload) {
-    const API_URL = 'https://visitebougi.onrender.com/api/reservations';
+    const API_URL = 'https://visitebejai.onrender.com/api/reservations';
     console.log("Envoi à l'API:", payload);
     
     try {
@@ -277,3 +277,4 @@ function initFormEvents() {
     document.getElementById("children").addEventListener("input", updateTotal);
     document.getElementById("date").min = new Date().toISOString().split('T')[0];
 }
+

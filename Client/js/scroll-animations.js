@@ -134,3 +134,5 @@ if ('IntersectionObserver' in window) {
 }
 
 console.log('✨ Animations scroll chargées avec succès');
+
+

@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db'); // <-- modifié ici
+const sequelize = require("./database"); // <-- modifié ici
 
 const Blocked = sequelize.define('Blocked', {
   nom_item: { 

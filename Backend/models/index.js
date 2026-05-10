@@ -1,13 +1,21 @@
-const { Sequelize } = require('sequelize');
+const sequelize = require("./database");
+const Reservation = require("./Reservation");
+const Property = require("./Property");              // ✅ Doit être présent
+const PropertyReservation = require("./PropertyReservation"); // ✅ Doit être présent
 
-const sequelize = new Sequelize('visitbejaia', 'postgres', 'massissilia06', {
-  host: 'localhost',
-  dialect: 'postgres',
+// Associations
+Property.hasMany(PropertyReservation, {
+  foreignKey: "propertyId",
+  onDelete: "CASCADE",
 });
 
-sequelize.authenticate()
-  .then(() => console.log("Connexion PostgreSQL réussie !"))
-  .catch(err => console.error("Erreur connexion :", err));
+PropertyReservation.belongsTo(Property, {
+  foreignKey: "propertyId",
+});
 
-module.exports = sequelize;
-
+module.exports = {
+  sequelize,
+  Reservation,
+  Property,           // ✅ Doit être exporté
+  PropertyReservation, // ✅ Doit être exporté
+};

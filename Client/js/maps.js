@@ -341,3 +341,5 @@ class InteractiveMapManager {
 document.addEventListener('DOMContentLoaded', () => {
     window.mapManager = new InteractiveMapManager();
 });
+
+

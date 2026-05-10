@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>VisitBéjaïa | Hébergements d'exception</title>
+    <title>VisitBejaia | Hebergements d'exception</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -239,7 +240,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            background: linear-gradient(135deg, rgba(15, 43, 61, 0.7), rgba(10, 31, 44, 0.8)), url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1600') center/cover no-repeat;
+            background: linear-gradient(135deg, rgba(15, 43, 61, 0.7), rgba(10, 31, 44, 0.8)), url('assets/images/chalet/chalet3.jpeg') center/cover no-repeat;
             background-blend-mode: overlay;
             background-attachment: fixed;
             border-radius: 0 0 4rem 4rem;
@@ -845,9 +846,9 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <span class="hero-badge"><i class="fas fa-star"></i> DESTINATION D'EXCEPTION</span>
-        <h1 class="hero-title">Séjours inoubliables à Béjaïa</h1>
-        <p class="hero-description">Villas de prestige, appartements avec vue mer et refuges authentiques pour des vacances méditerranéennes d'exception.</p>
-        <a href="#hebergements" class="hero-cta" id="scrollToHebergements">Découvrir <i class="fas fa-arrow-down"></i></a>
+        <h1 class="hero-title">Sejours inoubliables  Bejaia</h1>
+        <p class="hero-description">Villas de prestige, appartements avec vue mer et refuges authentiques pour des vacances mediterraniennes d'exception.</p>
+        <a href="#hebergements" class="hero-cta" id="scrollToHebergements">Decouvrir <i class="fas fa-arrow-down"></i></a>
     </div>
 </section>
 
@@ -869,7 +870,7 @@
             <select id="sortSelect" class="sort-select">
                 <option value="default">Trier par</option>
                 <option value="price-asc">Prix croissant</option>
-                <option value="price-desc">Prix décroissant</option>
+                <option value="price-desc">Prix decroissant</option>
             </select>
         </div>
     </div>
@@ -879,7 +880,6 @@
 <div class="container">
     <div class="hebergement-grid" id="hebergementGrid"></div>
 </div>
-
 <!-- Modal Hébergement -->
 <div class="modal-hebergement" id="hebergementModal">
     <div class="modal-content">
@@ -901,29 +901,74 @@
     </div>
 </div>
 
-<!-- Modal Réservation -->
+<!-- Modal Réservation avec tous les champs obligatoires -->
 <div class="booking-modal" id="bookingModal">
     <div class="booking-content" style="max-width: 550px; padding: 2rem;">
         <button class="booking-close"><i class="fas fa-times"></i></button>
         <h2 id="bookingTitle" style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem;">Confirmer votre séjour</h2>
         <form id="bookingForm">
             <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                <div style="flex: 1;"><label>Arrivée</label><input type="date" id="checkIn" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;"></div>
-                <div style="flex: 1;"><label>Départ</label><input type="date" id="checkOut" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;"></div>
+                <div style="flex: 1;">
+                    <label>Date d'arrivée <span style="color: red;">*</span></label>
+                    <input type="date" id="checkIn" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+                </div>
+                <div style="flex: 1;">
+                    <label>Date de départ <span style="color: red;">*</span></label>
+                    <input type="date" id="checkOut" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+                </div>
             </div>
+            
             <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                <div style="flex: 1;"><label>Adultes</label><select id="adults" style="width: 100%; padding: 0.7rem; border-radius: 12px;"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
-                <div style="flex: 1;"><label>Enfants</label><select id="children" style="width: 100%; padding: 0.7rem; border-radius: 12px;"><option>0</option><option>1</option><option>2</option></select></div>
+                <div style="flex: 1;">
+                    <label>Adultes <span style="color: red;">*</span></label>
+                    <select id="adults" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+                <div style="flex: 1;">
+                    <label>Enfants</label>
+                    <select id="children" style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
             </div>
-            <div style="margin-bottom: 1rem;"><label>Nom complet</label><input type="text" id="fullName" placeholder="Votre nom" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;"></div>
-            <div style="margin-bottom: 1rem;"><label>Email</label><input type="email" id="email" placeholder="email@exemple.com" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;"></div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label>Nom complet <span style="color: red;">*</span></label>
+                <input type="text" id="fullName" placeholder="Votre nom et prénom" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label>Prénom <span style="color: red;">*</span></label>
+                <input type="text" id="prenom" placeholder="Votre prénom" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label>Téléphone <span style="color: red;">*</span></label>
+                <input type="tel" id="telephone" placeholder="Votre numéro de téléphone" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+            </div>
+            
+            <div style="margin-bottom: 1rem;">
+                <label>Email <span style="color: red;">*</span></label>
+                <input type="email" id="email" placeholder="email@exemple.com" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+            </div>
+            
             <div id="totalPrice" style="font-size: 1.3rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem; text-align: center;"></div>
-            <button type="submit" style="width: 100%; background: var(--accent); padding: 1rem; border-radius: 60px; border: none; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition);"><i class="fas fa-check-circle"></i> Confirmer la réservation</button>
+            
+            <button type="submit" style="width: 100%; background: var(--accent); padding: 1rem; border-radius: 60px; border: none; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition);">
+                <i class="fas fa-check-circle"></i> Confirmer la réservation
+            </button>
         </form>
     </div>
 </div>
-
-
         
  <script src="js/navbar.js"></script>
 
@@ -933,10 +978,10 @@
     <script src="js/include-footer.js"></script>
 <script>
     const properties = [
-        { id: "v1", title: "Villa", location: "Tazeboucht, Béjaïa", description: "Chalet authentique au coeur d’une ferme sur les hauteurs de Tazeboucht, 3 chambres", longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht.1 chambre en lit double 2 chambres avec 2 lits 1 clic clac 1 place toilette et salle de bain kitchenette frigo ventilateur terasse avec table de pique nique vue degager sans vis a vis", price: 15000, type: "chalet", capacity: 10, rating: 4.9, popular: true, ambiance: ["🌊 Vue mer", "🏊 Piscine", "⭐ Luxe"], features: [{ icon: "fa-bed", text: "3 chambres" }, { icon: "fa-users", text: "10 pers" }, { icon: "fa-swimmer", text: "Piscine privée" }, { icon: "fa-wifi", text: "WiFi" }], images: ["assets/images/heber/villa6.jpeg", "assets/images/heber/villa3.jpeg", "assets/images/heber/villa2.jpeg","assets/images/heber/villa8.jpeg","assets/images/heber/villa1.jpeg"] },
-        { id: "v2", title: "Appartement t3 en duplex cosy", location: "entre Boulimat et Saket", description: "Duplex Familial Cosy avec Terrasse & Vue Mer – À seulement 5 minutes des plages, dans une résidence sécurisée idéale pour vos séjours en famille.", longDescription: "Appartement t3 en duplex cosyAppartement avec 2 chambre, une chambre lit double parentale, bien agencé, literie confortable, vue mer, une deuxième chambre avec 2 lit 1 place pour les enfants confortables, au niveaux supérieurs 3 lit pour les invités comme une sorte de loft.Cuisine très bien équipé Terrasse avec sa table et ses chaise pour manger en regardant la mer.Tout sa dans une résidence sécurisée en bord de mer entre boulimat et saket. À 5 min des plages", price: 22000, type: "appartement", capacity: 8, rating: 4.7, popular: false, ambiance: ["🌳 Jardin", "🏊 Piscine"], features: [{ icon: "fa-bed", text: "4 chambres" }, { icon: "fa-tree", text: "Jardin" }], images: ["assets/images/heber/chal1.jpeg", "assets/images/heber/chal2.jpeg","assets/images/heber/chal3.jpeg","assets/images/heber/chal4.jpeg","assets/images/heber/chal5.jpeg"] },
-        { id: "v3", title: "Villa Cap Carbon", location: "Cap Carbon", description: "Vue imprenable sur les falaises, 6 chambres", longDescription: "Piscine à débordement, hammam, vue panoramique sur la baie.", price: 35000, type: "villa", capacity: 12, rating: 5.0, popular: true, ambiance: ["🌊 Mer", "🏊 Piscine", "✨ Prestige"], features: [{ icon: "fa-eye", text: "Vue mer" }, { icon: "fa-hot-tub", text: "Spa" }], images: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO_E-RWL9ppT87d9rakdCW4yB2fDvCCszBV9mEdTbu&s", "https://cf.bstatic.com/xdata/images/hotel/max1024x768/315918665.jpg"] },
-        { id: "a4", title: "Le Penthouse", location: "Centre Béjaïa", description: "Terrasse 80m², vue 360°", longDescription: "Penthouse exclusif, 3 chambres, salle à manger panoramique.", price: 18000, type: "appartement", capacity: 6, rating: 4.9, popular: true, ambiance: ["🏙️ Vue 360°", "✨ Luxe"], features: [{ icon: "fa-crown", text: "Penthouse" }, { icon: "fa-champagne-glasses", text: "Bar" }], images: ["https://a0.muscache.com/im/pictures/1f0f4596-dacb-42fe-9811-70673828640f.jpg"] }
+        { id: "1", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht, 2 chambres", longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht.1 chambre en lit double 2 chambres avec 2 lits 1 clic clac 1 place toilette et salle de bain kitchenette frigo ventilateur terasse avec table de pique nique vue degager sans vis a vis", price: 25000, type: "chalet", capacity: 5, rating: 4.9, popular: true,  ambiance: ["Nature", "Calme", "Authentique"], features: [{ icon: "fa-bed", text: "2 chambres" }, { icon: "fa-users", text: "5 pers" }, { icon: "fa-swimmer", text: "Piscine privee" }, { icon: "fa-wifi", text: "WiFi" }], images: ["assets/images/chalet/c5.jpeg", "assets/images/chalet/chal1.jpeg","assets/images/chalet/chal2.jpeg","assets/images/chalet/chal3.jpeg","assets/images/chalet/chal4.jpeg","assets/images/chalet/chal5.jpeg"] },
+        { id: "2", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Duplex Familial Cosy avec Terrasse & Vue Mer seulement 5 minutes des plages, dans une residence securise ideale pour vos sejours en famille.", longDescription: "Appartement t3 en duplex cosyAppartement avec 2 chambre, une chambre lit double parentale, bien agence, literie confortable, vue mer, une deuxieme chambre avec 2 lit 1 place pour les enfants confortables, au niveaux superieurs 3 lit pour les invites comme une sorte de loft.Cuisine trois bien equipe Terrasse avec sa table et ses chaise pour manger en regardant la mer.Tout sa dans une residence securisee en bord de mer entre boulimat et saket.  5 min des plages", price: 30000, type: "chalet", capacity: 7, rating: 4.7, popular: false,  ambiance: ["Nature", "Calme", "Authentique"], features: [{ icon: "fa-bed", text: "3 chambres" }, { icon: "fa-tree", text: "Jardin" }], images: ["assets/images/chalet/chalet2.jpeg", "assets/images/chalet/chal6.jpeg","assets/images/chalet/chal7.jpeg","assets/images/chalet/chal8.jpeg","assets/images/chalet/chal9.jpeg"] },
+        { id: "3", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Vue imprenable sur les falaises, 4 chambres", longDescription: "Piscine  debordement, hammam, vue panoramique sur la baie.", price: 35000, capacity: 2, rating: 5.0, popular: true, features: [{ icon: "fa-eye", text: "Vue mer" }, { icon: "fa-hot-tub", text: "Spa" }], images: ["assets/images/chalet/chalet3.jpeg", "assets/images/chalet/z1.jpeg", "assets/images/chalet/z2.jpeg", "assets/images/chalet/z3.jpeg", "assets/images/chalet/z4.jpeg", "assets/images/chalet/z5.jpeg", "assets/images/chalet/z6.jpeg"] ,type: "chalet" , ambiance: ["Nature", "Calme", "Authentique"], },
+        { id: "4", title: "Villa", location: "Centre Bejaia", description: "Terrasse 80m, vue 360", longDescription: "Penthouse exclusif, 3 chambres, salle a manger panoramique.", price: 18000, type: "chalet", capacity: 6, rating: 4.9, popular: true, ambiance: [" Vue 360", " Luxe"], features: [{ icon: "fa-crown", text: "Penthouse" }, { icon: "fa-champagne-glasses", text: "Bar" }], images: ["https://a0.muscache.com/im/pictures/1f0f4596-dacb-42fe-9811-70673828640f.jpg"] }
     ];
 
     let currentProperty = null;
@@ -949,7 +994,7 @@
             const card = document.createElement('div');
             card.className = 'hebergement-card';
             card.style.animationDelay = `${idx * 0.05}s`;
-            const badge = p.popular ? '<div class="card-badge popular"><i class="fas fa-star"></i> Populaire</div>' : '<div class="card-badge">✨ Coup de cœur</div>';
+            const badge = p.popular ? '<div class="card-badge popular"><i class="fas fa-star"></i> Populaire</div>' : '<div class="card-badge"> Coup de coeur</div>';
             const ambianceTags = p.ambiance.map(a => `<span class="ambiance-tag">${a}</span>`).join('');
             card.innerHTML = `
                 ${badge}
@@ -962,7 +1007,7 @@
                     <p style="color: var(--gray); margin-bottom: 1rem;">${p.description}</p>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span class="card-price">${p.price.toLocaleString()} DZD <small style="font-size: 0.8rem;">/nuit</small></span>
-                        <button class="btn-details" data-id="${p.id}">Détails</button>
+                        <button class="btn-details" data-id="${p.id}">Details</button>
                     </div>
                 </div>
             `;
@@ -974,7 +1019,7 @@
                 openPropertyModal(btn.getAttribute('data-id'));
             });
         });
-        document.getElementById('resultsCount').innerHTML = `<i class="fas fa-building"></i> ${list.length} hébergement(s) exceptionnel(s) disponible(s)`;
+        document.getElementById('resultsCount').innerHTML = `<i class="fas fa-building"></i> ${list.length} h�bergement(s) exceptionnel(s) disponible(s)`;
     }
 
     function applyFilters() {
@@ -1053,15 +1098,25 @@
     }
 
     function updateTotalPrice() {
-        if (!currentProperty) return;
-        const checkIn = document.getElementById('checkIn').value;
-        const checkOut = document.getElementById('checkOut').value;
-        if (checkIn && checkOut) {
-            const nights = calculateNights(checkIn, checkOut);
-            const total = currentProperty.price * nights;
-            document.getElementById('totalPrice').innerHTML = `💰 Total: ${total.toLocaleString()} DZD (${nights} nuits)`;
+    if (!currentProperty) return;
+
+    const checkIn = document.getElementById('checkIn').value;
+    const checkOut = document.getElementById('checkOut').value;
+
+    if (checkIn && checkOut) {
+        const nights = calculateNights(checkIn, checkOut);
+
+        if (nights < 3) {
+            document.getElementById('totalPrice').innerHTML =
+                `⚠️ Minimum de réservation : <strong>3 nuits</strong>`;
+            return;
         }
+
+        const total = currentProperty.price * nights;
+        document.getElementById('totalPrice').innerHTML =
+            `💰 Total: ${total.toLocaleString()} DZD (${nights} nuits)`;
     }
+}
 
     function closeModals() {
         document.getElementById('hebergementModal')?.classList.remove('active');
@@ -1094,11 +1149,92 @@
             }
         });
         
-        document.getElementById('bookingForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert(`✨ Réservation confirmée pour ${currentProperty?.title}\nMerci ${document.getElementById('fullName').value}, un email de confirmation vous a été envoyé.`);
-            closeModals();
+       // Remplacer votre ancien event listener par celui-ci
+document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Récupérer les valeurs
+    const date_arrivee = document.getElementById('checkIn').value;
+    const date_depart = document.getElementById('checkOut').value;
+    const nom = document.getElementById('fullName').value;
+    const prenom = document.getElementById('prenom').value;
+    const telephone = document.getElementById('telephone').value;
+    const email = document.getElementById('email').value;
+    const adults = parseInt(document.getElementById('adults').value);
+    const children = parseInt(document.getElementById('children').value);
+    const nb_personnes = adults + children;
+
+    // Validation côté client
+    if (!date_arrivee || !date_depart) {
+        alert("Veuillez sélectionner les dates d'arrivée et de départ");
+        return;
+    }
+
+    if (!nom || !prenom || !telephone || !email) {
+        alert("Veuillez remplir tous les champs obligatoires (*)");
+        return;
+    }
+
+    // Validation email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Veuillez entrer un email valide");
+        return;
+    }
+
+    // Validation téléphone (optionnel mais recommandé)
+    if (telephone.length < 8) {
+        alert("Veuillez entrer un numéro de téléphone valide");
+        return;
+    }
+
+    const nights = calculateNights(date_arrivee, date_depart);
+
+    if (nights < 3) {
+        alert("❌ La réservation minimum est de 3 nuits");
+        return;
+    }
+
+    const data = {
+        propertyId: currentProperty.id,
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        telephone: telephone,
+        date_arrivee: date_arrivee,
+        date_depart: date_depart,
+        nb_personnes: nb_personnes
+    };
+
+    console.log("Données envoyées :", data);
+
+    try {
+        const res = await fetch("http://localhost:3000/api/property-reservations", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
         });
+
+        const result = await res.json();
+
+        if (res.ok) {
+            alert("✅ Réservation confirmée avec succès !");
+            closeModals();
+            // Réinitialiser le formulaire
+            document.getElementById('bookingForm').reset();
+            // Réinitialiser les dates par défaut
+            initBookingDates();
+        } else {
+            alert("❌ Erreur: " + (result.message || result.error || "Erreur inconnue"));
+        }
+
+    } catch (err) {
+        console.error("Erreur:", err);
+        alert("❌ Erreur de connexion au serveur");
+    }
+});
         
         const hamburger = document.getElementById('hamburgerBtn');
         const navMenu = document.getElementById('navMenu');
@@ -1116,3 +1252,4 @@
 </script>
 </body>
 </html>
+

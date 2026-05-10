@@ -9,3 +9,4 @@ const activitiesCatalog = [
     { id: "jetski", name: "Jet Ski", basePrice: 30000, category: "mer", icon: "fa-jet-fighter", desc: "Sensations fortes en liberté (1h).", hasChild: false },
     { id: "bateau", name: "Excursion Bateau", basePrice: 20000, category: "mer", icon: "fa-ship", desc: "Découvrez île de Nizla, grotte des pirates.", hasChild: false }
 ];
+
