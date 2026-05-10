@@ -2,7 +2,6 @@
 const { PropertyReservation, Property } = require("../models");
 
 
-const { PropertyReservation, Property } = require("../models");
 
 /* =========================
    PHONE FORMAT
