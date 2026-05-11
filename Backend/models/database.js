@@ -1,13 +1,14 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize('visitbejaia', 'postgres', 'massissilia06', {
-  host: 'localhost',
-  dialect: 'postgres',
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  },
+  logging: false
 });
 
-sequelize.authenticate()
-  .then(() => console.log("Connexion PostgreSQL réussie !"))
-  .catch(err => console.error("Erreur connexion :", err));
-
 module.exports = sequelize;
-
