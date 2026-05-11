@@ -76,7 +76,7 @@ exports.createReservation = async (req, res) => {
     
     res.status(201).json({
       success: true,
-      message: "Réservation créée avec succès",
+      message: "Votre demande de réservation a été envoyée avec succès. Veuillez attendre la confirmation,merci",
       data: reservation
     });
     
