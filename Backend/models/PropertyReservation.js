@@ -46,7 +46,8 @@ const PropertyReservation = sequelize.define('PropertyReservation', {
   },
   prix_total: {
     type: DataTypes.FLOAT,
-    defaultValue: 0,
+    allowNull: false
+  
   },
   status: {
     type: DataTypes.STRING,

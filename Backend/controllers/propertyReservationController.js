@@ -1,164 +1,197 @@
 // controllers/propertyReservationController.js
 const { PropertyReservation, Property } = require("../models");
 
-
-
 /* =========================
    PHONE FORMAT
 ========================= */
 function formatPhone(phone) {
   if (!phone) return null;
-
   phone = phone.replace(/\s/g, "");
-
   if (phone.startsWith("0")) {
     return "213" + phone.substring(1);
   }
-
   if (phone.startsWith("+")) {
     return phone.replace("+", "");
   }
-
   return phone;
 }
 
 /* =========================
    WHATSAPP MESSAGE
 ========================= */
-function generateWhatsAppMessage(status) {
-  switch (status) {
-    case "acceptee":
-      return "Bonjour 👋, c'est Visit Bejaia. Votre demande de réservation a été acceptée ✅.";
-    case "refusee":
-      return "Bonjour 👋, c'est Visit Bejaia. Votre demande de réservation a été refusée ❌.";
-    default:
-      return "";
+function generateWhatsAppMessage(status, reservation) {
+  if (status === "acceptee") {
+    return `Bonjour 👋, c'est Visit Bejaia. Votre réservation pour ${reservation.nom} ${reservation.prenom} a été acceptée ✅. Montant total: ${reservation.prix_total} DZD.`;
   }
+  if (status === "refusee") {
+    return `Bonjour 👋, c'est Visit Bejaia. Votre réservation pour ${reservation.nom} ${reservation.prenom} a été refusée ❌.`;
+  }
+  return "";
 }
 
 /* =========================
    WHATSAPP LINK
 ========================= */
-function generateWhatsAppLink(phone, status) {
+function generateWhatsAppLink(phone, status, reservation) {
   const formattedPhone = formatPhone(phone);
-  const message = generateWhatsAppMessage(status);
-
+  const message = generateWhatsAppMessage(status, reservation);
   if (!formattedPhone || !message) return null;
-
   return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
 }
-// CREATE - Créer une réservation
+
+/* =========================
+   CREATE RESERVATION - CORRIGÉ
+========================= */
 exports.createReservation = async (req, res) => {
   try {
-    console.log("DATA REÇUE :", req.body);
-    
-    const { 
-      propertyId, 
-      nom, 
-      email, 
-      date_arrivee, 
-      date_depart, 
-      nb_personnes,
-      prenom,      // Optionnel
-      telephone    // Optionnel
-    } = req.body;
-    
-    const reservation = await PropertyReservation.create({
+    const {
       propertyId,
       nom,
-      prenom: prenom || null,     // Si non fourni, mettre null
       email,
-      telephone: telephone || null, // Si non fourni, mettre null
       date_arrivee,
       date_depart,
-      nb_personnes
+      nb_personnes,
+      prenom,
+      telephone
+    } = req.body;
+
+    console.log("🔍 Recherche propriété avec ID:", propertyId);
+
+    // RECHERCHE CORRIGÉE - propertyId est une string
+    const property = await Property.findByPk(propertyId.toString());
+
+    if (!property) {
+      console.error("❌ Propriété non trouvée pour ID:", propertyId);
+      return res.status(404).json({
+        success: false,
+        message: `Propriété introuvable avec l'ID: ${propertyId}`
+      });
+    }
+
+    console.log("✅ Propriété trouvée:", {
+      id: property.id,
+      title: property.title,
+      price: property.price,
+      priceType: typeof property.price
     });
+
+    // Récupérer le prix de la propriété
+    const price = Number(property.price);
     
-    res.status(201).json({
+    if (isNaN(price) || price <= 0) {
+      console.error("❌ Prix invalide:", property.price);
+      return res.status(400).json({
+        success: false,
+        message: "Prix de la propriété invalide"
+      });
+    }
+
+    // Calculer le nombre de nuits
+    const startDate = new Date(date_arrivee);
+    const endDate = new Date(date_depart);
+    const nights = Math.max(1, Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)));
+
+    console.log("📅 Calcul:", { startDate, endDate, nights });
+
+    if (nights < 3) {
+      return res.status(400).json({
+        success: false,
+        message: "Minimum 3 nuits de réservation"
+      });
+    }
+
+    // Calculer le prix total
+    const prix_total = price * nights;
+
+    console.log("💰 Calcul prix:", {
+      price,
+      nights,
+      prix_total
+    });
+
+    // Créer la réservation avec le prix total
+    const reservation = await PropertyReservation.create({
+      propertyId: propertyId.toString(),
+      nom,
+      prenom: prenom || null,
+      email,
+      telephone: telephone || null,
+      date_arrivee,
+      date_depart,
+      nb_personnes,
+      prix_total  // ✅ Maintenant correctement calculé
+    });
+
+    console.log("✅ Réservation créée:", {
+      id: reservation.id,
+      prix_total: reservation.prix_total
+    });
+
+    return res.status(201).json({
       success: true,
-      message: "Votre demande de réservation a été envoyée avec succès. Veuillez attendre la confirmation,merci",
-      data: reservation
+      data: reservation,
+      message: "Réservation créée avec succès"
     });
-    
+
   } catch (error) {
-    console.error("Erreur createReservation :", error);
-    res.status(500).json({
+    console.error("❌ Erreur createReservation:", error);
+    return res.status(500).json({
       success: false,
-      message: "Erreur lors de la création de la réservation",
-      error: error.message
+      message: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
 };
 
-// GET ALL - Récupérer toutes les réservations
+/* =========================
+   GET ALL
+========================= */
 exports.getAllReservations = async (req, res) => {
   try {
     const data = await PropertyReservation.findAll({
-      include: [
-        {
-          model: Property,
-          attributes: ['id', 'title', 'location', 'price', 'type'] // Sélectionnez les champs dont vous avez besoin
-        }
-      ],
+      include: [{ model: Property }],
       order: [["createdAt", "DESC"]],
     });
 
-    res.json({
-      success: true,
-      data: data
-    });
+    res.json({ success: true, data });
 
   } catch (err) {
     console.error("Erreur getAllReservations :", err);
-    res.status(500).json({ 
-      success: false, 
-      error: err.message 
-    });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
-// GET BY ID - Récupérer une réservation spécifique
+/* =========================
+   GET BY ID
+========================= */
 exports.getReservationById = async (req, res) => {
   try {
-    const { id } = req.params;
-    
-    const reservation = await PropertyReservation.findByPk(id, {
-      include: [
-        {
-          model: Property,
-          attributes: ['id', 'title', 'location', 'price', 'type', 'images']
-        }
-      ]
+    const reservation = await PropertyReservation.findByPk(req.params.id, {
+      include: [{ model: Property }]
     });
-    
+
     if (!reservation) {
       return res.status(404).json({
         success: false,
         message: "Réservation non trouvée"
       });
     }
-    
-    res.json({
-      success: true,
-      data: reservation
-    });
-    
+
+    res.json({ success: true, data: reservation });
+
   } catch (err) {
-    console.error("Erreur getReservationById :", err);
-    res.status(500).json({ 
-      success: false, 
-      error: err.message 
-    });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
-// controllers/propertyReservationController.js - Ajoutez cette fonction
+/* =========================
+   UPDATE STATUS - CORRIGÉ (ajout du prix dans le message)
+========================= */
 exports.updateStatus = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
-
-    const reservation = await PropertyReservation.findByPk(id);
+    const reservation = await PropertyReservation.findByPk(req.params.id, {
+      include: [{ model: Property }]
+    });
 
     if (!reservation) {
       return res.status(404).json({
@@ -167,116 +200,72 @@ exports.updateStatus = async (req, res) => {
       });
     }
 
-    await reservation.update({ status });
+    const oldStatus = reservation.status;
+    await reservation.update({ status: req.body.status });
 
-    // 🔥 WhatsApp link
+    // Générer le lien WhatsApp avec le prix total
     const whatsappLink = generateWhatsAppLink(
       reservation.telephone,
-      status
+      req.body.status,
+      reservation
     );
+
+    console.log(`📱 Statut mis à jour: ${oldStatus} → ${req.body.status}`);
+    console.log(`💰 Prix total: ${reservation.prix_total} DZD`);
 
     return res.json({
       success: true,
       message: "Statut mis à jour",
-      whatsappLink
+      whatsappLink,
+      data: reservation
     });
 
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      error: err.message
-    });
+    console.error("Erreur updateStatus:", err);
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
-// 🔥 METS CETTE FONCTION EN DEHORS (PAS DANS updateStatus)
-function generateWhatsAppLink(phone, status) {
-  const formattedPhone = formatPhone(phone);
-
-  let message = "";
-
-  if (status === "acceptee") {
-    message = "Bonjour 👋, c'est Visit Bejaia. Votre demande de réservation a été acceptée ✅.";
-  }
-
-  if (status === "refusee") {
-    message = "Bonjour 👋, c'est Visit Bejaia. Votre demande a été refusée ❌.";
-  }
-
-  return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
-}
-
-function generateWhatsAppLink(phone, status) {
-  const formattedPhone = formatPhone(phone);
-
-  let message = "";
-
-  if (status === "acceptee") {
-    message = "Bonjour 👋, c'est Visit Bejaia. Votre demande de réservation a été acceptée ✅.";
-  }
-
-  if (status === "refusee") {
-    message = "Bonjour 👋, c'est Visit Bejaia. Votre demande a été refusée ❌.";
-  }
-
-  return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
-}
-// DELETE - Supprimer une réservation
+/* =========================
+   DELETE
+========================= */
 exports.deleteReservation = async (req, res) => {
   try {
-    const { id } = req.params;
-    
-    const reservation = await PropertyReservation.findByPk(id);
-    
+    const reservation = await PropertyReservation.findByPk(req.params.id);
+
     if (!reservation) {
       return res.status(404).json({
         success: false,
         message: "Réservation non trouvée"
       });
     }
-    
+
     await reservation.destroy();
-    
+
     res.json({
       success: true,
       message: "Réservation supprimée avec succès"
     });
-    
+
   } catch (err) {
-    console.error("Erreur deleteReservation :", err);
-    res.status(500).json({ 
-      success: false, 
-      error: err.message 
-    });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
-// GET BY PROPERTY - Récupérer les réservations d'une propriété
+/* =========================
+   BY PROPERTY
+========================= */
 exports.getReservationsByProperty = async (req, res) => {
   try {
-    const { propertyId } = req.params;
-    
     const reservations = await PropertyReservation.findAll({
-      where: { propertyId: propertyId },
-      include: [
-        {
-          model: Property,
-          attributes: ['id', 'title', 'location']
-        }
-      ],
+      where: { propertyId: req.params.propertyId },
+      include: [{ model: Property }],
       order: [["date_arrivee", "ASC"]]
     });
-    
-    res.json({
-      success: true,
-      data: reservations
-    });
-    
+
+    res.json({ success: true, data: reservations });
+
   } catch (err) {
-    console.error("Erreur getReservationsByProperty :", err);
-    res.status(500).json({ 
-      success: false, 
-      error: err.message 
-    });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
