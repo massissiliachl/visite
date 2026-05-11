@@ -4,8 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 
-// ✅ IMPORT CORRECT - plus de "./indexe"
-const { sequelize, Reservation, Property, PropertyReservation } = require("./models");
+const { sequelize } = require("./models");
 
 const reservationRoutes = require("./routes/reservationRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
@@ -17,11 +16,17 @@ app.use(cors());
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 
+// ROUTES
 app.use("/api/reservations", reservationRoutes);
 app.use("/availability", availabilityRoutes);
 app.use("/api/property-reservations", propertyReservationRoutes);
 
-// MAIL
+// TEST ROUTE (IMPORTANT)
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API OK" });
+});
+
+// EMAIL
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -30,7 +35,6 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// EMAIL ROUTE
 app.post("/send-email", async (req, res) => {
   try {
     await transporter.sendMail({
@@ -38,39 +42,35 @@ app.post("/send-email", async (req, res) => {
       to: req.body.to,
       subject: req.body.subject,
       html: `
-        <h2>Nouveau message VisitBejaia</h2>
-        <p><strong>Nom :</strong> ${req.body.name || "N/A"}</p>
-        <p><strong>Email :</strong> ${req.body.email || "N/A"}</p>
-        <p><strong>Téléphone :</strong> ${req.body.phone || "N/A"}</p>
-        <hr>
+        <h2>Message VisitBejaia</h2>
         <p>${req.body.message}</p>
       `
     });
 
     res.json({ message: "Email envoyé" });
-
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Erreur email" });
+    res.status(500).json({ error: err.message });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 
+// START SERVER (UNE SEULE FOIS)
 async function startServer() {
   try {
-    await sequelize.authenticate();
-    console.log("✅ DB connectée");
+    console.log("DB connection...");
 
-    await sequelize.sync({ alter: true });
-    console.log("✅ Tables synchronisées");
+    await sequelize.authenticate();
+    console.log("DB OK");
+
+    await sequelize.sync();
 
     app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur port ${PORT}`);
+      console.log("Server started on port", PORT);
     });
 
   } catch (err) {
-    console.error("❌ Erreur startup:", err);
+    console.log("ERROR START:", err);
   }
 }
 
