@@ -1207,33 +1207,34 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
     };
 
     console.log("Données envoyées :", data);
-
+    console.log("URL appelée:", "https://visitebejai.onrender.com/api/property-reservations");
     try {
         const res = await fetch("https://visitebejai.onrender.com/api/property-reservations", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+});
 
-        const result = await res.json();
+    console.log("STATUS:", res.status);
 
-        if (res.ok) {
-            alert("✅ Réservation confirmée avec succès !");
-            closeModals();
-            // Réinitialiser le formulaire
-            document.getElementById('bookingForm').reset();
-            // Réinitialiser les dates par défaut
-            initBookingDates();
-        } else {
-            alert("❌ Erreur: " + (result.message || result.error || "Erreur inconnue"));
-        }
-
-    } catch (err) {
-        console.error("Erreur:", err);
-        alert("❌ Erreur de connexion au serveur");
+    // 🔥 IMPORTANT (évite ton erreur JSON)
+    if (!res.ok) {
+        const text = await res.text();
+        console.error("Réponse serveur:", text);
+        throw new Error("Erreur serveur");
     }
+
+    const result = await res.json();
+
+    alert("✅ Réservation confirmée !");
+    closeModals();
+
+} catch (err) {
+    console.error("Erreur:", err);
+    alert("❌ Erreur serveur ou URL incorrecte");
+}
 });
         
         const hamburger = document.getElementById('hamburgerBtn');
