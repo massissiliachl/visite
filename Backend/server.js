@@ -21,7 +21,6 @@ app.use("/api/reservations", reservationRoutes);
 app.use("/availability", availabilityRoutes);
 app.use("/api/property-reservations", propertyReservationRoutes);
 
-// TEST ROUTE (IMPORTANT)
 app.get("/api/test", (req, res) => {
   res.json({ message: "API OK" });
 });
@@ -41,10 +40,7 @@ app.post("/send-email", async (req, res) => {
       from: process.env.EMAIL_USER,
       to: req.body.to,
       subject: req.body.subject,
-      html: `
-        <h2>Message VisitBejaia</h2>
-        <p>${req.body.message}</p>
-      `
+      html: `<h2>Message VisitBejaia</h2><p>${req.body.message}</p>`
     });
 
     res.json({ message: "Email envoyé" });
@@ -55,7 +51,7 @@ app.post("/send-email", async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-// START SERVER (UNE SEULE FOIS)
+// ✅ START PROPRE
 async function startServer() {
   try {
     console.log("DB connection...");
@@ -63,6 +59,9 @@ async function startServer() {
     await sequelize.authenticate();
     console.log("DB OK");
 
+    // 🔥 IMPORTANT: sync AVANT server
+    await sequelize.sync({ alter: true });
+    console.log("Tables créées");
 
     app.listen(PORT, () => {
       console.log("Server started on port", PORT);
