@@ -5,7 +5,7 @@ const cors = require("cors");
 const nodemailer = require("nodemailer");
 
 const { sequelize } = require("./models");
-
+const adminRoutes = require("./routes/adminRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
 const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
@@ -27,24 +27,32 @@ app.get("/api/test", (req, res) => {
 
 // EMAIL
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true, // ✅ obligatoire
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   }
 });
-
+app.use("/api/admin", adminRoutes);
 app.post("/send-email", async (req, res) => {
   try {
-    await transporter.sendMail({
+    console.log("BODY:", req.body); // ✅ voir données
+
+    const info = await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: req.body.to,
       subject: req.body.subject,
       html: `<h2>Message VisitBejaia</h2><p>${req.body.message}</p>`
     });
 
+    console.log("EMAIL SENT:", info); // ✅ succès
+
     res.json({ message: "Email envoyé" });
+
   } catch (err) {
+    console.log("EMAIL ERROR:", err); // 🔥 très important
     res.status(500).json({ error: err.message });
   }
 });
