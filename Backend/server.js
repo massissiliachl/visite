@@ -12,7 +12,8 @@ const availabilityRoutes = require("./routes/availabilityRoutes");
 const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
 
 const app = express();
-
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
 app.use(cors());
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
@@ -36,10 +37,24 @@ console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Défini" : "MANQUANT");
 
 // Créer le transporteur email
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
+  },
+  pool: true,
+  maxConnections: 1,
+  maxMessages: 10,
+
+  // ⛔ IMPORTANT FIX TIMEOUT
+  connectionTimeout: 30000,
+  socketTimeout: 30000,
+  greetingTimeout: 30000,
+
+  tls: {
+    rejectUnauthorized: false
   }
 });
 // Vérifier la connexion email
@@ -50,7 +65,21 @@ transporter.verify((error, success) => {
     console.log("✅ Serveur email prêt");
   }
 });
+async function sendMailRetry(mailOptions, retries = 3) {
+  try {
+    return await transporter.sendMail(mailOptions);
+  } catch (err) {
+    console.log("❌ Email error:", err.message);
 
+    if (retries > 0) {
+      console.log("🔁 Retry email...");
+      await new Promise(r => setTimeout(r, 2000));
+      return sendMailRetry(mailOptions, retries - 1);
+    }
+
+    throw err;
+  }
+}
 // Endpoint d'envoi d'email
 app.post("/send-email", async (req, res) => {
   try {
