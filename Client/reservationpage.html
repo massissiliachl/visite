@@ -312,28 +312,110 @@ h2 {
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
+/* ========== STYLES POUR L'IMPRESSION ========== */
 @media print {
-    .form, .actions, header, .admin-panel, .edit-mode-indicator {
-        display: none;
+    .admin-panel,
+    .form,
+    .actions,
+    .edit-mode-indicator,
+    .info,
+    button:not(.no-print) {
+        display: none !important;
     }
+    
     body {
         background: white;
+        margin: 0;
+        padding: 0;
+        font-size: 14pt !important;
+    }
+    
+    .container {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+    
+    h1 {
+        font-size: 24pt !important;
+        margin-bottom: 20pt !important;
+        color: #0a2540 !important;
+    }
+    
+    h2 {
+        font-size: 20pt !important;
+        margin-top: 25pt !important;
+        margin-bottom: 15pt !important;
+        color: #0a2540 !important;
+        page-break-after: avoid;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15pt 0;
+        font-size: 12pt !important;
+        page-break-inside: avoid;
+    }
+    
+    th {
+        background: #0a2540 !important;
+        color: white !important;
+        padding: 10pt 8pt !important;
+        font-size: 13pt !important;
+        font-weight: bold;
+        text-align: center;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    td {
+        padding: 8pt 6pt !important;
+        border: 1px solid #ddd;
+        font-size: 11pt !important;
+        text-align: center;
+    }
+    
+    .schedule-table th {
+        background: #1b5e20 !important;
+    }
+    
+    .schedule-table td {
+        padding: 10pt 6pt !important;
+    }
+    
+    .time-slot {
+        font-weight: bold;
+        background: #f0f0f0 !important;
+        font-size: 12pt !important;
+    }
+    
+    .boat-reservation {
+        font-size: 10pt !important;
+        padding: 5pt;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+    
+    header {
+        background: white;
+        color: #0a2540;
+        padding: 10pt;
+        margin-bottom: 20pt;
+    }
+    
+    header h1 {
+        color: #0a2540 !important;
     }
 }
 
-@media (max-width: 768px) {
-    .form, .admin-controls {
-        flex-direction: column;
-    }
-    input, select, button {
-        width: 100%;
-    }
-    .schedule-table {
-        font-size: 11px;
-    }
-    .boat-cell {
-        min-width: 200px;
-    }
+.pdf-print {
+    background: white !important;
+    transform: scale(1);
+}
+
+.pdf-print .no-print {
+    display: none !important;
 }
 </style>
 </head>
@@ -349,7 +431,7 @@ h2 {
 <div class="info" id="clock"></div>
 
 <!-- ================= PANEL ADMIN POUR MODIFIER LES HORAIRES ================= -->
-<div class="admin-panel">
+<div class="admin-panel no-print">
     <h3>⚙️ Administration des créneaux horaires</h3>
     <div class="admin-controls">
         <div class="form-group">
@@ -360,16 +442,14 @@ h2 {
         <button onclick="enableDeleteMode()" id="deleteModeBtn" style="background:#dc3545;">🗑️ Supprimer un créneau</button>
         <button onclick="resetToDefaultSlots()" style="background:#ff9800;">🔄 Réinitialiser</button>
     </div>
-    <div class="slot-list" id="slotList">
-        <!-- Liste des créneaux affichée ici -->
-    </div>
+    <div class="slot-list" id="slotList"></div>
     <p style="font-size: 12px; color: #666; margin-top: 10px;">
         💡 Astuce: Cliquez sur un créneau pour le modifier | Mode suppression pour supprimer
     </p>
 </div>
 
 <!-- ================= FORM CLIENT ================= -->
-<div class="form">
+<div class="form no-print">
     <div class="form-group">
         <label>Nom</label>
         <input id="nom" placeholder="Nom">
@@ -405,27 +485,28 @@ h2 {
         <label>Date</label>
         <input id="date" type="date">
     </div>
-    <button onclick="add()">➕ Ajouter</button>
+    <button onclick="addReservation()">➕ Ajouter</button>
 </div>
 
 <!-- ================= ACTIONS ================= -->
-<div class="actions">
+<div class="actions no-print">
     <button onclick="pdf()">📄 PDF</button>
     <button onclick="printTable()">🖨️ Imprimer</button>
 </div>
 
 <!-- ================= TABLE CLIENT ================= -->
+<h2>📋 Liste des réservations clients</h2>
 <table id="table">
     <thead>
-        <tr><th>Nom</th><th>Prénom</th><th>Tél</th><th>Pers</th><th>Activité</th><th>Heure</th><th>Date</th><th>Action</th></tr>
+        <tr><th>ID</th><th>Nom</th><th>Prénom</th><th>Tél</th><th>Pers</th><th>Activité</th><th>Heure</th><th>Date</th><th>Action</th></tr>
     </thead>
     <tbody></tbody>
 </table>
 
-<!-- ================= BATEAU AVEC CRÉNEAUX DYNAMIQUES ET SOUS-CRÉNEAUX 30MIN ================= -->
+<!-- ================= BATEAU AVEC CRÉNEAUX DYNAMIQUES ================= -->
 <h2>🚤 Réservation Bateau - Créneaux de 30 minutes</h2>
 
-<div class="form">
+<div class="form no-print">
     <div class="form-group">
         <label>Nom</label>
         <input id="bnom" placeholder="Nom">
@@ -449,15 +530,11 @@ h2 {
     </div>
     <div class="form-group">
         <label>Créneau principal</label>
-        <select id="bslot">
-            <!-- Options générées dynamiquement -->
-        </select>
+        <select id="bslot"></select>
     </div>
     <div class="form-group">
         <label>Sous-créneau (30min)</label>
-        <select id="bsubslot">
-            <!-- Options générées dynamiquement -->
-        </select>
+        <select id="bsubslot"></select>
     </div>
     <div class="form-group">
         <label>Bateau</label>
@@ -472,33 +549,28 @@ h2 {
 <div class="schedule-container">
     <table class="schedule-table" id="boatTable">
         <thead id="boatTableHeader">
-            <tr>
-                <th>Créneau</th>
-                <th>Bateau 1</th>
-                <th>Bateau 2</th>
-            </tr>
+            <tr><th>Créneau</th><th>Bateau 1</th><th>Bateau 2</th></tr>
         </thead>
-        <tbody id="boatTableBody">
-            <!-- Les lignes seront générées dynamiquement -->
-        </tbody>
+        <tbody id="boatTableBody"></tbody>
     </table>
 </div>
 
 </div>
 
-<div class="edit-mode-indicator" id="editModeIndicator">
+<div class="edit-mode-indicator no-print" id="editModeIndicator">
     ✏️ Admin: Cliquez sur un créneau pour le modifier
 </div>
 
 <script>
 
-/* ================= GESTION DES CRÉNEAUX DYNAMIQUES ================= */
-// Créneaux par défaut
+// ================= CONFIGURATION API =================
+const API_BASE_URL = 'https://visitebejai.onrender.com/api/reservations-admin';
+
+// ================= GESTION DES CRÉNEAUX DYNAMIQUES =================
 let defaultSlots = ["09h-11h", "11h-13h", "13h-15h", "15h-17h", "17h-19h"];
 let timeSlots = JSON.parse(localStorage.getItem("timeSlots")) || [...defaultSlots];
 let deleteMode = false;
 
-// Générer les sous-créneaux de 30 minutes pour un créneau donné
 function generateSubSlots(slot) {
     let [start, end] = slot.split('-');
     let startHour = parseInt(start.replace('h', ''));
@@ -546,34 +618,17 @@ function updateSlotSelect() {
 function renderSlotList() {
     let container = document.getElementById("slotList");
     if (!container) return;
-    
-    container.innerHTML = `
-        <strong>📋 Créneaux existants (${timeSlots.length}):</strong><br>
-        ${timeSlots.map(slot => `
-            <span class="slot-tag ${deleteMode ? 'delete-mode' : ''}" onclick="${deleteMode ? `deleteSlot('${slot}')` : `editSlot('${slot}')`}">
-                ${slot} ${deleteMode ? '🗑️' : '✏️'}
-            </span>
-        `).join('')}
-    `;
+    container.innerHTML = `<strong>📋 Créneaux existants (${timeSlots.length}):</strong><br>` +
+        timeSlots.map(slot => `<span class="slot-tag ${deleteMode ? 'delete-mode' : ''}" onclick="${deleteMode ? `deleteSlot('${slot}')` : `editSlot('${slot}')`}">${slot} ${deleteMode ? '🗑️' : '✏️'}</span>`).join('');
 }
 
 function addTimeSlot() {
     let newSlot = document.getElementById("newSlot").value.trim();
-    
-    if (!newSlot) {
-        alert("Veuillez entrer un créneau (ex: 19h-21h)");
-        return;
-    }
-    
-    if (timeSlots.includes(newSlot)) {
-        alert("Ce créneau existe déjà !");
-        return;
-    }
-    
+    if (!newSlot) { alert("Veuillez entrer un créneau (ex: 19h-21h)"); return; }
+    if (timeSlots.includes(newSlot)) { alert("Ce créneau existe déjà !"); return; }
     timeSlots.push(newSlot);
     timeSlots.sort();
     saveSlots();
-    
     document.getElementById("newSlot").value = "";
     alert(`✅ Créneau "${newSlot}" ajouté avec succès !`);
 }
@@ -583,20 +638,14 @@ function editSlot(oldSlot) {
     if (newSlot && newSlot !== oldSlot) {
         let index = timeSlots.indexOf(oldSlot);
         if (index !== -1) {
-            if (timeSlots.includes(newSlot)) {
-                alert("Ce créneau existe déjà !");
-                return;
-            }
+            if (timeSlots.includes(newSlot)) { alert("Ce créneau existe déjà !"); return; }
             timeSlots[index] = newSlot;
-            
-            // Mettre à jour les réservations
             let boatData = JSON.parse(localStorage.getItem("boatData")) || {};
             if (boatData[oldSlot]) {
                 boatData[newSlot] = boatData[oldSlot];
                 delete boatData[oldSlot];
                 localStorage.setItem("boatData", JSON.stringify(boatData));
             }
-            
             saveSlots();
             renderBoat();
             alert(`✅ Créneau modifié en "${newSlot}"`);
@@ -605,18 +654,15 @@ function editSlot(oldSlot) {
 }
 
 function deleteSlot(slot) {
-    if (confirm(`Supprimer définitivement le créneau "${slot}" ?\nToutes les réservations associées seront perdues !`)) {
+    if (confirm(`Supprimer définitivement le créneau "${slot}" ?`)) {
         let index = timeSlots.indexOf(slot);
         if (index !== -1) {
             timeSlots.splice(index, 1);
-            
-            // Supprimer les réservations associées
             let boatData = JSON.parse(localStorage.getItem("boatData")) || {};
             if (boatData[slot]) {
                 delete boatData[slot];
                 localStorage.setItem("boatData", JSON.stringify(boatData));
             }
-            
             saveSlots();
             renderBoat();
             alert(`✅ Créneau "${slot}" supprimé`);
@@ -630,11 +676,7 @@ function enableDeleteMode() {
     renderSlotList();
     document.getElementById("deleteModeBtn").style.background = "#c82333";
     document.getElementById("deleteModeBtn").innerHTML = "❌ Annuler suppression";
-    setTimeout(() => {
-        if (deleteMode) {
-            alert("Mode suppression activé. Cliquez sur un créneau pour le supprimer.");
-        }
-    }, 100);
+    setTimeout(() => { if (deleteMode) alert("Mode suppression activé. Cliquez sur un créneau pour le supprimer."); }, 100);
 }
 
 function disableDeleteMode() {
@@ -645,56 +687,39 @@ function disableDeleteMode() {
 }
 
 function resetToDefaultSlots() {
-    if (confirm("⚠️ Réinitialiser tous les créneaux par défaut ?\nTous les créneaux personnalisés seront perdus !")) {
+    if (confirm("⚠️ Réinitialiser tous les créneaux par défaut ?")) {
         timeSlots = [...defaultSlots];
-        
-        // Réinitialiser les réservations
         let newBoatData = {};
-        timeSlots.forEach(slot => {
-            newBoatData[slot] = { "1": [], "2": [] };
-        });
+        timeSlots.forEach(slot => { newBoatData[slot] = { "1": [], "2": [] }; });
         localStorage.setItem("boatData", JSON.stringify(newBoatData));
-        
         saveSlots();
         renderBoat();
         alert("✅ Créneaux réinitialisés !");
     }
 }
 
-/* ================= PERSISTANCE ================= */
-let data = JSON.parse(localStorage.getItem("data")) || [];
+// ================= GESTION DES RÉSERVATIONS CLIENTS =================
+let reservationsData = [];
 
-// Structure pour les réservations bateau avec sous-créneaux
-let boatData = JSON.parse(localStorage.getItem("boatData")) || {};
-
-function initBoatStructure() {
-    let needsSave = false;
-    timeSlots.forEach(slot => {
-        if (!boatData[slot]) {
-            boatData[slot] = { "1": [], "2": [] };
-            needsSave = true;
+async function loadReservations() {
+    try {
+        const response = await fetch(API_BASE_URL);
+        if (response.ok) {
+            reservationsData = await response.json();
+        } else {
+            reservationsData = JSON.parse(localStorage.getItem("reservationsData")) || [];
         }
-    });
-    if (needsSave) {
-        localStorage.setItem("boatData", JSON.stringify(boatData));
+    } catch (error) {
+        console.error("Erreur chargement:", error);
+        reservationsData = JSON.parse(localStorage.getItem("reservationsData")) || [];
     }
+    renderReservationsTable();
 }
 
-function save() {
-    localStorage.setItem("data", JSON.stringify(data));
-    localStorage.setItem("boatData", JSON.stringify(boatData));
-}
-
-/* ================= CLOCK ================= */
-setInterval(() => {
-    document.getElementById("clock").innerText = "📅 " + new Date().toLocaleString('fr-FR');
-}, 1000);
-
-/* ================= CLIENT STANDARD ================= */
-function add() {
-    let nom = document.getElementById("nom").value;
-    let prenom = document.getElementById("prenom").value;
-    let tel = document.getElementById("tel").value;
+async function addReservation() {
+    let nom = document.getElementById("nom").value.trim();
+    let prenom = document.getElementById("prenom").value.trim();
+    let tel = document.getElementById("tel").value.trim();
     let personnes = document.getElementById("personnes").value;
     let activite = document.getElementById("activite").value;
     let heure = document.getElementById("heure").value;
@@ -705,20 +730,40 @@ function add() {
         return;
     }
 
-    data.push({
-        id: Date.now(),
+    const newReservation = {
         nom: nom,
         prenom: prenom,
         tel: tel,
-        personnes: personnes || "1",
         activite: activite,
         heure: heure || "--:--",
-        date: date || new Date().toISOString().split('T')[0]
-    });
+        date: date || new Date().toISOString().split('T')[0],
+        personnes: personnes || "1"
+    };
 
-    save();
-    render();
-
+    try {
+        const response = await fetch(API_BASE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newReservation)
+        });
+        
+        if (response.ok) {
+            const saved = await response.json();
+            reservationsData.push(saved);
+            alert("✅ Réservation ajoutée avec succès !");
+        } else {
+            throw new Error("Erreur serveur");
+        }
+    } catch (error) {
+        console.error("Erreur API, sauvegarde locale:", error);
+        newReservation.id = Date.now();
+        reservationsData.push(newReservation);
+        alert("⚠️ Réservation sauvegardée localement (hors ligne)");
+    }
+    
+    saveReservationsToLocal();
+    renderReservationsTable();
+    
     document.getElementById("nom").value = "";
     document.getElementById("prenom").value = "";
     document.getElementById("tel").value = "";
@@ -727,52 +772,84 @@ function add() {
     document.getElementById("date").value = "";
 }
 
-function render() {
-    let t = document.querySelector("#table tbody");
-    if (!t) return;
-    t.innerHTML = "";
+function saveReservationsToLocal() {
+    localStorage.setItem("reservationsData", JSON.stringify(reservationsData));
+}
 
-    data.forEach((r, i) => {
-        t.innerHTML += `
+async function deleteReservation(id) {
+    if (!confirm("Supprimer cette réservation ?")) return;
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });
+        if (response.ok) {
+            reservationsData = reservationsData.filter(r => r.id !== id);
+        } else {
+            throw new Error("Erreur suppression");
+        }
+    } catch (error) {
+        console.error("Erreur API, suppression locale:", error);
+        reservationsData = reservationsData.filter(r => r.id !== id);
+    }
+    
+    saveReservationsToLocal();
+    renderReservationsTable();
+}
+
+async function updateReservationField(id, field, value) {
+    const reservation = reservationsData.find(r => r.id === id);
+    if (!reservation) return;
+    
+    reservation[field] = value;
+    
+    try {
+        const response = await fetch(`${API_BASE_URL}/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reservation)
+        });
+        if (!response.ok) throw new Error("Erreur mise à jour");
+    } catch (error) {
+        console.error("Erreur API, mise à jour locale:", error);
+    }
+    
+    saveReservationsToLocal();
+}
+
+function renderReservationsTable() {
+    let tbody = document.querySelector("#table tbody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+    
+    reservationsData.forEach((r, i) => {
+        tbody.innerHTML += `
         <tr>
-            <td contenteditable onblur="updateData(${i}, 'nom', this.innerText)">${escapeHtml(r.nom)}</td>
-            <td contenteditable onblur="updateData(${i}, 'prenom', this.innerText)">${escapeHtml(r.prenom)}</td>
-            <td contenteditable onblur="updateData(${i}, 'tel', this.innerText)">${escapeHtml(r.tel)}</td>
-            <td contenteditable onblur="updateData(${i}, 'personnes', this.innerText)">${escapeHtml(r.personnes)}</td>
-            <td contenteditable onblur="updateData(${i}, 'activite', this.innerText)">${escapeHtml(r.activite)}</td>
-            <td contenteditable onblur="updateData(${i}, 'heure', this.innerText)">${escapeHtml(r.heure)}</td>
-            <td contenteditable onblur="updateData(${i}, 'date', this.innerText)">${escapeHtml(r.date)}</td>
-            <td><button onclick="del(${i})" style="background:#dc3545; padding:5px 10px;">❌</button></td>
+            <td>${r.id || i+1}</td>
+            <td contenteditable onblur="updateReservationField(${r.id}, 'nom', this.innerText)">${escapeHtml(r.nom)}</td>
+            <td contenteditable onblur="updateReservationField(${r.id}, 'prenom', this.innerText)">${escapeHtml(r.prenom)}</td>
+            <td contenteditable onblur="updateReservationField(${r.id}, 'tel', this.innerText)">${escapeHtml(r.tel)}</td>
+            <td contenteditable onblur="updateReservationField(${r.id}, 'personnes', this.innerText)">${escapeHtml(r.personnes)}</td>
+            <td contenteditable onblur="updateReservationField(${r.id}, 'activite', this.innerText)">${escapeHtml(r.activite)}</td>
+            <td contenteditable onblur="updateReservationField(${r.id}, 'heure', this.innerText)">${escapeHtml(r.heure)}</td>
+            <td contenteditable onblur="updateReservationField(${r.id}, 'date', this.innerText)">${escapeHtml(r.date)}</td>
+            <td><button onclick="deleteReservation(${r.id})" style="background:#dc3545; padding:5px 10px;">❌</button></td>
         </tr>`;
     });
 }
 
-function updateData(index, field, value) {
-    if (data[index]) {
-        data[index][field] = value;
-        save();
-    }
-}
+// ================= GESTION BATEAU =================
+let boatData = JSON.parse(localStorage.getItem("boatData")) || {};
 
-function del(i) {
-    if (confirm("Supprimer cette réservation ?")) {
-        data.splice(i, 1);
-        save();
-        render();
-    }
-}
-
-function escapeHtml(str) {
-    if (!str) return "";
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
+function initBoatStructure() {
+    let needsSave = false;
+    timeSlots.forEach(slot => {
+        if (!boatData[slot]) {
+            boatData[slot] = { "1": [], "2": [] };
+            needsSave = true;
+        }
     });
+    if (needsSave) localStorage.setItem("boatData", JSON.stringify(boatData));
 }
 
-/* ================= BATEAU AVEC SOUS-CRÉNEAUX ================= */
 function addBoat() {
     let slot = document.getElementById("bslot").value;
     let subslot = document.getElementById("bsubslot").value;
@@ -782,53 +859,36 @@ function addBoat() {
     let tel = document.getElementById("btel").value.trim();
     let circuit = document.getElementById("bcircuit").value;
 
-    if (!nom || !prenom) {
-        alert("❌ Veuillez entrer le nom et prénom du client");
-        return;
-    }
-    if (!tel) {
-        alert("❌ Veuillez entrer un numéro de téléphone");
-        return;
-    }
-
-    if (!boatData[slot]) {
-        boatData[slot] = { "1": [], "2": [] };
-    }
+    if (!nom || !prenom) { alert("❌ Veuillez entrer le nom et prénom"); return; }
+    if (!tel) { alert("❌ Veuillez entrer un numéro de téléphone"); return; }
+    if (!boatData[slot]) boatData[slot] = { "1": [], "2": [] };
 
     let existingReservation = boatData[slot][boatNumber].find(r => r.subslot === subslot);
-    
     if (existingReservation) {
         alert(`❌ Ce créneau (${subslot}) est déjà réservé sur le Bateau ${boatNumber} par ${existingReservation.nom} ${existingReservation.prenom}`);
         return;
     }
 
     boatData[slot][boatNumber].push({
-        nom: nom,
-        prenom: prenom,
-        tel: tel,
-        circuit: circuit + " min",
-        subslot: subslot,
+        nom: nom, prenom: prenom, tel: tel,
+        circuit: circuit + " min", subslot: subslot,
         timestamp: new Date().toISOString()
     });
+    boatData[slot][boatNumber].sort((a, b) => a.subslot.localeCompare(b.subslot));
 
-    boatData[slot][boatNumber].sort((a, b) => {
-        return a.subslot.localeCompare(b.subslot);
-    });
-
-    save();
+    localStorage.setItem("boatData", JSON.stringify(boatData));
     renderBoat();
 
     document.getElementById("bnom").value = "";
     document.getElementById("bprenom").value = "";
     document.getElementById("btel").value = "";
-    
     alert(`✅ Réservation confirmée !\nBateau ${boatNumber} - ${slot} : ${subslot}\nDurée: ${circuit} minutes`);
 }
 
 function deleteBoatReservation(slot, boatNumber, index) {
-    if (confirm("Supprimer cette réservation de bateau ?")) {
+    if (confirm("Supprimer cette réservation ?")) {
         boatData[slot][boatNumber].splice(index, 1);
-        save();
+        localStorage.setItem("boatData", JSON.stringify(boatData));
         renderBoat();
         alert("✅ Réservation supprimée");
     }
@@ -836,20 +896,7 @@ function deleteBoatReservation(slot, boatNumber, index) {
 
 function renderBoatTable() {
     let tbody = document.getElementById("boatTableBody");
-    let thead = document.getElementById("boatTableHeader");
-    
     if (!tbody) return;
-    
-    if (thead) {
-        thead.innerHTML = `
-            <tr>
-                <th>Créneau</th>
-                <th>Bateau 1</th>
-                <th>Bateau 2</th>
-            </tr>
-        `;
-    }
-    
     tbody.innerHTML = "";
     
     timeSlots.forEach(slot => {
@@ -861,7 +908,6 @@ function renderBoatTable() {
         for (let boatNum of ["1", "2"]) {
             let cell = row.insertCell();
             cell.className = "boat-cell";
-            
             let reservations = boatData[slot]?.[boatNum] || [];
             if (reservations.length > 0) {
                 cell.innerHTML = reservations.map((r, idx) => `
@@ -880,62 +926,71 @@ function renderBoatTable() {
     });
 }
 
-function renderBoat() {
-    renderBoatTable();
-}
+function renderBoat() { renderBoatTable(); }
 
-/* ================= PDF ================= */
-function pdf() {
-    html2canvas(document.body, {
-        scale: 2,
-        logging: false,
-        useCORS: true
-    }).then(canvas => {
-        const { jsPDF } = window.jspdf;
-        let doc = new jsPDF("p", "mm", "a4");
-        let img = canvas.toDataURL("image/png");
-        let imgWidth = 210;
-        let pageHeight = 297;
-        let imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
-
-        doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 0) {
-            position = heightLeft - imgHeight;
-            doc.addPage();
-            doc.addImage(img, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-        }
-        doc.save("reservations.pdf");
-    }).catch(error => {
-        console.error("Erreur PDF:", error);
-        alert("Erreur lors de la génération du PDF");
+// ================= FONCTIONS UTILES =================
+function escapeHtml(str) {
+    if (!str) return "";
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
     });
 }
 
-/* ================= PRINT ================= */
-function printTable() {
-    window.print();
+function showToast(msg, type) {
+    let toast = document.getElementById("toast");
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "toast";
+        toast.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:white; padding:10px 20px; border-radius:8px; z-index:9999;";
+        document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    toast.style.background = type === "error" ? "#dc3545" : "#28a745";
+    toast.style.display = "block";
+    setTimeout(() => { toast.style.display = "none"; }, 3000);
 }
 
-/* ================= INITIALISATION ================= */
+// ================= PDF & PRINT =================
+function pdf() {
+    const noPrintElements = document.querySelectorAll('.no-print');
+    noPrintElements.forEach(el => el.style.display = 'none');
+    
+    setTimeout(() => {
+        html2canvas(document.body, { scale: 3, logging: false, backgroundColor: '#ffffff' }).then(canvas => {
+            const { jsPDF } = window.jspdf;
+            let doc = new jsPDF("p", "mm", "a4");
+            let img = canvas.toDataURL("image/png");
+            let imgWidth = 210;
+            let imgHeight = (canvas.height * imgWidth) / canvas.width;
+            doc.addImage(img, 'PNG', 0, 0, imgWidth, imgHeight);
+            doc.save("reservations.pdf");
+            noPrintElements.forEach(el => el.style.display = '');
+        }).catch(error => {
+            alert("Erreur lors de la génération du PDF");
+            noPrintElements.forEach(el => el.style.display = '');
+        });
+    }, 200);
+}
+
+function printTable() { window.print(); }
+
+// ================= HORLOGE =================
+setInterval(() => {
+    document.getElementById("clock").innerText = "📅 " + new Date().toLocaleString('fr-FR');
+}, 1000);
+
+// ================= INITIALISATION =================
+document.getElementById("bslot")?.addEventListener("change", updateSubSlotOptions);
+document.getElementById("date").value = new Date().toISOString().split('T')[0];
+
 initBoatStructure();
 updateSlotSelect();
-render();
 renderBoat();
 renderSlotList();
-
-// Event listener pour mise à jour des sous-créneaux
-document.getElementById("bslot")?.addEventListener("change", updateSubSlotOptions);
-
-// Date par défaut
-if (!document.getElementById("date").value) {
-    let today = new Date().toISOString().split('T')[0];
-    document.getElementById("date").value = today;
-}
+loadReservations();
 
 </script>
 
