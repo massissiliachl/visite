@@ -2,13 +2,10 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const nodemailer = require("nodemailer");
 const path = require("path");
-const dns = require("dns");
-
-const SibApiV3Sdk = require("sib-api-v3-sdk");
 
 const { sequelize } = require("./models");
-
 const adminRoutes = require("./routes/adminRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
@@ -17,115 +14,81 @@ const reservationAdminRoute = require("./routes/ReservationAdminRoute");
 
 const app = express();
 
-/* =========================
-   DNS FIX (Render / IPv4)
-========================= */
-dns.setDefaultResultOrder("ipv4first");
-
-/* =========================
-   MIDDLEWARE
-========================= */
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
+app.use(cors());
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 
-app.use(express.static(path.join(__dirname, "public")));
+// Servir les fichiers statiques
+app.use(express.static(path.join(__dirname, 'public')));
 
-/* =========================
-   ROUTES
-========================= */
+// ROUTES
 app.use("/api/reservations", reservationRoutes);
 app.use("/availability", availabilityRoutes);
 app.use("/api/property-reservations", propertyReservationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/reservation-admin", reservationAdminRoute);
-
 app.get("/api/test", (req, res) => {
   res.json({ message: "API OK" });
 });
 
-/* =========================
-   BREVO EMAIL
-========================= */
-const client = SibApiV3Sdk.ApiClient.instance;
-const apiKey = client.authentications["api-key"];
-apiKey.apiKey = process.env.BREVO_API_KEY;
+// Vérifier les variables d'environnement
+console.log("EMAIL_USER:", process.env.EMAIL_USER ? "Défini" : "MANQUANT");
+console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Défini" : "MANQUANT");
 
-const emailApi = new SibApiV3Sdk.TransactionalEmailsApi();
-
-app.post("/send-email", async (req, res) => {
-  try {
-    const { to, subject, message } = req.body;
-
-    if (!to || !subject || !message) {
-      return res.status(400).json({
-        success: false,
-        error: "Missing fields",
-      });
-    }
-
-    const result = await emailApi.sendTransacEmail({
-      sender: {
-        email: process.env.EMAIL_USER || "visitebejaia@gmail.com",
-        name: "Visit Béjaïa",
-      },
-      to: [{ email: to }],
-      subject,
-      htmlContent: `
-        <div style="font-family: Arial; padding:15px;">
-          <h2>Visit Béjaïa</h2>
-          <p>${message.replace(/\n/g, "<br>")}</p>
-        </div>
-      `,
-    });
-
-    res.json({
-      success: true,
-      message: "Email envoyé",
-      id: result.messageId || null,
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      error: err.message,
-    });
+// Créer le transporteur email
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+// Vérifier la connexion email
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("❌ Erreur de connexion email:", error);
+  } else {
+    console.log("✅ Serveur email prêt");
   }
 });
 
-/* =========================
-   AVAILABILITY
-========================= */
+// Endpoint d'envoi d'email
+app.post("/send-email", (req, res) => {
+  res.json({
+    success: true,
+    message: "Email feature disabled"
+  });
+});
+// Endpoint pour les dates bloquées (correction du template string)
 app.get("/availability/:activityName", async (req, res) => {
   try {
-    res.json([]);
+    const activityName = decodeURIComponent(req.params.activityName);
+    // Votre logique pour récupérer les dates bloquées
+    res.json([]); // Exemple: retourner un tableau vide
   } catch (error) {
+    console.error("Erreur availability:", error);
     res.status(500).json({ error: error.message });
   }
 });
 
-/* =========================
-   START SERVER
-========================= */
 const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
+    console.log("🔄 Connexion à la base de données...");
     await sequelize.authenticate();
+    console.log("✅ Base de données connectée");
+    
     await sequelize.sync({ alter: true });
-
+    console.log("✅ Tables synchronisées");
+    
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📧 /send-email ready`);
+      console.log(`🚀 Serveur démarré sur le port ${PORT}`);
+      console.log(`📧 Endpoint email: http://localhost:${PORT}/send-email`);
     });
+    
   } catch (err) {
-    console.error("❌ Server error:", err);
+    console.log("❌ Erreur au démarrage:", err);
   }
 }
 
