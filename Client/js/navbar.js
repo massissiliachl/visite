@@ -65,7 +65,7 @@ function initializeNavbar() {
         });
     });
 
-    // GESTION INTELLIGENTE DES LIENS
+    
     const menuLinks = navMenu.querySelectorAll('a');
     menuLinks.forEach(link => {
         link.addEventListener('click', function(e) {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -677,8 +677,8 @@
 <!-- Hero -->
 <section class="hero" id="accueil">
     <div class="hero-content">
-        <h1 class="hero-title">Les Tr�sors de B�ja�a</h1>
-        <p class="hero-description">D�couvrez les lieux d'exception qui font la richesse de notre r�gion</p>
+        <h1 class="hero-title">Les Tresors de Béjaia</h1>
+        <p class="hero-description">Découvrez les lieux d'exception qui font la richesse de notre région</p>
     </div>
 </section>
 
@@ -689,10 +689,10 @@
     </div>
 
     <div class="filter-section">
-        <button class="filter-btn active" data-filter="all">? Tous les lieux</button>
-        <button class="filter-btn" data-filter="nature">?? Nature & Montagne</button>
-        <button class="filter-btn" data-filter="plage">??? Plages & Mer</button>
-        <button class="filter-btn" data-filter="culture">??? Historique & Culture</button>
+        <button class="filter-btn active" data-filter="all"> Tous les lieux</button>
+        <button class="filter-btn" data-filter="nature"> Nature & Montagne</button>
+        <button class="filter-btn" data-filter="plage"> Plages & Mer</button>
+        <button class="filter-btn" data-filter="culture"> Historique & Culture</button>
     </div>
 
     <div class="destinations-grid" id="destinationsGrid"></div>
@@ -707,7 +707,7 @@
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-container">
         <div class="modal-header">
-            <h3 id="modalTitle">D�tail</h3>
+            <h3 id="modalTitle">Detail</h3>
             <button class="close-modal" id="closeModalBtn">&times;</button>
         </div>
         <img id="modalImage" class="modal-image" src="" alt="">
@@ -740,7 +740,7 @@
             id: 2,
             name: "Cap Carbon",
             category: "nature",
-            location: "Parc national de Gouraya, B�ja�a",
+            location: "Parc national de Gouraya, Béjaia",
             image: "https://upload.wikimedia.org/wikipedia/commons/5/57/Cap_Carbon_1.jpg",
             description: "Un des plus beaux caps de la Méditerranée. Son phare emblématique offre une vue à couper le souffle sur la baie de Béjaïa.",
             features: ["Phare historique", "Vue mer", "Coucher de soleil", "Photo exceptionnelle"]
@@ -749,26 +749,26 @@
             id: 3,
             name: "Pic des Singes",
             category: "nature",
-            location: "Parc national de Gouraya, B�ja�a",
+            location: "Parc national de Gouraya, Béjaia",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-j-l0CJvqlC9r-DSV1SBWEjxAkvOLNhlMPQ&s",
-            description: "Rencontrez les c�l�bres singes magots dans leur habitat naturel. Une exp�rience unique au c�ur de la magnifique for�t d'Akfadou.",
-            features: ["Observation singes", "For�t dense", "Randonn�e", "Pique-nique"]
+            description: "Rencontrez les célèbres singes magots dans leur habitat naturel. Une expérience unique au cœur de la magnifique forêt d'Akfadou.",
+            features: ["Observation singes", "Fort dense", "Randonnée", "Pique-nique"]
         },
        
         {
             id: 5,
             name: "Plage des Aiguades",
             category: "plage",
-            location: "Les Aiguades, B�ja�a",
+            location: "Les Aiguades, Béjaia",
             image: "https://pbs.twimg.com/media/D6z4f6AUIAEbil-.jpg",
-            description: "Une plage sauvage et pr�serv�e, encadr�e par des falaises. Un cadre idyllique pour une journ�e de d�tente.",
-            features: ["Cadre sauvage", "Falaises", "Eaux claires", "Tranquillit�"]
+            description: "Une plage sauvage et préservée, encadrée par des falaises. Un cadre idyllique pour une journée de détente.",
+            features: ["Cadre sauvage", "Falaises", "Eaux claires", "Tranquillité"]
         },
         {
             id: 6,
-            name: "La Casbah de B�ja�a",
+            name: "La Casbah de Béjaia",
             category: "culture",
-            location: "B�ja�a centre",
+            location: "Béjaia centre",
             image: "https://lecourrier-dalgerie.com/wp-content/uploads/2022/05/Casbah-de-Be%CC%81jai%CC%88a.jpg",
             description: "Flânez dans les ruelles pittoresques de la vieille ville. Découvrez l'architecture ottomane et l'artisanat local.",
             features: ["Architecture ottomane", "Ruelles typiques", "Artisanat", "Histoire"]
@@ -807,7 +807,7 @@
             category: "plage",
             location: "Brise de mer, Béjaïa",
             image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/B%C3%A9ja%C3%AFa_brise_de_mer.jpg/3840px-B%C3%A9ja%C3%AFa_brise_de_mer.jpg",
-            description: "Une petite crique paisible, id�ale pour ceux qui recherchent calme et d�tente loin de la foule.",
+            description: "Une petite crique paisible, idéale pour ceux qui recherchent calme et détente loin de la foule.",
             features: ["Crique naturelle", "Calme", "Sable fin", "Eaux claires"]
         }
     ];
@@ -825,7 +825,7 @@
                     <img src="${dest.image}" alt="${dest.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=${encodeURIComponent(dest.name)}'">
                     <div class="image-overlay"></div>
                     <span class="card-category">
-                        ${dest.category === "nature" ? "?? Nature" : dest.category === "plage" ? "??? Plage" : "??? Historique"}
+                        ${dest.category === "nature" ? " Nature" : dest.category === "plage" ? " Plage" : "Historique"}
                     </span>
                 </div>
                 <div class="card-content">

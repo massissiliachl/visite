@@ -836,6 +836,12 @@
                 justify-content: center;
             }
         }
+        @media (max-width: 768px) {
+    .hero {
+        background-attachment: scroll; /* IMPORTANT */
+        min-height: 70vh;
+    }
+}
     </style>
 </head>
 <body>
@@ -979,9 +985,9 @@
 <script>
     const properties = [
         { id: "1", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht, 2 chambres", longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht.1 chambre en lit double 2 chambres avec 2 lits 1 clic clac 1 place toilette et salle de bain kitchenette frigo ventilateur terasse avec table de pique nique vue degager sans vis a vis", price: 25000, type: "chalet", capacity: 5, rating: 4.9, popular: true,  ambiance: ["Nature", "Calme", "Authentique"], features: [{ icon: "fa-bed", text: "2 chambres" }, { icon: "fa-users", text: "5 pers" }, { icon: "fa-swimmer", text: "Piscine privee" }, { icon: "fa-wifi", text: "WiFi" }], images: ["assets/images/chalet/c5.jpeg", "assets/images/chalet/chal1.jpeg","assets/images/chalet/chal2.jpeg","assets/images/chalet/chal3.jpeg","assets/images/chalet/chal4.jpeg","assets/images/chalet/chal5.jpeg"] },
-        { id: "2", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Duplex Familial Cosy avec Terrasse & Vue Mer seulement 5 minutes des plages, dans une residence securise ideale pour vos sejours en famille.", longDescription: "Appartement t3 en duplex cosyAppartement avec 2 chambre, une chambre lit double parentale, bien agence, literie confortable, vue mer, une deuxieme chambre avec 2 lit 1 place pour les enfants confortables, au niveaux superieurs 3 lit pour les invites comme une sorte de loft.Cuisine trois bien equipe Terrasse avec sa table et ses chaise pour manger en regardant la mer.Tout sa dans une residence securisee en bord de mer entre boulimat et saket.  5 min des plages", price: 30000, type: "chalet", capacity: 7, rating: 4.7, popular: false,  ambiance: ["Nature", "Calme", "Authentique"], features: [{ icon: "fa-bed", text: "3 chambres" }, { icon: "fa-tree", text: "Jardin" }], images: ["assets/images/chalet/chalet2.jpeg", "assets/images/chalet/chal6.jpeg","assets/images/chalet/chal7.jpeg","assets/images/chalet/chal8.jpeg","assets/images/chalet/chal9.jpeg"] },
-        { id: "3", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Vue imprenable sur les falaises, 4 chambres", longDescription: "Piscine  debordement, hammam, vue panoramique sur la baie.", price: 35000, capacity: 2, rating: 5.0, popular: true, features: [{ icon: "fa-eye", text: "Vue mer" }, { icon: "fa-hot-tub", text: "Spa" }], images: ["assets/images/chalet/chalet3.jpeg", "assets/images/chalet/z1.jpeg", "assets/images/chalet/z2.jpeg", "assets/images/chalet/z3.jpeg", "assets/images/chalet/z4.jpeg", "assets/images/chalet/z5.jpeg", "assets/images/chalet/z6.jpeg"] ,type: "chalet" , ambiance: ["Nature", "Calme", "Authentique"], },
-        { id: "4", title: "Villa", location: "Centre Bejaia", description: "Terrasse 80m, vue 360", longDescription: "Penthouse exclusif, 3 chambres, salle a manger panoramique.", price: 18000, type: "chalet", capacity: 6, rating: 4.9, popular: true, ambiance: [" Vue 360", " Luxe"], features: [{ icon: "fa-crown", text: "Penthouse" }, { icon: "fa-champagne-glasses", text: "Bar" }], images: ["https://a0.muscache.com/im/pictures/1f0f4596-dacb-42fe-9811-70673828640f.jpg"] }
+        { id: "2", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht, 3 chambres.", longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht.", price: 30000, type: "chalet", capacity: 7, rating: 4.7, popular: false,  ambiance: ["Nature", "Calme", "Authentique"], features: [{ icon: "fa-bed", text: "3 chambres" }, { icon: "fa-tree", text: "Jardin" }], images: ["assets/images/chalet/chalet2.jpeg", "assets/images/chalet/chal6.jpeg","assets/images/chalet/chal7.jpeg","assets/images/chalet/chal8.jpeg","assets/images/chalet/chal9.jpeg"] },
+        { id: "3", title: "Chalet au coeur de la ferme", location: "Tazeboucht, Bejaia", description: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht, 4 chambres", longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht.", price: 35000, capacity: 2, rating: 5.0, popular: true, features: [{ icon: "fa-eye", text: "Belle Vue " }, { icon: "fa-bed", text: "4 chambres" }], images: ["assets/images/chalet/chalet3.jpeg", "assets/images/chalet/z1.jpeg", "assets/images/chalet/z2.jpeg", "assets/images/chalet/z3.jpeg", "assets/images/chalet/z4.jpeg", "assets/images/chalet/z5.jpeg", "assets/images/chalet/z6.jpeg"] ,type: "chalet" , ambiance: ["Nature", "Calme", "Authentique"], },
+        { id: "4", title: "Villa", location: "Centre Bejaia", description: "Terrasse 80m, vue 360", longDescription: "Penthouse exclusif, 3 chambres, salle a manger panoramique.", price: 18000, type: "chalet", capacity: 6, rating: 4.9, popular: true, ambiance: [" Vue 360", " Luxe"], features: [{ icon: "fa-crown", text: "Penthouse" }], images: ["https://a0.muscache.com/im/pictures/1f0f4596-dacb-42fe-9811-70673828640f.jpg"] }
     ];
 
     let currentProperty = null;
@@ -1228,7 +1234,7 @@ document.getElementById('bookingForm').addEventListener('submit', async (e) => {
 
     const result = await res.json();
 
-    alert("✅ Réservation confirmée !");
+    alert("✅Votre demande de réservation a été envoyée avec succès. Veuillez attendre la confirmation,merci !");
     closeModals();
 
 } catch (err) {

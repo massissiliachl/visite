@@ -2684,6 +2684,120 @@
     margin-bottom: 0;
     font-weight: 500;
 }
+
+
+
+
+.red-notes-container {
+    background: #fff5f5;
+    border: 1px solid #ffcccc;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.3s ease;
+}
+
+.red-notes-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ffcccc;
+}
+
+.red-notes-header i {
+    color: #dc2626;
+    font-size: 1rem;
+}
+
+.red-notes-header span {
+    color: #dc2626;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.red-notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.red-note-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.red-big-dot {
+    flex-shrink: 0;
+    width: 6px;
+    height: 6px;
+    background: #dc2626;
+    border-radius: 50%;
+    margin-top: 8px;
+}
+
+/* Alternative avec pseudo-élément si vous préférez */
+.red-note-item .red-dot {
+    width: 6px;
+    height: 6px;
+    background: #dc2626;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+    margin-top: 8px;
+}
+
+.red-note-text {
+    color: #991b1b;
+    flex: 1;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styles pour le bouton d'upload */
+.proof-upload-area {
+    margin-bottom: 0.5rem;
+}
+
+.upload-btn {
+    background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.upload-btn:hover {
+    background: linear-gradient(135deg, #d32f2f, #8b6b53);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+}
+
+.upload-btn i {
+    font-size: 1.1rem;
+}
         </style>
 </head>
 
@@ -2732,6 +2846,7 @@
     <a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <!-- Modal -->
+<!-- MODALE DE RÉSERVATION CORRIGÉE (remplacez l'ancienne modale par celle-ci) -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal-container">
         <div class="modal-header">
@@ -2777,7 +2892,6 @@
             <div id="bateauOptions" class="options-modal" style="display: none;">
                 <label>Choisissez votre offre :</label>
                 
-                <!-- Offre Découverte -->
                 <div class="bateau-offre">
                     <div class="bateau-offre-title">
                         <i class="fas fa-ship"></i> Offre Découverte (1h30/2h)
@@ -2798,7 +2912,6 @@
                     </div>
                 </div>
 
-                <!-- Offre Évasion -->
                 <div class="bateau-offre">
                     <div class="bateau-offre-title">
                         <i class="fas fa-umbrella-beach"></i> Offre Évasion (3h/3h30) + Brunch
@@ -2821,7 +2934,6 @@
                     </div>
                 </div>
 
-                <!-- Offre Détente -->
                 <div class="bateau-offre">
                     <div class="bateau-offre-title">
                         <i class="fas fa-fire"></i> Offre Détente (4h30/5h) + Barbecue + Bouée
@@ -2841,14 +2953,21 @@
 
             <div class="form-group" id="fullNameGroup">
                 <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et prénom)</span></label>
-                <input type="text" id="fullName" placeholder="Ex: Visit Béjaïa" required>
+                <input type="text" id="fullName" placeholder="Ex: Mohamed Amine" required>
                 <div class="error-message" id="fullNameError">❗ Veuillez entrer votre nom et prénom (séparés par un espace)</div>
             </div>
             <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
             <div class="form-group"><label>Téléphone *</label><input type="tel" id="phone" required></div>
             <div class="form-group"><label>Date souhaitée *</label><input type="date" id="date" required></div>
-            <div class="form-group"><label>Adultes *</label><input type="number" id="adults" min="1" value="1" required></div>
-            <div class="form-group" id="childGroup" style="display:none;"><label>Enfants <span id="childExtraLabel"></span></label><input type="number" id="children" min="0" value="0"></div>
+<!-- Remplacer cette section dans la modale -->
+<div class="form-group" id="adultsGroup">
+    <label>Adultes *</label>
+    <input type="number" id="adults" min="0" value="1" required>
+</div>
+<div class="form-group" id="childGroup" style="display:none;">
+    <label>Enfants <span id="childExtraLabel"></span></label>
+    <input type="number" id="children" min="0" value="0">
+</div>       
             <div class="form-group">
                 <label>Mode de paiement</label>
                 <select id="paymentMethod">
@@ -2865,15 +2984,26 @@
                 <small>Envoyez le virement à ce compte et saisissez la référence de transaction ci-dessous.</small>
             </div>
             <div class="form-group"><label>Référence transaction</label>
-                <input type="text" id="transactionRef" placeholder="ex: 123456" required>
+                <input type="text" id="transactionRef" placeholder="ex: 123456">
             </div>
-            <div class="form-group" id="paymentProofGroup">
-                <label>Preuve de paiement (capture ou scan) *</label>
-                <input type="file" id="paymentProof" accept="image/*" capture="environment">
-                <small style="display:block;margin-top:0.45rem;color:#4e655f;">
-                    Formats acceptes: JPG, PNG, WEBP (max 5 Mo)
-                </small>
-            </div>
+            
+            <!-- SECTION PREUVE DE PAIEMENT - VERSION SIMPLIFIÉE QUI FONCTIONNE -->
+          <!-- SECTION PREUVE DE PAIEMENT - SÉLECTION DEPUIS LA GALERIE -->
+<div class="form-group" id="paymentProofGroup">
+    <label>📸 Preuve de paiement *</label>
+    <div class="proof-upload-area">
+        <button type="button" id="uploadBtn" class="upload-btn">
+            <i class="fas fa-folder-open"></i> Choisir une image depuis la galerie
+        </button>
+        <input type="file" id="paymentProof" accept="image/*" style="display:none;">
+        <small style="display:block; margin-top:0.5rem; color:#666;">📱 Formats acceptés : JPG, PNG, WEBP (max 5 Mo)</small>
+    </div>
+    <div id="proofPreviewContainer" style="margin-top: 0.8rem; display: none;">
+        <img id="proofPreviewImg" style="max-width:100%; max-height:150px; border-radius:10px; border:1px solid #ddd;">
+        <button type="button" id="clearProofBtn" style="display:block; margin-top:0.5rem; background:#dc2626; color:white; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">🗑 Supprimer</button>
+    </div>
+    <div class="error-message" id="proofError">⚠️ Veuillez ajouter une preuve de paiement</div>
+</div>
             <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
             <div class="price-summary"><strong>Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>Acompte 30 % : <span id="depositAmount">0 DA</span></small></div>
             <button type="submit" class="btn-submit">Confirmer la réservation</button>
@@ -2895,21 +3025,21 @@
         <div class="accommodation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
 
             <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                <img src="assets/images/heber/chal2.jpeg" alt="Appartement Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Appartement vue mer</h3>
-                <p style="margin: 0 0 1rem; color: #4e655f;">Confort moderne, balcon panoramique et accès direct à la plage.</p>
+                <img src="assets/images/chalet/c5.jpeg" alt="Appartement Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Chalet familiale</h3>
+                <p style="margin: 0 0 1rem; color: #4e655f;">Confort moderne.</p>
             </article>
 
             <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                <img src="assets/images/heber/villa6.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Villa familiale</h3>
-                <p style="margin: 0 0 1rem; color: #4e655f;">Piscine privée, jardin ombragé et service personnalisé.</p>
+                <img src="assets/images/chalet/chalet2.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+            <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Chalet </h3>
+                <p style="margin: 0 0 1rem; color: #4e655f;"> Belle vue ,service personnalisé.</p>
             </article>
 
             <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                <img src="assets/images/heber/villa2.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Villa authentique</h3>
-                <p style="margin: 0 0 1rem; color: #4e655f;">Ambiance traditionnelle, patio central et petit-déjeuner local offert.</p>
+                <img src="assets/images/chalet/chalet3.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
+                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Chalet authentique</h3>
+                <p style="margin: 0 0 1rem; color: #4e655f;"> Belle vue ,service personnalisé.</p>
             </article>
 
         </div>
@@ -2999,13 +3129,13 @@
         <div class="container">
             <h2 class="section-title">Instagram Feed</h2>
             <div class="instagram-grid">
-                <div class="instagram-item" style="background-image: url('assets/images/jets.jpg')"></div>
+                <div class="instagram-item" style="background-image: url('https://le-batut.com/wp-content/uploads/2022/04/dscn7664_6298089310_o-scaled.jpg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad.jpeg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad1.jpeg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/dj.jpeg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad4.jpeg')"></div>
-                <div class="instagram-item" style="background-image: url('assets/images/vol\ parapente.jpg')"></div>
-                <div class="instagram-item" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400')"></div>
+                <div class="instagram-item" style="background-image: url('https://www.bauges-parapente.com/wp-content/uploads/2024/03/bapteme-parapente-haute-savoie--768x1024.jpg')"></div>
+                <div class="instagram-item" style="background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/91/2c/a0/getting-ready-to-fly.jpg?w=500&h=500&s=1')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad3.jpeg')"></div>
             </div>
         </div>
@@ -3038,7 +3168,7 @@
                 <li><span class="check-icon">✔</span> Découvrez la région comme un local</li>
             </ul>
         
-            <a href="#" class="btn-primary">Découvrir nos activités ✨</a>
+            <a href="activites.html" class="btn-primary">Découvrir nos activités ✨</a>
         </div>
         <!-- Bloc carrousel 3D (DROITE) -->
         <div class="about-media" id="mediaContent">
@@ -3047,7 +3177,7 @@
                     <img src="assets/images/i.jpeg" alt="Équipe créative">
                 </div>
                 <div class="carousel-card" data-index="1">
-                    <img src="assets/images/i1.jpeg" alt="Atelier design">
+                    <img src="assets/images/i.jpeg" alt="Atelier design">
                 </div>
                 <div class="carousel-card" data-index="2">
                     <img src="assets/images/i1.jpeg" alt="Collaboration">
@@ -3057,9 +3187,9 @@
                 </div>
             </div>
             <div class="carousel-nav">
-                <button class="nav-btn" id="prevBtn">?</button>
+                <button class="nav-btn" id="prevBtn">←</button>
                 <div class="dots" id="dots"></div>
-                <button class="nav-btn" id="nextBtn">?</button>
+                <button class="nav-btn" id="nextBtn">→</button>
             </div>
           <div class="floating-card">
     <div class="floating-number">+50</div>
@@ -3363,7 +3493,67 @@ Message : ${document.getElementById("message").value}
                     }
                 });
             }
-
+// ===== GESTION DE LA PREUVE DE PAIEMENT DEPUIS LA GALERIE =====
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadBtn = document.getElementById('uploadBtn');
+    const proofInput = document.getElementById('paymentProof');
+    const proofPreviewContainer = document.getElementById('proofPreviewContainer');
+    const proofPreviewImg = document.getElementById('proofPreviewImg');
+    const clearProofBtn = document.getElementById('clearProofBtn');
+    const proofError = document.getElementById('proofError');
+    
+    // Bouton pour ouvrir la galerie
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() {
+            proofInput.click();
+        });
+    }
+    
+    // Quand un fichier est sélectionné
+    if (proofInput) {
+        proofInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Vérifier le type
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+                if (!allowedTypes.includes(file.type)) {
+                    showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error');
+                    proofInput.value = '';
+                    proofPreviewContainer.style.display = 'none';
+                    if (proofError) proofError.classList.remove('show');
+                    return;
+                }
+                
+                // Vérifier la taille (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('Image trop volumineuse (max 5 Mo)', 'error');
+                    proofInput.value = '';
+                    proofPreviewContainer.style.display = 'none';
+                    if (proofError) proofError.classList.remove('show');
+                    return;
+                }
+                
+                // Afficher l'aperçu
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    proofPreviewImg.src = e.target.result;
+                    proofPreviewContainer.style.display = 'block';
+                    if (proofError) proofError.classList.remove('show');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    // Bouton pour supprimer la preuve
+    if (clearProofBtn) {
+        clearProofBtn.addEventListener('click', function() {
+            proofInput.value = '';
+            proofPreviewContainer.style.display = 'none';
+            proofPreviewImg.src = '';
+        });
+    }
+});
             // Données pour les incontournables
             const mustSeeData = {
                 grotte: {
@@ -3816,8 +4006,168 @@ function renderCards(filter = "all") {
 let currentActivityNotes = [];
 
 // MODIFIER la fonction openModal
+// Remplacer la fonction openModal par celle-ci
 function openModal(id, name, price, hasChild, childPrice) {
     currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
+    boueeAdded = false;
+
+    // Récupérer les notes de l'activité
+    const activity = activitiesCatalog.find(a => a.id === id);
+    currentActivityNotes = activity?.activityNote || [];
+    
+    document.getElementById("modalTitle").innerHTML = `Réserver ${name}`;
+    
+    // Masquer toutes les options
+    document.getElementById("quadOptions").style.display = "none";
+    document.getElementById("parapenteOptions").style.display = "none";
+    document.getElementById("jetskiOptions").style.display = "none";
+    document.getElementById("bateauOptions").style.display = "none";
+
+    // Récupérer les groupes
+    const adultsGroup = document.getElementById("adultsGroup");
+    const childGroup = document.getElementById("childGroup");
+    const childLabel = document.getElementById("childExtraLabel");
+    
+    // Réinitialiser les champs
+    document.getElementById("fullName").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("specialRequests").value = "";
+    
+    // Afficher les options selon l'activité
+    if (id === "quad") {
+        document.getElementById("quadOptions").style.display = "block";
+        document.getElementById("quadSelect").value = "3000";
+        document.getElementById("quadChild").checked = false;
+        currentAct.pricePerAdult = 3000;
+        
+        // POUR LE QUAD : PAS D'ADULTES, CHAQUE QUAD = 1 PERSONNE
+        // On masque le champ adultes et on le fixe à 1
+        if (adultsGroup) {
+            adultsGroup.style.display = "none";
+            document.getElementById("adults").value = 1;
+        }
+        // Gestion enfant via la checkbox uniquement
+        if (childGroup) {
+            childGroup.style.display = "none";
+        }
+        document.getElementById("children").value = 0;
+        
+    } else if (id === "parapente") {
+        document.getElementById("parapenteOptions").style.display = "block";
+        document.getElementById("parapenteSelect").value = "6000";
+        currentAct.pricePerAdult = 6000;
+        if (adultsGroup) adultsGroup.style.display = "block";
+        if (childGroup) childGroup.style.display = "none";
+        document.getElementById("adults").value = 1;
+        
+    } else if (id === "jetski") {
+        document.getElementById("jetskiOptions").style.display = "block";
+        document.getElementById("jetskiSelect").value = "30000";
+        currentAct.pricePerAdult = 30000;
+        if (adultsGroup) adultsGroup.style.display = "block";
+        if (childGroup) childGroup.style.display = "none";
+        document.getElementById("adults").value = 1;
+        
+    } else if (id === "bateau") {
+        document.getElementById("bateauOptions").style.display = "block";
+        const firstRadio = document.querySelector('input[name="bateauOption"]:checked');
+        if (firstRadio) {
+            currentAct.pricePerAdult = parseInt(firstRadio.value);
+            toggleBoueeOption();
+        }
+        if (adultsGroup) adultsGroup.style.display = "block";
+        if (childGroup) childGroup.style.display = "none";
+        document.getElementById("adults").value = 1;
+        
+    } else {
+        // Autres activités (visite, cheval, bouee, parasailing)
+        if (adultsGroup) adultsGroup.style.display = "block";
+        if (hasChild && childGroup) {
+            childGroup.style.display = "block";
+            if (childLabel) childLabel.innerHTML = `(+${childPrice} DA/enfant)`;
+        } else if (childGroup) {
+            childGroup.style.display = "none";
+        }
+        document.getElementById("adults").value = 1;
+        document.getElementById("children").value = 0;
+    }
+    
+    // Afficher les notes en rouge
+    displayRedNotesAtTop();
+    
+    // Mettre à jour le prix
+    updateTotal();
+    
+    // Afficher la modale
+    document.getElementById("modalOverlay").classList.add("active");
+}
+
+// Remplacer la fonction updateTotal par celle-ci
+function updateTotal() {
+    let total = 0;
+    let adults = 1;
+    let children = 0;
+    
+    // Pour Quad : 1 quad = 1 personne, pas d'adultes à multiplier
+  // Dans la fonction submit, remplacer le calcul du total par :
+
+
+if (currentAct.id === 'quad') {
+    total = currentAct.pricePerAdult;
+    const quadChildCheckbox = document.getElementById("quadChild");
+    if (quadChildCheckbox && quadChildCheckbox.checked) {
+        total += 1000;
+    }
+} 
+else if (currentAct.id === 'bateau') {
+    total = currentAct.pricePerAdult;
+    if (boueeAdded) total += 5000;
+}
+else {
+    total = currentAct.pricePerAdult * adults;
+    if (currentAct.hasChild && currentAct.id !== 'quad') {
+        total += children * (currentAct.childPrice || 0);
+    }
+
+    else if (currentAct.id === 'bateau') {
+        adults = parseInt(document.getElementById("adults").value) || 1;
+        total = currentAct.pricePerAdult; // Prix déjà pour le bateau entier
+        if (boueeAdded) total += 5000;
+    }
+    else {
+        // Autres activités (parapente, jetski, visite, cheval, etc.)
+        adults = parseInt(document.getElementById("adults").value) || 1;
+        children = parseInt(document.getElementById("children").value) || 0;
+        total = currentAct.pricePerAdult * adults;
+        
+        // Enfants pour les activités qui en ont
+        if (currentAct.hasChild && currentAct.id !== 'quad') {
+            total += children * (currentAct.childPrice || 0);
+        }
+    }
+
+    const deposit = Math.round(total * 0.3);
+
+    const totalSpan = document.getElementById("totalPriceDisplay");
+    const depositSpan = document.getElementById("depositAmount");
+    
+    if (totalSpan) totalSpan.innerHTML = total.toLocaleString('fr-DZ') + " DA";
+    if (depositSpan) depositSpan.innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
+}
+
+// Corriger l'écouteur du bouton Quad
+document.getElementById("quadChild")?.addEventListener("change", function(e) {
+    if (currentAct.id === "quad") {
+        updateTotal();
+    }
+});
+
+document.getElementById("quadSelect")?.addEventListener("change", function() {
+    if (currentAct.id === "quad") {
+        currentAct.pricePerAdult = parseInt(this.value);
+        updateTotal();
+    }
+});    currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
     boueeAdded = false;
 
     // Récupérer les notes de l'activité correspondante
@@ -3902,14 +4252,14 @@ function displayRedNotesAtTop() {
                 <i class="fas fa-exclamation-circle"></i>
                 <span>Informations importantes</span>
             </div>
-            <div class="red-notes-list">
-                ${currentActivityNotes.map(note => `
-                    <div class="red-note-item">
-                        <span class="red-big-dot">?</span>
-                        <span class="red-note-text">${note}</span>
-                    </div>
-                `).join('')}
-            </div>
+          <div class="red-notes-list">
+    ${currentActivityNotes.map(note => `
+        <div class="red-note-item">
+            <i class="fas fa-circle" style="color: #dc2626; font-size: 0.7rem;"></i>
+            <span class="red-note-text">${note}</span>
+        </div>
+    `).join('')}
+</div>
         `;
         notesContainer.style.display = "block";
     } else {
@@ -4343,7 +4693,142 @@ if (currentAct.id === 'bateau' && boueeAdded) {
 
 
 
- 
+ //proof of payment
+ // ===== GESTION SIMPLIFIÉE DE LA PREUVE DE PAIEMENT =====
+let currentProofFile = null;
+
+function setupProofManagement() {
+    const proofInput = document.getElementById('paymentProof');
+    const proofPreviewContainer = document.getElementById('proofPreviewContainer');
+    const proofPreviewImg = document.getElementById('proofPreviewImg');
+    const clearProofBtn = document.getElementById('clearProofBtn');
+    const proofError = document.getElementById('proofError');
+    
+    if (!proofInput) return;
+    
+    proofInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Vérifier le type
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+            if (!allowedTypes.includes(file.type)) {
+                showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error');
+                proofInput.value = '';
+                proofPreviewContainer.style.display = 'none';
+                currentProofFile = null;
+                return;
+            }
+            
+            // Vérifier la taille (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Image trop volumineuse (max 5 Mo)', 'error');
+                proofInput.value = '';
+                proofPreviewContainer.style.display = 'none';
+                currentProofFile = null;
+                return;
+            }
+            
+            currentProofFile = file;
+            
+            // Afficher l'aperçu
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                proofPreviewImg.src = e.target.result;
+                proofPreviewContainer.style.display = 'block';
+                proofError.classList.remove('show');
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    if (clearProofBtn) {
+        clearProofBtn.addEventListener('click', function() {
+            proofInput.value = '';
+            proofPreviewContainer.style.display = 'none';
+            proofPreviewImg.src = '';
+            currentProofFile = null;
+            proofError.classList.remove('show');
+        });
+    }
+}
+
+// Modifier la fonction updatePaymentProofVisibility
+const originalUpdatePaymentProofVisibility = updatePaymentProofVisibility;
+window.updatePaymentProofVisibility = function() {
+    const paymentSelect = document.getElementById("paymentMethod");
+    const proofGroup = document.getElementById("paymentProofGroup");
+    const bankDetails = document.getElementById("bankDetails");
+    
+    if (!paymentSelect || !proofGroup) return;
+    
+    const isProofRequired = paymentSelect.value === "CCP" || paymentSelect.value === "BaridiMob" || paymentSelect.value === "Virement";
+    proofGroup.style.display = isProofRequired ? "block" : "none";
+    
+    // Rendre le champ file required seulement si la preuve est requise
+    const proofInput = document.getElementById("paymentProof");
+    if (proofInput) {
+        proofInput.required = isProofRequired;
+    }
+    
+    if (bankDetails) {
+        bankDetails.style.display = "block";
+    }
+};
+
+// Modifier la fonction fileToBase64 pour utiliser currentProofFile
+window.fileToBase64 = function(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("Impossible de lire le fichier de preuve"));
+        reader.readAsDataURL(file);
+    });
+};
+
+// Modifier la fonction sendReservation (garder l'originale mais adapter)
+const originalSendReservation = window.sendReservation;
+window.sendReservation = async function(payload) {
+    const API_URL = 'https://visitebejai.onrender.com/api/reservations';
+    console.log("Envoi à l'API:", payload);
+    
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        const data = await response.json();
+        console.log("Réponse API:", response.status, data);
+        
+        if (!response.ok) {
+            throw new Error(data.message || data.error || `Erreur ${response.status}`);
+        }
+        
+        return { success: true, data: data, apiResponse: true };
+        
+    } catch (error) {
+        console.error("Erreur API:", error);
+        const localReservations = JSON.parse(localStorage.getItem('bejaia_reservations') || '[]');
+        const newReservation = {
+            ...payload,
+            id: Date.now(),
+            created_at: new Date().toISOString(),
+            saved_locally: true
+        };
+        localReservations.push(newReservation);
+        localStorage.setItem('bejaia_reservations', JSON.stringify(localReservations));
+        return { success: true, local: true, data: newReservation };
+    }
+};
+document.getElementById("uploadBtn").addEventListener("click", () => {
+    document.getElementById("paymentProof").click();
+});
+
+setTimeout(setupProofManagement, 100);
 
 </script>
 

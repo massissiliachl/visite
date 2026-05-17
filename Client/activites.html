@@ -9,6 +9,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+
+
+
+/* Styles pour le bouton d'upload */
+.proof-upload-area {
+    margin-bottom: 0.5rem;
+}
+
+.upload-btn {
+    background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 3rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.upload-btn:hover {
+    background: linear-gradient(135deg, #d32f2f, #8b6b53);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(211, 47, 47, 0.3);
+}
+
+.upload-btn i {
+    font-size: 1.1rem;
+}
         * {
             margin: 0;
             padding: 0;
@@ -864,13 +898,22 @@
                     <small>Envoyez le virement à ce compte et saisissez la référence de transaction ci-dessous.</small>
                 </div>
                 <div class="form-group"><label>Référence transaction</label><input type="text" id="transactionRef" placeholder="ex: 123456"></div>
-                <div class="form-group" id="paymentProofGroup">
-                    <label>Preuve de paiement (capture ou scan) *</label>
-                    <input type="file" id="paymentProof" accept="image/*" capture="environment">
-                    <small style="display:block;margin-top:0.45rem;color:#4e655f;">
-                        Formats acceptés: JPG, PNG, WEBP (max 5 Mo)
-                    </small>
-                </div>
+                <!-- SECTION PREUVE DE PAIEMENT - SÉLECTION DEPUIS LA GALERIE -->
+<div class="form-group" id="paymentProofGroup">
+    <label>📸 Preuve de paiement *</label>
+    <div class="proof-upload-area">
+        <button type="button" id="uploadBtn" class="upload-btn">
+            <i class="fas fa-folder-open"></i> Choisir une image depuis la galerie
+        </button>
+        <input type="file" id="paymentProof" accept="image/*" style="display:none;">
+        <small style="display:block; margin-top:0.5rem; color:#666;">📱 Formats acceptés : JPG, PNG, WEBP (max 5 Mo)</small>
+    </div>
+    <div id="proofPreviewContainer" style="margin-top: 0.8rem; display: none;">
+        <img id="proofPreviewImg" style="max-width:100%; max-height:150px; border-radius:10px; border:1px solid #ddd;">
+        <button type="button" id="clearProofBtn" style="display:block; margin-top:0.5rem; background:#dc2626; color:white; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">🗑 Supprimer</button>
+    </div>
+    <div class="error-message" id="proofError">⚠️ Veuillez ajouter une preuve de paiement</div>
+</div>
                 <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
                 <div class="price-summary"><strong>Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>Acompte 30% : <span id="depositAmount">0 DA</span></small></div>
                 <button type="submit" class="btn-submit">Confirmer la réservation</button>
@@ -939,8 +982,8 @@
                 icon: "fa-motorcycle", 
                 image: "assets/images/quad.jpeg", 
                 desc: "Randonnée quad (pas de course) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. À partir de 13h30 sans réservation premier arrivé première sortie.", 
-                hasChild: true, 
-                childPrice: 1000
+                hasChild: false,  
+                childPrice: 0     
             },
             { 
                 id: "parapente", 
@@ -1119,7 +1162,8 @@
             if (act && act.activityNote) {
                 let notes = act.activityNote;
                 if (!Array.isArray(notes)) notes = [notes];
-                noteBox.innerHTML = notes.map(note => `<div class="info-item"><span class="big-dot">?</span> ${note}</div>`).join("");
+                noteBox.innerHTML = notes.map(note => `<div class="info-item"><span class="big-dot">            <i class="fas fa-circle" style="color: #dc2626; font-size: 0.7rem;"></i>
+</span> ${note}</div>`).join("");
                 noteBox.className = "info-box info-warning";
             } else {
                 noteBox.innerHTML = "";
@@ -1345,7 +1389,7 @@
             const paymentProofFile = document.getElementById("paymentProof")?.files?.[0] || null;
 
             if (!validateFullName(fullName)) {
-                showToast("?? Veuillez entrer votre NOM et PR�NOM complets", "warning");
+                showToast(" Veuillez entrer votre NOM et PRENOM complets", "warning");
                 return;
             }
             if (!email || !phone || !date) {
@@ -1379,7 +1423,7 @@ try {
             if (paymentProofFile) {
                 const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
                 if (!allowedTypes.includes(paymentProofFile.type)) {
-                    showToast("Format image non support� (JPG, PNG, WEBP uniquement)", "error");
+                    showToast("Format image non supporte (JPG, PNG, WEBP uniquement)", "error");
                     return;
                 }
 
@@ -1413,12 +1457,12 @@ try {
                     const offre = selectedRadio.getAttribute('data-offre');
                     const capacite = selectedRadio.getAttribute('data-capacite');
                     selectedOption = `Offre ${offre} - ${capacite} personnes`;
-                    if (boueeAdded) selectedOption += " + Bou�e tract�e";
+                    if (boueeAdded) selectedOption += " + Bouee tractee";
                 }
             }
 
             if (payment === "PayPal") {
-                const message = `??? *NOUVELLE R�SERVATION PAYPAL - VISIT BEJAIA* ???\n\n?? *Client:* ${nom} ${prenom}\n?? *Email:* ${email}\n?? *T�l�phone:* ${phone}\n\n?? *Activit�:* ${currentAct.name}\n${selectedOption ? `?? *Option:* ${selectedOption}\n` : ''}?? *Date souhait�e:* ${date}\n?? *Personnes:* ${children > 0 ? children + ' enfant(s)' : '1 personne'}\n\n?? *Montant total:* ${total.toLocaleString('fr-DZ')} DA\n?? *Acompte 30%:* ${deposit.toLocaleString('fr-DZ')} DA\n\n?? *Mode de paiement:* PAYPAL\n\n?? *Demandes sp�ciales:* ${special || 'Aucune'}\n\n? *R�servation faite le:* ${new Date().toLocaleString('fr-FR')}`;
+                const message = `??? *NOUVELLE RESERVATION PAYPAL - VISIT BEJAIA* ???\n\n?? *Client:* ${nom} ${prenom}\n?? *Email:* ${email}\n?? *Telephone:* ${phone}\n\n?? *Activite:* ${currentAct.name}\n${selectedOption ? `?? *Option:* ${selectedOption}\n` : ''}?? *Date souhaitee:* ${date}\n?? *Personnes:* ${children > 0 ? children + ' enfant(s)' : '1 personne'}\n\n?? *Montant total:* ${total.toLocaleString('fr-DZ')} DA\n?? *Acompte 30%:* ${deposit.toLocaleString('fr-DZ')} DA\n\n?? *Mode de paiement:* PAYPAL\n\n?? *Demandes speciales:* ${special || 'Aucune'}\n\n? *Reservation faite le:* ${new Date().toLocaleString('fr-FR')}`;
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappNumber = "33619501708";
                 window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
@@ -1443,7 +1487,7 @@ try {
                 const result = await sendReservation(payload);
                 setLoading(false);
                 if (result.success) {
-                    const message = result.local ? "? R�servation sauvegard�e localement" : "? R�servation confirm�e !";
+                    const message = result.local ? " Reservation sauvegardee localement" : " Reservation confirmee !";
                     showToast(`${message} - Total: ${total.toLocaleString('fr-DZ')} DA`, "success");
                     setTimeout(() => {
                         closeModal();
@@ -1453,7 +1497,7 @@ try {
                         updateTotal();
                     }, 2000);
                 } else {
-                    showToast("? Erreur lors de la r�servation", "error");
+                    showToast(" Erreur lors de la reservation", "error");
                 }
             } catch (error) {
                 console.error("Erreur:", error);
@@ -1461,7 +1505,68 @@ try {
                 showToast("? Erreur: " + error.message, "error");
             }
         });
-
+//proof
+// ===== GESTION DE LA PREUVE DE PAIEMENT DEPUIS LA GALERIE =====
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadBtn = document.getElementById('uploadBtn');
+    const proofInput = document.getElementById('paymentProof');
+    const proofPreviewContainer = document.getElementById('proofPreviewContainer');
+    const proofPreviewImg = document.getElementById('proofPreviewImg');
+    const clearProofBtn = document.getElementById('clearProofBtn');
+    const proofError = document.getElementById('proofError');
+    
+    // Bouton pour ouvrir la galerie
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() {
+            proofInput.click();
+        });
+    }
+    
+    // Quand un fichier est sélectionné
+    if (proofInput) {
+        proofInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Vérifier le type
+                const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+                if (!allowedTypes.includes(file.type)) {
+                    showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error');
+                    proofInput.value = '';
+                    proofPreviewContainer.style.display = 'none';
+                    if (proofError) proofError.classList.remove('show');
+                    return;
+                }
+                
+                // Vérifier la taille (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('Image trop volumineuse (max 5 Mo)', 'error');
+                    proofInput.value = '';
+                    proofPreviewContainer.style.display = 'none';
+                    if (proofError) proofError.classList.remove('show');
+                    return;
+                }
+                
+                // Afficher l'aperçu
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    proofPreviewImg.src = e.target.result;
+                    proofPreviewContainer.style.display = 'block';
+                    if (proofError) proofError.classList.remove('show');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    // Bouton pour supprimer la preuve
+    if (clearProofBtn) {
+        clearProofBtn.addEventListener('click', function() {
+            proofInput.value = '';
+            proofPreviewContainer.style.display = 'none';
+            proofPreviewImg.src = '';
+        });
+    }
+});
         document.getElementById("closeModalBtn").addEventListener("click", closeModal);
         document.getElementById("modalOverlay").addEventListener("click", (e) => { 
             if (e.target === document.getElementById("modalOverlay")) closeModal(); 
