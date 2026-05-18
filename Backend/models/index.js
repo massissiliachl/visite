@@ -18,6 +18,6 @@ module.exports = {
   Reservation,
   Property,           // ✅ Doit être exporté
   PropertyReservation,
-  PropertyReservation,
+  ReservationAdmin,
    // ✅ Doit être exporté
 };
