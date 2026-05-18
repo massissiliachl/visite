@@ -44,7 +44,7 @@ app.use("/api/admin", adminRoutes);
 
 // 🔥 CORRECTION IMPORTANTE ICI
 console.log("ROUTE ADMIN CHARGÉE");
-app.use("/api/reservations-admin", reservationAdminRoute);
+app.use("/api/reservations-admin", ReservationAdminRoute);
 // test API
 app.get("/api/test", (req, res) => {
   res.json({ message: "API OK" });
