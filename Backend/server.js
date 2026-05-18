@@ -14,7 +14,7 @@ const availabilityRoutes = require("./routes/availabilityRoutes");
 const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
 
 // ⚠️ CORRECTION IMPORT (important)
-const reservationAdminRoute = require("./routes/reservationAdminRoute");
+const ReservationAdminRoute = require("./routes/ReservationAdminRoute");
 const app = express();
 
 /* =========================
