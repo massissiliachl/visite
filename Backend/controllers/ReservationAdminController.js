@@ -13,9 +13,14 @@ exports.createReservation = async (req, res) => {
       activite: req.body.activite,
       heure: req.body.heure || "--:--",
       date: req.body.date,
-      personnes: req.body.personnes || 1
-    });
-
+      personnes: req.body.personnes || 1,
+       // 🚤 BATEAU
+  slot: req.body.slot || null,
+  subslot: req.body.subslot || null,
+  bateau: req.body.bateau || null,
+  duree: req.body.duree || null
+});
+  
     res.status(201).json(reservation);
 
   } catch (err) {

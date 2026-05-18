@@ -737,7 +737,8 @@ async function addReservation() {
         activite: activite,
         heure: heure || "--:--",
         date: date || new Date().toISOString().split('T')[0],
-        personnes: personnes || "1"
+        personnes: personnes || "1",
+        
     };
 
     try {

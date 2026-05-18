@@ -29,6 +29,24 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
   personnes: {
     type: DataTypes.INTEGER,
     defaultValue: 1
+  },slot: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  
+  subslot: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  
+  bateau: {
+    type: DataTypes.STRING, // "1" ou "2"
+    allowNull: true
+  },
+  
+  duree: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 });
 
