@@ -6,36 +6,58 @@ const nodemailer = require("nodemailer");
 const path = require("path");
 
 const { sequelize } = require("./models");
+
+// ROUTES
 const adminRoutes = require("./routes/adminRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
 const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
+
+// ⚠️ CORRECTION IMPORT (important)
 const reservationAdminRoute = require("./routes/ReservationAdminRoute");
 
 const app = express();
 
-app.use(cors());
+/* =========================
+   MIDDLEWARES
+========================= */
+app.use(cors({
+  origin: "*"
+}));
+
 app.use(express.json({ limit: "25mb" }));
 app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 
-// Servir les fichiers statiques
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
-// ROUTES
+/* =========================
+   ROUTES API
+========================= */
+
+// IMPORTANT : cohérence avec frontend
 app.use("/api/reservations", reservationRoutes);
-app.use("/availability", availabilityRoutes);
+
+app.use("/api/availability", availabilityRoutes);
+
 app.use("/api/property-reservations", propertyReservationRoutes);
+
 app.use("/api/admin", adminRoutes);
-app.use("/api/reservation-admin", reservationAdminRoute);
+
+// 🔥 CORRECTION IMPORTANTE ICI
+app.use("/api/reservations-admin", reservationAdminRoute);
+
+// test API
 app.get("/api/test", (req, res) => {
   res.json({ message: "API OK" });
 });
 
-// Vérifier les variables d'environnement
+/* =========================
+   EMAIL (GMAIL)
+========================= */
+
 console.log("EMAIL_USER:", process.env.EMAIL_USER ? "Défini" : "MANQUANT");
 console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Défini" : "MANQUANT");
 
-// Créer le transporteur email
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -43,52 +65,70 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS
   }
 });
-// Vérifier la connexion email
-transporter.verify((error, success) => {
+
+transporter.verify((error) => {
   if (error) {
-    console.error("❌ Erreur de connexion email:", error);
+    console.error("❌ Erreur email:", error);
   } else {
     console.log("✅ Serveur email prêt");
   }
 });
 
-// Endpoint d'envoi d'email
+/* =========================
+   EMAIL ENDPOINT (désactivé)
+========================= */
 app.post("/send-email", (req, res) => {
   res.json({
     success: true,
     message: "Email feature disabled"
   });
 });
-// Endpoint pour les dates bloquées (correction du template string)
-app.get("/availability/:activityName", async (req, res) => {
+
+/* =========================
+   AVAILABILITY
+========================= */
+app.get("/api/availability/:activityName", async (req, res) => {
   try {
     const activityName = decodeURIComponent(req.params.activityName);
-    // Votre logique pour récupérer les dates bloquées
-    res.json([]); // Exemple: retourner un tableau vide
+
+    res.json([]);
   } catch (error) {
-    console.error("Erreur availability:", error);
+    console.error("❌ Availability error:", error);
     res.status(500).json({ error: error.message });
   }
 });
 
+/* =========================
+   404 HANDLER (IMPORTANT DEBUG)
+========================= */
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Route non trouvée",
+    path: req.originalUrl
+  });
+});
+
+/* =========================
+   START SERVER
+========================= */
 const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
-    console.log("🔄 Connexion à la base de données...");
+    console.log("🔄 Connexion DB...");
+
     await sequelize.authenticate();
-    console.log("✅ Base de données connectée");
-    
+    console.log("✅ DB connectée");
+
     await sequelize.sync({ alter: true });
-    console.log("✅ Tables synchronisées");
-    
+    console.log("✅ Tables sync");
+
     app.listen(PORT, () => {
-      console.log(`🚀 Serveur démarré sur le port ${PORT}`);
-      console.log(`📧 Endpoint email: http://localhost:${PORT}/send-email`);
+      console.log(`🚀 Serveur sur port ${PORT}`);
     });
-    
+
   } catch (err) {
-    console.log("❌ Erreur au démarrage:", err);
+    console.log("❌ ERREUR START SERVER:", err);
   }
 }
 
