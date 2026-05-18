@@ -14,8 +14,7 @@ const availabilityRoutes = require("./routes/availabilityRoutes");
 const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
 
 // ⚠️ CORRECTION IMPORT (important)
-const reservationAdminRoute = require("./routes/ReservationAdminRoute");
-
+const reservationAdminRoute = require("./routes/reservationAdminRoute");
 const app = express();
 
 /* =========================
@@ -44,8 +43,8 @@ app.use("/api/property-reservations", propertyReservationRoutes);
 app.use("/api/admin", adminRoutes);
 
 // 🔥 CORRECTION IMPORTANTE ICI
+console.log("ROUTE ADMIN CHARGÉE");
 app.use("/api/reservations-admin", reservationAdminRoute);
-
 // test API
 app.get("/api/test", (req, res) => {
   res.json({ message: "API OK" });

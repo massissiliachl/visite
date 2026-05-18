@@ -1,11 +1,11 @@
 const { ReservationAdmin } = require("../models");
 
+
 // ➕ Ajouter réservation
 exports.createReservation = async (req, res) => {
   try {
-    console.log("📝 Données reçues:", req.body);
-    
-    // Assurez-vous que toutes les données sont bien reçues
+    console.log("📦 BODY REÇU:", req.body);
+
     const reservation = await ReservationAdmin.create({
       nom: req.body.nom,
       prenom: req.body.prenom,
@@ -13,13 +13,16 @@ exports.createReservation = async (req, res) => {
       activite: req.body.activite,
       heure: req.body.heure || "--:--",
       date: req.body.date,
-      personnes: req.body.personnes || 1  // 🔥 AJOUTEZ CETTE LIGNE
+      personnes: req.body.personnes || 1
     });
-    
+
     res.status(201).json(reservation);
+
   } catch (err) {
-    console.error("❌ Erreur création:", err);
-    res.status(500).json({ error: err.message });
+    console.error("❌ ERREUR CREATE:", err);
+    res.status(500).json({
+      error: err.message
+    });
   }
 };
 
