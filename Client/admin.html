@@ -842,6 +842,10 @@
             <div class="nav-item" data-page="stats">
                 <i class="fas fa-chart-line"></i> <span>Statistiques</span>
             </div>
+            <!-- Dans la sidebar, ajoutez ce menu après "Statistiques" -->
+<div class="nav-item" data-page="employeurs">
+    <i class="fas fa-users"></i> <span>Gestion Employeurs</span>
+</div>
             <div class="nav-item" data-page="settings">
                 <i class="fas fa-cog"></i> <span>Paramètres</span>
             </div>
@@ -1016,7 +1020,78 @@
                     </table>
                 </div>
             </div>
+<!-- Page Gestion Employeurs - À ajouter après la page Paramètres -->
+<div id="page-employeurs" class="page-content">
+    <div class="top-bar">
+        <div class="page-title">
+            <h1><i class="fas fa-users"></i> Gestion des employeurs</h1>
+            <p>Créez et gérez les comptes employeurs</p>
+        </div>
+        <button id="refreshEmployersBtn" style="background:#f97316; border:none; padding:0.6rem 1.2rem; border-radius:2rem; color:white; cursor:pointer;">
+            <i class="fas fa-sync-alt"></i> Actualiser
+        </button>
+    </div>
 
+    <!-- Formulaire de création -->
+    <div class="bloquer-container" style="margin-bottom: 2rem;">
+        <h2><i class="fas fa-user-plus"></i> Créer un nouvel employeur</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+            <div class="date-picker-group">
+                <label>👤 Nom</label>
+                <input type="text" id="employeurNom" placeholder="Nom">
+            </div>
+            <div class="date-picker-group">
+                <label>👤 Prénom</label>
+                <input type="text" id="employeurPrenom" placeholder="Prénom">
+            </div>
+            <div class="date-picker-group">
+                <label>📧 Email</label>
+                <input type="email" id="employeurEmail" placeholder="email@exemple.com">
+            </div>
+            <div class="date-picker-group">
+                <label>🔒 Mot de passe</label>
+                <input type="password" id="employeurPassword" placeholder="Mot de passe">
+            </div>
+            <div class="date-picker-group">
+                <label>📞 Téléphone</label>
+                <input type="tel" id="employeurTelephone" placeholder="Téléphone">
+            </div>
+            <div class="date-picker-group">
+                <label>👔 Rôle</label>
+                <select id="employeurRole">
+                    <option value="employeur">Employeur</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn-primary" onclick="createEmployeur()" style="margin-top: 1rem;">
+            <i class="fas fa-save"></i> Créer le compte
+        </button>
+    </div>
+
+    <!-- Liste des employeurs -->
+    <div class="bloquer-container">
+        <h2><i class="fas fa-list"></i> Liste des employeurs</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom complet</th>
+                        <th>Email</th>
+                        <th>Téléphone</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeursTableBody">
+                    <tr><td colspan="7" style="text-align:center;">Chargement...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
             <!-- Page Statistiques -->
             <div id="page-stats" class="page-content">
                 <div class="top-bar">
@@ -1546,89 +1621,92 @@
 
         // ========== NAVIGATION ==========
         function showPage(pageName) {
-            document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active-page'));
-            const activePage = document.getElementById(`page-${pageName}`);
-            if (activePage) activePage.classList.add('active-page');
-            
-            if (pageName === 'reservations-hebergement') fetchPropertyReservations();
-            if (pageName === 'reservations') fetchReservations();
-            if (pageName === 'stats') updateStatsPage();
-            
-            const titles = {
-                'reservations': 'Gestion des réservations activités',
-                'reservations-hebergement': 'Gestion des réservations hébergements',
-                'bloquer': 'Bloquer une date',
-                'stats': 'Statistiques',
-                'settings': 'Paramètres'
-            };
-            const icons = {
-                'reservations': '<i class="fas fa-ticket-alt"></i>',
-                'reservations-hebergement': '<i class="fas fa-home"></i>',
-                'bloquer': '<i class="fas fa-ban"></i>',
-                'stats': '<i class="fas fa-chart-line"></i>',
-                'settings': '<i class="fas fa-cog"></i>'
-            };
-            const titleEl = document.querySelector('.page-title h1');
-            if (titleEl && titles[pageName]) titleEl.innerHTML = `${icons[pageName]} ${titles[pageName]}`;
+    document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active-page'));
+    const activePage = document.getElementById(`page-${pageName}`);
+    if (activePage) activePage.classList.add('active-page');
+    
+    if (pageName === 'reservations-hebergement') fetchPropertyReservations();
+    if (pageName === 'reservations') fetchReservations();
+    if (pageName === 'stats') updateStatsPage();
+    if (pageName === 'employeurs') fetchEmployeurs(); // AJOUTÉ
+    
+    const titles = {
+        'reservations': 'Gestion des réservations activités',
+        'reservations-hebergement': 'Gestion des réservations hébergements',
+        'bloquer': 'Bloquer une date',
+        'stats': 'Statistiques',
+        'settings': 'Paramètres',
+        'employeurs': 'Gestion des employeurs' // AJOUTÉ
+    };
+    const icons = {
+        'reservations': '<i class="fas fa-ticket-alt"></i>',
+        'reservations-hebergement': '<i class="fas fa-home"></i>',
+        'bloquer': '<i class="fas fa-ban"></i>',
+        'stats': '<i class="fas fa-chart-line"></i>',
+        'settings': '<i class="fas fa-cog"></i>',
+        'employeurs': '<i class="fas fa-users"></i>' // AJOUTÉ
+    };
+    const titleEl = document.querySelector('.page-title h1');
+    if (titleEl && titles[pageName]) titleEl.innerHTML = `${icons[pageName]} ${titles[pageName]}`;
+}
+
+// ========== EVENT LISTENERS ==========
+document.getElementById('searchInput')?.addEventListener('input', applyFiltersAndRender);
+document.getElementById('statusFilter')?.addEventListener('change', applyFiltersAndRender);
+document.getElementById('refreshBtn')?.addEventListener('click', () => fetchReservations());
+document.getElementById('refreshPropertyBtn')?.addEventListener('click', () => fetchPropertyReservations());
+document.getElementById('refreshEmployersBtn')?.addEventListener('click', () => fetchEmployeurs()); // AJOUTÉ
+document.getElementById('propertySearchInput')?.addEventListener('input', () => renderPropertyReservations());
+document.getElementById('propertyStatusFilter')?.addEventListener('change', () => renderPropertyReservations());
+document.getElementById('closeDetailModal')?.addEventListener('click', () => document.getElementById('detailModal').classList.remove('active'));
+document.getElementById('detailModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('detailModal')) document.getElementById('detailModal').classList.remove('active'); });
+document.getElementById('activitySelect')?.addEventListener('change', (e) => loadBlockedDates(e.target.value));
+
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+        showPage(item.dataset.page);
+        // Fermer le menu mobile après clic
+        if (window.innerWidth <= 768) {
+            document.querySelector('.sidebar')?.classList.remove('mobile-open');
+            document.getElementById('sidebarOverlay')?.classList.remove('active');
+            document.body.style.overflow = '';
         }
+    });
+});
 
-        // ========== EVENT LISTENERS ==========
-        document.getElementById('searchInput')?.addEventListener('input', applyFiltersAndRender);
-        document.getElementById('statusFilter')?.addEventListener('change', applyFiltersAndRender);
-        document.getElementById('refreshBtn')?.addEventListener('click', () => fetchReservations());
-        document.getElementById('refreshPropertyBtn')?.addEventListener('click', () => fetchPropertyReservations());
-        document.getElementById('propertySearchInput')?.addEventListener('input', () => renderPropertyReservations());
-        document.getElementById('propertyStatusFilter')?.addEventListener('change', () => renderPropertyReservations());
-        document.getElementById('closeDetailModal')?.addEventListener('click', () => document.getElementById('detailModal').classList.remove('active'));
-        document.getElementById('detailModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('detailModal')) document.getElementById('detailModal').classList.remove('active'); });
-        document.getElementById('activitySelect')?.addEventListener('change', (e) => loadBlockedDates(e.target.value));
-        
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
-                showPage(item.dataset.page);
-                // Fermer le menu mobile après clic
-                if (window.innerWidth <= 768) {
-                    document.querySelector('.sidebar')?.classList.remove('mobile-open');
-                    document.getElementById('sidebarOverlay')?.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            });
-        });
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('proof-preview')) e.target.classList.toggle('zoomed');
+});
 
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('proof-preview')) e.target.classList.toggle('zoomed');
-        });
+// ========== MENU MOBILE CORRIGÉ ==========
+const menuToggleBtn = document.getElementById('menuToggle');
+const sidebarElement = document.querySelector('.sidebar');
+const overlayElement = document.getElementById('sidebarOverlay');
 
-        // ========== MENU MOBILE CORRIGÉ ==========
-        const menuToggleBtn = document.getElementById('menuToggle');
-        const sidebarElement = document.querySelector('.sidebar');
-        const overlayElement = document.getElementById('sidebarOverlay');
+function toggleMobileMenu() {
+    if (sidebarElement) {
+        sidebarElement.classList.toggle('mobile-open');
+    }
+    if (overlayElement) {
+        overlayElement.classList.toggle('active');
+    }
+    // Empêcher le scroll du body quand le menu est ouvert
+    if (sidebarElement?.classList.contains('mobile-open')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
 
-        function toggleMobileMenu() {
-            if (sidebarElement) {
-                sidebarElement.classList.toggle('mobile-open');
-            }
-            if (overlayElement) {
-                overlayElement.classList.toggle('active');
-            }
-            // Empêcher le scroll du body quand le menu est ouvert
-            if (sidebarElement?.classList.contains('mobile-open')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-
-        if (menuToggleBtn) {
-            menuToggleBtn.addEventListener('click', toggleMobileMenu);
-        }
-        if (overlayElement) {
-            overlayElement.addEventListener('click', toggleMobileMenu);
-        }
-
-        // Réinitialiser l'affichage du menu lors du redimensionnement
+if (menuToggleBtn) {
+    menuToggleBtn.addEventListener('click', toggleMobileMenu);
+}
+if (overlayElement) {
+    overlayElement.addEventListener('click', toggleMobileMenu);
+}
+   // Réinitialiser l'affichage du menu lors du redimensionnement
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768) {
                 if (sidebarElement?.classList.contains('mobile-open')) {
@@ -1639,6 +1717,194 @@
             }
         });
 
+
+
+        // Ajoutez ces fonctions dans la section <script>
+
+// API pour les employeurs
+const USERS_API = 'https://visitebejai.onrender.com/api/users/employeurs';
+
+// ========== FONCTIONS POUR LES EMPLOYEURS (CORRIGÉES) ==========
+
+// Récupérer la liste des employeurs
+async function fetchEmployeurs() {
+    try {
+        const response = await fetch(`${API_BASE}/auth/employeurs`);
+        if (!response.ok) throw new Error('Erreur chargement');
+        const data = await response.json();
+        renderEmployeurs(data);
+    } catch (error) {
+        console.error('Erreur:', error);
+        document.getElementById('employeursTableBody').innerHTML = 
+            '<tr><td colspan="7">❌ Erreur chargement des employeurs</td></tr>';
+    }
+}
+
+// Afficher la liste des employeurs
+function renderEmployeurs(employeurs) {
+    const tbody = document.getElementById('employeursTableBody');
+    if (!employeurs || employeurs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7">Aucun employeur trouvé</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = employeurs.map(user => `
+        <tr>
+            <td>#${user.id}</td>
+            <td>${user.nom} ${user.prenom}</td>
+            <td>${user.email}</td>
+            <td>${user.telephone || '—'}</td>
+            <td>
+                <span class="status-badge ${user.role === 'admin' ? 'status-acceptee' : 'status-en_attente'}">
+                    ${user.role === 'admin' ? 'Admin' : 'Employeur'}
+                </span>
+            </td>
+            <td>
+                <span class="status-badge ${user.isActive ? 'status-acceptee' : 'status-refusee'}">
+                    ${user.isActive ? 'Actif' : 'Inactif'}
+                </span>
+            </td>
+            <td class="action-btns">
+                <button class="btn-icon" onclick="toggleEmployeurStatus(${user.id}, ${!user.isActive})" title="${user.isActive ? 'Désactiver' : 'Activer'}">
+                    <i class="fas ${user.isActive ? 'fa-ban' : 'fa-check-circle'}"></i>
+                </button>
+                <button class="btn-icon btn-refuse" onclick="deleteEmployeur(${user.id})" title="Supprimer">
+                    <i class="fas fa-trash"></i>
+                </button>
+                <button class="btn-icon btn-view" onclick="resetEmployeurPassword(${user.id})" title="Réinitialiser mot de passe">
+                    <i class="fas fa-key"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Créer un nouvel employeur
+async function createEmployeur() {
+    const nom = document.getElementById('employeurNom').value.trim();
+    const prenom = document.getElementById('employeurPrenom').value.trim();
+    const email = document.getElementById('employeurEmail').value.trim();
+    const password = document.getElementById('employeurPassword').value;
+    const telephone = document.getElementById('employeurTelephone').value.trim();
+    const role = document.getElementById('employeurRole').value;
+    
+    if (!nom || !prenom || !email || !password) {
+        alert('Veuillez remplir tous les champs obligatoires');
+        return;
+    }
+    
+    if (password.length < 6) {
+        alert('Le mot de passe doit contenir au moins 6 caractères');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nom,
+                prenom,
+                email,
+                password,
+                telephone: telephone || null,
+                role: role || 'employeur'
+            })
+        });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erreur création');
+        }
+        
+        alert('✅ Compte employeur créé avec succès !');
+        
+        // Réinitialiser le formulaire
+        document.getElementById('employeurNom').value = '';
+        document.getElementById('employeurPrenom').value = '';
+        document.getElementById('employeurEmail').value = '';
+        document.getElementById('employeurPassword').value = '';
+        document.getElementById('employeurTelephone').value = '';
+        
+        // Rafraîchir la liste
+        fetchEmployeurs();
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('❌ Erreur: ' + error.message);
+    }
+}
+
+// Changer le statut d'un employeur
+async function toggleEmployeurStatus(userId, newStatus) {
+    const action = newStatus ? 'activer' : 'désactiver';
+    if (!confirm(`Confirmer la ${action} de ce compte ?`)) return;
+    
+    try {
+        const response = await fetch(`${API_BASE}/auth/${userId}/status`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isActive: newStatus })
+        });
+        
+        if (!response.ok) throw new Error('Erreur modification');
+        
+        alert(`✅ Compte ${action} avec succès`);
+        fetchEmployeurs();
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('❌ Erreur lors de la modification');
+    }
+}
+
+// Supprimer un employeur
+async function deleteEmployeur(userId) {
+    if (!confirm('⚠️ Supprimer définitivement ce compte ? Cette action est irréversible.')) return;
+    
+    try {
+        const response = await fetch(`${API_BASE}/auth/${userId}`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) throw new Error('Erreur suppression');
+        
+        alert('✅ Compte supprimé avec succès');
+        fetchEmployeurs();
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('❌ Erreur lors de la suppression');
+    }
+}
+
+// Réinitialiser le mot de passe
+async function resetEmployeurPassword(userId) {
+    const newPassword = prompt('Entrez le nouveau mot de passe (minimum 6 caractères):');
+    if (!newPassword) return;
+    
+    if (newPassword.length < 6) {
+        alert('Le mot de passe doit contenir au moins 6 caractères');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`${API_BASE}/auth/${userId}/reset-password`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: newPassword })
+        });
+        
+        if (!response.ok) throw new Error('Erreur réinitialisation');
+        
+        alert('✅ Mot de passe réinitialisé avec succès');
+        fetchEmployeurs();
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        alert('❌ Erreur lors de la réinitialisation');
+    }
+}
         // ========== INITIALISATION ==========
         checkAdminSession();
 

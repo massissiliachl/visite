@@ -3,6 +3,7 @@ const Reservation = require("./Reservation");
 const Property = require("./Property");              // ✅ Doit être présent
 const PropertyReservation = require("./PropertyReservation"); // ✅ Doit être présent
 const ReservationAdmin = require("./ReservationAdmin");
+const users = require("./users");
 // Associations
 Property.hasMany(PropertyReservation, {
   foreignKey: "propertyId",
@@ -19,5 +20,6 @@ module.exports = {
   Property,           // ✅ Doit être exporté
   PropertyReservation,
   ReservationAdmin,
+  users,
    // ✅ Doit être exporté
 };

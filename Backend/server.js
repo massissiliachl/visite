@@ -12,8 +12,9 @@ const adminRoutes = require("./routes/adminRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
 const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
+const authRoutes = require("./routes/authRoutes");
 
-// ⚠️ CORRECTION IMPORT (important)
+
 const ReservationAdminRoute = require("./routes/ReservationAdminRoute");
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/api/property-reservations", propertyReservationRoutes);
 
 app.use("/api/admin", adminRoutes);
 
+app.use("/api/auth", authRoutes);
 // 🔥 CORRECTION IMPORTANTE ICI
 console.log("ROUTE ADMIN CHARGÉE");
 app.use("/api/reservations-admin", ReservationAdminRoute);
