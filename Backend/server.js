@@ -16,6 +16,24 @@ const emailRoutes = require("./routes/emailRoutes");
 
 const ReservationAdminRoute = require("./routes/ReservationAdminRoute");
 const app = express();
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+  },
+  // ⬇️ AJOUTE CES OPTIONS ⬇️
+  tls: {
+      rejectUnauthorized: false
+  },
+  connectionTimeout: 60000,
+  greetingTimeout: 60000,
+  socketTimeout: 60000,
+  debug: true,
+  logger: true
+});
 
 /* =========================
    MIDDLEWARES
