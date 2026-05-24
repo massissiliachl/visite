@@ -29,6 +29,8 @@ app.use(express.urlencoded({ extended: true, limit: "25mb" }));
 
 app.use(express.static(path.join(__dirname, "public")));
 
+const clientDir = path.join(__dirname, "..", "Client");
+
 /* =========================
    ROUTES API
 ========================= */
@@ -73,13 +75,24 @@ app.get("/api/availability/:activityName", async (req, res) => {
 });
 
 /* =========================
+   FRONTEND (Client)
+========================= */
+app.use(express.static(clientDir));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(clientDir, "index.html"));
+});
+
+/* =========================
    404 HANDLER (IMPORTANT DEBUG)
 ========================= */
 app.use((req, res) => {
-  res.status(404).json({
-    error: "Route non trouvée",
-    path: req.originalUrl
-  });
+  if (req.path.startsWith("/api") || req.path === "/send-email") {
+    return res.status(404).json({
+      error: "Route non trouvée",
+      path: req.originalUrl
+    });
+  }
+  res.status(404).sendFile(path.join(clientDir, "index.html"));
 });
 
 /* =========================
