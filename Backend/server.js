@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
 const path = require("path");
 
 const { sequelize } = require("./models");
@@ -13,7 +12,7 @@ const reservationRoutes = require("./routes/reservationRoutes");
 const availabilityRoutes = require("./routes/availabilityRoutes");
 const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
 const authRoutes = require("./routes/authRoutes");
-
+const emailRoutes = require("./routes/emailRoutes");
 
 const ReservationAdminRoute = require("./routes/ReservationAdminRoute");
 const app = express();
@@ -55,35 +54,9 @@ app.get("/api/test", (req, res) => {
 /* =========================
    EMAIL (GMAIL)
 ========================= */
-
 console.log("EMAIL_USER:", process.env.EMAIL_USER ? "Défini" : "MANQUANT");
 console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Défini" : "MANQUANT");
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-
-transporter.verify((error) => {
-  if (error) {
-    console.error("❌ Erreur email:", error);
-  } else {
-    console.log("✅ Serveur email prêt");
-  }
-});
-
-/* =========================
-   EMAIL ENDPOINT (désactivé)
-========================= */
-app.post("/send-email", (req, res) => {
-  res.json({
-    success: true,
-    message: "Email feature disabled"
-  });
-});
+app.use("/", emailRoutes);
 
 /* =========================
    AVAILABILITY

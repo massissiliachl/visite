@@ -3230,16 +3230,16 @@
                 </div>
                 <form class="contact-form" id="contactForm">
                     <div class="form-group">
-                        <input type="text" id="name" placeholder="Votre nom" required>
+                        <input type="text" id="contactName" placeholder="Votre nom" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" placeholder="Votre email" required>
+                        <input type="email" id="contactEmail" placeholder="Votre email" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" id="phone" placeholder="Votre téléphone">
+                        <input type="tel" id="contactPhone" placeholder="Votre téléphone">
                     </div>
                     <div class="form-group">
-                        <textarea id="message" rows="5" placeholder="Votre message" required></textarea>
+                        <textarea id="contactMessage" rows="5" placeholder="Votre message" required></textarea>
                     </div>
                     <button type="submit" class="btn">Envoyer le message</button>
                 </form>
@@ -3280,6 +3280,10 @@
 
     <script>
 
+    // API : local en dev, Render en production
+    const API_BASE = (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1' || !location.hostname)
+        ? 'http://localhost:3000'
+        : 'https://visitebejai.onrender.com';
 
     // ========== ANIMATION AU SCROLL ==========
     const observerOptions = {
@@ -3401,28 +3405,37 @@
     // let autoRotate = setInterval(nextSlide, 4000);
     // carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
     // carousel.addEventListener('mouseleave', () => autoRotate = setInterval(nextSlide, 4000));
-// Email
+// Email (formulaire contact)
 document.getElementById("contactForm").addEventListener("submit", async function(e){
             e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
             const data = {
                 to: "visitebejaia@gmail.com",
                 subject: "✈️ VisitBejaia - Nouveau message client",
                 message: `
-Nom : ${document.getElementById("name").value}
-Email : ${document.getElementById("email").value}
-Téléphone : ${document.getElementById("phone").value}
-Message : ${document.getElementById("message").value}
+Nom : ${document.getElementById("contactName").value}
+Email : ${document.getElementById("contactEmail").value}
+Téléphone : ${document.getElementById("contactPhone").value}
+Message : ${document.getElementById("contactMessage").value}
                 `
             };
             try {
-                await fetch("https://visitebejai.onrender.com/send-email", {
+                if (submitBtn) submitBtn.disabled = true;
+                const response = await fetch(`${API_BASE}/send-email`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data)
                 });
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok || result.error || result.message === "Email feature disabled") {
+                    throw new Error(result.error || result.details || result.message || "Échec de l'envoi");
+                }
                 alert("Message envoyé !");
+                e.target.reset();
             } catch (error) {
-                alert("Erreur envoi message");
+                alert("Erreur envoi message : " + (error.message || "réseau"));
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
             }
         });
     function createParticles() {
@@ -4458,7 +4471,7 @@ function updateTotal() {
         }
 
         async function sendReservation(payload) {
-            const API_URL = 'https://visitebejai.onrender.com/api/reservations';
+            const API_URL = `${API_BASE}/api/reservations`;
             console.log("Envoi à l'API:", payload);
             
             try {
@@ -4540,7 +4553,7 @@ function updateTotal() {
 
             // Vérifier si la date est bloquée
             try {
-                const blockedResponse = await fetch('https://visitebejai.onrender.com/availability/${encodeURIComponent(currentAct.name)}');
+                const blockedResponse = await fetch(`${API_BASE}/api/availability/${encodeURIComponent(currentAct.name)}`);
                 if (blockedResponse.ok) {
                     const blockedDates = await blockedResponse.json();
                     if (blockedDates.includes(date)) {
@@ -4788,7 +4801,7 @@ window.fileToBase64 = function(file) {
 // Modifier la fonction sendReservation (garder l'originale mais adapter)
 const originalSendReservation = window.sendReservation;
 window.sendReservation = async function(payload) {
-    const API_URL = 'https://visitebejai.onrender.com/api/reservations';
+    const API_URL = `${API_BASE}/api/reservations`;
     console.log("Envoi à l'API:", payload);
     
     try {
