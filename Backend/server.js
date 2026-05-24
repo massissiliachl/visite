@@ -53,7 +53,12 @@ transporter.verify((error, success) => {
 // =========================
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://visitbejaia.org",
+      "https://www.visitbejaia.org"
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
   })
 );
 
