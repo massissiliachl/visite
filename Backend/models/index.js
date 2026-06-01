@@ -1,7 +1,7 @@
 const sequelize = require("./database");
 const Reservation = require("./Reservation");
-const Property = require("./Property");              // ✅ Doit être présent
-const PropertyReservation = require("./PropertyReservation"); // ✅ Doit être présent
+const Property = require("./Property");          
+const PropertyReservation = require("./PropertyReservation"); 
 const ReservationAdmin = require("./ReservationAdmin");
 const users = require("./users");
 // Associations
@@ -17,9 +17,9 @@ PropertyReservation.belongsTo(Property, {
 module.exports = {
   sequelize,
   Reservation,
-  Property,           // ✅ Doit être exporté
+  Property,           
   PropertyReservation,
   ReservationAdmin,
   users,
-   // ✅ Doit être exporté
+   
 };

@@ -4,7 +4,7 @@ const sequelize = require("./database");
 
 const Property = sequelize.define("Property", {
   id: {
-    type: DataTypes.STRING,  // ✅ STRING pour 'v1', 'v2', etc
+    type: DataTypes.STRING,  
     primaryKey: true,
   },
   title: {
