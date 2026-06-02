@@ -4,8 +4,9 @@ const sequelize = require("./database");
 
 const Property = sequelize.define("Property", {
   id: {
-    type: DataTypes.STRING,  
+    type: DataTypes.STRING,
     primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   title: {
     type: DataTypes.STRING,
@@ -24,7 +25,22 @@ const Property = sequelize.define("Property", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  images: DataTypes.TEXT,
+  images: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    defaultValue: '[]',
+    get() {
+      const raw = this.getDataValue('images');
+      try {
+        return raw ? JSON.parse(raw) : [];
+      } catch (err) {
+        return [];
+      }
+    },
+    set(value) {
+      this.setDataValue('images', JSON.stringify(value || []));
+    }
+  },
 }, {
   tableName: "properties",
   timestamps: true,

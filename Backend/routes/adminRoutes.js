@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 
 const adminController = require("../controllers/adminController");
-const auth = require("../middleware/auth");
 
 const ADMIN = {
     email: "admin@visitbejaia.com",
@@ -47,21 +46,18 @@ router.get(
 // CREATE hébergement
 router.post(
     "/properties",
-    auth,
     adminController.createProperty
 );
 
 // UPDATE hébergement
 router.put(
     "/properties/:id",
-    auth,
     adminController.updateProperty
 );
 
 // DELETE hébergement
 router.delete(
     "/properties/:id",
-    auth,
     adminController.deleteProperty
 );
 
