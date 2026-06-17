@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visit Béjaïa - Réservations Bateau (Admin)</title>
+<title>Visit Béjaïa - Réservations (Admin)</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -139,19 +139,26 @@ header h1 {
     color: #0a2540;
 }
 
-input, select {
+input, select, textarea {
     padding: 10px 12px;
     margin: 0;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 14px;
     transition: all 0.3s;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-input:focus, select:focus {
+input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: #0077b6;
     box-shadow: 0 0 0 2px rgba(0,119,182,0.2);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 40px;
+    max-height: 120px;
 }
 
 button {
@@ -299,7 +306,7 @@ tr:hover {
 
 .schedule-table td {
     text-align: center;
-    vertical-align: middle;
+    vertical-align: top;
     padding: 8px;
     border: 1px solid #e0e0e0;
 }
@@ -311,25 +318,38 @@ tr:hover {
 }
 
 .boat-cell {
-    min-width: 250px;
-    min-height: 80px;
+    min-width: 280px;
     background: #f9f9f9;
 }
 
 .boat-reservation {
     background: #e8f5e9;
     padding: 8px;
-    margin: 3px;
+    margin: 5px 0;
     border-radius: 8px;
     font-size: 11px;
     border-left: 3px solid #4caf50;
     text-align: left;
 }
 
+.boat-reservation.conflict {
+    background: #ffebee;
+    border-left-color: #f44336;
+}
+
 .boat-free {
     color: #999;
     font-style: italic;
     padding: 10px;
+}
+
+.boat-occupied {
+    background: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    text-align: center;
 }
 
 .delete-boat {
@@ -368,111 +388,187 @@ h2 {
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* ========== STYLES POUR L'IMPRESSION ========== */
+/* Calendrier style */
+.calendar-container {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.calendar-nav {
+    background: #0a2540;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.calendar-day-header {
+    font-weight: bold;
+    padding: 8px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.calendar-day {
+    padding: 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+}
+
+.calendar-day:hover {
+    background: #f97316;
+    color: white;
+}
+
+.calendar-day.selected {
+    background: #0077b6;
+    color: white;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    cursor: default;
+}
+
+.calendar-day.has-reservations {
+    background: #ff9800;
+    color: white;
+}
+
+.calendar-day.today {
+    border: 2px solid #f97316;
+    font-weight: bold;
+}
+
+/* Print styles */
 @media print {
-    .admin-panel,
-    .form,
-    .actions,
-    .edit-mode-indicator,
-    .info,
-    .search-section,
-    button:not(.no-print) {
+    .admin-panel, .form, .actions, .edit-mode-indicator, .info, .search-section, .calendar-container, button:not(.no-print) {
         display: none !important;
     }
-    
-    body {
-        background: white;
-        margin: 0;
-        padding: 0;
-        font-size: 14pt !important;
-    }
-    
-    .container {
-        padding: 0;
-        margin: 0;
-        width: 100%;
-    }
-    
-    h1 {
-        font-size: 24pt !important;
-        margin-bottom: 20pt !important;
-        color: #0a2540 !important;
-    }
-    
-    h2 {
-        font-size: 20pt !important;
-        margin-top: 25pt !important;
-        margin-bottom: 15pt !important;
-        color: #0a2540 !important;
-        page-break-after: avoid;
-    }
-    
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 15pt 0;
-        font-size: 12pt !important;
-        page-break-inside: avoid;
-    }
-    
-    th {
-        background: #0a2540 !important;
-        color: white !important;
-        padding: 10pt 8pt !important;
-        font-size: 13pt !important;
-        font-weight: bold;
-        text-align: center;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-    
-    td {
-        padding: 8pt 6pt !important;
-        border: 1px solid #ddd;
-        font-size: 11pt !important;
-        text-align: center;
-    }
-    
-    .schedule-table th {
-        background: #1b5e20 !important;
-    }
-    
-    .schedule-table td {
-        padding: 10pt 6pt !important;
-    }
-    
-    .time-slot {
-        font-weight: bold;
-        background: #f0f0f0 !important;
-        font-size: 12pt !important;
-    }
-    
-    .boat-reservation {
-        font-size: 10pt !important;
-        padding: 5pt;
-        break-inside: avoid;
-        page-break-inside: avoid;
-    }
-    
-    header {
-        background: white;
-        color: #0a2540;
-        padding: 10pt;
-        margin-bottom: 20pt;
-    }
-    
-    header h1 {
-        color: #0a2540 !important;
-    }
+    body { background: white; font-size: 12pt; }
+    .container { padding: 0; }
+    table { box-shadow: none; }
+    th { background: #0a2540 !important; color: white !important; -webkit-print-color-adjust: exact; }
 }
 
-.pdf-print {
-    background: white !important;
-    transform: scale(1);
+@media (max-width: 750px) {
+    .admin-controls, .form, .search-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .form-group { width: 100%; }
 }
 
-.pdf-print .no-print {
-    display: none !important;
+/* Styles pour les champs de paiement */
+.payment-fields {
+    background: #f0f7ff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #0077b6;
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.payment-fields .form-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.payment-fields .form-group label {
+    color: #0077b6;
+}
+
+.payment-fields .form-group .total-label {
+    color: #1b5e20;
+    font-weight: bold;
+}
+
+.payment-fields .form-group .rest-label {
+    color: #c62828;
+    font-weight: bold;
+}
+
+.payment-fields input {
+    border-color: #0077b6;
+}
+
+.payment-fields .rest-input {
+    background: #fff3e0;
+    font-weight: bold;
+    color: #c62828;
+    border-color: #f44336;
+}
+
+.payment-fields .rest-input:focus {
+    border-color: #f44336;
+    box-shadow: 0 0 0 2px rgba(244,67,54,0.2);
+}
+
+/* Styles pour la note */
+.note-field {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.note-field .form-group {
+    width: 100%;
+}
+
+.note-field textarea {
+    width: 100%;
+    border-color: #9c27b0;
+    background: #faf0ff;
+}
+
+.note-field textarea:focus {
+    border-color: #9c27b0;
+    box-shadow: 0 0 0 2px rgba(156,39,176,0.2);
+}
+
+.note-field label {
+    color: #9c27b0 !important;
+}
+
+/* Style pour la note dans le tableau */
+.note-cell {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.note-cell:hover {
+    white-space: normal;
+    overflow: visible;
+    background: #faf0ff;
+    position: relative;
+    z-index: 10;
 }
 </style>
 </head>
@@ -480,91 +576,94 @@ h2 {
 <body>
 
 <header>
-<h1>🌊 Visit Béjaïa - Réservations Bateau (Administrateur)</h1>
+<h1>🌊 Visit Béjaïa - Réservations (Administrateur)</h1>
 </header>
 
 <div class="container">
 
 <div class="info" id="clock"></div>
 
-<!-- ================= PANEL ADMIN POUR MODIFIER LES HORAIRES ================= -->
+<!-- ================= CALENDRIER ================= -->
+<div class="calendar-container no-print">
+    <div class="calendar-header">
+        <button class="calendar-nav" onclick="changeMonth(-1)">◀ Mois précédent</button>
+        <h3 id="monthYear" style="margin:0;"></h3>
+        <button class="calendar-nav" onclick="changeMonth(1)">Mois suivant ▶</button>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+    <p style="font-size: 12px; margin-top: 10px; color: #666;">
+        📅 Cliquez sur une date pour filtrer | 🟠 = réservations ce jour
+    </p>
+</div>
+
+<!-- ================= PANEL ADMIN ================= -->
 <div class="admin-panel no-print">
     <h3>⚙️ Administration des créneaux horaires</h3>
     <div class="admin-controls">
         <div class="form-group">
             <label>➕ Ajouter un créneau</label>
-            <input type="text" id="newSlot" placeholder="Ex: 19h-21h">
+            <input type="text" id="newSlot" placeholder="Ex: 09h-11h">
         </div>
         <button onclick="addTimeSlot()">Ajouter créneau</button>
-        <button onclick="enableDeleteMode()" id="deleteModeBtn" style="background:#dc3545;">🗑️ Supprimer un créneau</button>
+        <button onclick="enableDeleteMode()" id="deleteModeBtn" style="background:#dc3545;">🗑️ Supprimer créneau</button>
         <button onclick="resetToDefaultSlots()" style="background:#ff9800;">🔄 Réinitialiser</button>
     </div>
     <div class="slot-list" id="slotList"></div>
-    <p style="font-size: 12px; color: #666; margin-top: 10px;">
-        💡 Astuce: Cliquez sur un créneau pour le modifier | Mode suppression pour supprimer
-    </p>
 </div>
 
-<!-- ================= FORM CLIENT ================= -->
+<!-- ================= FORM CLIENT AVEC PAIEMENT ET NOTE ================= -->
 <div class="form no-print">
-    <div class="form-group">
-        <label>Nom</label>
-        <input id="nom" placeholder="Nom">
-    </div>
-    <div class="form-group">
-        <label>Prénom</label>
-        <input id="prenom" placeholder="Prénom">
-    </div>
-    <div class="form-group">
-        <label>Téléphone</label>
-        <input id="tel" placeholder="Téléphone">
-    </div>
-    <div class="form-group">
-        <label>Personnes</label>
-        <input id="personnes" type="number" placeholder="Personnes" value="1">
-    </div>
+    <div class="form-group"><label>Nom</label><input id="nom" placeholder="Nom"></div>
+    <div class="form-group"><label>Prénom</label><input id="prenom" placeholder="Prénom"></div>
+    <div class="form-group"><label>Téléphone</label><input id="tel" placeholder="0555123456"></div>
+    <div class="form-group"><label>Personnes</label><input id="personnes" type="number" value="1" min="1"></div>
     <div class="form-group">
         <label>Activité</label>
         <select id="activite">
-            <option>Bateau</option>
-            <option>Visite guidée</option>
-            <option>Quad</option>
-            <option>Cheval</option>
-            <option>Jetski</option>
-            <option>Parapente</option>
+            <option>Bateau</option><option>Visite guidée</option><option>Quad</option>
+            <option>Cheval</option><option>Jetski</option><option>Parapente</option>
         </select>
     </div>
-    <div class="form-group">
-        <label>Heure</label>
-        <input id="heure" type="time">
+    <div class="form-group"><label>Heure</label><input id="heure" type="time"></div>
+    <div class="form-group"><label>Date</label><input id="date" type="date"></div>
+    
+    <!-- Champs de paiement -->
+    <div class="payment-fields">
+        <div class="form-group">
+            <label class="total-label">💰 Total à payer (DA)</label>
+            <input type="number" id="totalAPayer" placeholder="Ex: 6000" min="1" step="100" required oninput="calculerReste()">
+        </div>
+        <div class="form-group">
+            <label>💳 Versement (DA)</label>
+            <input type="number" id="versement" placeholder="0" min="0" step="100" oninput="calculerReste()">
+        </div>
+        <div class="form-group">
+            <label class="rest-label">📊 Reste à payer (DA)</label>
+            <input type="number" id="resteAPayer" placeholder="0" readonly class="rest-input">
+        </div>
     </div>
-    <div class="form-group">
-        <label>Date</label>
-        <input id="date" type="date">
+    
+    <!-- Champ Note / Remarque -->
+    <div class="note-field">
+        <div class="form-group">
+            <label>📝 Note / Remarque</label>
+            <textarea id="note" placeholder="Ajouter une note ou remarque..." rows="2"></textarea>
+        </div>
     </div>
+    
     <button onclick="addReservation()">➕ Ajouter</button>
 </div>
 
-<!-- ================= SECTION RECHERCHE ================= -->
+<!-- ================= RECHERCHE ================= -->
 <div class="search-section no-print">
-    <div class="search-title">
-        🔍 Recherche avancée
-    </div>
+    <div class="search-title">🔍 Recherche avancée</div>
     <div class="search-filters">
-        <div class="form-group">
-            <label>Date</label>
-            <input type="date" id="searchDate">
-        </div>
-        <div class="form-group">
-            <label>Nom du client</label>
-            <input type="text" id="searchName" placeholder="Nom ou prénom...">
-        </div>
+        <div class="form-group"><label>Date</label><input type="date" id="searchDate"></div>
+        <div class="form-group"><label>Nom</label><input type="text" id="searchName" placeholder="Nom ou prénom"></div>
         <button onclick="searchReservations()">🔍 Rechercher</button>
         <button onclick="clearSearch()" class="clear-search">🗑️ Effacer</button>
     </div>
-    <div class="search-stats" id="searchStats">
-        📊 Affichage de toutes les réservations
-    </div>
+    <div class="search-stats" id="searchStats">📊 Affichage de toutes les réservations</div>
 </div>
 
 <!-- ================= ACTIONS ================= -->
@@ -573,367 +672,546 @@ h2 {
     <button onclick="printTable()">🖨️ Imprimer</button>
 </div>
 
-<!-- ================= TABLE CLIENT ================= -->
+<!-- ================= TABLE CLIENT AVEC PAIEMENT ET NOTE ================= -->
 <h2>📋 Liste des réservations clients</h2>
 <table id="table">
     <thead>
-        <tr><th>ID</th><th>Nom</th><th>Prénom</th><th>Tél</th><th>Pers</th><th>Activité</th><th>Heure</th><th>Date</th><th>Action</th></tr>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Tél</th>
+            <th>Pers</th>
+            <th>Activité</th>
+            <th>Heure</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Versement</th>
+            <th>Reste</th>
+            <th>Note</th>
+            <th>Action</th>
+        </tr>
     </thead>
     <tbody id="tableBody"></tbody>
 </table>
 
-<!-- ================= BATEAU AVEC CRÉNEAUX DYNAMIQUES ================= -->
-<h2>🚤 Réservation Bateau - Créneaux de 30 minutes</h2>
+<!-- ================= BATEAU AVEC CRÉNEAUX ================= -->
+<h2>🚤 Réservation Bateau - Créneaux disponibles</h2>
 
 <div class="form no-print">
-    <div class="form-group">
-        <label>Nom</label>
-        <input id="bnom" placeholder="Nom">
-    </div>
-    <div class="form-group">
-        <label>Prénom</label>
-        <input id="bprenom" placeholder="Prénom">
-    </div>
-    <div class="form-group">
-        <label>Téléphone</label>
-        <input id="btel" placeholder="Téléphone">
-    </div>
-    <div class="form-group">
-        <label>Durée</label>
+    <div class="form-group"><label>Nom</label><input id="bnom" placeholder="Nom"></div>
+    <div class="form-group"><label>Prénom</label><input id="bprenom" placeholder="Prénom"></div>
+    <div class="form-group"><label>Téléphone</label><input id="btel" placeholder="0555123456"></div>
+    <div class="form-group"><label>Date</label><input type="date" id="bdate"></div>
+    <div class="form-group"><label>Durée</label>
         <select id="bcircuit">
-            <option value="30">30 min</option>
             <option value="60">1h</option>
             <option value="90">1h30</option>
             <option value="120">2h</option>
+            <option value="150">2h30</option>
+            <option value="180">3h</option>
+            <option value="210">3h30</option>
         </select>
     </div>
-    <div class="form-group">
-        <label>Créneau principal</label>
-        <select id="bslot"></select>
+    <div class="form-group"><label>Heure de début</label><select id="bstarttime"></select></div>
+    <div class="form-group"><label>Bateau</label>
+        <select id="bboat"><option value="1">Bateau 1</option><option value="2">Bateau 2</option></select>
     </div>
-    <div class="form-group">
-        <label>Sous-créneau (30min)</label>
-        <select id="bsubslot"></select>
+    
+    <!-- Champs de paiement pour bateau -->
+    <div class="payment-fields">
+        <div class="form-group">
+            <label class="total-label">💰 Total à payer (DA)</label>
+            <input type="number" id="btotalAPayer" placeholder="Ex: 16000" min="1" step="100" required oninput="calculerResteBateau()">
+        </div>
+        <div class="form-group">
+            <label>💳 Versement (DA)</label>
+            <input type="number" id="bversement" placeholder="0" min="0" step="100" oninput="calculerResteBateau()">
+        </div>
+        <div class="form-group">
+            <label class="rest-label">📊 Reste à payer (DA)</label>
+            <input type="number" id="bresteAPayer" placeholder="0" readonly class="rest-input">
+        </div>
     </div>
-    <div class="form-group">
-        <label>Bateau</label>
-        <select id="bboat">
-            <option value="1">Bateau 1</option>
-            <option value="2">Bateau 2</option>
-        </select>
+    
+    <!-- Champ Note pour bateau -->
+    <div class="note-field">
+        <div class="form-group">
+            <label>📝 Note / Remarque</label>
+            <textarea id="bnote" placeholder="Ajouter une note ou remarque..." rows="2"></textarea>
+        </div>
     </div>
+    
     <button onclick="addBoat()">🚤 Réserver</button>
 </div>
 
 <div class="schedule-container">
     <table class="schedule-table" id="boatTable">
-        <thead id="boatTableHeader">
-            <tr><th>Créneau</th><th>Bateau 1</th><th>Bateau 2</th></tr>
-        </thead>
+        <thead><tr><th>Heure de début</th><th>Bateau 1</th><th>Bateau 2</th></tr></thead>
         <tbody id="boatTableBody"></tbody>
     </table>
 </div>
 
 </div>
 
-<div class="edit-mode-indicator no-print" id="editModeIndicator">
-    ✏️ Admin: Cliquez sur un créneau pour le modifier
-</div>
+<div class="edit-mode-indicator no-print">✏️ Admin: Cliquez créneau pour modifier</div>
 
 <script>
 
-// ================= CONFIGURATION API =================
-const API_BASE_URL = 'https://visitebejai.onrender.com/api/reservations-admin';
+const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || !location.hostname;
+const API_BASE_URL = isLocalHost
+    ? (location.port === '3000' ? `${window.location.origin}/api/reservations-admin` : 'http://127.0.0.1:3000/api/reservations-admin')
+    : 'https://visitebejai.onrender.com/api/reservations-admin';
 
-// ================= GESTION DES CRÉNEAUX DYNAMIQUES =================
+// Tarifs bateau par durée (DA) — pré-remplissage automatique
+const BOAT_PRICE_BY_MINUTES = {
+    60: 16000,
+    90: 20000,
+    120: 20000,
+    150: 25000,
+    180: 35000,
+    210: 40000
+};
+
+function normalizeReservation(raw) {
+    if (!raw) return raw;
+    const total = parseFloat(raw.totalAPayer ?? raw.total_a_payer ?? raw.total) || 0;
+    const versement = parseFloat(raw.versement) || 0;
+    const reste = raw.resteAPayer != null
+        ? (parseFloat(raw.resteAPayer) || 0)
+        : Math.max(0, total - versement);
+    return {
+        ...raw,
+        totalAPayer: total,
+        versement,
+        resteAPayer: reste,
+        note: (raw.note && String(raw.note).trim()) || "Aucune note"
+    };
+}
+
+function mergeSavedReservation(sent, saved) {
+    const normalized = normalizeReservation(saved);
+    return normalizeReservation({ ...sent, ...normalized });
+}
+
+function suggestBoatTotal() {
+    const minutes = parseInt(document.getElementById("bcircuit")?.value, 10);
+    const totalInput = document.getElementById("btotalAPayer");
+    if (!totalInput || !BOAT_PRICE_BY_MINUTES[minutes]) return;
+    if (!totalInput.value || parseFloat(totalInput.value) <= 0) {
+        totalInput.value = BOAT_PRICE_BY_MINUTES[minutes];
+        calculerResteBateau();
+    }
+}
+
+// ================= VARIABLES =================
 let defaultSlots = ["09h-11h", "11h-13h", "13h-15h", "15h-17h", "17h-19h"];
 let timeSlots = JSON.parse(localStorage.getItem("timeSlots")) || [...defaultSlots];
 let deleteMode = false;
-
-// Variables pour la recherche
 let allReservationsData = [];
+let reservationsData = [];
 let currentSearchFilter = { date: "", name: "" };
+let currentCalendarDate = new Date();
+let selectedCalendarDate = "";
 
-function generateSubSlots(slot) {
-    let [start, end] = slot.split('-');
-    let startHour = parseInt(start.replace('h', ''));
-    let endHour = parseInt(end.replace('h', ''));
-    let subSlots = [];
-    
-    for (let hour = startHour; hour < endHour; hour++) {
-        let startTime = `${hour.toString().padStart(2, '0')}h${hour === startHour ? '00' : '00'}`;
-        let endTime = `${hour.toString().padStart(2, '0')}h30`;
-        subSlots.push(`${startTime}-${endTime}`);
-        
-        let startTime2 = `${hour.toString().padStart(2, '0')}h30`;
-        let endTime2 = `${(hour + 1).toString().padStart(2, '0')}h00`;
-        if (hour + 1 <= endHour) {
-            subSlots.push(`${startTime2}-${endTime2}`);
-        }
-    }
-    return subSlots;
+// ================= FONCTIONS DE CALCUL DE PAIEMENT =================
+function calculerReste() {
+    const total = parseFloat(document.getElementById('totalAPayer').value) || 0;
+    const versement = parseFloat(document.getElementById('versement').value) || 0;
+    const reste = total - versement;
+    document.getElementById('resteAPayer').value = reste >= 0 ? reste : 0;
 }
 
-function updateSubSlotOptions() {
-    let selectedSlot = document.getElementById("bslot").value;
-    let subSlotSelect = document.getElementById("bsubslot");
-    if (subSlotSelect && selectedSlot) {
-        let subSlots = generateSubSlots(selectedSlot);
-        subSlotSelect.innerHTML = subSlots.map(slot => `<option value="${slot}">${slot}</option>`).join('');
+function calculerResteBateau() {
+    const total = parseFloat(document.getElementById('btotalAPayer').value) || 0;
+    const versement = parseFloat(document.getElementById('bversement').value) || 0;
+    const reste = total - versement;
+    document.getElementById('bresteAPayer').value = reste >= 0 ? reste : 0;
+}
+
+// ================= CALENDRIER =================
+function buildCalendar() {
+    const year = currentCalendarDate.getFullYear();
+    const month = currentCalendarDate.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const startDayOfWeek = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    
+    document.getElementById("monthYear").innerText = `${firstDay.toLocaleString('fr', { month: 'long' })} ${year}`;
+    
+    let grid = '<div class="calendar-day-header">Lun</div><div class="calendar-day-header">Mar</div><div class="calendar-day-header">Mer</div>';
+    grid += '<div class="calendar-day-header">Jeu</div><div class="calendar-day-header">Ven</div><div class="calendar-day-header">Sam</div><div class="calendar-day-header">Dim</div>';
+    
+    let startOffset = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1;
+    
+    for (let i = 0; i < startOffset; i++) {
+        grid += '<div class="calendar-day empty"></div>';
+    }
+    
+    const today = new Date().toISOString().split('T')[0];
+    
+    for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const hasReservations = allReservationsData.some(r => r.date === dateStr);
+        let classes = "calendar-day";
+        if (dateStr === today) classes += " today";
+        if (hasReservations) classes += " has-reservations";
+        if (selectedCalendarDate === dateStr) classes += " selected";
+        grid += `<div class="${classes}" onclick="selectCalendarDate('${dateStr}')">${d}</div>`;
+    }
+    
+    document.getElementById("calendarGrid").innerHTML = grid;
+}
+
+function changeMonth(delta) {
+    currentCalendarDate.setMonth(currentCalendarDate.getMonth() + delta);
+    buildCalendar();
+}
+
+function selectCalendarDate(dateStr) {
+    selectedCalendarDate = dateStr;
+    document.getElementById("searchDate").value = dateStr;
+    searchReservations();
+    buildCalendar();
+}
+
+// ================= CRÉNEAUX =================
+function getAllAvailableStartTimes() {
+    let startTimes = [];
+    timeSlots.forEach(slot => {
+        let [start, end] = slot.split('-');
+        let startHour = parseInt(start.replace('h', ''));
+        let endHour = parseInt(end.replace('h', ''));
+        for (let hour = startHour; hour < endHour; hour++) {
+            startTimes.push(`${hour.toString().padStart(2,'0')}:00`);
+            startTimes.push(`${hour.toString().padStart(2,'0')}:30`);
+        }
+    });
+    return startTimes;
+}
+
+function updateStartTimeOptions() {
+    let startTimeSelect = document.getElementById("bstarttime");
+    if (startTimeSelect) {
+        let startTimes = getAllAvailableStartTimes();
+        startTimeSelect.innerHTML = startTimes.map(time => `<option value="${time}">${time}</option>`).join('');
     }
 }
 
 function saveSlots() {
     localStorage.setItem("timeSlots", JSON.stringify(timeSlots));
-    updateSlotSelect();
+    updateStartTimeOptions();
     renderBoatTable();
     renderSlotList();
-}
-
-function updateSlotSelect() {
-    let select = document.getElementById("bslot");
-    if (select) {
-        select.innerHTML = timeSlots.map(slot => `<option value="${slot}">${slot}</option>`).join('');
-        updateSubSlotOptions();
-    }
 }
 
 function renderSlotList() {
     let container = document.getElementById("slotList");
     if (!container) return;
-    container.innerHTML = `<strong>📋 Créneaux existants (${timeSlots.length}):</strong><br>` +
+    container.innerHTML = `<strong>📋 Créneaux (${timeSlots.length}):</strong><br>` +
         timeSlots.map(slot => `<span class="slot-tag ${deleteMode ? 'delete-mode' : ''}" onclick="${deleteMode ? `deleteSlot('${slot}')` : `editSlot('${slot}')`}">${slot} ${deleteMode ? '🗑️' : '✏️'}</span>`).join('');
 }
 
 function addTimeSlot() {
     let newSlot = document.getElementById("newSlot").value.trim();
-    if (!newSlot) { alert("Veuillez entrer un créneau (ex: 19h-21h)"); return; }
-    if (timeSlots.includes(newSlot)) { alert("Ce créneau existe déjà !"); return; }
+    if (!newSlot) return alert("Entrez un créneau (ex: 09h-11h)");
+    if (timeSlots.includes(newSlot)) return alert("Existe déjà");
     timeSlots.push(newSlot);
     timeSlots.sort();
     saveSlots();
     document.getElementById("newSlot").value = "";
-    alert(`✅ Créneau "${newSlot}" ajouté avec succès !`);
+    alert("✅ Créneau ajouté");
 }
 
 function editSlot(oldSlot) {
     let newSlot = prompt("Modifier le créneau (format: 09h-11h):", oldSlot);
-    if (newSlot && newSlot !== oldSlot) {
-        let index = timeSlots.indexOf(oldSlot);
-        if (index !== -1) {
-            if (timeSlots.includes(newSlot)) { alert("Ce créneau existe déjà !"); return; }
-            timeSlots[index] = newSlot;
-            let boatData = JSON.parse(localStorage.getItem("boatData")) || {};
-            if (boatData[oldSlot]) {
-                boatData[newSlot] = boatData[oldSlot];
-                delete boatData[oldSlot];
-                localStorage.setItem("boatData", JSON.stringify(boatData));
-            }
+    if (newSlot && newSlot !== oldSlot && !timeSlots.includes(newSlot)) {
+        let idx = timeSlots.indexOf(oldSlot);
+        if (idx !== -1) {
+            timeSlots[idx] = newSlot;
             saveSlots();
-            renderBoat();
-            alert(`✅ Créneau modifié en "${newSlot}"`);
+            alert("✅ Modifié");
         }
     }
 }
 
 function deleteSlot(slot) {
-    if (confirm(`Supprimer définitivement le créneau "${slot}" ?`)) {
-        let index = timeSlots.indexOf(slot);
-        if (index !== -1) {
-            timeSlots.splice(index, 1);
-            let boatData = JSON.parse(localStorage.getItem("boatData")) || {};
-            if (boatData[slot]) {
-                delete boatData[slot];
-                localStorage.setItem("boatData", JSON.stringify(boatData));
-            }
-            saveSlots();
-            renderBoat();
-            alert(`✅ Créneau "${slot}" supprimé`);
-        }
-    }
-    disableDeleteMode();
-}
-
-function enableDeleteMode() {
-    deleteMode = true;
-    renderSlotList();
-    document.getElementById("deleteModeBtn").style.background = "#c82333";
-    document.getElementById("deleteModeBtn").innerHTML = "❌ Annuler suppression";
-    setTimeout(() => { if (deleteMode) alert("Mode suppression activé. Cliquez sur un créneau pour le supprimer."); }, 100);
-}
-
-function disableDeleteMode() {
-    deleteMode = false;
-    renderSlotList();
-    document.getElementById("deleteModeBtn").style.background = "#dc3545";
-    document.getElementById("deleteModeBtn").innerHTML = "🗑️ Supprimer un créneau";
-}
-
-function resetToDefaultSlots() {
-    if (confirm("⚠️ Réinitialiser tous les créneaux par défaut ?")) {
-        timeSlots = [...defaultSlots];
-        let newBoatData = {};
-        timeSlots.forEach(slot => { newBoatData[slot] = { "1": [], "2": [] }; });
-        localStorage.setItem("boatData", JSON.stringify(newBoatData));
+    if (confirm(`Supprimer le créneau "${slot}" ?`)) {
+        timeSlots = timeSlots.filter(s => s !== slot);
         saveSlots();
-        renderBoat();
-        alert("✅ Créneaux réinitialisés !");
+        disableDeleteMode();
+        alert("✅ Créneau supprimé");
     }
 }
 
-// ================= GESTION DES RÉSERVATIONS CLIENTS =================
-let reservationsData = [];
+function enableDeleteMode() { deleteMode = true; renderSlotList(); document.getElementById("deleteModeBtn").innerHTML = "❌ Annuler"; setTimeout(()=> alert("Mode suppression: cliquez sur un créneau"), 100); }
+function disableDeleteMode() { deleteMode = false; renderSlotList(); document.getElementById("deleteModeBtn").innerHTML = "🗑️ Supprimer créneau"; }
+function resetToDefaultSlots() {
+    if(confirm("Réinitialiser tous les créneaux ?")){
+        timeSlots = [...defaultSlots];
+        saveSlots();
+        alert("✅ Créneaux réinitialisés");
+    }
+}
 
+// ================= GESTION RÉSERVATIONS =================
 async function loadReservations() {
     try {
-        const response = await fetch(API_BASE_URL);
-        if (response.ok) {
-            allReservationsData = await response.json();
-            reservationsData = [...allReservationsData];
-            console.log("✅ Données chargées depuis le serveur");
-        } else {
-            console.log("⚠️ Erreur serveur, utilisation localStorage");
-            allReservationsData = JSON.parse(localStorage.getItem("reservationsData")) || [];
-            reservationsData = [...allReservationsData];
-        }
-    } catch (error) {
-        console.error("Erreur chargement:", error);
-        allReservationsData = JSON.parse(localStorage.getItem("reservationsData")) || [];
-        reservationsData = [...allReservationsData];
-    }
+        let res = await fetch(API_BASE_URL);
+        if(res.ok) allReservationsData = (await res.json()).map(normalizeReservation);
+        else allReservationsData = (JSON.parse(localStorage.getItem("reservationsData")) || []).map(normalizeReservation);
+    } catch(e) { allReservationsData = (JSON.parse(localStorage.getItem("reservationsData")) || []).map(normalizeReservation); }
+    reservationsData = [...allReservationsData];
     renderReservationsTable();
-    renderBoatTableFromAPI(); // Charger le tableau bateau depuis l'API
+    renderBoatTable();
+    buildCalendar();
 }
 
-// Fonction pour afficher les réservations bateau dans le tableau dédié (depuis l'API)
-async function renderBoatTableFromAPI() {
-    let tbody = document.getElementById("boatTableBody");
-    if (!tbody) return;
+function saveReservationsToLocal() { localStorage.setItem("reservationsData", JSON.stringify(allReservationsData)); }
+
+// Vérification de conflit pour toute activité
+function checkTimeConflict(date, heure, activite, excludeId = null) {
+    return allReservationsData.some(r => 
+        r.id !== excludeId &&
+        r.date === date &&
+        r.heure === heure &&
+        r.activite === activite
+    );
+}
+
+// Vérification spécifique pour bateau avec durée (chevauchement)
+function checkBoatConflictWithDuration(date, startTime, boatNumber, durationMinutes, excludeId = null) {
+    let startHour = parseInt(startTime.split(':')[0]);
+    let startMinute = parseInt(startTime.split(':')[1]);
+    let startTotalMinutes = startHour * 60 + startMinute;
+    let endTotalMinutes = startTotalMinutes + durationMinutes;
     
-    // Récupérer toutes les réservations bateau depuis l'API
-    let boatReservations = [];
-    try {
-        const response = await fetch(API_BASE_URL);
-        if (response.ok) {
-            const allData = await response.json();
-            boatReservations = allData.filter(r => r.activite === "Bateau");
-            console.log("🚤 Réservations bateau chargées depuis l'API:", boatReservations.length);
-        } else {
-            // Fallback localStorage
-            const localData = JSON.parse(localStorage.getItem("reservationsData")) || [];
-            boatReservations = localData.filter(r => r.activite === "Bateau");
-        }
-    } catch (error) {
-        console.error("Erreur chargement bateaux:", error);
-        const localData = JSON.parse(localStorage.getItem("reservationsData")) || [];
-        boatReservations = localData.filter(r => r.activite === "Bateau");
-    }
+    return allReservationsData.some(r => {
+        if (r.id === excludeId) return false;
+        if (r.activite !== "Bateau") return false;
+        if (r.date !== date) return false;
+        if (r.bateau !== `Bateau ${boatNumber}`) return false;
+        
+        let rStartHour = parseInt(r.heure.split(':')[0]);
+        let rStartMinute = parseInt(r.heure.split(':')[1]);
+        let rStartTotalMinutes = rStartHour * 60 + rStartMinute;
+        
+        let rDuration = parseInt(r.duree) || 60;
+        let rEndTotalMinutes = rStartTotalMinutes + rDuration;
+        
+        // Vérifier si les créneaux se chevauchent
+        return (startTotalMinutes < rEndTotalMinutes && endTotalMinutes > rStartTotalMinutes);
+    });
+}
+
+async function renderBoatTable() {
+    let tbody = document.getElementById("boatTableBody");
+    if(!tbody) return;
+    
+    let boatReservations = allReservationsData.filter(r => r.activite === "Bateau");
+    let currentDate = document.getElementById("bdate").value || new Date().toISOString().split('T')[0];
+    let startTimes = getAllAvailableStartTimes();
     
     tbody.innerHTML = "";
     
-    timeSlots.forEach(slot => {
+    for(let startTime of startTimes) {
         let row = tbody.insertRow();
-        let timeCell = row.insertCell(0);
-        timeCell.className = "time-slot";
-        timeCell.innerHTML = `<strong>${slot}</strong>`;
+        row.insertCell(0).innerHTML = `<strong>${startTime}</strong>`;
         
-        for (let boatNum of ["1", "2"]) {
+        for(let b of ["1","2"]) {
             let cell = row.insertCell();
-            cell.className = "boat-cell";
             
-            // Filtrer les réservations pour ce créneau et ce bateau
-            const reservationsForSlot = boatReservations.filter(r => 
-                r.slot === slot && 
-                r.bateau === `Bateau ${boatNum}`
-            );
+            // Vérifier si ce créneau est occupé par une réservation
+            let isOccupied = false;
+            let occupyingReservation = null;
             
-            if (reservationsForSlot.length > 0) {
-                cell.innerHTML = reservationsForSlot.map((r, idx) => `
+            for(let res of boatReservations) {
+                if(res.date !== currentDate) continue;
+                if(res.bateau !== `Bateau ${b}`) continue;
+                
+                let resStartHour = parseInt(res.heure.split(':')[0]);
+                let resStartMinute = parseInt(res.heure.split(':')[1]);
+                let resStartTotal = resStartHour * 60 + resStartMinute;
+                let resDuration = parseInt(res.duree) || 60;
+                let resEndTotal = resStartTotal + resDuration;
+                
+                let currentHour = parseInt(startTime.split(':')[0]);
+                let currentMinute = parseInt(startTime.split(':')[1]);
+                let currentTotal = currentHour * 60 + currentMinute;
+                
+                if(currentTotal >= resStartTotal && currentTotal < resEndTotal) {
+                    isOccupied = true;
+                    occupyingReservation = res;
+                    break;
+                }
+            }
+            
+            // Vérifier les réservations qui commencent exactement à cette heure
+            let exactReservations = boatReservations.filter(r => {
+                return r.date === currentDate && r.heure === startTime && r.bateau === `Bateau ${b}`;
+            });
+            
+            if(exactReservations.length) {
+                cell.innerHTML = exactReservations.map(r => `
                     <div class="boat-reservation">
-                        <strong>⏰ ${r.subslot || r.heure}</strong><br>
-                        <strong>👤 ${escapeHtml(r.nom)} ${escapeHtml(r.prenom)}</strong><br>
+                        <strong>📅 ${r.date}</strong><br>
+                        <strong>⏰ ${r.heure}</strong><br>
+                        👤 ${escapeHtml(r.nom)} ${escapeHtml(r.prenom)}<br>
                         📞 ${escapeHtml(r.tel)}<br>
-                        ⏱️ ${escapeHtml(r.duree || r.circuit || "30 min")}<br>
-                        <button class="delete-boat" onclick="deleteBoatReservationFromAPI(${r.id}, '${slot}', '${boatNum}', ${idx})">✖ Supprimer</button>
+                        ⏱️ ${r.duree}<br>
+                        💰 Total: ${r.totalAPayer || 0} DA<br>
+                        💳 Versement: ${r.versement || 0} DA<br>
+                        📊 Reste: ${r.resteAPayer || 0} DA<br>
+                        📝 ${escapeHtml(r.note) || 'Aucune note'}<br>
+                        <button class="delete-boat" onclick="deleteBoatReservation(${r.id})">✖ Supprimer</button>
                     </div>
                 `).join('');
+            } else if(isOccupied && occupyingReservation) {
+                cell.innerHTML = `<div class="boat-occupied">⛔ Occupé jusqu'à ${getEndTime(occupyingReservation.heure, occupyingReservation.duree)}<br>Réservation: ${occupyingReservation.nom} ${occupyingReservation.prenom}<br>${occupyingReservation.duree}</div>`;
             } else {
                 cell.innerHTML = '<div class="boat-free">✓ Libre</div>';
             }
         }
-    });
+    }
 }
 
-// Supprimer une réservation bateau depuis l'API
-async function deleteBoatReservationFromAPI(reservationId, slot, boatNumber, index) {
-    if (!confirm("Supprimer cette réservation bateau ?")) return;
-    
+function getEndTime(startTime, durationStr) {
+    let startHour = parseInt(startTime.split(':')[0]);
+    let startMinute = parseInt(startTime.split(':')[1]);
+    let duration = parseInt(durationStr);
+    let endTotal = startHour * 60 + startMinute + duration;
+    let endHour = Math.floor(endTotal / 60);
+    let endMinute = endTotal % 60;
+    return `${endHour.toString().padStart(2,'0')}:${endMinute.toString().padStart(2,'0')}`;
+}
+
+async function deleteBoatReservation(id) {
+    if(!confirm("Supprimer cette réservation ?")) return;
     try {
-        const response = await fetch(`${API_BASE_URL}/${reservationId}`, { method: 'DELETE' });
-        if (response.ok) {
-            // Supprimer aussi de allReservationsData
-            allReservationsData = allReservationsData.filter(r => r.id !== reservationId);
-            reservationsData = [...allReservationsData];
+        await fetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });
+        allReservationsData = allReservationsData.filter(r => r.id !== id);
+        if(currentSearchFilter.date || currentSearchFilter.name) searchReservations();
+        else { reservationsData = [...allReservationsData]; renderReservationsTable(); }
+        renderBoatTable();
+        buildCalendar();
+        alert("✅ Réservation supprimée");
+    } catch(e) {
+        allReservationsData = allReservationsData.filter(r => r.id !== id);
+        saveReservationsToLocal();
+        renderReservationsTable();
+        renderBoatTable();
+        buildCalendar();
+        alert("✅ Supprimée localement");
+    }
+}
+
+// ================= AJOUT BATEAU =================
+async function addBoat() {
+    let date = document.getElementById("bdate").value;
+    if(!date) {
+        alert("Veuillez choisir une date");
+        return;
+    }
+    
+    let startTime = document.getElementById("bstarttime").value;
+    let boatNumber = document.getElementById("bboat").value;
+    let nom = document.getElementById("bnom").value.trim();
+    let prenom = document.getElementById("bprenom").value.trim();
+    let tel = document.getElementById("btel").value.trim();
+    let duration = parseInt(document.getElementById("bcircuit").value);
+    let totalAPayer = parseFloat(document.getElementById("btotalAPayer").value) || 0;
+    let versement = parseFloat(document.getElementById("bversement").value) || 0;
+    let resteAPayer = totalAPayer - versement;
+    if(resteAPayer < 0) resteAPayer = 0;
+    let note = document.getElementById("bnote").value.trim();
+    
+    if(!nom || !prenom) { alert("Nom et prénom requis"); return; }
+    if(!tel) { alert("Numéro de téléphone requis"); return; }
+    if(totalAPayer <= 0) { alert("Veuillez saisir le total à payer (supérieur à 0 DA)"); return; }
+    if(versement > totalAPayer) { alert("Le versement ne peut pas dépasser le total à payer"); return; }
+    if(!note) note = "Aucune note";
+    
+    // Vérifier si l'heure de début est valide
+    let durationStr = duration + " min";
+    let endTime = getEndTime(startTime, durationStr);
+    
+    // Vérifier si la réservation dépasse la plage horaire
+    let allStartTimes = getAllAvailableStartTimes();
+    let lastStartTime = allStartTimes[allStartTimes.length - 1];
+    let lastStartHour = parseInt(lastStartTime.split(':')[0]);
+    let lastStartMinute = parseInt(lastStartTime.split(':')[1]);
+    let lastStartTotal = lastStartHour * 60 + lastStartMinute;
+    
+    let endHour = parseInt(endTime.split(':')[0]);
+    let endMinute = parseInt(endTime.split(':')[1]);
+    let endTotal = endHour * 60 + endMinute;
+    
+    if(endTotal > lastStartTotal + 30) {
+        alert(`❌ La réservation dépasse la plage horaire disponible (jusqu'à ${lastStartTime})`);
+        return;
+    }
+    
+    // Vérification conflit avec durée
+    if(checkBoatConflictWithDuration(date, startTime, boatNumber, duration)) {
+        alert(`❌ CONFLIT !\nLe Bateau ${boatNumber} est déjà réservé sur ce créneau ou un créneau qui se chevauche le ${date}\nVeuillez choisir un autre bateau ou horaire.`);
+        return;
+    }
+    
+    // Vérification conflit horaire simple
+    if(checkTimeConflict(date, startTime, "Bateau")) {
+        alert(`❌ CONFLIT HORAIRE !\nUne réservation Bateau existe déjà à ${startTime} le ${date}\nVeuillez choisir un autre horaire.`);
+        return;
+    }
+    
+    let reservationDB = {
+            nom, prenom, tel,
+            activite: "Bateau",
+            heure: startTime,
+            date: date,
+            personnes: 1,
+            bateau: `Bateau ${boatNumber}`,
+            duree: duration + " min",
+            totalAPayer: totalAPayer,
+            versement: versement,
+            resteAPayer: resteAPayer,
+            note: note
+        };
+
+    try {
+        const response = await fetch(API_BASE_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reservationDB)
+        });
+        
+        if(response.ok) {
+            const saved = mergeSavedReservation(reservationDB, await response.json());
+            allReservationsData.push(saved);
             saveReservationsToLocal();
-            
-            // Recharger les tableaux
-            renderReservationsTable();
-            renderBoatTableFromAPI();
-            alert("✅ Réservation bateau supprimée de la base !");
+            if(currentSearchFilter.date || currentSearchFilter.name) searchReservations();
+            else { reservationsData = [...allReservationsData]; renderReservationsTable(); }
+            renderBoatTable();
+            buildCalendar();
+            alert(`✅ Réservation confirmée !\nBateau ${boatNumber} - ${date} à ${startTime} (${duration} min)\n💰 Total: ${totalAPayer} DA - Versement: ${versement} DA - Reste: ${resteAPayer} DA\n📝 Note: ${note || 'Aucune'}`);
         } else {
-            throw new Error("Erreur suppression");
+            const errBody = await response.json().catch(() => ({}));
+            throw new Error(errBody.error || "Erreur serveur");
         }
-    } catch (error) {
-        console.error("Erreur suppression:", error);
-        alert("⚠️ Erreur lors de la suppression");
+    } catch(error) {
+        alert(`❌ ${error.message || "Impossible d'enregistrer sur le serveur"}`);
+        return;
     }
+    
+    document.getElementById("bnom").value = "";
+    document.getElementById("bprenom").value = "";
+    document.getElementById("btel").value = "";
+    document.getElementById("btotalAPayer").value = "";
+    document.getElementById("bversement").value = "";
+    document.getElementById("bresteAPayer").value = "";
+    document.getElementById("bnote").value = "";
 }
 
-// Fonction de recherche
-function searchReservations() {
-    const searchDate = document.getElementById("searchDate").value;
-    const searchName = document.getElementById("searchName").value.trim().toLowerCase();
-    
-    currentSearchFilter = { date: searchDate, name: searchName };
-    
-    let filtered = [...allReservationsData];
-    
-    if (searchDate) {
-        filtered = filtered.filter(r => r.date === searchDate);
-    }
-    
-    if (searchName) {
-        filtered = filtered.filter(r => 
-            (r.nom && r.nom.toLowerCase().includes(searchName)) ||
-            (r.prenom && r.prenom.toLowerCase().includes(searchName))
-        );
-    }
-    
-    reservationsData = filtered;
-    renderReservationsTable();
-    
-    const statsDiv = document.getElementById("searchStats");
-    if (searchDate || searchName) {
-        let message = `🔍 Résultat: ${filtered.length} réservation(s) trouvée(s)`;
-        if (searchDate) message += ` | Date: ${searchDate}`;
-        if (searchName) message += ` | Recherche: "${searchName}"`;
-        statsDiv.innerHTML = message;
-    } else {
-        statsDiv.innerHTML = `📊 Affichage de toutes les réservations (${filtered.length} total)`;
-    }
-}
-
-function clearSearch() {
-    document.getElementById("searchDate").value = "";
-    document.getElementById("searchName").value = "";
-    currentSearchFilter = { date: "", name: "" };
-    reservationsData = [...allReservationsData];
-    renderReservationsTable();
-    
-    const statsDiv = document.getElementById("searchStats");
-    statsDiv.innerHTML = `📊 Affichage de toutes les réservations (${reservationsData.length} total)`;
-}
-
+// ================= AJOUT RÉSERVATION GÉNÉRIQUE =================
 async function addReservation() {
     let nom = document.getElementById("nom").value.trim();
     let prenom = document.getElementById("prenom").value.trim();
@@ -942,299 +1220,192 @@ async function addReservation() {
     let activite = document.getElementById("activite").value;
     let heure = document.getElementById("heure").value;
     let date = document.getElementById("date").value;
-
-    if (!nom || !prenom) {
-        alert("Veuillez remplir au moins le nom et prénom");
+    let totalAPayer = parseFloat(document.getElementById("totalAPayer").value) || 0;
+    let versement = parseFloat(document.getElementById("versement").value) || 0;
+    let resteAPayer = totalAPayer - versement;
+    if(resteAPayer < 0) resteAPayer = 0;
+    let note = document.getElementById("note").value.trim();
+    
+    if(!nom || !prenom) return alert("Nom et prénom requis");
+    if(!date) date = new Date().toISOString().split('T')[0];
+    if(!heure) return alert("Veuillez sélectionner une heure");
+    if(totalAPayer <= 0) return alert("Veuillez saisir le total à payer (supérieur à 0 DA)");
+    if(versement > totalAPayer) return alert("Le versement ne peut pas dépasser le total à payer");
+    if(!note) note = "Aucune note";
+    
+    if(checkTimeConflict(date, heure, activite)) {
+        alert(`❌ CONFLIT !\nUne réservation "${activite}" existe déjà le ${date} à ${heure}\nVeuillez choisir un autre créneau horaire.`);
         return;
     }
-
-    const newReservation = {
-        nom: nom,
-        prenom: prenom,
-        tel: tel,
-        activite: activite,
-        heure: heure || "--:--",
-        date: date || new Date().toISOString().split('T')[0],
-        personnes: parseInt(personnes) || 1
-    };
-
-    try {
-        const response = await fetch(API_BASE_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newReservation)
-        });
-        
-        if (response.ok) {
-            const saved = await response.json();
-            allReservationsData.push(saved);
-            if (currentSearchFilter.date || currentSearchFilter.name) {
-                searchReservations();
-            } else {
-                reservationsData = [...allReservationsData];
-                renderReservationsTable();
-            }
-            // Si c'est une réservation bateau, rafraîchir le tableau bateau
-            if (activite === "Bateau") {
-                renderBoatTableFromAPI();
-            }
-            alert("✅ Réservation ajoutée avec succès !");
-        } else {
-            throw new Error("Erreur serveur");
-        }
-    } catch (error) {
-        console.error("Erreur API, sauvegarde locale:", error);
-        newReservation.id = Date.now();
-        allReservationsData.push(newReservation);
-        if (currentSearchFilter.date || currentSearchFilter.name) {
-            searchReservations();
-        } else {
-            reservationsData = [...allReservationsData];
-            renderReservationsTable();
-        }
-        alert("⚠️ Réservation sauvegardée localement (hors ligne)");
-    }
     
-    saveReservationsToLocal();
+    let newRes = { 
+        nom, prenom, tel, 
+        activite, 
+        heure: heure, 
+        date: date, 
+        personnes: parseInt(personnes)||1,
+        totalAPayer: totalAPayer,
+        versement: versement,
+        resteAPayer: resteAPayer,
+        note: note
+    };
+    
+    try {
+        let res = await fetch(API_BASE_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(newRes) });
+        if(res.ok) {
+            let saved = mergeSavedReservation(newRes, await res.json());
+            allReservationsData.push(saved);
+            saveReservationsToLocal();
+            if(currentSearchFilter.date || currentSearchFilter.name) searchReservations();
+            else { reservationsData = [...allReservationsData]; renderReservationsTable(); }
+            if(activite === "Bateau") renderBoatTable();
+            buildCalendar();
+            alert(`✅ Réservation ajoutée\n💰 Total: ${totalAPayer} DA - Versement: ${versement} DA - Reste: ${resteAPayer} DA\n📝 Note: ${note || 'Aucune'}`);
+        } else {
+            const errBody = await res.json().catch(() => ({}));
+            throw new Error(errBody.error || "Erreur serveur");
+        }
+    } catch(e) {
+        alert(`❌ ${e.message || "Impossible d'enregistrer sur le serveur"}`);
+        return;
+    }
     
     document.getElementById("nom").value = "";
     document.getElementById("prenom").value = "";
     document.getElementById("tel").value = "";
-    document.getElementById("personnes").value = "1";
     document.getElementById("heure").value = "";
-    document.getElementById("date").value = new Date().toISOString().split('T')[0];
-}
-
-function saveReservationsToLocal() {
-    localStorage.setItem("reservationsData", JSON.stringify(allReservationsData));
+    document.getElementById("totalAPayer").value = "";
+    document.getElementById("versement").value = "";
+    document.getElementById("resteAPayer").value = "";
+    document.getElementById("note").value = "";
 }
 
 async function deleteReservation(id) {
-    if (!confirm("Supprimer cette réservation ?")) return;
-    
+    if(!confirm("Supprimer cette réservation ?")) return;
     try {
-        const response = await fetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });
-        if (response.ok) {
-            allReservationsData = allReservationsData.filter(r => r.id !== id);
-            if (currentSearchFilter.date || currentSearchFilter.name) {
-                searchReservations();
-            } else {
-                reservationsData = [...allReservationsData];
-                renderReservationsTable();
-            }
-            // Rafraîchir le tableau bateau si nécessaire
-            renderBoatTableFromAPI();
-            alert("✅ Réservation supprimée");
-        } else {
-            throw new Error("Erreur suppression");
-        }
-    } catch (error) {
-        console.error("Erreur API, suppression locale:", error);
+        await fetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });
         allReservationsData = allReservationsData.filter(r => r.id !== id);
-        if (currentSearchFilter.date || currentSearchFilter.name) {
-            searchReservations();
-        } else {
-            reservationsData = [...allReservationsData];
-            renderReservationsTable();
-        }
-        alert("⚠️ Réservation supprimée localement");
+        if(currentSearchFilter.date || currentSearchFilter.name) searchReservations();
+        else { reservationsData = [...allReservationsData]; renderReservationsTable(); }
+        renderBoatTable();
+        buildCalendar();
+        alert("✅ Réservation supprimée");
+    } catch(e) {
+        allReservationsData = allReservationsData.filter(r => r.id !== id);
+        saveReservationsToLocal();
+        renderReservationsTable();
+        renderBoatTable();
+        buildCalendar();
+        alert("✅ Supprimée localement");
     }
-    
-    saveReservationsToLocal();
 }
 
 async function updateReservationField(id, field, value) {
-    const reservation = allReservationsData.find(r => r.id === id);
-    if (!reservation) return;
+    let res = allReservationsData.find(r=> r.id == id);
+    if(!res) return;
     
-    reservation[field] = value;
-    
-    try {
-        const response = await fetch(`${API_BASE_URL}/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reservation)
-        });
-        if (!response.ok) throw new Error("Erreur mise à jour");
-    } catch (error) {
-        console.error("Erreur API, mise à jour locale:", error);
+    if(field === "heure") {
+        if(checkTimeConflict(res.date, value, res.activite, id)) {
+            alert(`❌ Conflit horaire ! ${res.activite} déjà réservée à ${value} le ${res.date}`);
+            renderReservationsTable();
+            return;
+        }
     }
     
+    res[field] = value;
+    try { await fetch(`${API_BASE_URL}/${id}`, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(res) }); } catch(e) {}
     saveReservationsToLocal();
-    if (currentSearchFilter.date || currentSearchFilter.name) {
-        searchReservations();
-    } else {
-        renderReservationsTable();
-    }
-    // Rafraîchir le tableau bateau si c'est une réservation bateau
-    if (reservation.activite === "Bateau") {
-        renderBoatTableFromAPI();
-    }
+    if(currentSearchFilter.date || currentSearchFilter.name) searchReservations();
+    else renderReservationsTable();
+    if(res.activite === "Bateau") renderBoatTable();
+    buildCalendar();
 }
 
 function renderReservationsTable() {
     let tbody = document.getElementById("tableBody");
-    if (!tbody) return;
+    if(!tbody) return;
     tbody.innerHTML = "";
-    
-    if (reservationsData.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: 40px;">📭 Aucune réservation trouvée</td></tr>`;
-        return;
-    }
-    
-    reservationsData.forEach((r, i) => {
-        const reservationId = r.id || i+1;
-        tbody.innerHTML += `
-        <tr>
-            <td>${reservationId}</td>
-            <td contenteditable onblur="updateReservationField(${reservationId}, 'nom', this.innerText)">${escapeHtml(r.nom)}</td>
-            <td contenteditable onblur="updateReservationField(${reservationId}, 'prenom', this.innerText)">${escapeHtml(r.prenom)}</td>
-            <td contenteditable onblur="updateReservationField(${reservationId}, 'tel', this.innerText)">${escapeHtml(r.tel)}</td>
-            <td contenteditable onblur="updateReservationField(${reservationId}, 'personnes', this.innerText)">${escapeHtml(r.personnes)}</td>
-            <td contenteditable onblur="updateReservationField(${reservationId}, 'activite', this.innerText)">${escapeHtml(r.activite)}</td>
-            <td contenteditable onblur="updateReservationField(${reservationId}, 'heure', this.innerText)">${escapeHtml(r.heure)}</td>
-            <td contenteditable onblur="updateReservationField(${reservationId}, 'date', this.innerText)">${escapeHtml(r.date)}</td>
-            <td><button onclick="deleteReservation(${reservationId})" style="background:#dc3545; padding:5px 10px;">❌</button></td>
-        </tr>`;
+    if(reservationsData.length===0) { tbody.innerHTML = "<tr><td colspan='13' style='text-align:center'>Aucune réservation</td></tr>"; return; }
+    reservationsData.forEach(r => {
+        let row = tbody.insertRow();
+        row.insertCell(0).innerText = r.id;
+        row.insertCell(1).innerHTML = `<span contenteditable onblur="updateReservationField(${r.id},'nom',this.innerText)">${escapeHtml(r.nom)}</span>`;
+        row.insertCell(2).innerHTML = `<span contenteditable onblur="updateReservationField(${r.id},'prenom',this.innerText)">${escapeHtml(r.prenom)}</span>`;
+        row.insertCell(3).innerHTML = `<span contenteditable onblur="updateReservationField(${r.id},'tel',this.innerText)">${escapeHtml(r.tel)}</span>`;
+        row.insertCell(4).innerHTML = `<span contenteditable onblur="updateReservationField(${r.id},'personnes',this.innerText)">${escapeHtml(r.personnes)}</span>`;
+        row.insertCell(5).innerHTML = `<span contenteditable onblur="updateReservationField(${r.id},'activite',this.innerText)">${escapeHtml(r.activite)}</span>`;
+        row.insertCell(6).innerHTML = `<span contenteditable onblur="updateReservationField(${r.id},'heure',this.innerText)">${escapeHtml(r.heure)}</span>`;
+        row.insertCell(7).innerHTML = `<span contenteditable onblur="updateReservationField(${r.id},'date',this.innerText)">${escapeHtml(r.date)}</span>`;
+        row.insertCell(8).innerHTML = `<span>${r.totalAPayer || 0} DA</span>`;
+        row.insertCell(9).innerHTML = `<span>${r.versement || 0} DA</span>`;
+        row.insertCell(10).innerHTML = `<span style="font-weight:bold;color:${(r.resteAPayer || 0) > 0 ? '#c62828' : '#1b5e20'}">${r.resteAPayer || 0} DA</span>`;
+        row.insertCell(11).innerHTML = `<span class="note-cell" title="${escapeHtml(r.note) || 'Aucune note'}">${escapeHtml(r.note) || '—'}</span>`;
+        row.insertCell(12).innerHTML = `<button onclick="deleteReservation(${r.id})" style="background:#dc3545;padding:5px 10px;">❌</button>`;
     });
 }
 
-// ================= GESTION BATEAU =================
-let boatData = JSON.parse(localStorage.getItem("boatData")) || {};
-
-function initBoatStructure() {
-    let needsSave = false;
-    timeSlots.forEach(slot => {
-        if (!boatData[slot]) {
-            boatData[slot] = { "1": [], "2": [] };
-            needsSave = true;
-        }
-    });
-    if (needsSave) localStorage.setItem("boatData", JSON.stringify(boatData));
+function searchReservations() {
+    let date = document.getElementById("searchDate").value;
+    let name = document.getElementById("searchName").value.trim().toLowerCase();
+    currentSearchFilter = { date, name };
+    let filtered = [...allReservationsData];
+    if(date) filtered = filtered.filter(r=> r.date === date);
+    if(name) filtered = filtered.filter(r=> (r.nom?.toLowerCase().includes(name) || r.prenom?.toLowerCase().includes(name)));
+    reservationsData = filtered;
+    renderReservationsTable();
+    document.getElementById("searchStats").innerHTML = `🔍 ${filtered.length} réservation(s) trouvée(s)`;
 }
 
-async function addBoat() {
-    let slot = document.getElementById("bslot").value;
-    let subslot = document.getElementById("bsubslot").value;
-    let boatNumber = document.getElementById("bboat").value;
-    let nom = document.getElementById("bnom").value.trim();
-    let prenom = document.getElementById("bprenom").value.trim();
-    let tel = document.getElementById("btel").value.trim();
-    let circuit = document.getElementById("bcircuit").value;
-
-    if (!nom || !prenom) { alert("❌ Veuillez entrer le nom et prénom"); return; }
-    if (!tel) { alert("❌ Veuillez entrer un numéro de téléphone"); return; }
-
-    try {
-        const reservationDB = {
-            nom: nom,
-            prenom: prenom,
-            tel: tel,
-            activite: "Bateau",
-            heure: subslot.split('-')[0],
-            date: new Date().toISOString().split('T')[0],
-            personnes: 1,
-            slot: slot,
-            subslot: subslot,
-            bateau: `Bateau ${boatNumber}`,
-            duree: circuit + " min"
-        };
-        
-        console.log("📤 Envoi réservation bateau à l'API:", reservationDB);
-        
-        const response = await fetch(API_BASE_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reservationDB)
-        });
-        
-        if (response.ok) {
-            const saved = await response.json();
-            allReservationsData.push(saved);
-            saveReservationsToLocal();
-            
-            // Recharger les tableaux
-            if (currentSearchFilter.date || currentSearchFilter.name) {
-                searchReservations();
-            } else {
-                reservationsData = [...allReservationsData];
-                renderReservationsTable();
-            }
-            renderBoatTableFromAPI(); // Rafraîchir le tableau bateau depuis l'API
-            
-            alert(`✅ Réservation confirmée et sauvegardée dans la base !\nBateau ${boatNumber} - ${slot} : ${subslot}\nDurée: ${circuit} minutes`);
-        } else {
-            const errorText = await response.text();
-            console.error("❌ Erreur API:", errorText);
-            alert(`⚠️ Erreur lors de la sauvegarde: ${response.status}`);
-        }
-    } catch (error) {
-        console.error("❌ Erreur lors de la sauvegarde dans la base:", error);
-        alert(`⚠️ Erreur: ${error.message}`);
-    }
-
-    document.getElementById("bnom").value = "";
-    document.getElementById("bprenom").value = "";
-    document.getElementById("btel").value = "";
+function clearSearch() {
+    document.getElementById("searchDate").value = "";
+    document.getElementById("searchName").value = "";
+    selectedCalendarDate = "";
+    currentSearchFilter = { date: "", name: "" };
+    reservationsData = [...allReservationsData];
+    renderReservationsTable();
+    buildCalendar();
+    document.getElementById("searchStats").innerHTML = "📊 Affichage de toutes les réservations";
 }
 
-function renderBoatTable() {
-    // Cette fonction est remplacée par renderBoatTableFromAPI()
-    renderBoatTableFromAPI();
-}
+function escapeHtml(str) { if(!str) return ""; return String(str).replace(/[&<>]/g, m=> m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
 
-function renderBoat() { renderBoatTableFromAPI(); }
-
-// ================= FONCTIONS UTILES =================
-function escapeHtml(str) {
-    if (!str) return "";
-    return String(str).replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
-
-// ================= PDF & PRINT =================
 function pdf() {
-    const noPrintElements = document.querySelectorAll('.no-print');
-    noPrintElements.forEach(el => el.style.display = 'none');
-    
-    setTimeout(() => {
-        html2canvas(document.body, { scale: 3, logging: false, backgroundColor: '#ffffff' }).then(canvas => {
-            const { jsPDF } = window.jspdf;
-            let doc = new jsPDF("p", "mm", "a4");
-            let img = canvas.toDataURL("image/png");
-            let imgWidth = 210;
-            let imgHeight = (canvas.height * imgWidth) / canvas.width;
-            doc.addImage(img, 'PNG', 0, 0, imgWidth, imgHeight);
-            doc.save("reservations.pdf");
-            noPrintElements.forEach(el => el.style.display = '');
-        }).catch(error => {
-            alert("Erreur lors de la génération du PDF");
-            noPrintElements.forEach(el => el.style.display = '');
-        });
+    let noPrint = document.querySelectorAll('.no-print');
+    noPrint.forEach(el=>el.style.display='none');
+    setTimeout(()=>{ 
+        html2canvas(document.body, {scale: 2}).then(canvas => { 
+            const { jsPDF } = window.jspdf; 
+            const doc = new jsPDF('p', 'mm', 'a4'); 
+            const img = canvas.toDataURL('image/png'); 
+            const w = 210; 
+            const h = (canvas.height * w) / canvas.width; 
+            doc.addImage(img, 'PNG', 0, 0, w, h); 
+            doc.save('reservations.pdf'); 
+            noPrint.forEach(el=>el.style.display=''); 
+        }); 
     }, 200);
 }
 
-function printTable() { window.print(); }
-
-// ================= HORLOGE =================
-setInterval(() => {
-    document.getElementById("clock").innerText = "📅 " + new Date().toLocaleString('fr-FR');
-}, 1000);
+function printTable(){ window.print(); }
 
 // ================= INITIALISATION =================
-document.getElementById("bslot")?.addEventListener("change", updateSubSlotOptions);
+setInterval(() => { document.getElementById("clock").innerHTML = "📅 "+new Date().toLocaleString('fr-FR'); }, 1000);
 document.getElementById("date").value = new Date().toISOString().split('T')[0];
+document.getElementById("bdate").value = new Date().toISOString().split('T')[0];
+document.getElementById("bdate")?.addEventListener("change", () => renderBoatTable());
+document.getElementById("bcircuit")?.addEventListener("change", () => {
+    suggestBoatTotal();
+    renderBoatTable();
+});
 
-initBoatStructure();
-updateSlotSelect();
+updateStartTimeOptions();
+suggestBoatTotal();
 renderSlotList();
 loadReservations();
 
 </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </body>
 </html>

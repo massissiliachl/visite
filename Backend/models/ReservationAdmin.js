@@ -29,25 +29,48 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
   personnes: {
     type: DataTypes.INTEGER,
     defaultValue: 1
-  },slot: {
+  },
+  // 🚤 Champs bateau
+  slot: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  
   subslot: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  
   bateau: {
     type: DataTypes.STRING, // "1" ou "2"
     allowNull: true
   },
-  
   duree: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  // 💰 Champs paiement
+  totalAPayer: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0,
+    allowNull: false
+  },
+  versement: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0,
+    allowNull: false
+  },
+  resteAPayer: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0,
+    allowNull: false
+  },
+  // 📝 Note / Remarque
+  note: {
+    type: DataTypes.TEXT,
+    allowNull: true
   }
+}, {
+  tableName: "ReservationAdmins",
+  timestamps: true // createdAt et updatedAt automatiques
 });
 
 module.exports = ReservationAdmin;

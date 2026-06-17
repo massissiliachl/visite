@@ -1,8 +1,64 @@
-const jwt = require("jsonwebtoken");
 const { Property } = require("../models");
 
 
 // ========== GESTION DES PROPRIÉTÉS (HÉBERGEMENTS) ==========
+const pickFirstDefined = (...values) => values.find((value) => value !== undefined);
+
+const normalizePropertyPayload = (payload = {}) => ({
+    title: pickFirstDefined(payload.title, payload.nom, payload.name),
+    location: pickFirstDefined(payload.location, payload.localisation, payload.address),
+    description: pickFirstDefined(payload.description, payload.shortDescription, payload.resume),
+    longDescription: pickFirstDefined(
+        payload.longDescription,
+        payload.long_description,
+        payload.longDesc,
+        payload.descriptionLongue
+    ),
+    price: pickFirstDefined(payload.price, payload.prix, payload.tarif),
+    type: pickFirstDefined(payload.type, payload.category, payload.categorie),
+    images: pickFirstDefined(payload.images, payload.photos, payload.gallery),
+    priceHaute: pickFirstDefined(
+        payload.priceHaute,
+        payload.price_haute,
+        payload.prixHaute,
+        payload.highSeasonPrice
+    ),
+    priceBasse: pickFirstDefined(
+        payload.priceBasse,
+        payload.price_basse,
+        payload.prixBasse,
+        payload.lowSeasonPrice
+    ),
+    isDevis: pickFirstDefined(payload.isDevis, payload.is_devis, payload.devis),
+    capacity: pickFirstDefined(payload.capacity, payload.capacite, payload.maxPeople),
+    rating: pickFirstDefined(payload.rating, payload.note),
+    popular: pickFirstDefined(payload.popular, payload.isPopular, payload.top),
+    ambiance: pickFirstDefined(payload.ambiance, payload.ambiances),
+    features: pickFirstDefined(payload.features, payload.equipements, payload.amenities)
+});
+
+const parseNumber = (value) => {
+    if (value === undefined || value === null || value === '') return null;
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+};
+
+const parseBoolean = (value) => {
+    return value === true || value === 'true' || value === 1 || value === '1';
+};
+
+const parseArray = (value) => {
+    if (Array.isArray(value)) return value;
+    if (typeof value === 'string' && value.trim()) {
+        try {
+            const parsed = JSON.parse(value);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch {
+            return value.split(',').map((item) => item.trim()).filter(Boolean);
+        }
+    }
+    return [];
+};
 
 // GET tous les hébergements
 const getAllProperties = async (req, res) => {
@@ -33,14 +89,32 @@ const getPropertyById = async (req, res) => {
 // POST créer un hébergement
 const createProperty = async (req, res) => {
     try {
-        const { title, location, description, price, type, images } = req.body;
+        const payload = normalizePropertyPayload(req.body);
+        const {
+            title,
+            location,
+            description,
+            longDescription,
+            price,
+            type,
+            images,
+            priceHaute,
+            priceBasse,
+            isDevis,
+            capacity,
+            rating,
+            popular,
+            ambiance,
+            features
+        } = payload;
         
         // Validation
         if (!title || !location || !description || !price || !type) {
             return res.status(400).json({ error: "Tous les champs sont requis" });
         }
         
-        if (isNaN(price) || price <= 0) {
+        const priceValue = parseNumber(price);
+        if (priceValue === null || priceValue <= 0) {
             return res.status(400).json({ error: "Le prix doit être un nombre positif" });
         }
         
@@ -48,9 +122,18 @@ const createProperty = async (req, res) => {
             title,
             location,
             description,
-            price: parseInt(price),
+            longDescription: longDescription || description,
+            price: priceValue,
             type,
-            images: images || []
+            images: parseArray(images),
+            priceHaute: parseNumber(priceHaute),
+            priceBasse: parseNumber(priceBasse),
+            isDevis: parseBoolean(isDevis),
+            capacity: parseNumber(capacity),
+            rating: parseNumber(rating),
+            popular: parseBoolean(popular),
+            ambiance: parseArray(ambiance),
+            features: parseArray(features)
         });
         
         console.log(`✅ Admin a créé l'hébergement: ${title}`);
@@ -70,15 +153,41 @@ const updateProperty = async (req, res) => {
             return res.status(404).json({ error: "Hébergement non trouvé" });
         }
         
-        const { title, location, description, price, type, images } = req.body;
-        
+        const payload = normalizePropertyPayload(req.body);
+        const {
+            title,
+            location,
+            description,
+            longDescription,
+            price,
+            type,
+            images,
+            priceHaute,
+            priceBasse,
+            isDevis,
+            capacity,
+            rating,
+            popular,
+            ambiance,
+            features
+        } = payload;
+
         await property.update({
             title: title || property.title,
             location: location || property.location,
             description: description || property.description,
-            price: price || property.price,
+            longDescription: longDescription || property.longDescription,
+            price: price !== undefined && price !== null ? parseNumber(price) : property.price,
             type: type || property.type,
-            images: images || property.images
+            images: images !== undefined ? parseArray(images) : property.images,
+            priceHaute: priceHaute !== undefined ? parseNumber(priceHaute) : property.priceHaute,
+            priceBasse: priceBasse !== undefined ? parseNumber(priceBasse) : property.priceBasse,
+            isDevis: isDevis !== undefined ? parseBoolean(isDevis) : property.isDevis,
+            capacity: capacity !== undefined ? parseNumber(capacity) : property.capacity,
+            rating: rating !== undefined ? parseNumber(rating) : property.rating,
+            popular: popular !== undefined ? parseBoolean(popular) : property.popular,
+            ambiance: ambiance !== undefined ? parseArray(ambiance) : property.ambiance,
+            features: features !== undefined ? parseArray(features) : property.features
         });
         
         console.log(`✅ Admin a modifié l'hébergement ID: ${req.params.id}`);

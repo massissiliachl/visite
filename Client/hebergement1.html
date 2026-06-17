@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>VisitBejaia | Hebergements d'exception</title>
+    <title>VisitBejaia | Hébergements d'exception</title>
     <link rel="icon" type="image/png" href="assets/images/logo.png">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -456,19 +456,13 @@
         }
 
         .card-image {
-    height: 280px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.6s ease;
-}
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: transform 0.6s ease;
+        }
 
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-}
         .hebergement-card:hover .card-image {
             transform: scale(1.05);
         }
@@ -753,6 +747,27 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 2rem;
+            margin: 2rem 0;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
         /* Footer */
         .footer {
             background: var(--primary-dark);
@@ -874,15 +889,30 @@
     </style>
 </head>
 <body>
-<div id="navbar-placeholder"></div>
+<nav class="navbar" id="navbar">
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-umbrella-beach logo-icon"></i>
+            <span class="logo-text">VisitBejaia</span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="#hebergements" class="active">Hébergements</a></li>
+            <li><a href="activites.html">Activités</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" id="hamburgerBtn">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
 
 <section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <span class="hero-badge"><i class="fas fa-star"></i> DESTINATION D'EXCEPTION</span>
-        <h1 class="hero-title">Sejours inoubliables Bejaia</h1>
-        <p class="hero-description">Villas de prestige, appartements avec vue mer et refuges authentiques pour des vacances mediterraniennes d'exception.</p>
-        <a href="#hebergements" class="hero-cta" id="scrollToHebergements">Decouvrir <i class="fas fa-arrow-down"></i></a>
+        <h1 class="hero-title">Séjours inoubliables à Bejaia</h1>
+        <p class="hero-description">Villas de prestige, appartements avec vue mer et refuges authentiques pour des vacances méditerranéennes d'exception.</p>
+        <a href="#hebergements" class="hero-cta" id="scrollToHebergements">Découvrir <i class="fas fa-arrow-down"></i></a>
     </div>
 </section>
 
@@ -902,7 +932,7 @@
             <select id="sortSelect" class="sort-select">
                 <option value="default">Trier par</option>
                 <option value="price-asc">Prix croissant</option>
-                <option value="price-desc">Prix decroissant</option>
+                <option value="price-desc">Prix décroissant</option>
             </select>
         </div>
     </div>
@@ -1003,191 +1033,272 @@
     </div>
 </div>
 
-<script src="js/navbar.js"></script>
-<div data-include="footer"></div>
-<script src="js/include-footer.js"></script>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-col">
+            <h4>Visit Bejaia</h4>
+            <p>Découvrez la beauté de Bejaia à travers nos hébergements d'exception et activités uniques.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <p><i class="fas fa-phone"></i> +213 771 836 210</p>
+            <p><i class="fas fa-envelope"></i> contact@visitbejaia.com</p>
+        </div>
+        <div class="footer-col">
+            <h4>Suivez-nous</h4>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4>Informations</h4>
+            <p><a href="#" style="color: white; text-decoration: none;">Mentions légales</a></p>
+            <p><a href="#" style="color: white; text-decoration: none;">CGV</a></p>
+        </div>
+    </div>
+</footer>
 
 <script>
-    const properties = [
-        { 
-            id: "1", 
-            title: "Chalet au coeur de la ferme", 
-            location: "Tazeboucht, Bejaia", 
-            description: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht", 
-            longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht. 1 chambre en lit double, 1 chambre avec 2 lits, 1 clic clac, toilette et salle de bain, kitchenette, frigo, ventilateur, terrasse avec table de pique nique, vue dégagée sans vis à vis.", 
-            price: null, 
-            isDevis: true,
-            type: "chalet", 
-            capacity: 5, 
-            rating: 4.9, 
-            popular: true, 
-            ambiance: ["Nature", "Calme", "Authentique"],
-            features: [
-                { icon: "fa-bed", text: "2 chambres" },
-                { icon: "fa-users", text: "5 pers" },
-                { icon: "fa-sun", text: "Terrasse aménagée" }
-            ], 
-            images: ["assets/images/chalet/c5.jpeg", "assets/images/chalet/chal1.jpeg","assets/images/chalet/chal2.jpeg","assets/images/chalet/chal3.jpeg","assets/images/chalet/chal4.jpeg","assets/images/chalet/chal5.jpeg"] 
-        },
-        { 
-            id: "2", 
-            title: "Chalet prestige", 
-            location: "Tazeboucht, Bejaia", 
-            description: "Chalet avec vue panoramique sur les hauteurs", 
-            longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht avec vue panoramique exceptionnelle.", 
-            price: null, 
-            isDevis: true,
-            type: "chalet", 
-            capacity: 7, 
-            rating: 4.7, 
-            popular: false, 
-            ambiance: ["Nature", "Vue", "Authentique"], 
-            features: [{ icon: "fa-bed", text: "3 chambres" }, { icon: "fa-tree", text: "Jardin" }], 
-            images: ["assets/images/chalet/chalet2.jpeg", "assets/images/chalet/chal6.jpeg","assets/images/chalet/chal7.jpeg","assets/images/chalet/chal8.jpeg","assets/images/chalet/chal9.jpeg"] 
-        },
-        { 
-            id: "3", 
-            title: "Chalet prestige", 
-            location: "Tazeboucht, Bejaia", 
-            description: "Chalet prestige avec prestations haut de gamme", 
-            longDescription: "Chalet authentique au coeur d'une ferme sur les hauteurs de Tazeboucht. Prestige et confort absolu.", 
-            price: null,
-            isDevis: true,
-            capacity: 10, 
-            rating: 5.0, 
-            popular: true, 
-            features: [{ icon: "fa-eye", text: "Belle Vue" }, { icon: "fa-bed", text: "4 chambres" }, { icon: "fa-hot-tub", text: "Jacuzzi" }], 
-            images: ["assets/images/chalet/chalet3.jpeg", "assets/images/chalet/z1.jpeg", "assets/images/chalet/z2.jpeg", "assets/images/chalet/z3.jpeg", "assets/images/chalet/z4.jpeg", "assets/images/chalet/z5.jpeg", "assets/images/chalet/z6.jpeg"],
-            type: "chalet", 
-            ambiance: ["Nature", "Calme", "Authentique", "Luxe"]
-        },
-        // NOUVEAU APPARTEMENT 1
-{ 
-    id: "5", 
-    title: "Appartemnt f3 , ach lbaz", 
-    location: "ach lbaz, Béjaïa", 
-    description: "Magnifique appartement avec vue panoramique sur la mer,tout équipé", 
-    longDescription: "Magnifique logement tout équipé avec climatisation et une superbe vue sur mer. Idéal pour des vacances en famille ou entre amis dans un cadre calme et agréable. Situé à seulement 10 minutes en voiture des magnifiques plages de Saket et Boulimat, parfait pour profiter pleinement de la mer et du soleil. ☀️🏖️", 
-    priceHaute: 17000,
-    priceBasse: 14000,
-    isDevis: false,
-    type: "appartement", 
-    capacity: 6, 
-    rating: 4.8, 
-    popular: true, 
-    ambiance: ["Mer", "Vue", "Moderne"],
-    features: [
-        { icon: "fa-bed", text: "3 chambres" },
-        { icon: "fa-users", text: "6 pers" },
-        { icon: "fa-wind", text: "Clim" }
-    ], 
-    images: ["assets/images/appa/im1.jpeg", "assets/images/appa/im2.jpeg", "assets/images/appa/im3.jpeg", "assets/images/appa/im4.jpeg", "assets/images/appa/im5.jpeg", "assets/images/appa/im6.jpeg", "assets/images/appa/im7.jpeg" ]
-},
-{ 
-    id: "6", 
-    title: "Appartemnt f2 , Sidi Ali Lbher ", 
-    location: "Sidi Ali Lbher , Béjaïa", 
-    description: "Magnifique appartement pas loin de l'aéroport ,tout équipé", 
-    longDescription: "Magnifique logement tout équipé avec climatisation et une superbe vue sur mer. Idéal pour des vacances en famille ou entre amis dans un cadre calme et agréable. ", 
-    priceHaute: 13000,
-    priceBasse: 13000,
-    isDevis: true,
-    type: "appartement", 
-    capacity: 6, 
-    rating: 4.8, 
-    popular: true, 
-    ambiance: ["Mer", "Vue", "Moderne"],
-    features: [
-        { icon: "fa-bed", text: "1 chambres +Salon" },
-        
-        { icon: "fa-wind", text: "Clim" }
-    ], 
-    images: ["assets/images/appa/s3.jpeg", "assets/images/appa/s1.jpeg", "assets/images/appa/s4.jpeg", "assets/images/appa/s6.jpeg",  "assets/images/appa/s5.jpeg","assets/images/appa/s7.jpeg", "assets/images/appa/s2.jpeg" ]
-},
-{ 
-    id: "4", 
-    title: "Appartemnt f2 ,  Résidence Emeraude ", 
-    location: "quartier Sghir , Béjaïa", 
-    description: "Bel appartement moderne et tout équipé", 
-    longDescription: "Magnifique logement tout équipé avec climatisation et une superbe vue, situé dans la résidence Émeraude à Bejaïa. Idéal pour des vacances en famille ou entre amis dans un cadre calme et agréable. ",    priceHaute: 17000,
-    priceBasse: 15000,
-    isDevis: true,
-    type: "appartement", 
-    capacity: 6, 
-    rating: 4.8, 
-    popular: true, 
-    ambiance: ["Mer", "Vue", "Moderne"],
-    features: [
-        { icon: "fa-bed", text: "1 chambres +Salon" },
-        
-        { icon: "fa-wind", text: "Clim" }
-    ], 
-    images: ["assets/images/appa/r1.jpeg", "assets/images/appa/r2.jpeg", "assets/images/appa/r3.jpeg", "assets/images/appa/r4.jpeg",  "assets/images/appa/r5.jpeg"]
-},
-{ 
-    id: "7", 
-    title: "Appartemnt f2 ,  Cote ", 
-    location: " Béjaïa", 
-    description: "Bel appartement moderne et tout équipé", 
-    longDescription: "Magnifique logement tout équipé avec climatisation et une superbe vue. Idéal pour des vacances en famille ou entre amis dans un cadre calme et agréable. ",    priceHaute: 17000,
-    priceBasse: 13000,
-    isDevis: true,
-    type: "appartement", 
-    capacity: 6, 
-    rating: 4.8, 
-    popular: true, 
-    ambiance: ["Mer", "Vue", "Moderne"],
-    features: [
-        { icon: "fa-bed", text: "1 chambres +Salon" },
-        
-        { icon: "fa-wind", text: "Clim" }
-    ], 
-    images: ["assets/images/appa/c1.jpeg", "assets/images/appa/c2.jpeg", "assets/images/appa/c3.jpeg", "assets/images/appa/4.jpeg",  "assets/images/appa/c5.jpeg","assets/images/appa/c6.jpeg","assets/images/appa/c7.jpeg"]
-},
-
-// NOUVEAU APPARTEMENT 2
-
-    ];
-
+    const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+    const isFileProtocol = window.location.protocol === "file:";
+    const API_BASE = (isLocalHost || isFileProtocol)
+        ? "http://localhost:3000/api"
+        : "https://visitebejai.onrender.com/api";
+    const PROPERTY_RESERVATION_API = `${API_BASE}/property-reservations`;
+    let propertiesList = [];
     let currentProperty = null;
     let currentImages = [];
+
+    // Fonctions utilitaires
+    function parseImages(images) {
+        if (!images) return [];
+        if (Array.isArray(images)) return images;
+        if (typeof images === 'string') {
+            try {
+                const parsed = JSON.parse(images);
+                return Array.isArray(parsed) ? parsed : [images];
+            } catch (e) {
+                return [images];
+            }
+        }
+        return [];
+    }
+
+    function parseArrayField(value) {
+        if (!value) return [];
+        if (Array.isArray(value)) return value;
+        if (typeof value === 'string') {
+            const trimmed = value.trim();
+            if (!trimmed) return [];
+            try {
+                const parsed = JSON.parse(trimmed);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                return trimmed.split(',').map(item => item.trim()).filter(Boolean);
+            }
+        }
+        return [];
+    }
+
+    function detectFeatureIcon(text) {
+        const t = String(text || '').toLowerCase();
+        if (t.includes('wifi') || t.includes('wi-fi') || t.includes('internet')) return 'fa-wifi';
+        if (t.includes('piscine') || t.includes('pool')) return 'fa-person-swimming';
+        if (t.includes('parking') || t.includes('garage')) return 'fa-square-parking';
+        if (t.includes('chambre') || t.includes('lit') || t.includes('bed')) return 'fa-bed';
+        if (t.includes('clim') || t.includes('chauffage')) return 'fa-wind';
+        if (t.includes('cuisine') || t.includes('kitchen')) return 'fa-kitchen-set';
+        if (t.includes('vue mer') || t.includes('mer') || t.includes('terrasse')) return 'fa-water';
+        if (t.includes('personne') || t.includes('pers')) return 'fa-users';
+        if (t.includes('sécur') || t.includes('secur')) return 'fa-shield-halved';
+        if (t.includes('tv') || t.includes('télé') || t.includes('tele')) return 'fa-tv';
+        return 'fa-check';
+    }
+
+    function normalizeFeatures(features, prop) {
+        const parsed = parseArrayField(features);
+        const normalized = parsed
+            .map(item => {
+                if (typeof item === 'string') {
+                    return { icon: detectFeatureIcon(item), text: item };
+                }
+                if (item && typeof item === 'object') {
+                    const text = item.text || item.label || item.name || '';
+                    if (!text) return null;
+                    return { icon: item.icon || detectFeatureIcon(text), text };
+                }
+                return null;
+            })
+            .filter(Boolean);
+
+        if (normalized.length > 0) return normalized;
+
+        return [
+            { icon: "fa-bed", text: `${prop.type === 'villa' ? '4+' : prop.type === 'appartement' ? '2-3' : '2'} chambres` },
+            { icon: "fa-users", text: `${prop.capacity || 6} pers` },
+            { icon: "fa-wind", text: "Climatisation" }
+        ];
+    }
+
+    function calculateNights(checkInValue, checkOutValue) {
+        if (!checkInValue || !checkOutValue) return 0;
+        const checkInDate = new Date(checkInValue);
+        const checkOutDate = new Date(checkOutValue);
+        const diff = checkOutDate - checkInDate;
+        if (Number.isNaN(diff) || diff <= 0) return 0;
+        return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function getNightPrice(property) {
+        if (!property) return null;
+        if (property.isDevis) return null;
+        if (property.priceHaute) return Number(property.priceHaute);
+        if (property.priceBasse) return Number(property.priceBasse);
+        if (property.price) return Number(property.price);
+        return null;
+    }
+
+    function updateBookingTotal() {
+        const totalPriceEl = document.getElementById('totalPrice');
+        if (!totalPriceEl || !currentProperty) return;
+
+        const checkInValue = document.getElementById('checkIn')?.value;
+        const checkOutValue = document.getElementById('checkOut')?.value;
+        const adults = Number(document.getElementById('adults')?.value || 0);
+        const children = Number(document.getElementById('children')?.value || 0);
+        const totalPersons = adults + children;
+        const nights = calculateNights(checkInValue, checkOutValue);
+
+        if (currentProperty.isDevis) {
+            totalPriceEl.innerHTML = `📄 <strong>Devis sur demande</strong>${totalPersons > 0 ? ` • ${totalPersons} pers` : ''}`;
+            return;
+        }
+
+        const nightlyPrice = getNightPrice(currentProperty);
+        if (!nightlyPrice || nights <= 0) {
+            totalPriceEl.innerHTML = `💰 Tarif: ${(currentProperty.price || 0).toLocaleString('fr-DZ')} DA/nuit${totalPersons > 0 ? ` • ${totalPersons} pers` : ''}`;
+            return;
+        }
+
+        const total = nightlyPrice * nights;
+        totalPriceEl.innerHTML = `💰 ${nightlyPrice.toLocaleString('fr-DZ')} DA × ${nights} nuit(s) = <strong>${total.toLocaleString('fr-DZ')} DA</strong>${totalPersons > 0 ? ` • ${totalPersons} pers` : ''}`;
+    }
+
+    // Charger les hébergements depuis l'API
+    async function loadPropertiesFromAPI() {
+        const grid = document.getElementById('hebergementGrid');
+        const resultsCount = document.getElementById('resultsCount');
+        
+        if (grid) grid.innerHTML = '<div style="text-align:center; padding:3rem;"><i class="fas fa-spinner fa-spin"></i> Chargement des hébergements...</div>';
+        if (resultsCount) resultsCount.innerHTML = 'Chargement...';
+        
+        try {
+            const response = await fetch(`${API_BASE}/admin/properties`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const properties = await response.json();
+            
+            propertiesList = properties.map(prop => ({
+                ...prop,
+                images: parseImages(prop.images),
+                title: prop.title || '',
+                location: prop.location || '',
+                description: prop.description || prop.longDescription || '',
+                longDescription: prop.longDescription || prop.description || '',
+                price: Number(prop.price) || 0,
+                isDevis: prop.isDevis === undefined ? false : prop.isDevis,
+                priceHaute: Number(prop.priceHaute) || null,
+                priceBasse: Number(prop.priceBasse) || null,
+                capacity: Number(prop.capacity) || null,
+                rating: Number(prop.rating) || 0,
+                features: normalizeFeatures(prop.features, prop),
+                ambiance: parseArrayField(prop.ambiance)
+            }));
+            
+            displayProperties(propertiesList);
+            
+        } catch (error) {
+            console.error('Erreur chargement:', error);
+            if (grid) grid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Erreur de chargement</h3>
+                    <p>Impossible de charger les hébergements. Veuillez réessayer plus tard.</p>
+                    <button onclick="loadPropertiesFromAPI()" style="margin-top:1rem; background:var(--accent); border:none; padding:0.7rem 1.5rem; border-radius:50px; color:white; cursor:pointer;">
+                        <i class="fas fa-sync-alt"></i> Réessayer
+                    </button>
+                </div>
+            `;
+        }
+    }
 
     function displayProperties(list) {
         const grid = document.getElementById('hebergementGrid');
         if (!grid) return;
+        
+        if (!list || list.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-home"></i>
+                    <h3>Aucun hébergement</h3>
+                    <p>Aucun hébergement n'est disponible pour le moment.</p>
+                </div>
+            `;
+            const countSpan = document.getElementById('resultsCount');
+            if (countSpan) countSpan.innerHTML = `📭 0 hébergement disponible`;
+            return;
+        }
+        
         grid.innerHTML = '';
         list.forEach((p, idx) => {
             const card = document.createElement('div');
             card.className = 'hebergement-card';
             card.style.animationDelay = `${idx * 0.05}s`;
+            
+            const firstImage = p.images && p.images.length > 0 ? p.images[0] : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="%23e2e8f0"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%2364748b">No image</text></svg>';
+            
             const badge = p.popular ? '<div class="card-badge popular"><i class="fas fa-star"></i> Populaire</div>' : '<div class="card-badge">❤️ Coup de coeur</div>';
-            const ambianceTags = p.ambiance?.map(a => `<span class="ambiance-tag">${a}</span>`).join('') || '';
+            const ambianceTags = p.ambiance?.map(a => `<span class="ambiance-tag">${escapeHtml(String(a))}</span>`).join('') || '';
+            const ratingValue = Number(p.rating) > 0 ? Number(p.rating).toFixed(1) : null;
+            const capacityValue = Number(p.capacity) > 0 ? Number(p.capacity) : null;
+            const metaChips = `
+                <div class="card-meta">
+                    ${ratingValue ? `<span class="card-meta-chip"><i class="fas fa-star"></i> ${ratingValue}/5</span>` : ''}
+                    ${capacityValue ? `<span class="card-meta-chip"><i class="fas fa-users"></i> ${capacityValue} pers</span>` : ''}
+                    <span class="card-meta-chip"><i class="fas fa-house"></i> ${escapeHtml(p.type || 'hébergement')}</span>
+                </div>
+            `;
             
             let priceDisplay;
             if (p.isDevis) {
                 priceDisplay = '<span class="price-devis"><i class="fas fa-file-signature"></i> Devis sur demande</span>';
             } else if (p.priceHaute && p.priceBasse) {
-                priceDisplay = `<div style="display:flex; flex-direction:column; gap:2px;"><span class="card-price" style="font-size:1.1rem;">${p.priceHaute.toLocaleString('fr-DZ')} DA <span style="font-size:0.7rem;">/nuit (haute saison)</span></span><span style="font-size:0.8rem; color:var(--gray);">${p.priceBasse.toLocaleString('fr-DZ')} DA (hors saison)</span></div>`;
+                priceDisplay = `<div style="display:flex; flex-direction:column; gap:2px;">
+                    <span class="card-price" style="font-size:1.1rem;">${p.priceHaute.toLocaleString('fr-DZ')} DA <span style="font-size:0.7rem;">/nuit (haute saison)</span></span>
+                    <span style="font-size:0.8rem; color:var(--gray);">${p.priceBasse.toLocaleString('fr-DZ')} DA (hors saison)</span>
+                </div>`;
             } else {
-                priceDisplay = `<span class="card-price">${p.price.toLocaleString('fr-DZ')} DA<span style="font-size:0.8rem;">/nuit</span></span>`;
+                priceDisplay = `<span class="card-price">${(p.price || 0).toLocaleString('fr-DZ')} DA<span style="font-size:0.8rem;">/nuit</span></span>`;
             }
             
             card.innerHTML = `
-    ${badge}
-    <div class="card-image" style="position: relative; overflow: hidden;">
-        <img src="${p.images[0]}" alt="${p.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
-        <div class="card-ambiance" style="position: absolute; bottom: 12px; left: 12px; z-index: 3; display: flex; gap: 8px;">${ambianceTags}</div>
-    </div>
-    <div class="card-content">
-        <h3>${p.title}</h3>
-        <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</div>
-        <p style="color: var(--gray); margin-bottom: 1rem;">${p.description}</p>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            ${priceDisplay}
-            <button class="btn-details" data-id="${p.id}">Détails</button>
-        </div>
-    </div>
-`; grid.appendChild(card);
+                ${badge}
+                <div class="card-image" style="background-image: url('${firstImage}'); background-size: cover; background-position: center;">
+                    <div class="card-ambiance">${ambianceTags}</div>
+                </div>
+                <div class="card-content">
+                    <h3>${escapeHtml(p.title)}</h3>
+                    <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${escapeHtml(p.location)}</div>
+                    ${metaChips}
+                    <p style="color: var(--gray); margin-bottom: 1rem;">${escapeHtml(p.description?.substring(0, 100) || '')}${p.description?.length > 100 ? '...' : ''}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        ${priceDisplay}
+                        <button class="btn-details" data-id="${p.id}">Détails</button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
         });
         
         document.querySelectorAll('.btn-details').forEach(btn => {
@@ -1203,28 +1314,48 @@
         }
     }
 
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
     function applyFilters() {
-        let list = [...properties];
+        let list = [...propertiesList];
         const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
         if (activeFilter !== 'all') {
             list = list.filter(p => p.type === activeFilter);
         }
         const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
         if (searchTerm) {
-            list = list.filter(p => p.title.toLowerCase().includes(searchTerm) || p.location.toLowerCase().includes(searchTerm));
+            list = list.filter(
+                p => (p.title || '').toLowerCase().includes(searchTerm) || (p.location || '').toLowerCase().includes(searchTerm)
+            );
         }
+        
+        const sortValue = document.getElementById('sortSelect')?.value;
+        if (sortValue === 'price-asc') {
+            list.sort((a, b) => (a.price || 0) - (b.price || 0));
+        } else if (sortValue === 'price-desc') {
+            list.sort((a, b) => (b.price || 0) - (a.price || 0));
+        }
+        
         displayProperties(list);
     }
 
     function openPropertyModal(id) {
-        const prop = properties.find(p => p.id === id);
+        const prop = propertiesList.find(p => p.id == id);
         if (!prop) return;
         currentProperty = prop;
-        currentImages = prop.images;
+        currentImages = prop.images || [];
         
         document.getElementById('modalTitle').innerText = prop.title;
         document.getElementById('modalLocation').innerHTML = `<i class="fas fa-map-marker-alt"></i> ${prop.location}`;
-        document.getElementById('modalDescription').innerText = prop.longDescription;
+        document.getElementById('modalDescription').innerText = prop.longDescription || prop.description || '';
         
         if (prop.isDevis) {
             document.getElementById('modalPrice').innerHTML = '<span style="background:#f0e6d8; padding:0.3rem 1rem; border-radius:30px;"><i class="fas fa-file-signature"></i> Devis sur demande</span>';
@@ -1236,63 +1367,76 @@
                 </div>
             `;
         } else {
-            document.getElementById('modalPrice').innerHTML = `<span style="background:#f0e6d8; padding:0.3rem 1rem; border-radius:30px;">${prop.price.toLocaleString('fr-DZ')} DA <span style="font-size:0.8rem;">/nuit</span></span>`;
+            document.getElementById('modalPrice').innerHTML = `<span style="background:#f0e6d8; padding:0.3rem 1rem; border-radius:30px;">${(prop.price || 0).toLocaleString('fr-DZ')} DA <span style="font-size:0.8rem;">/nuit</span></span>`;
         }
         
         const featContainer = document.getElementById('modalFeatures');
         featContainer.innerHTML = '';
-        if (prop.features) {
+        if (prop.features && prop.features.length) {
             prop.features.forEach(f => { 
-                featContainer.innerHTML += `<div class="modal-feature-item"><i class="fas ${f.icon}"></i> <span>${f.text}</span></div>`; 
+                featContainer.innerHTML += `<div class="modal-feature-item"><i class="fas ${f.icon || 'fa-circle'}"></i> <span>${escapeHtml(String(f.text || ''))}</span></div>`; 
             });
+        } else {
+            featContainer.innerHTML = `<div class="modal-feature-item"><i class="fas fa-bed"></i> <span>Confort moderne</span></div>
+                                       <div class="modal-feature-item"><i class="fas fa-wifi"></i> <span>Wi-Fi gratuit</span></div>`;
         }
         
         const galleryDiv = document.getElementById('modalGallery');
         galleryDiv.innerHTML = '';
-        prop.images.forEach((img, idx) => {
-            const div = document.createElement('div');
-            div.className = 'modal-gallery-item' + (idx === 0 ? ' active' : '');
-            div.innerHTML = `<img src="${img}" alt="view">`;
-            div.addEventListener('click', () => setMainMedia(idx));
-            galleryDiv.appendChild(div);
-        });
+        if (currentImages.length === 0) {
+            galleryDiv.innerHTML = '<div style="text-align:center; padding:1rem;">Aucune image disponible</div>';
+        } else {
+            currentImages.forEach((img, idx) => {
+                const div = document.createElement('div');
+                div.className = 'modal-gallery-item' + (idx === 0 ? ' active' : '');
+                div.innerHTML = `<img src="${img}" alt="view" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\"><rect width=\"100%\" height=\"100%\" fill=\"%23e2e8f0\"/><text x=\"50%\" y=\"50%\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"%2364748b\">Image</text></svg>'">`;
+                div.addEventListener('click', () => setMainMedia(idx));
+                galleryDiv.appendChild(div);
+            });
+        }
         setMainMedia(0);
         
-        const similar = properties.filter(p => p.type === prop.type && p.id !== prop.id).slice(0, 3);
+        const similar = propertiesList.filter(p => p.type === prop.type && p.id !== prop.id).slice(0, 3);
         const similarDiv = document.getElementById('similarProperties');
         similarDiv.innerHTML = '';
-        similar.forEach(s => {
-            const simItem = document.createElement('div');
-            simItem.className = 'similar-item';
-            let priceSim = '';
-            if (s.isDevis) {
-                priceSim = 'Devis';
-            } else if (s.priceHaute && s.priceBasse) {
-                priceSim = `${s.priceHaute.toLocaleString('fr-DZ')} DA`;
-            } else {
-                priceSim = `${s.price?.toLocaleString('fr-DZ') || '?'} DA`;
-            }
-            simItem.innerHTML = `<img src="${s.images[0]}" alt="${s.title}"><p><strong>${s.title}</strong><br>${priceSim}</p>`;
-            simItem.addEventListener('click', () => openPropertyModal(s.id));
-            similarDiv.appendChild(simItem);
-        });
+        if (similar.length === 0) {
+            similarDiv.innerHTML = '<p>Aucun hébergement similaire</p>';
+        } else {
+            similar.forEach(s => {
+                const simItem = document.createElement('div');
+                simItem.className = 'similar-item';
+                let priceSim = '';
+                if (s.isDevis) {
+                    priceSim = 'Devis';
+                } else if (s.priceHaute && s.priceBasse) {
+                    priceSim = `${s.priceHaute.toLocaleString('fr-DZ')} DA`;
+                } else {
+                    priceSim = `${(s.price || 0).toLocaleString('fr-DZ') || '?'} DA`;
+                }
+                const simImage = s.images && s.images[0] ? s.images[0] : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="%23e2e8f0"/></svg>';
+                simItem.innerHTML = `<img src="${simImage}" alt="${s.title}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\"><rect width=\"100%\" height=\"100%\" fill=\"%23e2e8f0\"/></svg>'"><p><strong>${s.title}</strong><br>${priceSim}</p>`;
+                simItem.addEventListener('click', () => openPropertyModal(s.id));
+                similarDiv.appendChild(simItem);
+            });
+        }
         
         document.getElementById('hebergementModal').classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 
     function setMainMedia(index) {
-        if (!currentImages?.[index]) return;
+        if (!currentImages || currentImages.length === 0 || !currentImages[index]) {
+            const mainMediaDiv = document.getElementById('modalMainMedia');
+            if (mainMediaDiv) mainMediaDiv.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;background:#e2e8f0;">Aucune image</div>';
+            return;
+        }
         const mainMediaDiv = document.getElementById('modalMainMedia');
         if (mainMediaDiv) {
-            mainMediaDiv.innerHTML = `<img src="${currentImages[index]}" alt="vue principale">`;
+            mainMediaDiv.innerHTML = `<img src="${currentImages[index]}" alt="vue principale" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\"><rect width=\"100%\" height=\"100%\" fill=\"%23e2e8f0\"/><text x=\"50%\" y=\"50%\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"%2364748b\">Image</text></svg>'">`;
         }
         document.querySelectorAll('.modal-gallery-item').forEach((item, i) => {
-            if (i === index) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
+            if (i === index) item.classList.add('active');
+            else item.classList.remove('active');
         });
     }
 
@@ -1322,8 +1466,9 @@
         document.getElementById('loaderOverlay').classList.remove('active');
     }
 
+    // Initialisation
     document.addEventListener('DOMContentLoaded', () => {
-        displayProperties(properties);
+        loadPropertiesFromAPI();
         initBookingDates();
         
         document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1355,17 +1500,25 @@
                         if (currentProperty.priceHaute && currentProperty.priceBasse) {
                             document.getElementById('totalPrice').innerHTML = `💰 Tarifs: ${currentProperty.priceHaute.toLocaleString('fr-DZ')} DA/nuit (haute saison) / ${currentProperty.priceBasse.toLocaleString('fr-DZ')} DA/nuit (hors saison)`;
                         } else {
-                            document.getElementById('totalPrice').innerHTML = `💰 Tarif: ${currentProperty.price.toLocaleString('fr-DZ')} DA/nuit`;
+                            document.getElementById('totalPrice').innerHTML = `💰 Tarif: ${(currentProperty.price || 0).toLocaleString('fr-DZ')} DA/nuit`;
                         }
                     } else {
                         document.getElementById('totalPrice').innerHTML = '📄 <strong>Devis sur demande</strong> - Réponse sous 24h';
                     }
                     document.getElementById('bookingModal').classList.add('active');
+                    updateBookingTotal();
                 }
             });
         }
+
+        ['checkIn', 'checkOut', 'adults', 'children'].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('change', updateBookingTotal);
+                el.addEventListener('input', updateBookingTotal);
+            }
+        });
         
-        // Formulaire avec timeout court (3 secondes max)
         const bookingForm = document.getElementById('bookingForm');
         if (bookingForm) {
             bookingForm.addEventListener('submit', async (e) => {
@@ -1412,12 +1565,11 @@
                 
                 showLoader();
                 
-                // Timeout de 5 secondes max
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 5000);
                 
                 try {
-                    const res = await fetch("https://visitebejai.onrender.com/api/property-reservations", {
+                    const res = await fetch(PROPERTY_RESERVATION_API, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(data),
@@ -1426,9 +1578,7 @@
                     
                     clearTimeout(timeoutId);
                     
-                    if (!res.ok) {
-                        throw new Error("Erreur serveur");
-                    }
+                    if (!res.ok) throw new Error("Erreur serveur");
                     
                     await res.json();
                     alert("✅ Votre demande a été envoyée avec succès ! Notre équipe vous contactera très prochainement.");
@@ -1455,9 +1605,7 @@
         
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (navbar) {
-                navbar.classList.toggle('scrolled', window.scrollY > 50);
-            }
+            if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
         
         const scrollBtn = document.getElementById('scrollToHebergements');
@@ -1467,6 +1615,13 @@
                 document.getElementById('hebergements').scrollIntoView({ behavior: 'smooth' });
             });
         }
+        
+        // Rafraîchissement périodique (optionnel)
+        setInterval(() => {
+            if (!document.getElementById('hebergementModal')?.classList.contains('active')) {
+                loadPropertiesFromAPI();
+            }
+        }, 30000);
     });
 </script>
 </body>

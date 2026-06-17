@@ -2,10 +2,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisitBejaia - Les Tr�sors de B�ja�a</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Bejaia Odyssey | Luxury Travel Experience</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         * {
             margin: 0;
@@ -13,193 +14,164 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #0F2B3D;
+            --secondary: #D4AF37;
+            --accent: #E88D67;
+            --dark: #1A2C3E;
+            --light: #F5F2EB;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: #f8f9fa;
-            color: #1a2a3a;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--light);
+            color: var(--primary);
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
         }
 
-        .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-        }
-
-        .logo h1 {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, #1a3a6b, #e63946);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: #2c3e50;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #1a3a6b, #e63946);
-            transition: width 0.3s ease;
-        }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-
-        .nav-menu a:hover {
-            color: #e63946;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            z-index: 2001;
-        }
-
-        .hamburger span {
-            width: 28px;
-            height: 2px;
-            background: #1a3a6b;
-            transition: 0.3s;
-            display: block;
-        }
-
-        /* ===== VOICE BUTTON ===== */
-        .voice-button {
-            background: #f3ede7;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid #e0d2c4;
-            color: #1a3a6b;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-            margin-right: 15px;
-        }
-
-        .voice-button:hover {
-            background: #1a3a6b;
-            color: #ffffff;
-            transform: rotate(360deg) scale(1.1);
-            border-color: #1a3a6b;
-        }
-
-        .voice-button.speaking {
-            background: #e63946;
-            color: #ffffff;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
+        /* Hero Section - Fullscreen Video */
         .hero {
             position: relative;
-            min-height: 70vh;
-            background: url('https://www.bejaia-guidedepoche.com/images/CouvertureLieu/60/_thumb2/fbimg1616444248998.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: scroll;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
+            height: 100vh;
             overflow: hidden;
+            margin-top: 0;
         }
 
-        .hero::before {
-            content: '';
+        .hero-video {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(15, 43, 61, 0.7), rgba(0, 0, 0, 0.5));
             z-index: 1;
         }
 
         .hero-content {
-            padding: 120px 20px;
             position: relative;
             z-index: 2;
-            transform: translateY(50px);
-            opacity: 0;
-            animation: heroSlideUp 1.2s ease-out 0.3s forwards;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
         }
 
-        @keyframes heroSlideUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s ease;
         }
 
         .hero-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 700;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.8s ease;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-title span {
+            color: var(--secondary);
         }
 
         .hero-description {
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            opacity: 0.95;
-            max-width: 600px;
-            margin: 0 auto;
-            animation: fadeInUp 0.8s ease 0.2s both;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            gap: 15px;
+        }
+
+        .btn-outline {
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator a {
+            color: white;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .scroll-indicator a:hover {
+            opacity: 1;
         }
 
         @keyframes fadeInUp {
@@ -213,706 +185,525 @@
             }
         }
 
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(10px) translateX(-50%); }
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-dark {
+            background: var(--primary);
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
         .section-header {
             text-align: center;
-            margin: 60px 0 40px;
+            margin-bottom: 60px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            color: var(--secondary);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
 
         .section-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: #1a3a6b;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #1a3a6b, #e63946);
-            border-radius: 3px;
+        .section-dark .section-title {
+            color: white;
         }
 
         .section-subtitle {
-            text-align: center;
-            color: #6c757d;
-            font-size: 1.1rem;
             max-width: 700px;
-            margin: 25px auto 0;
+            margin: 20px auto 0;
+            opacity: 0.8;
         }
 
-        .filter-section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin: 40px 0 50px;
-        }
-
-        .filter-btn {
-            background: white;
-            border: 2px solid #e9ecef;
-            padding: 10px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: #495057;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover {
-            border-color: #e63946;
-            color: #e63946;
-            transform: translateY(-2px);
-        }
-
-        .filter-btn.active {
-            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
-            border-color: transparent;
-            color: white;
-            box-shadow: 0 10px 20px -8px rgba(26, 58, 107, 0.4);
-        }
-
-        .destinations-grid {
+        /* Featured Cards */
+        .featured-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
         }
 
-        .destination-card {
-            background: white;
+        .featured-card {
+            position: relative;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             cursor: pointer;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: cardAppear 0.6s ease forwards;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
-        @keyframes cardAppear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .featured-card:hover {
+            transform: translateY(-10px);
         }
 
-        .destination-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 30px 50px -20px rgba(230, 57, 70, 0.3);
-        }
-
-        .card-image {
-            position: relative;
-            height: 260px;
+        .featured-card-image {
+            height: 450px;
             overflow: hidden;
         }
 
-        .card-image img {
+        .featured-card-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s ease;
         }
 
-        .destination-card:hover .card-image img {
+        .featured-card:hover .featured-card-image img {
             transform: scale(1.08);
         }
 
-        .image-overlay {
+        .featured-card-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            height: 100px;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: white;
         }
 
-        .card-category {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            padding: 6px 14px;
-            border-radius: 30px;
-            color: white;
+        .featured-card-category {
             font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            z-index: 2;
+            letter-spacing: 2px;
+            color: var(--secondary);
+            margin-bottom: 10px;
         }
 
-        .card-content {
-            padding: 22px;
-        }
-
-        .card-title {
-            font-size: 1.4rem;
+        .featured-card-title {
+            font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 8px;
-            color: #1a3a6b;
-            transition: color 0.3s ease;
+            margin-bottom: 10px;
+            font-family: 'Cormorant Garamond', serif;
         }
 
-        .destination-card:hover .card-title {
-            color: #e63946;
-        }
-
-        .card-location {
+        .featured-card-location {
             display: flex;
             align-items: center;
-            gap: 6px;
-            color: #e63946;
+            gap: 5px;
             font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 12px;
+            opacity: 0.8;
         }
 
-        .card-description {
-            color: #6c757d;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            margin-bottom: 15px;
+        /* Swiper Carousel */
+        .carousel-section {
+            background: linear-gradient(135deg, var(--primary), #1a3a5c);
+            position: relative;
+            overflow: hidden;
         }
 
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #e9ecef;
+        .swiper {
+            padding: 50px 0 70px 0;
         }
 
-        .btn-explore {
-            background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
-            border: none;
-            padding: 10px 25px;
-            border-radius: 40px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
+        .swiper-slide {
+            border-radius: 20px;
+            overflow: hidden;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            width: 350px;
         }
 
-        .btn-explore:hover {
-            background: linear-gradient(135deg, #e63946, #c1121f);
-            transform: translateX(5px);
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .modal-container {
-            background: white;
-            max-width: 600px;
-            width: 90%;
-            border-radius: 28px;
-            padding: 30px;
-            max-height: 90vh;
-            overflow-y: auto;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-container {
-            transform: scale(1);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .modal-header h3 {
-            font-size: 1.5rem;
-            color: #1a3a6b;
-            font-weight: 700;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #adb5bd;
-            transition: all 0.3s ease;
-        }
-
-        .close-modal:hover {
-            color: #e63946;
-            transform: rotate(90deg);
-        }
-
-        .modal-image {
+        .swiper-slide img {
             width: 100%;
-            height: 250px;
+            height: 400px;
             object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 20px;
         }
 
-        .modal-description {
-            color: #495057;
-            line-height: 1.6;
-            margin-bottom: 20px;
+        .swiper-slide .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
         }
 
-        .modal-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+        .swiper-pagination-bullet {
+            background: var(--secondary);
         }
 
-        .modal-feature {
-            background: #f8f9fa;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            color: #1a3a6b;
-            font-weight: 500;
+        .swiper-pagination-bullet-active {
+            background: var(--secondary);
         }
 
-        .footer {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #94a3b8;
-            padding: 50px 0 20px;
-            margin-top: 60px;
-        }
-
-        .footer-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 30px;
+        /* Stats Section */
+        .stats-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 30px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--secondary);
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .stat-label {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Testimonials */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
         }
 
-        .footer-logo h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
-            color: white;
-            margin-bottom: 15px;
+        .testimonial-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
         }
 
-        .footer-links h4 {
-            color: white;
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #e63946;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-        }
-
-        .social-icons a {
-            background: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            color: white;
-            text-decoration: none;
-        }
-
-        .social-icons a:hover {
-            background: #e63946;
+        .testimonial-card:hover {
             transform: translateY(-5px);
         }
 
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            margin-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            width: 60px;
-            height: 60px;
+        .testimonial-avatar {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: white;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            z-index: 100;
-            transition: all 0.3s ease;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            border: 3px solid var(--secondary);
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary), #b8960f);
+            text-align: center;
+            padding: 80px 0;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .cta-btn {
+            background: var(--primary);
+            color: var(--secondary);
+            padding: 15px 45px;
+            border-radius: 50px;
             text-decoration: none;
-            animation: pulse 2s infinite;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
         }
 
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-            background: #128C7E;
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
-
+        /* Responsive */
         @media (max-width: 992px) {
-            .nav-menu {
-                display: none;
-                position: fixed;
-                top: 80px;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 30px;
-                gap: 20px;
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-                z-index: 1999;
-            }
-
-            .nav-menu.active {
-                display: flex;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .destinations-grid {
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            }
-
-            .footer-container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-                text-align: center;
-            }
-
-            .social-icons {
-                justify-content: center;
-            }
+            .featured-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            .destinations-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .card-image {
-                height: 220px;
-            }
+            .container { padding: 0 20px; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .featured-card-image { height: 350px; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .section { padding: 60px 0; }
+            .hero-title { font-size: clamp(2rem, 8vw, 3rem); }
         }
     </style>
 </head>
 <body>
 
-<!-- Navigation -->
+<!-- ===== VOTRE NAVBAR ICI ===== -->
 <div id="navbar-placeholder"></div>
+<!-- ===== FIN NAVBAR ===== -->
 
-<!-- Hero -->
-<section class="hero" id="accueil">
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <video class="hero-video" autoplay muted loop playsinline poster="https://www.bejaia-guidedepoche.com/images/CouvertureLieu/60/_thumb2/fbimg1616444248998.jpg">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
     <div class="hero-content">
-        <h1 class="hero-title">Les Tresors de Béjaia</h1>
-        <p class="hero-description">Découvrez les lieux d'exception qui font la richesse de notre région</p>
+        <div class="hero-badge">✦ LUXURY TRAVEL EXPERIENCE ✦</div>
+        <h1 class="hero-title">Découvrez <span>Béjaïa</span><br>Là où la mer rencontre la montagne</h1>
+        <p class="hero-description">Explorez des paysages à couper le souffle, une culture millénaire et une hospitalité légendaire</p>
+        <div class="hero-buttons">
+            <a href="#experiences" class="btn-primary">Explorer <i class="fas fa-arrow-right"></i></a>
+            <a href="#contact" class="btn-outline">Réserver <i class="fas fa-calendar-alt"></i></a>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <a href="#experiences"><i class="fas fa-chevron-down"></i></a>
     </div>
 </section>
 
-<div class="container" id="destinations">
-    <div class="section-header">
-        <h2 class="section-title">Nos Destinations</h2>
-        <p class="section-subtitle">Entre mer et montagne, explorez les plus beaux sites de Béjaïa</p>
-    </div>
-
-    <div class="filter-section">
-        <button class="filter-btn active" data-filter="all"> Tous les lieux</button>
-        <button class="filter-btn" data-filter="nature"> Nature & Montagne</button>
-        <button class="filter-btn" data-filter="plage"> Plages & Mer</button>
-        <button class="filter-btn" data-filter="culture"> Historique & Culture</button>
-    </div>
-
-    <div class="destinations-grid" id="destinationsGrid"></div>
-</div>
-
-<!-- WhatsApp -->
-<a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>
-
-<!-- Modal D�tail -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3 id="modalTitle">Detail</h3>
-            <button class="close-modal" id="closeModalBtn">&times;</button>
+<!-- Featured Experiences -->
+<section class="section" id="experiences">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">✦ EXCLUSIVE EXPERIENCES ✦</div>
+            <h2 class="section-title">Des expériences uniques</h2>
+            <p class="section-subtitle">Des aventures sur mesure pour découvrir l'essence authentique de Béjaïa</p>
         </div>
-        <img id="modalImage" class="modal-image" src="" alt="">
-        <p id="modalDescription" class="modal-description"></p>
-        <div id="modalFeatures" class="modal-features"></div>
+        <div class="featured-grid" id="featuredGrid"></div>
     </div>
-</div>
+</section>
 
+<!-- Carousel Destinations -->
+<section class="carousel-section section" id="destinations">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">✦ DESTINATIONS EXCEPTIONNELLES ✦</div>
+            <h2 class="section-title">Lieux d'exception</h2>
+            <p class="section-subtitle">Des joyaux naturels et historiques à couper le souffle</p>
+        </div>
+    </div>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper" id="swiperWrapper"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="section section-dark">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" data-count="50">0+</div>
+                <div class="stat-label">Expériences uniques</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="15000">0+</div>
+                <div class="stat-label">Voyageurs satisfaits</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="25">0+</div>
+                <div class="stat-label">Guides experts</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="100">0%</div>
+                <div class="stat-label">Satisfaction garantie</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-tag">✦ TEMOIGNAGES ✦</div>
+            <h2 class="section-title">Ce que nos voyageurs disent</h2>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Client" class="testimonial-avatar">
+                <p class="testimonial-text">"Une expérience inoubliable ! Les paysages de Béjaïa sont à couper le souffle. L'organisation était parfaite."</p>
+                <div class="testimonial-name">— Sarah M.</div>
+                <div><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i></div>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="testimonial-avatar">
+                <p class="testimonial-text">"Le Pic des Singes et le Cap Carbon sont des merveilles. Je recommande vivement cette destination !"</p>
+                <div class="testimonial-name">— Thomas L.</div>
+                <div><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i></div>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Client" class="testimonial-avatar">
+                <p class="testimonial-text">"L'accueil était chaleureux, les guides passionnés. Une belle découverte de la culture kabyle."</p>
+                <div class="testimonial-name">— Amira K.</div>
+                <div><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i><i class="fas fa-star" style="color: var(--secondary);"></i></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Prêt pour l'aventure ?</h2>
+        <p style="margin-bottom: 30px;">Réservez votre expérience dès maintenant et vivez des moments magiques</p>
+        <a href="https://wa.me/213557664089" class="cta-btn">Réserver maintenant <i class="fab fa-whatsapp"></i></a>
+    </div>
+</section>
+
+
+<!-- WhatsApp Float -->
 <script src="js/navbar.js"></script>
-<script src="script.js"></script>
 
-<!-- Footer placeholder -->
-<div data-include="footer"></div>
-
-<script src="js/include-footer.js"></script>
-  
+    <!-- Footer placeholder -->
+    <div data-include="footer"></div>
+    
+    <script src="js/include-footer.js"></script>
+      
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // Lieux authentiques de Béjaïa avec photos réelles
+    // Destinations Data (avec accents corrigés)
     const destinations = [
-        {
-            id: 1,
-            name: "Parc National de Gouraya",
-            category: "nature",
-            location: "Béjaïa",
-            image: "https://www.bejaia-guidedepoche.com/images/CouvertureLieu/130/_thumb2/dsc03690.JPG",
-            description: "Un écrin de verdure surplombant la mer Méditerranée. Sentiers de randonnée, vues panoramiques et une biodiversité exceptionnelle vous attendent.",
-            features: ["Randonnée", "Panorama", "Faune et flore", "Aire de pique-nique"]
-        },
-        {
-            id: 2,
-            name: "Cap Carbon",
-            category: "nature",
-            location: "Parc national de Gouraya, Béjaia",
-            image: "https://upload.wikimedia.org/wikipedia/commons/5/57/Cap_Carbon_1.jpg",
-            description: "Un des plus beaux caps de la Méditerranée. Son phare emblématique offre une vue à couper le souffle sur la baie de Béjaïa.",
-            features: ["Phare historique", "Vue mer", "Coucher de soleil", "Photo exceptionnelle"]
-        },
-        {
-            id: 3,
-            name: "Pic des Singes",
-            category: "nature",
-            location: "Parc national de Gouraya, Béjaia",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-j-l0CJvqlC9r-DSV1SBWEjxAkvOLNhlMPQ&s",
-            description: "Rencontrez les célèbres singes magots dans leur habitat naturel. Une expérience unique au cœur de la magnifique forêt d'Akfadou.",
-            features: ["Observation singes", "Fort dense", "Randonnée", "Pique-nique"]
-        },
-       
-        {
-            id: 5,
-            name: "Plage des Aiguades",
-            category: "plage",
-            location: "Les Aiguades, Béjaia",
-            image: "https://pbs.twimg.com/media/D6z4f6AUIAEbil-.jpg",
-            description: "Une plage sauvage et préservée, encadrée par des falaises. Un cadre idyllique pour une journée de détente.",
-            features: ["Cadre sauvage", "Falaises", "Eaux claires", "Tranquillité"]
-        },
-        {
-            id: 6,
-            name: "La Casbah de Béjaia",
-            category: "culture",
-            location: "Béjaia centre",
-            image: "https://lecourrier-dalgerie.com/wp-content/uploads/2022/05/Casbah-de-Be%CC%81jai%CC%88a.jpg",
-            description: "Flânez dans les ruelles pittoresques de la vieille ville. Découvrez l'architecture ottomane et l'artisanat local.",
-            features: ["Architecture ottomane", "Ruelles typiques", "Artisanat", "Histoire"]
-        },
-        {
-            id: 7,
-            name: "Fort Yemma Gouraya",
-            category: "culture",
-            location: "Mont Gouraya, Béjaïa",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcdyNws8S6IM6g5gmgWEf66JB1Uo5SFp9xuA&s",
-            description: "Un fort historique qui surplombe majestueusement la baie. Témoin de l'histoire riche de la région.",
-            features: ["Histoire", "Panorama", "Architecture militaire", "Visite guidée"]
-        },
-        
-        {
-            id: 13,
-            name: "Ferme Djerba",
-            category: "culture",
-            location: "Tazeboucht à Boulimat",
-            image: "https://elwatan.dz/wp-content/uploads/storage/2089/272105593.jpg",
-            description: "Un village de montagne authentique, avec ses maisons en pierre et son artisanat traditionnel kabyle.",
-            features: ["Authenticité", "Artisanat", "Accueil chaleureux", "Gastronomie"]
-        },
-        {
-            id: 14,
-            name: "Phare du Cap Carbon",
-            category: "culture",
-            location: "Cap Carbon, Béjaïa",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn260DTdIkJMv-jJXGFcrGR9gUU8a9V7bZCw&s",
-            description: "Le phare emblématique de Béjaïa, un monument chargé d'histoire.",
-            features: ["Phare", "Histoire maritime", "Vue panoramique", "Coucher de soleil"]
-        },
-        {
-            id: 15,
-            name: "Plage de la Brise",
-            category: "plage",
-            location: "Brise de mer, Béjaïa",
-            image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/B%C3%A9ja%C3%AFa_brise_de_mer.jpg/3840px-B%C3%A9ja%C3%AFa_brise_de_mer.jpg",
-            description: "Une petite crique paisible, idéale pour ceux qui recherchent calme et détente loin de la foule.",
-            features: ["Crique naturelle", "Calme", "Sable fin", "Eaux claires"]
-        }
+        { id: 1, name: "Parc National de Gouraya", category: "nature", location: "Béjaïa", image: "https://www.bejaia-guidedepoche.com/images/CouvertureLieu/130/_thumb2/dsc03690.JPG", description: "Un écrin de verdure surplombant la mer Méditerranée." },
+        { id: 2, name: "Cap Carbon", category: "nature", location: "Béjaïa", image: "https://upload.wikimedia.org/wikipedia/commons/5/57/Cap_Carbon_1.jpg", description: "Un des plus beaux caps de la Méditerranée." },
+        { id: 3, name: "Pic des Singes", category: "nature", location: "Béjaïa", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-j-l0CJvqlC9r-DSV1SBWEjxAkvOLNhlMPQ&s", description: "Rencontrez les célèbres singes magots." },
+        { id: 5, name: "Plage des Aiguades", category: "plage", location: "Béjaïa", image: "https://pbs.twimg.com/media/D6z4f6AUIAEbil-.jpg", description: "Une plage sauvage et préservée." },
+        { id: 6, name: "La Casbah de Béjaïa", category: "culture", location: "Béjaïa", image: "https://lecourrier-dalgerie.com/wp-content/uploads/2022/05/Casbah-de-B%C3%A9jai%C3%AFa.jpg", description: "Flânez dans les ruelles pittoresques." },
+        { id: 7, name: "Fort Yemma Gouraya", category: "culture", location: "Béjaïa", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcdyNws8S6IM6g5gmgWEf66JB1Uo5SFp9xuA&s", description: "Un fort historique qui surplombe la baie." },
+        { id: 14, name: "Phare du Cap Carbon", category: "culture", location: "Béjaïa", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn260DTdIkJMv-jJXGFcrGR9gUU8a9V7bZCw&s", description: "Le phare emblématique de Béjaïa." },
+        { id: 15, name: "Plage de la Brise", category: "plage", location: "Béjaïa", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/B%C3%A9ja%C3%AFa_brise_de_mer.jpg/3840px-B%C3%A9ja%C3%AFa_brise_de_mer.jpg", description: "Une petite crique paisible." }
     ];
 
-    // Rendu des cartes
-    function renderDestinations(filter = "all") {
-        const grid = document.getElementById("destinationsGrid");
+    // Render Featured Cards
+    function renderFeatured() {
+        const grid = document.getElementById('featuredGrid');
         if (!grid) return;
-
-        const filtered = filter === "all" ? destinations : destinations.filter(d => d.category === filter);
-
-        grid.innerHTML = filtered.map((dest, index) => `
-            <div class="destination-card" data-category="${dest.category}" style="animation-delay: ${index * 0.03}s">
-                <div class="card-image">
-                    <img src="${dest.image}" alt="${dest.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=${encodeURIComponent(dest.name)}'">
-                    <div class="image-overlay"></div>
-                    <span class="card-category">
-                        ${dest.category === "nature" ? " Nature" : dest.category === "plage" ? " Plage" : "Historique"}
-                    </span>
+        
+        const featured = destinations.slice(0, 3);
+        grid.innerHTML = featured.map(dest => `
+            <div class="featured-card">
+                <div class="featured-card-image">
+                    <img src="${dest.image}" alt="${dest.name}" loading="lazy">
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title">${dest.name}</h3>
-                    <div class="card-location">
-                        <i class="fas fa-map-marker-alt"></i> ${dest.location}
-                    </div>
-                    <p class="card-description">${dest.description.substring(0, 100)}${dest.description.length > 100 ? '...' : ''}</p>
-                    <div class="card-footer">
-                        <button class="btn-explore" data-id="${dest.id}">
-                            <i class="fas fa-info-circle"></i> Découvrir
-                        </button>
-                    </div>
+                <div class="featured-card-overlay">
+                    <div class="featured-card-category">${dest.category === 'nature' ? '🌿 NATURE' : dest.category === 'plage' ? '🏖️ PLAGE' : '🏛️ CULTURE'}</div>
+                    <h3 class="featured-card-title">${dest.name}</h3>
+                    <div class="featured-card-location"><i class="fas fa-map-marker-alt"></i> ${dest.location}</div>
                 </div>
             </div>
         `).join('');
-
-        // Événements boutons
-        document.querySelectorAll('.btn-explore').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const id = parseInt(btn.dataset.id);
-                const destination = destinations.find(d => d.id === id);
-                if (destination) {
-                    openModal(destination);
-                }
-            });
-        });
     }
 
-    // Ouvrir modal
-    function openModal(dest) {
-        document.getElementById("modalTitle").innerHTML = dest.name;
-        document.getElementById("modalImage").src = dest.image;
-        document.getElementById("modalDescription").innerHTML = dest.description;
-        document.getElementById("modalFeatures").innerHTML = dest.features.map(f => 
-            `<span class="modal-feature"><i class="fas fa-check-circle" style="color:#e63946; margin-right:5px;"></i> ${f}</span>`
-        ).join('');
-        document.getElementById("modalOverlay").classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-        document.getElementById("modalOverlay").classList.remove("active");
-        document.body.style.overflow = "auto";
-    }
-
-    // Navigation mobile
-    const hamburger = document.getElementById("hamburgerBtn");
-    const navMenu = document.getElementById("navMenu");
-
-    if (hamburger && navMenu) {
-        hamburger.addEventListener("click", () => {
-            navMenu.classList.toggle("active");
-            const spans = hamburger.querySelectorAll("span");
-            if (navMenu.classList.contains("active")) {
-                spans[0].style.transform = "rotate(45deg) translate(6px, 6px)";
-                spans[1].style.opacity = "0";
-                spans[2].style.transform = "rotate(-45deg) translate(6px, -6px)";
-            } else {
-                spans[0].style.transform = "none";
-                spans[1].style.opacity = "1";
-                spans[2].style.transform = "none";
+    // Render Swiper
+    function renderSwiper() {
+        const wrapper = document.getElementById('swiperWrapper');
+        if (!wrapper) return;
+        
+        wrapper.innerHTML = destinations.map(dest => `
+            <div class="swiper-slide">
+                <img src="${dest.image}" alt="${dest.name}">
+                <div class="slide-content">
+                    <h3>${dest.name}</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> ${dest.location}</p>
+                </div>
+            </div>
+        `).join('');
+        
+        new Swiper('.mySwiper', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                320: { slidesPerView: 1, spaceBetween: 20 },
+                768: { slidesPerView: 2, spaceBetween: 30 },
+                1024: { slidesPerView: 3, spaceBetween: 40 }
             }
         });
     }
 
-    // Initialisation
-    document.addEventListener("DOMContentLoaded", () => {
-        renderDestinations("all");
-
-        // Filtres
-        document.querySelectorAll(".filter-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                renderDestinations(btn.dataset.filter);
-            });
+    // Animate Counters
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            let current = 0;
+            const increment = target / 50;
+            const update = () => {
+                if (current < target) {
+                    current += increment;
+                    let suffix = '';
+                    if (target === 100) suffix = '%';
+                    else if (target === 15000) suffix = 'k+';
+                    else suffix = '+';
+                    counter.innerHTML = Math.ceil(current) + suffix;
+                    setTimeout(update, 30);
+                } else {
+                    let suffix = '';
+                    if (target === 100) suffix = '%';
+                    else if (target === 15000) suffix = 'k+';
+                    else suffix = '+';
+                    counter.innerHTML = target + suffix;
+                }
+            };
+            update();
         });
+    }
 
-        // Modal events
-        document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-        document.getElementById("modalOverlay").addEventListener("click", (e) => {
-            if (e.target === document.getElementById("modalOverlay")) closeModal();
-        });
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        renderFeatured();
+        renderSwiper();
+        animateCounters();
     });
 </script>
 </body>
 </html>
-

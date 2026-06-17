@@ -7,6 +7,8 @@ const fs = require("fs");
 const multer = require("multer");
 
 const { sequelize } = require("./models");
+const { ensurePropertyColumns } = require("./utils/ensurePropertyColumns");
+const { ensureReservationAdminColumns } = require("./utils/ensureReservationAdminColumns");
 
 // ROUTES
 const adminRoutes = require("./routes/adminRoutes");
@@ -210,6 +212,8 @@ async function startServer() {
     console.log("✅ DB connectée");
 
     await sequelize.sync({ alter: true });
+    await ensurePropertyColumns(sequelize);
+    await ensureReservationAdminColumns(sequelize);
     console.log("✅ Tables synchronisées");
 
     app.listen(PORT, () => {

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maquette Billet Electronique</title>
+
+<style>
+body{
+    background:#e5e5e5;
+    font-family:Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:30px;
+}
+
+.ticket{
+    width:900px;
+    margin:auto;
+    background:#fff;
+    padding:30px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+}
+
+.office{
+    width:45%;
+    text-align:center;
+    font-size:14px;
+}
+
+.passenger{
+    width:45%;
+    text-align:right;
+    font-size:14px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.logo small{
+    display:block;
+    font-size:18px;
+    font-weight:normal;
+}
+
+.fake-qr{
+    width:120px;
+    height:120px;
+    margin:10px auto;
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #000 0px,
+            #000 4px,
+            #fff 4px,
+            #fff 8px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 4px,
+            rgba(0,0,0,.3) 4px,
+            rgba(0,0,0,.3) 8px
+        );
+}
+
+.title{
+    background:#333;
+    color:white;
+    text-align:center;
+    padding:10px;
+    margin:25px 0;
+    font-weight:bold;
+}
+
+.notice{
+    text-align:center;
+    font-size:12px;
+    margin-bottom:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:20px;
+}
+
+th{
+    background:#444;
+    color:white;
+    padding:10px;
+    font-size:13px;
+}
+
+td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:center;
+    font-size:13px;
+}
+
+.flight-info{
+    line-height:1.7;
+}
+
+.footer{
+    margin-top:25px;
+    font-size:12px;
+    border-top:1px solid #ccc;
+    padding-top:10px;
+}
+
+.small{
+    font-size:11px;
+    color:#444;
+}
+</style>
+</head>
+
+<body>
+
+<div class="ticket">
+
+    <div class="header">
+
+        <div class="office">
+
+            <strong>Bureau émetteur</strong><br>
+            Visit Bejaia<br>
+            Russel Stade Bejaia,<br>
+            Alger<br>
+            +33 6 19 50 17 08<br>
+            01 juin 2026
+        </div>
+
+        <div class="passenger">
+
+            <div class="logo">
+                VOLOTEA
+                <small></small>
+            </div>
+
+            <br>
+
+            <strong>Passager :</strong> Hassiba BETTOUCHE<br>
+            <strong>Réservation :</strong> <br>
+            <strong>Billet :</strong> 223555148217
+
+        </div>
+
+    </div>
+
+    <div class="title">
+        ELECTRONIC TICKET RECEIPT
+    </div>
+
+    <div class="notice">
+        Veuillez vous présenter à l'enregistrement au moins 4 heures avant le départ.
+    </div>
+
+    <table>
+
+        <tr>
+           
+            <th>Arrivée</th>
+            <th>Départ</th>
+            <th>Vol</th>
+            <th>Destination</th>
+            <th>Origine</th>
+        </tr>
+
+        <tr>
+            
+            <td>23:55<br>01/06/2026</td>
+            <td>21:25<br>01/06/2026</td>
+            <td>V7 2631</td>
+            <td>Marseille</td>
+            <td>Bejaia</td>
+        </tr>
+
+    </table>
+
+    <div class="flight-info">
+
+        Terminal : 1<br>
+        Classe : Economique<br>
+        Statut : Confirmé<br>
+        Bagage : a main<br>
+        Durée : 01h30
+
+    </div>
+
+    <br>
+
+    
+ 
+
+  
+
+</div>
+
+</body>
+</html>

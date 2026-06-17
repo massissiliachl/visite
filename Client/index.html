@@ -3,16 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisitBéjaïa - Éclat Méditerranéen</title>
+
+    <title>Visit Béjaïa - Aventure et découverte à l'Algérienne</title>
+
+    <!-- META DESCRIPTION (SEO) -->
+    <meta name="description" content="Visit Béjaïa - Aventure et découverte à l'Algérienne , Découvrez Béjaïa avec Visit Béjaïa : excursions en bateau, jet ski, quad, hébergements et activités touristiques en Algérie.">
+
+    <!-- ================= FAVICON (IMPORTANT GOOGLE + NAVIGATEUR) ================= -->
+
+    <!-- ICO (compatibilité maximale) -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <!-- PNG modernes -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+
+    <!-- Apple iPhone / iPad -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <link rel="stylesheet" href="css/activity-cards.css">
+    <link rel="stylesheet" href="css/whatsapp-float.css">
+
+    <!-- ================= OPEN GRAPH (Facebook / WhatsApp) ================= -->
+    <meta property="og:title" content="Visiter Béjaïa - Éclat Méditerranéen">
+    <meta property="og:description" content="Excursions bateau, jet ski, quad et hébergements à Béjaïa">
+    <meta property="og:image" content="https://www.visitbejaia.org/assets/images/logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.visitbejaia.org">
+
+    <!-- ================= TWITTER CARD ================= -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Visiter Béjaïa - Éclat Méditerranéen">
+    <meta name="twitter:image" content="https://www.visitbejaia.org/assets/images/logo.png">
+
+    <!-- ================= GOOGLE STRUCTURED DATA ================= -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Visiter Béjaïa",
+        "url": "https://www.visitbejaia.org",
+        "logo": "https://www.visitbejaia.org/assets/images/logo.png"
+    }
+    </script>
+
     <style>
         /* ===== DESIGN SYSTEM COMPLET AVEC ANIMATIONS ===== */
         * {
@@ -1122,7 +1157,143 @@
             transform: translate(-50%, -50%) scale(1);
         }
 
-        /* ===== CONTACT ===== */
+        /* ===== HÉBERGEMENT — carte d'invitation ===== */
+      /* ===== SECTION HÉBERGEMENT - IMAGE À GAUCHE AVEC ANIMATION DOUCE ===== */
+/* ===== SECTION HÉBERGEMENT - EXACTEMENT COMME L'IMAGE ===== */
+.hebergement-teaser {
+    padding: 60px 0;
+    background: #fff;
+}
+
+.hebergement-teaser .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hebergement-card {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    background: #fff;
+}
+
+.hebergement-image {
+    flex: 1;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.hebergement-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hebergement-content {
+    flex: 1;
+}
+
+.hebergement-content h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e74c3c;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.hebergement-content h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    font-family: inherit;
+}
+
+.hebergement-content p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.hebergement-btn {
+    display: inline-block;
+    background: #1a1a2e;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.hebergement-btn:hover {
+    background: #e74c3c;
+}
+
+/* ===== RESPONSIVE - GARDE LE MÊME DESIGN ===== */
+@media (max-width: 900px) {
+    .hebergement-card {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .hebergement-image {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .hebergement-content {
+        text-align: center;
+    }
+    
+    .hebergement-content h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hebergement-teaser {
+        padding: 40px 0;
+    }
+    
+    .hebergement-content h2 {
+        font-size: 24px;
+    }
+    
+    .hebergement-content p {
+        font-size: 14px;
+    }
+    
+    .hebergement-btn {
+        display: inline-block;
+        width: auto;
+        padding: 10px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hebergement-content h2 {
+        font-size: 22px;
+    }
+    
+    .hebergement-content p {
+        font-size: 13px;
+    }
+    
+    .hebergement-btn {
+        font-size: 13px;
+        padding: 10px 20px;
+    }
+}        /* ===== CONTACT ===== */
         .contact {
             padding: 6rem 0;
             background: #f5efe8;
@@ -1654,12 +1825,7 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
-            overflow-x: hidden;
-        }
-
+      
         /* Section principale */
         .about-section {
             max-width: 1400px;
@@ -2148,145 +2314,7 @@
             box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
         }
 
-        .activities-grid {
-    display: flex;
-    gap: 2rem;
-    overflow-x: auto;
-    padding: 1rem 0 2rem;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-
-    /* cacher scrollbar */
-    scrollbar-width: none;
-}
-
-.activities-grid::-webkit-scrollbar {
-    display: none;
-}
-
-.activity-card {
-    flex: 0 0 340px;
-    scroll-snap-align: start;
-    min-height: 720px;
-    display: flex;
-    flex-direction: column;
-
-    background: rgba(255, 255, 255, 0.98);
-    border-radius: 2rem;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
-    position: relative;
-
-    opacity: 0;
-    transform: translateY(30px);
-    animation: cardFadeIn 0.6s ease forwards;
-}
-
-.card-media {
-    height: 220px;
-    overflow: hidden;
-}
-
-.card-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.activity-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 30px 50px -20px rgba(249, 115, 22, 0.25);
-}
-        @keyframes cardFadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .activity-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 30px 50px -20px rgba(249, 115, 22, 0.25);
-        }
-
-        .card-header {
-            padding: 1.8rem 1.8rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .icon-circle {
-            width: 75px;
-            height: 75px;
-            background: linear-gradient(135deg, #fff5eb, #ffe6d5);
-            border-radius: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            color: #1d3ddb;
-            transition: 0.3s;
-        }
-
-        .price-badge {
-            background: linear-gradient(135deg, #a90303, #0f17f4);
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 1rem;
-            color: #ffffff;
-        }
-
-        .card-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            padding: 0 1.8rem;
-            margin-bottom: 0.5rem;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .card-desc {
-            padding: 0 1.8rem;
-            color: #64748b;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-            flex-grow: 1;
-        }
-
-        .btn-book {
-            margin: auto 1.8rem 1.8rem;
-            background: linear-gradient(95deg, #a90303, #a90303);
-            border: none;
-            padding: 1rem;
-            border-radius: 3rem;
-            font-weight: 700;
-            color: white;
-            width: calc(100% - 3.6rem);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-book:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -8px #a90303;
-        }
-
-        @media (max-width: 768px) {
-            .activity-card {
-                min-height: 680px;
-            }
-        }
+        /* cartes activités → css/activity-cards.css */
 
         .modal-overlay {
             position: fixed;
@@ -2369,7 +2397,7 @@
 
         .price-summary strong {
             font-size: 1.2rem;
-            color: #a90303;
+            color: #1e293b;
         }
 
         .btn-submit {
@@ -2510,26 +2538,201 @@
         font-size: 1.8rem;
     }
 }   
+/* ===== SCROLL HORIZONTAL DES CARTES ACTIVITÉS ===== */
+.activities-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: visible;
+    gap: 2rem;
+    padding: 1rem 0.5rem 2rem;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+/* Style de la scrollbar */
+.activities-grid::-webkit-scrollbar {
+    height: 6px;
+}
+.activities-grid::-webkit-scrollbar-track {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+.activities-grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #d32f2f, #1a3a6b);
+    border-radius: 10px;
+}
+
+/* Cartes en mode horizontal */
+.activity-card {
+    flex: 0 0 320px;
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 50px -15px rgba(211, 47, 47, 0.3);
+}
+
+.card-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.activity-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.card-category {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a3a6b;
+    margin-bottom: 0.5rem;
+}
+
+.card-desc {
+    color: #6d7a75;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.price small {
+    font-size: 0.7rem;
+    font-weight: normal;
+    color: #94a3b8;
+}
+
+.btn-reserve {
+    background: linear-gradient(135deg, #1a3a6b, #2d5a9f);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-reserve:hover {
+    background: linear-gradient(135deg, #d32f2f, #b91c1c);
+    transform: scale(1.05);
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .activity-card {
         flex: 0 0 85%;
+        min-width: 260px;
     }
-
-    .activities-grid {
-        gap: 1rem;
-        padding: 1rem;
+    .card-image {
+        height: 200px;
+    }
+    .card-title {
+        font-size: 1.2rem;
+    }
+    .card-desc {
+        font-size: 0.85rem;
+    }
+    .price {
+        font-size: 1.1rem;
+    }
+    .btn-reserve {
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
     }
 }
 
+@media (max-width: 480px) {
+    .activity-card {
+        flex: 0 0 90%;
+        min-width: 240px;
+    }
+    .card-image {
+        height: 180px;
+    }
+    .card-content {
+        padding: 1rem;
+    }
+    .card-title {
+        font-size: 1.1rem;
+    }
+}
 
-//bateau 
+/* Animation d'apparition des cartes */
+.activity-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: cardAppear 0.6s forwards;
+}
 
+.activity-card:nth-child(1) { animation-delay: 0.1s; }
+.activity-card:nth-child(2) { animation-delay: 0.2s; }
+.activity-card:nth-child(3) { animation-delay: 0.3s; }
+.activity-card:nth-child(4) { animation-delay: 0.4s; }
+.activity-card:nth-child(5) { animation-delay: 0.5s; }
+.activity-card:nth-child(6) { animation-delay: 0.6s; }
 
-
-
-
-
-
+@keyframes cardAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 
 /* Conteneur des notes rouges */
@@ -2606,19 +2809,6 @@
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Style spécifique pour les options bateau avec sous-options */
 .bateau-offre {
     background: white;
@@ -2685,88 +2875,6 @@
     font-weight: 500;
 }
 
-
-
-
-.red-notes-container {
-    background: #fff5f5;
-    border: 1px solid #ffcccc;
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 20px;
-    animation: fadeInUp 0.3s ease;
-}
-
-.red-notes-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #ffcccc;
-}
-
-.red-notes-header i {
-    color: #dc2626;
-    font-size: 1rem;
-}
-
-.red-notes-header span {
-    color: #dc2626;
-    font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.red-notes-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.red-note-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.red-big-dot {
-    flex-shrink: 0;
-    width: 6px;
-    height: 6px;
-    background: #dc2626;
-    border-radius: 50%;
-    margin-top: 8px;
-}
-
-/* Alternative avec pseudo-élément si vous préférez */
-.red-note-item .red-dot {
-    width: 6px;
-    height: 6px;
-    background: #dc2626;
-    border-radius: 50%;
-    display: inline-block;
-    flex-shrink: 0;
-    margin-top: 8px;
-}
-
-.red-note-text {
-    color: #991b1b;
-    flex: 1;
-    font-size: 0.85rem;
-    line-height: 1.4;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* Styles pour le bouton d'upload */
 .proof-upload-area {
     margin-bottom: 0.5rem;
@@ -2798,18 +2906,11 @@
 .upload-btn i {
     font-size: 1.1rem;
 }
-        </style>
+    </style>
 </head>
 
-
-
-
-<!-- WhatsApp Floating Button -->
-<a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
-    <i class="fab fa-whatsapp"></i>
-</a>
 <body>
-
+    <div class="main-content">
     <!-- Navigation -->
     <div id="navbar-placeholder"></div>
 
@@ -2828,8 +2929,9 @@
         <div class="hero-overlay"></div>
         <div class="wave"></div>
     </section>
-<!-- Activités (avec carrousel auto-scroller) -->
- <div class="container">
+
+    <!-- Activités -->
+    <div class="container">
         <div class="activities-header">
             <h1><i class="fas fa-compass"></i> Nos activités</h1>
             <p>Des expériences uniques à vivre à Béjaïa</p>
@@ -2843,208 +2945,211 @@
             </div>
             
             <div class="activities-grid" id="activitiesGrid"></div>
-    <a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
 
     <!-- Modal -->
-<!-- MODALE DE RÉSERVATION CORRIGÉE (remplacez l'ancienne modale par celle-ci) -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal-container">
-        <div class="modal-header">
-            <h3 id="modalTitle">Réserver</h3>
-            <button style="background:none; border:none; font-size:2rem; cursor:pointer; color:#94a3b8;" id="closeModalBtn">&times;</button>
-        </div>
-        <form id="reservationForm">
-            <div class="info-box" id="activityNote"></div>
-            
-            <!-- Options Quad -->
-            <div id="quadOptions" class="options-modal" style="display: none;">
-                <label> Choisissez votre formule :</label>
-                <select id="quadSelect">
-                    <option value="3000">30 minutes - 3000 DA</option>
-                    <option value="4000">45 minutes - 4000 DA</option>
-                </select>
-                <div class="child-option">
-                    <input type="checkbox" id="quadChild">
-                    <label>Enfant à l'arrière (+1000 DA)</label>
-                </div>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle">Réserver</h3>
+                <button style="background:none; border:none; font-size:2rem; cursor:pointer; color:#94a3b8;" id="closeModalBtn">&times;</button>
             </div>
-
-            <!-- Options Parapente -->
-            <div id="parapenteOptions" class="options-modal" style="display: none;">
-                <label>Choisissez votre formule vidéo :</label>
-                <select id="parapenteSelect">
-                    <option value="6000">Vidéo GoPro 4K - 6000 DA</option>
-                    <option value="7000">Vidéo GoPro 5,3K - 7000 DA</option>
-                    <option value="8000">Vidéo Insta 360 - 8000 DA</option>
-                </select>
-            </div>
-
-            <!-- Options Jet Ski -->
-            <div id="jetskiOptions" class="options-modal" style="display: none;">
-                <label> Choisissez la durée :</label>
-                <select id="jetskiSelect">
-                    <option value="30000"> 1h00 - 30000 DA</option>
-                    <option value="40000"> 1h30 - 40000 DA</option>
-                </select>
-            </div>
-
-            <!-- Options bateau détaillées -->
-            <div id="bateauOptions" class="options-modal" style="display: none;">
-                <label>Choisissez votre offre :</label>
+            <form id="reservationForm">
+                <div class="info-box" id="activityNote"></div>
                 
-                <div class="bateau-offre">
-                    <div class="bateau-offre-title">
-                        <i class="fas fa-ship"></i> Offre Découverte (1h30/2h)
-                    </div>
-                    <div class="bateau-capacite">
-                        <label>
-                            <input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5">
-                             Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7">
-                             Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9">
-                            Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
-                        </label>
+                <!-- Options Quad -->
+                <div id="quadOptions" class="options-modal" style="display: none;">
+                    <label> Choisissez votre formule :</label>
+                    <select id="quadSelect">
+                        <option value="3000">30 minutes - 3000 DA</option>
+                        <option value="4000">45 minutes - 4000 DA</option>
+                    </select>
+                    <div class="child-option">
+                        <input type="checkbox" id="quadChild">
+                        <label>Enfant à l'arrière (+1000 DA)</label>
                     </div>
                 </div>
 
-                <div class="bateau-offre">
-                    <div class="bateau-offre-title">
-                        <i class="fas fa-umbrella-beach"></i> Offre Évasion (3h/3h30) + Brunch
+                <!-- Options Parapente -->
+                <div id="parapenteOptions" class="options-modal" style="display: none;">
+                    <label>Choisissez votre formule vidéo :</label>
+                    <select id="parapenteSelect">
+                        <option value="6000">Vidéo GoPro 4K - 6000 DA</option>
+                        <option value="7000">Vidéo GoPro 5,3K - 7000 DA</option>
+                        <option value="8000">Vidéo Insta 360 - 8000 DA</option>
+                    </select>
+                </div>
+
+                <!-- Options Jet Ski -->
+                <div id="jetskiOptions" class="options-modal" style="display: none;">
+                    <label> Choisissez la durée :</label>
+                    <select id="jetskiSelect">
+                        <option value="30000"> 1h00 - 30000 DA</option>
+                        <option value="40000"> 1h30 - 40000 DA</option>
+                    </select>
+                </div>
+
+                <!-- Options bateau détaillées -->
+                <div id="bateauOptions" class="options-modal" style="display: none;">
+                    <label>Choisissez votre offre :</label>
+                    
+                    <div class="bateau-offre">
+                        <div class="bateau-offre-title">
+                            <i class="fas fa-ship"></i> Circuit classique (1h30/2h)
+                        </div>
+                        <div class="bateau-capacite">
+                            <label>
+                                <input type="radio" name="bateauOption" value="16000" data-offre="classique" data-capacite="3">
+                                🚤 Bateau 3 personnes - <span class="price-detail">16000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5">
+                                ⛵ Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7">
+                                ⛵ Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9">
+                                ⛵ Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="bateau-capacite">
-                        <label>
-                            <input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5" data-bouee="true">
-                            Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7" data-bouee="false">
-                            Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
-                        </label>
+                
+                    <div class="bateau-offre">
+                        <div class="bateau-offre-title">
+                            <i class="fas fa-umbrella-beach"></i> Offre Évasion (3h/3h30) + Brunch
+                        </div>
+                        <div class="bateau-capacite">
+                            <label>
+                                <input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5" data-bouee="true">
+                                Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7" data-bouee="false">
+                                Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
+                            </label>
+                        </div>
+                        <div class="option-bouee" id="boueeOptionContainer" style="display: none;">
+                            <label>
+                                <input type="checkbox" id="boueeOption">
+                                ➕ Bouée tractée (5000 DA supplémentaire)
+                            </label>
+                        </div>
                     </div>
-                    <div class="option-bouee" id="boueeOptionContainer" style="display: none;">
-                        <label>
-                            <input type="checkbox" id="boueeOption">
-                             + Bouée tractée (5000 DA supplémentaire)
-                        </label>
+                
+                    <div class="bateau-offre">
+                        <div class="bateau-offre-title">
+                            <i class="fas fa-fire"></i> Offre Détente (4h30/5h) + Barbecue + Bouée
+                        </div>
+                        <div class="bateau-capacite">
+                            <label>
+                                <input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5">
+                                Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7">
+                                Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bateau-offre">
-                    <div class="bateau-offre-title">
-                        <i class="fas fa-fire"></i> Offre Détente (4h30/5h) + Barbecue + Bouée
+                <div class="form-group" id="fullNameGroup">
+                    <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et prénom)</span></label>
+                    <input type="text" id="fullName" placeholder="Ex: Visite Bejaia" required>
+                    <div class="error-message" id="fullNameError">❗ Veuillez entrer votre nom et prénom (séparés par un espace)</div>
+                </div>
+                <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
+                <div class="form-group"><label>Téléphone *</label><input type="tel" id="phone" required></div>
+                <div class="form-group"><label>Date souhaitée *</label><input type="date" id="date" required></div>
+                <div class="form-group" id="adultsGroup">
+                    <label>Adultes *</label>
+                    <input type="number" id="adults" min="0" value="1" required>
+                </div>
+                <div class="form-group" id="childGroup" style="display:none;">
+                    <label>Enfants <span id="childExtraLabel"></span></label>
+                    <input type="number" id="children" min="0" value="0">
+                </div>       
+                <div class="form-group">
+                    <label>Mode de paiement</label>
+                    <select id="paymentMethod">
+                        <option value="BaridiMob">BaridiMob</option>
+                        <option value="CCP">CCP</option>
+                        <option value="Virement">Virement</option>
+                        <option value="PayPal">PayPal (Confirmation WhatsApp)</option>
+                    </select>
+                </div>
+                <div class="form-group bank-details" id="bankDetails">
+                    <label>Coordonnées pour virement</label>
+                    <div class="bank-detail-line"><strong>Code banque :</strong> 005</div>
+                    <div class="bank-detail-line"><strong>N° de compte :</strong> 00133000011952  <strong>Clé RIB :</strong> 77  BDL</div>
+                    <small>Envoyez le virement à ce compte et saisissez la référence de transaction ci-dessous.</small>
+                </div>
+                <div class="form-group"><label>Référence transaction</label>
+                    <input type="text" id="transactionRef" placeholder="ex: 123456">
+                </div>
+                
+                <!-- SECTION PREUVE DE PAIEMENT -->
+                <div class="form-group" id="paymentProofGroup">
+                    <label>📸 Preuve de paiement *</label>
+                    <div class="proof-upload-area">
+                        <button type="button" id="uploadBtn" class="upload-btn">
+                            <i class="fas fa-folder-open"></i> Choisir une image depuis la galerie
+                        </button>
+                        <input type="file" id="paymentProof" accept="image/*" style="display:none;">
+                        
+                        <small style="display:block; margin-top:0.5rem; color:#666;">
+                            📱 Formats acceptés : JPG, PNG, WEBP (max 5 Mo)
+                        </small>
+
+                        <div style="margin-top:10px; padding:10px; background:#fff3cd; border-left:4px solid #f59e0b; border-radius:8px;">
+                            <strong>📌 Important :</strong><br>
+                            La preuve de paiement est obligatoire pour confirmer votre réservation. Sans capture d'écran ou justificatif de paiement, la réservation ne pourra pas être validée.
+                        </div>
                     </div>
-                    <div class="bateau-capacite">
-                        <label>
-                            <input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5">
-                            Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7">
-                            Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
-                        </label>
+                    
+                    <div id="proofPreviewContainer" style="margin-top: 0.8rem; display: none;">
+                        <img id="proofPreviewImg" style="max-width:100%; max-height:150px; border-radius:10px; border:1px solid #ddd;">
+                        <button type="button" id="clearProofBtn" style="display:block; margin-top:0.5rem; background:#dc2626; color:white; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">🗑 Supprimer</button>
+                    </div>
+                    
+                    <div class="error-message" id="proofError">
+                        ⚠️ Veuillez ajouter une preuve de paiement pour continuer la réservation.
                     </div>
                 </div>
-            </div>
+                <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
+                <div class="price-summary"><strong>Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>Acompte 30 % : <span id="depositAmount">0 DA</span></small></div>
+                <button type="submit" class="btn-submit">Confirmer la réservation</button>
+            </form>
+        </div>
+    </div>
 
-            <div class="form-group" id="fullNameGroup">
-                <label>Nom complet * <span style="color:#dc2626; font-size:0.7rem;">(Nom et prénom)</span></label>
-                <input type="text" id="fullName" placeholder="Ex: Mohamed Amine" required>
-                <div class="error-message" id="fullNameError">❗ Veuillez entrer votre nom et prénom (séparés par un espace)</div>
-            </div>
-            <div class="form-group"><label>Email *</label><input type="email" id="email" required></div>
-            <div class="form-group"><label>Téléphone *</label><input type="tel" id="phone" required></div>
-            <div class="form-group"><label>Date souhaitée *</label><input type="date" id="date" required></div>
-<!-- Remplacer cette section dans la modale -->
-<div class="form-group" id="adultsGroup">
-    <label>Adultes *</label>
-    <input type="number" id="adults" min="0" value="1" required>
-</div>
-<div class="form-group" id="childGroup" style="display:none;">
-    <label>Enfants <span id="childExtraLabel"></span></label>
-    <input type="number" id="children" min="0" value="0">
-</div>       
-            <div class="form-group">
-                <label>Mode de paiement</label>
-                <select id="paymentMethod">
-                    <option value="BaridiMob">BaridiMob</option>
-                    <option value="CCP">CCP</option>
-                    <option value="Virement">Virement</option>
-                    <option value="PayPal">PayPal (Confirmation WhatsApp)</option>
-                </select>
-            </div>
-            <div class="form-group bank-details" id="bankDetails">
-                <label>Coordonnées pour virement</label>
-                <div class="bank-detail-line"><strong>Code banque :</strong> 005</div>
-                <div class="bank-detail-line"><strong>N° de compte :</strong> 00133000011952  <strong>Clé RIB :</strong> 77  BDL</div>
-                <small>Envoyez le virement à ce compte et saisissez la référence de transaction ci-dessous.</small>
-            </div>
-            <div class="form-group"><label>Référence transaction</label>
-                <input type="text" id="transactionRef" placeholder="ex: 123456">
-            </div>
-            
-            <!-- SECTION PREUVE DE PAIEMENT - VERSION SIMPLIFIÉE QUI FONCTIONNE -->
-          <!-- SECTION PREUVE DE PAIEMENT - SÉLECTION DEPUIS LA GALERIE -->
-<div class="form-group" id="paymentProofGroup">
-    <label>📸 Preuve de paiement *</label>
-    <div class="proof-upload-area">
-        <button type="button" id="uploadBtn" class="upload-btn">
-            <i class="fas fa-folder-open"></i> Choisir une image depuis la galerie
-        </button>
-        <input type="file" id="paymentProof" accept="image/*" style="display:none;">
-        <small style="display:block; margin-top:0.5rem; color:#666;">📱 Formats acceptés : JPG, PNG, WEBP (max 5 Mo)</small>
-    </div>
-    <div id="proofPreviewContainer" style="margin-top: 0.8rem; display: none;">
-        <img id="proofPreviewImg" style="max-width:100%; max-height:150px; border-radius:10px; border:1px solid #ddd;">
-        <button type="button" id="clearProofBtn" style="display:block; margin-top:0.5rem; background:#dc2626; color:white; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">🗑 Supprimer</button>
-    </div>
-    <div class="error-message" id="proofError">⚠️ Veuillez ajouter une preuve de paiement</div>
-</div>
-            <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
-            <div class="price-summary"><strong>Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>Acompte 30 % : <span id="depositAmount">0 DA</span></small></div>
-            <button type="submit" class="btn-submit">Confirmer la réservation</button>
-        </form>
-    </div>
-</div>
     <div id="toast" class="toast-notification"></div>
     <div id="loading" class="loading-overlay"><div class="spinner"></div></div>
 
-
-  <!-- SECTION HÉBERGEMENT -->
-  <section id="hebergement" class="accommodation-section" style="padding: 5rem 0; background: #ffffff;">
-    <div class="container">
-        <h2 class="section-title">Hébergement de charme</h2>
-        <p class="section-subtitle">
-            Choisissez parmi des appartements, villas et riads soigneusement sélectionnés pour votre confort à Béjaïa.
-        </p>
-
-        <div class="accommodation-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-
-            <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                <img src="assets/images/chalet/c5.jpeg" alt="Appartement Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Chalet familiale</h3>
-                <p style="margin: 0 0 1rem; color: #4e655f;">Confort moderne.</p>
-            </article>
-
-            <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                <img src="assets/images/chalet/chalet2.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-            <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Chalet </h3>
-                <p style="margin: 0 0 1rem; color: #4e655f;"> Belle vue ,service personnalisé.</p>
-            </article>
-
-            <article class="accommodation-card" style="background: #f8f9fa; border-radius: 20px; padding: 1.5rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);">
-                <img src="assets/images/chalet/chalet3.jpeg" alt="Villa Béjaïa" style="width: 100%; border-radius: 14px; object-fit: cover; height: 180px;">
-                <h3 style="margin: 1rem 0 0.5rem; color: #1a3a6b;">Chalet authentique</h3>
-                <p style="margin: 0 0 1rem; color: #4e655f;"> Belle vue ,service personnalisé.</p>
-            </article>
-
+    <!-- Hébergement -->
+    <section id="hebergement" class="hebergement-teaser">
+        <div class="container">
+            <div class="hebergement-card">
+                <div class="hebergement-image">
+                    <img src="assets/images/chalet/chalet2.jpeg" alt="Chalets et hébergements à Béjaïa">
+                </div>
+                <div class="hebergement-content">
+                    <span class="hebergement-tag">HÉBERGEMENTS</span>
+                    <h2>Votre séjour à Béjaïa</h2>
+                    <p>
+                        Choisissez l'hébergement qui vous convient pour passer un bon séjour à Béjaïa .
+                    </p>
+                    <a href="hebergement.html" class="hebergement-btn">
+                        Voir les hébergements <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- MODALE POUR INCONTOURNABLES -->
     <div class="must-modal" id="mustModal">
@@ -3063,8 +3168,7 @@
         </div>
     </div>
 
-
-    <!-- NOUVELLE SECTION DESTINATION SIMPLE (1 SEULE IMAGE) -->
+    <!-- NOUVELLE SECTION DESTINATION SIMPLE -->
     <section class="destination-simple-section">
         <div class="destination-simple-container">
             <h2 class="section-title">Incontournables</h2>
@@ -3084,6 +3188,7 @@
             </a>
         </div>
     </section>
+
     <!-- Nos Atouts -->
     <section id="pourquoi" class="about-section">
         <div class="decor-dot"></div>
@@ -3096,34 +3201,14 @@
             <p class="section-subtitle">Des valeurs qui font la différence</p>
         
             <div class="about-grid">
-        
-                <div class="about-item">
-                    <div class="about-icon">🌟</div>
-                    <h3>Service premium</h3>
-                    <p>Expérience 5 étoiles garantie</p>
-                </div>
-        
-                <div class="about-item">
-                    <div class="about-icon">🕒</div>
-                    <h3>Support 24/7</h3>
-                    <p>Assistance permanente</p>
-                </div>
-        
-                <div class="about-item">
-                    <div class="about-icon">✅</div>
-                    <h3>Réservation garantie</h3>
-                    <p>Confirmation immédiate</p>
-                </div>
-        
-                <div class="about-item">
-                    <div class="about-icon">🏔️</div>
-                    <h3>Destinations uniques</h3>
-                    <p>Experts locaux</p>
-                </div>
-        
+                <div class="about-item"><div class="about-icon">🌟</div><h3>Service premium</h3><p>Expérience 5 étoiles garantie</p></div>
+                <div class="about-item"><div class="about-icon">🕒</div><h3>Support 24/7</h3><p>Assistance permanente</p></div>
+                <div class="about-item"><div class="about-icon">✅</div><h3>Réservation garantie</h3><p>Confirmation immédiate</p></div>
+                <div class="about-item"><div class="about-icon">🏔️</div><h3>Destinations uniques</h3><p>Experts locaux</p></div>
             </div>
         </div>
-        </section>
+    </section>
+
     <!-- Instagram Feed -->
     <section class="instagram-section">
         <div class="container">
@@ -3141,76 +3226,54 @@
         </div>
     </section>
 
-   
-
-
-       <!-- À propos -->
-
-<section class="about-section" id="about-section">
-    <div class="about-container">
-        <!-- Bloc texte (GAUCHE) -->
-        <div class="about-content" id="textContent">
-            <span class="badge">🌍 À propos de nous</span>
-        
-            <h2>
-                On ne se contente pas de montrer Béjaïa.<br>
-                On vous fait la vivre.
-            </h2>
-        
-            <p class="description">
-                Avec Visit Béjaïa, nous réunissons nature, aventure et culture pour vous faire découvrir les meilleures activités de la région.  
-                Chaque expérience est pensée pour vous offrir des moments uniques entre mer, montagne et patrimoine.
-            </p>
-        
-            <ul class="features-list">
-                <li><span class="check-icon">✔</span> Explorez des activités uniques à Béjaïa</li>
-                <li><span class="check-icon">✔</span> Vivez des expériences inoubliables</li>
-                <li><span class="check-icon">✔</span> Découvrez la région comme un local</li>
-            </ul>
-        
-            <a href="activites.html" class="btn-primary">Découvrir nos activités ✨</a>
-        </div>
-        <!-- Bloc carrousel 3D (DROITE) -->
-        <div class="about-media" id="mediaContent">
-            <div class="carousel-3d" id="carousel3d">
-                <div class="carousel-card" data-index="0">
-                    <img src="assets/images/i.jpeg" alt="Équipe créative">
+    <!-- À propos -->
+    <section class="about-section" id="about-section">
+        <div class="about-container">
+            <div class="about-content" id="textContent">
+                <span class="badge">🌍 À propos de nous</span>
+                <h2>On ne se contente pas de montrer Béjaïa.<br>On vous fait la vivre.</h2>
+                <p class="description">
+                    Avec Visit Béjaïa, nous réunissons nature, aventure et culture pour vous faire découvrir les meilleures activités de la région.  
+                    Chaque expérience est pensée pour vous offrir des moments uniques entre mer, montagne et patrimoine.
+                </p>
+                <ul class="features-list">
+                    <li><span class="check-icon">✔</span> Explorez des activités uniques à Béjaïa</li>
+                    <li><span class="check-icon">✔</span> Vivez des expériences inoubliables</li>
+                    <li><span class="check-icon">✔</span> Découvrez la région comme un local</li>
+                </ul>
+                <a href="activites.html" class="btn-primary">Découvrir nos activités ✨</a>
+            </div>
+            <div class="about-media" id="mediaContent">
+                <div class="carousel-3d" id="carousel3d">
+                    <div class="carousel-card" data-index="0"><img src="assets/images/i.jpeg" alt="Équipe créative"></div>
+                    <div class="carousel-card" data-index="1"><img src="assets/images/i.jpeg" alt="Atelier design"></div>
+                    <div class="carousel-card" data-index="2"><img src="assets/images/i1.jpeg" alt="Collaboration"></div>
+                    <div class="carousel-card" data-index="3"><img src="assets/images/i.jpeg" alt="Réunion créative"></div>
                 </div>
-                <div class="carousel-card" data-index="1">
-                    <img src="assets/images/i.jpeg" alt="Atelier design">
+                <div class="carousel-nav">
+                    <button class="nav-btn" id="prevBtn">←</button>
+                    <div class="dots" id="dots"></div>
+                    <button class="nav-btn" id="nextBtn">→</button>
                 </div>
-                <div class="carousel-card" data-index="2">
-                    <img src="assets/images/i1.jpeg" alt="Collaboration">
-                </div>
-                <div class="carousel-card" data-index="3">
-                    <img src="assets/images/i.jpeg" alt="Réunion créative">
+                <div class="floating-card">
+                    <div class="floating-number">+50</div>
+                    <div class="stat-label">Lieux<br>à découvrir</div>
                 </div>
             </div>
-            <div class="carousel-nav">
-                <button class="nav-btn" id="prevBtn">←</button>
-                <div class="dots" id="dots"></div>
-                <button class="nav-btn" id="nextBtn">→</button>
-            </div>
-          <div class="floating-card">
-    <div class="floating-number">+50</div>
-    <div class="stat-label">Lieux<br>a decouvrir</div>
-</div>
         </div>
-    </div>
-</section>
-    <!-- Contact -->
+    </section>
+
     <!-- Contact -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Nous Vous Écoutons</h2>
-            <p class="section-subtitle">Contactez-nous pour planifier votre prochaine aventure à Béjaïa</p>
+            <h2 class="section-title">Une question ? Une réservation ? Contactez-nous</h2>
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="info-item">
                         <div class="info-icon">📍</div>
                         <div>
                             <h4>Adresse</h4>
-                            <p>123 Avenue de la Mer, Bejaia, Algérie</p>
+                            <p>Russel, Béjaïa, en face du Stade de l'Unité Maghrébine</p>
                         </div>
                     </div>
                     <div class="info-item">
@@ -3229,18 +3292,10 @@
                     </div>
                 </div>
                 <form class="contact-form" id="contactForm">
-                    <div class="form-group">
-                        <input type="text" id="contactName" placeholder="Votre nom" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="contactEmail" placeholder="Votre email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" id="contactPhone" placeholder="Votre téléphone">
-                    </div>
-                    <div class="form-group">
-                        <textarea id="contactMessage" rows="5" placeholder="Votre message" required></textarea>
-                    </div>
+                    <div class="form-group"><input type="text" id="contactName" placeholder="Votre nom" required></div>
+                    <div class="form-group"><input type="email" id="contactEmail" placeholder="Votre email" required></div>
+                    <div class="form-group"><input type="tel" id="contactPhone" placeholder="Votre téléphone"></div>
+                    <div class="form-group"><textarea id="contactMessage" rows="5" placeholder="Votre message" required></textarea></div>
                     <button type="submit" class="btn">Envoyer le message</button>
                 </form>
             </div>
@@ -3270,52 +3325,50 @@
             </form>
         </div>
     </div>
+    </div>
+
     <script src="js/navbar.js"></script>
+    <script src="js/whatsapp-float.js"></script>
+    <script src="js/activity-cards.js"></script>
 
     <!-- Footer placeholder -->
     <div data-include="footer"></div>
-    
     <script src="js/include-footer.js"></script>
-      
 
     <script>
+    // API configuration
+    const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || !location.hostname;
+    const API_BASE = isLocalHost ? (location.port === '3000' ? window.location.origin : 'http://127.0.0.1:3000') : 'https://visitebejai.onrender.com';
+    const FETCH_TIMEOUT_MS = 25000;
 
-    // API : local en dev, Render en production
-    const API_BASE = (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1' || !location.hostname)
-        ? 'http://localhost:3000'
-        : 'https://visitebejai.onrender.com';
+    function fetchWithTimeout(url, options = {}, timeoutMs = FETCH_TIMEOUT_MS) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        return fetch(url, { ...options, signal: controller.signal }).finally(() => clearTimeout(timer));
+    }
 
-    // ========== ANIMATION AU SCROLL ==========
-    const observerOptions = {
-        threshold: 0.2,
-        rootMargin: '0px 0px -100px 0px'
-    };
+    function warmUpApi() { if (!isLocalHost) fetchWithTimeout(`${API_BASE}/api/test`, {}, 15000).catch(() => {}); }
+    warmUpApi();
 
+    // Animation au scroll
+    const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -100px 0px' };
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, observerOptions);
-
     observer.observe(document.getElementById('textContent'));
     observer.observe(document.getElementById('mediaContent'));
 
-    // ========== CARROUSEL 3D ==========
+    // Carrousel 3D
     const carousel = document.getElementById('carousel3d');
     const cards = document.querySelectorAll('.carousel-card');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const dotsContainer = document.getElementById('dots');
-    
     let currentIndex = 0;
     const totalCards = cards.length;
     let isDragging = false;
     let startX = 0;
-    let currentRotation = 0;
 
-    // Créer les dots
     for (let i = 0; i < totalCards; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
@@ -3323,1540 +3376,497 @@
         dot.addEventListener('click', () => goToSlide(i));
         dotsContainer.appendChild(dot);
     }
-
     const dots = document.querySelectorAll('.dot');
 
     function updateCarousel() {
         const angle = (currentIndex / totalCards) * -360;
-        currentRotation = angle;
-        
         cards.forEach((card, index) => {
             const cardAngle = (index / totalCards) * 360;
-            const transform = `
-                rotateY(${cardAngle + angle}deg) 
-                translateZ(250px)
-            `;
-            card.style.transform = transform;
-            card.style.opacity = '1';
-            card.style.visibility = 'visible';
+            card.style.transform = `rotateY(${cardAngle + angle}deg) translateZ(250px)`;
         });
-        
-        // Mettre à jour les dots
-        dots.forEach((dot, index) => {
-            if (index === currentIndex) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
-        
-        // Animation 3D supplémentaire
+        dots.forEach((dot, index) => { if (index === currentIndex) dot.classList.add('active'); else dot.classList.remove('active'); });
         carousel.style.transform = `rotateY(${angle}deg)`;
     }
 
-    function goToSlide(index) {
-        currentIndex = index;
-        updateCarousel();
-    }
+    function goToSlide(index) { currentIndex = index; updateCarousel(); }
+    function nextSlide() { currentIndex = (currentIndex + 1) % totalCards; updateCarousel(); }
+    function prevSlide() { currentIndex = (currentIndex - 1 + totalCards) % totalCards; updateCarousel(); }
 
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % totalCards;
-        updateCarousel();
-    }
-
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-        updateCarousel();
-    }
-
-    // Événements de navigation
     nextBtn.addEventListener('click', nextSlide);
     prevBtn.addEventListener('click', prevSlide);
 
-    // Drag pour faire tourner le carrousel
-    carousel.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX;
-        carousel.style.cursor = 'grabbing';
-    });
-
+    carousel.addEventListener('mousedown', (e) => { isDragging = true; startX = e.clientX; carousel.style.cursor = 'grabbing'; });
     window.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
         const deltaX = e.clientX - startX;
-        if (Math.abs(deltaX) > 50) {
-            if (deltaX > 0) {
-                prevSlide();
-            } else {
-                nextSlide();
-            }
-            isDragging = false;
-        }
+        if (Math.abs(deltaX) > 50) { if (deltaX > 0) prevSlide(); else nextSlide(); isDragging = false; }
     });
-
-    window.addEventListener('mouseup', () => {
-        isDragging = false;
-        carousel.style.cursor = 'grab';
-    });
-
-    // Initialisation
+    window.addEventListener('mouseup', () => { isDragging = false; carousel.style.cursor = 'grab'; });
     updateCarousel();
 
-    // Auto-rotation (optionnelle - décommentez si voulu)
-    // let autoRotate = setInterval(nextSlide, 4000);
-    // carousel.addEventListener('mouseenter', () => clearInterval(autoRotate));
-    // carousel.addEventListener('mouseleave', () => autoRotate = setInterval(nextSlide, 4000));
-// Email (formulaire contact)
-document.getElementById("contactForm").addEventListener("submit", async function(e){
-            e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            const data = {
-                to: "visitebejaia@gmail.com",
-                subject: "✈️ VisitBejaia - Nouveau message client",
-                message: `
-Nom : ${document.getElementById("contactName").value}
-Email : ${document.getElementById("contactEmail").value}
-Téléphone : ${document.getElementById("contactPhone").value}
-Message : ${document.getElementById("contactMessage").value}
-                `
-            };
-            try {
-                if (submitBtn) submitBtn.disabled = true;
-                const response = await fetch(`${API_BASE}/send-email`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
-                const result = await response.json().catch(() => ({}));
-                if (!response.ok || result.error || result.message === "Email feature disabled") {
-                    throw new Error(result.error || result.details || result.message || "Échec de l'envoi");
-                }
-                alert("Message envoyé !");
-                e.target.reset();
-            } catch (error) {
-                alert("Erreur envoi message : " + (error.message || "réseau"));
-            } finally {
-                if (submitBtn) submitBtn.disabled = false;
-            }
-        });
+    // Email
+    document.getElementById("contactForm").addEventListener("submit", async function(e){
+        e.preventDefault();
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const data = {
+            to: "visitebejaia@gmail.com",
+            subject: "✈️ VisitBejaia - Nouveau message client",
+            message: `Nom : ${document.getElementById("contactName").value}\nEmail : ${document.getElementById("contactEmail").value}\nTéléphone : ${document.getElementById("contactPhone").value}\nMessage : ${document.getElementById("contactMessage").value}`
+        };
+        try {
+            if (submitBtn) submitBtn.disabled = true;
+            const response = await fetch(`${API_BASE}/send-email`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok || result.error || result.message === "Email feature disabled") throw new Error(result.error || result.details || result.message || "Échec de l'envoi");
+            alert("Message envoyé !");
+            e.target.reset();
+        } catch (error) { alert("Erreur envoi message : " + (error.message || "réseau")); }
+        finally { if (submitBtn) submitBtn.disabled = false; }
+    });
+
+    // Particules
     function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            if (!particlesContainer) return;
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 10 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
+        const particlesContainer = document.getElementById('particles');
+        if (!particlesContainer) return;
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
         }
+    }
+    createParticles();
 
-        // Effet de scroll sur la navbar
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (navbar) {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
+    // Scroll navbar
+    window.addEventListener('scroll', function() {
+        const navbar = document.getElementById('navbar');
+        if (navbar) { if (window.scrollY > 50) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled'); }
+    });
+
+    // Menu mobile
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navMenu = document.getElementById('navMenu');
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                const spans = this.querySelectorAll('span');
+                if (navMenu.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
                 } else {
-                    navbar.classList.remove('scrolled');
-                }
-            }
-        });
-
-        // Menu mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            const hamburger = document.getElementById('hamburgerBtn');
-            const navMenu = document.getElementById('navMenu');
-            
-            if (hamburger && navMenu) {
-                hamburger.addEventListener('click', function() {
-                    navMenu.classList.toggle('active');
-                    const spans = this.querySelectorAll('span');
-                    if (navMenu.classList.contains('active')) {
-                        spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
-                        spans[1].style.opacity = '0';
-                        spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
-                    } else {
-                        spans[0].style.transform = 'none';
-                        spans[1].style.opacity = '1';
-                        spans[2].style.transform = 'none';
-                    }
-                });
-
-                const menuLinks = navMenu.querySelectorAll('a');
-                menuLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        navMenu.classList.remove('active');
-                        const spans = hamburger.querySelectorAll('span');
-                        spans[0].style.transform = 'none';
-                        spans[1].style.opacity = '1';
-                        spans[2].style.transform = 'none';
-                    });
-                });
-
-                document.addEventListener('click', function(event) {
-                    if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
-                        navMenu.classList.remove('active');
-                        const spans = hamburger.querySelectorAll('span');
-                        spans[0].style.transform = 'none';
-                        spans[1].style.opacity = '1';
-                        spans[2].style.transform = 'none';
-                    }
-                });
-            }
-// ===== GESTION DE LA PREUVE DE PAIEMENT DEPUIS LA GALERIE =====
-document.addEventListener('DOMContentLoaded', function() {
-    const uploadBtn = document.getElementById('uploadBtn');
-    const proofInput = document.getElementById('paymentProof');
-    const proofPreviewContainer = document.getElementById('proofPreviewContainer');
-    const proofPreviewImg = document.getElementById('proofPreviewImg');
-    const clearProofBtn = document.getElementById('clearProofBtn');
-    const proofError = document.getElementById('proofError');
-    
-    // Bouton pour ouvrir la galerie
-    if (uploadBtn) {
-        uploadBtn.addEventListener('click', function() {
-            proofInput.click();
-        });
-    }
-    
-    // Quand un fichier est sélectionné
-    if (proofInput) {
-        proofInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                // Vérifier le type
-                const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
-                if (!allowedTypes.includes(file.type)) {
-                    showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error');
-                    proofInput.value = '';
-                    proofPreviewContainer.style.display = 'none';
-                    if (proofError) proofError.classList.remove('show');
-                    return;
-                }
-                
-                // Vérifier la taille (max 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    showToast('Image trop volumineuse (max 5 Mo)', 'error');
-                    proofInput.value = '';
-                    proofPreviewContainer.style.display = 'none';
-                    if (proofError) proofError.classList.remove('show');
-                    return;
-                }
-                
-                // Afficher l'aperçu
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    proofPreviewImg.src = e.target.result;
-                    proofPreviewContainer.style.display = 'block';
-                    if (proofError) proofError.classList.remove('show');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-    
-    // Bouton pour supprimer la preuve
-    if (clearProofBtn) {
-        clearProofBtn.addEventListener('click', function() {
-            proofInput.value = '';
-            proofPreviewContainer.style.display = 'none';
-            proofPreviewImg.src = '';
-        });
-    }
-});
-            // Données pour les incontournables
-            const mustSeeData = {
-                grotte: {
-                    title: "Les grottes de la côte ouest",
-                    rating: "⭐ 4.8 (2 345 avis)",
-                    description: "Explorez les magnifiques grottes marines de la côte ouest de Béjaïa.",
-                    details: [
-                        { icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" },
-                        { icon: "fa-users", text: "Groupe : 4-10 personnes" },
-                        { icon: "fa-ship", text: "Transport en bateau inclus" },
-                        { icon: "fa-utensils", text: "Repas inclus (demi-pension)" }
-                    ],
-                    media: [
-                        { type: "image", src: "images" }
-                    ]
-                },
-                ferme: {
-                    title: "Découvrir la ferme Djerba",
-                    rating: "⭐ 4.8 (1 890 avis)",
-                    description: "Immersion dans la vie rurale traditionnelle.",
-                    details: [
-                        { icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" },
-                        { icon: "fa-users", text: "Groupe : 2-8 personnes" },
-                        { icon: "fa-utensils", text: "Repas bio inclus" },
-                        { icon: "fa-tree", text: "Activités agricoles" }
-                    ],
-                    media: [
-                        { type: "image", src: "image2" }
-                    ]
-                },
-                historique: {
-                    title: "Visite des sites historiques",
-                    rating: "⭐ 4.9 (3 102 avis)",
-                    description: "Plongez dans l'histoire riche de Béjaïa.",
-                    details: [
-                        { icon: "fa-clock", text: "Durée : 2 jours / 1 nuit" },
-                        { icon: "fa-users", text: "Groupe : 2-15 personnes" },
-                        { icon: "fa-map", text: "Guide historien" },
-                        { icon: "fa-camera", text: "Visite photo" }
-                    ],
-                    media: [
-                        { type: "image", src: "https://images.unsplash.com/photo-1549893074-4bc9fbb0f8f8?w=1200&q=80" },
-                        { type: "image", src: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=80" }
-                    ]
-                },
-                vol: {
-                    title: "Vol au-dessus de la Méditerranée",
-                    rating: "⭐ 4.7 (1 567 avis)",
-                    description: "Expérience unique en parapente au-dessus des eaux turquoise.",
-                    details: [
-                        { icon: "fa-clock", text: "Durée : 1 journée" },
-                        { icon: "fa-users", text: "Groupe : 1-4 personnes" },
-                        { icon: "fa-parachute-box", text: "Équipement inclus" },
-                        { icon: "fa-video", text: "Vidéo de votre vol" }
-                    ],
-                    media: [
-                        { type: "image", src: "data:image" }
-                    ]
-                },
-                "petite-casbah": {
-                    title: "La petite Casbah de Béjaïa",
-                    rating: "⭐ 4.6 (2 001 avis)",
-                    description: "Balade dans les ruelles pittoresques.",
-                    details: [
-                        { icon: "fa-clock", text: "Durée : 1 journée" },
-                        { icon: "fa-users", text: "Groupe : 2-12 personnes" },
-                        { icon: "fa-shopping-bag", text: "Marché artisanal" },
-                        { icon: "fa-utensils", text: "Déjeuner typique" }
-                    ],
-                    media: [
-                        { type: "image", src: "data:image" }
-                    ]
-                },
-                fort: {
-                    title: "Fort Yemma Gouraya",
-                    rating: "⭐ 4.7 (2 890 avis)",
-                    description: "Vue panoramique exceptionnelle sur la baie.",
-                    details: [
-                        { icon: "fa-clock", text: "Durée : 1 journée" },
-                        { icon: "fa-users", text: "Groupe : 2-20 personnes" },
-                        { icon: "fa-hiking", text: "Randonnée incluse" },
-                        { icon: "fa-camera", text: "Point photo exceptionnel" }
-                    ],
-                    media: [
-                        { type: "image", src: "data:image" },
-                        { type: "image", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn0B0EYzm7wCaesEbQloprV0sJ1bDzpmje8Q&s" }
-                    ]
-                },
-                paddle: {
-                    title: "Initiation au paddle",
-                    rating: "⭐ 4.5 (978 avis)",
-                    description: "Découvrez la côte depuis la mer.",
-                    details: [
-                        { icon: "fa-clock", text: "Durée : Demi-journée" },
-                        { icon: "fa-users", text: "Groupe : 1-6 personnes" },
-                        { icon: "fa-life-ring", text: "Équipement inclus" },
-                        { icon: "fa-water", text: "Cours d'initiation" }
-                    ],
-                    media: [
-                        { type: "image", src: "data:image" }
-                    ]
-                }
-            };
-
-            // Gestionnaire pour la modale des incontournables
-            const mustModal = document.getElementById('mustModal');
-            const mustModalGallery = document.getElementById('mustModalGallery');
-            const mustModalMainMedia = document.getElementById('mustModalMainMedia');
-            const mustModalTitle = document.getElementById('mustModalTitle');
-            const mustModalRating = document.getElementById('mustModalRating');
-            const mustModalDescription = document.getElementById('mustModalDescription');
-            const mustModalDetails = document.getElementById('mustModalDetails');
-
-            let currentMedia = [];
-
-            function setMainMedia(index) {
-                const media = currentMedia[index];
-                if (!media) return;
-                document.querySelectorAll('.must-modal-gallery-item').forEach((item, i) => {
-                    if (i === index) {
-                        item.classList.add('active');
-                    } else {
-                        item.classList.remove('active');
-                    }
-                });
-                if (media.type === 'video') {
-                    mustModalMainMedia.innerHTML = `<video controls autoplay loop muted src="${media.src}"></video>`;
-                } else {
-                    mustModalMainMedia.innerHTML = `<img src="${media.src}" alt="">`;
-                }
-            }
-
-            document.querySelectorAll('.must-see-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const key = card.dataset.modal;
-                    const data = mustSeeData[key];
-                    if (!data) return;
-                    currentMedia = data.media;
-                    mustModalTitle.textContent = data.title;
-                    mustModalRating.innerHTML = `<i class="fas fa-star"></i> ${data.rating}`;
-                    mustModalDescription.textContent = data.description;
-                    mustModalDetails.innerHTML = '';
-                    data.details.forEach(detail => {
-                        const div = document.createElement('div');
-                        div.className = 'must-modal-detail-item';
-                        div.innerHTML = `<i class="fas ${detail.icon}"></i> <span>${detail.text}</span>`;
-                        mustModalDetails.appendChild(div);
-                    });
-                    mustModalGallery.innerHTML = '';
-                    data.media.forEach((media, index) => {
-                        const item = document.createElement('div');
-                        item.className = 'must-modal-gallery-item';
-                        if (index === 0) item.classList.add('active');
-                        if (media.type === 'video') {
-                            item.innerHTML = `<video src="${media.src}" muted></video>`;
-                        } else {
-                            item.innerHTML = `<img src="${media.src}" alt="">`;
-                        }
-                        item.addEventListener('click', () => setMainMedia(index));
-                        mustModalGallery.appendChild(item);
-                    });
-                    setMainMedia(0);
-                    mustModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                });
-            });
-
-            document.querySelector('.must-modal-close').addEventListener('click', () => {
-                mustModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-
-            mustModal.addEventListener('click', (e) => {
-                if (e.target === mustModal) {
-                    mustModal.classList.remove('active');
-                    document.body.style.overflow = 'auto';
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
                 }
             });
-
-            window.openDestinationReservation = function(id, name, price) {
-                alert(`Réservation pour ${name} à partir de ${price} DZD`);
-            }
-
-            window.closeDestinationReservation = function() {
-                document.getElementById('destinationReservationModal').classList.remove('active');
-            }
-
-            window.submitDestinationReservation = function(event) {
-                event.preventDefault();
-                alert('Réservation confirmée !');
-                closeDestinationReservation();
-            }
-
-            // ===== AUTO-SCROLL CAROUSEL =====
-            const carousel = document.querySelector('.activities-carousel');
-            if (carousel) {
-                // Déterminer la vitesse en fonction de la taille de l'écran
-                function getScrollSpeed() {
-                    if (window.innerWidth < 480) return 0.5;  // Très lent sur mobile
-                    if (window.innerWidth < 768) return 0.8;  // Lent sur tablette
-                    return 1;  // Normal sur desktop
-                }
-
-                let scrollSpeed = getScrollSpeed();
-                let isAutoScrolling = true;
-                let scrollInterval;
-
-                function startAutoScroll() {
-                    if (isAutoScrolling) return;
-                    isAutoScrolling = true;
-                    scrollSpeed = getScrollSpeed();
-                    scrollInterval = setInterval(() => {
-                        carousel.scrollLeft += scrollSpeed;
-                        // Reset to beginning when reaching the end
-                        if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 5) {
-                            carousel.scrollLeft = 0;
-                        }
-                    }, 20);
-                }
-
-                function stopAutoScroll() {
-                    isAutoScrolling = false;
-                    clearInterval(scrollInterval);
-                }
-
-                // Start auto-scroll après 1 seconde
-                setTimeout(() => {
-                    scrollSpeed = getScrollSpeed();
-                    scrollInterval = setInterval(() => {
-                        if (isAutoScrolling) {
-                            carousel.scrollLeft += scrollSpeed;
-                            if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 5) {
-                                carousel.scrollLeft = 0;
-                            }
-                        }
-                    }, 20);
-                }, 1000);
-
-                // Pause on mouse/touch enter
-                carousel.addEventListener('mouseenter', stopAutoScroll);
-                carousel.addEventListener('touchstart', stopAutoScroll);
-
-                // Resume on mouse/touch leave
-                carousel.addEventListener('mouseleave', startAutoScroll);
-                carousel.addEventListener('touchend', () => {
-                    setTimeout(startAutoScroll, 2000);
+            const menuLinks = navMenu.querySelectorAll('a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    const spans = hamburger.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
                 });
-
-                // Adapter la vitesse au redimensionnement
-                window.addEventListener('resize', () => {
-                    scrollSpeed = getScrollSpeed();
-                });
-
-                // Allow manual scrolling with wheel
-                carousel.addEventListener('wheel', (e) => {
-                    stopAutoScroll();
-                    setTimeout(startAutoScroll, 3000);
-                });
-
-                // Allow manual scrolling with touch
-                let touchStartX = 0;
-                carousel.addEventListener('touchmove', () => {
-                    stopAutoScroll();
-                });
-            }
-        });
-
-        console.log("=== PAGE INDEX - ACTIVITÉS ===");
-// MÊMES ACTIVITÉS QUE activites.html
-const activitiesCatalog = [
-    { 
-        id: "visite", 
-        activityNote: [
-    "Le prix inclut uniquement la visite guidée et non le transport.",
-    "Prix dégressif à partir de la deuxième personne."
-],
-name: "Visite guidée",
-basePrice: 6000,
-category: "culture",
-icon: "fa-landmark",
-image: "assets/images/casbah.jpg",
-desc: "Partez à la découverte de Bejaïa entre histoire et nature. Visitez les plus beaux spots de Béjaïa, de Gouraya à la cascade, en passant par la Casbah. Profitez d’un tour guidé avec un guide passionné, amoureux de la ville et connaisseur de tous ses recoins et de ses histoires.",
-hasChild: false},
-    { 
-        id: "quad", 
-        activityNote: [
-    "Baskets et lunettes recommandées",
-    "Casque quad fourni",
-    "1 adulte par quad, conduite à partir de 16 ans",
-    "Le guide se réserve le droit de vous reprendre le quad si vous ne respectez pas ces consignes, sans remboursement."
-],
-        name: "Randonnée Quad", 
-        basePrice: 3000, 
-        category: "terre", 
-        icon: "fa-motorcycle", 
-        image: "assets/images/quad.jpeg", 
-        desc: "Randonnée en quad (pas de course) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. À partir de 13h30, sans réservation : premier arrivé, premier sorti.",        hasChild: true, 
-        childPrice: 1000, 
-        options: [
-            {label: "30 min", price: 3000},
-            {label: "45 min (Réservation & paiement exigés)", price: 4000}
-        ] 
-    },
-    { 
-        id: "parapente", 
-        activityNote: [
-            "Moniteur diplômé et reconnu.",
-            "Les vols se déroulent en toute sécurité.",
-            "Équipement de sécurité fourni.",
-            "Les vols peuvent être annulés à la dernière minute si les conditions changent.",
-            "Les vols peuvent être annulés si vous n'écoutez pas le moniteur."
-        ], 
-        name: "Parapente", 
-        basePrice: 6000, 
-        category: "terre", 
-        icon: "fa-parachute-box", 
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", 
-        desc: "Envoyez-vous en l'air avec un baptême en parapente sur le plus beau spot de vol en Algérie, avec un atterrissage sur la plage.", 
-        hasChild: false,
-        options: [
-            {label: "avec vidéo GoPro 4K", price: 6000},
-            {label: "avec vidéo GoPro 5,3K", price: 7000},
-            {label: "avec vidéo Insta 360", price: 8000}
-        ]
-    },
-    { 
-        id: "cheval", 
-        activityNote: [
-            "Les randonnées se font sur une colline et un chemin forestier surplombant la mer, et non sur une plage.",
-            "Les randonnées se déroulent le matin ou en fin d'après-midi par respect pour la santé de l'animal.",
-            "Pique-nique interdit au sein de la ferme.",
-            "1 personne par cheval."
-        ],
-        name: "Randonnée à cheval", 
-        basePrice: 2500, 
-        category: "terre", 
-        icon: "fa-horse", 
-        image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", 
-        desc: "Entre le bleu de la Méditerranée et le vert du parc national de Gouraya, laissez-vous contempler les beaux paysages de la Kabylie à cheval pour une randonnée inoubliable d'environ 30 min.", 
-        hasChild: false 
-    },
-    { 
-        id: "parasailing", 
-        activityNote: [
-            "L'activité peut être annulée en cas de changement de météo.",
-            "Les réservations se font pour les créneaux du matin ; l'après-midi, premier arrivé, premier servi."
-        ],
-        name: "Parasailing", 
-        basePrice: 10000, 
-        category: "mer", 
-        icon: "fa-parachute-box", 
-        image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", 
-        desc: "Pas besoin d'être un expert pour voler. Juste l'envie de voir l'horizon autrement. Le parachute ascensionnel : 100 % sensation, 0 % d'effort, 1000 souvenirs inoubliables.", 
-        hasChild: false 
-    },
-    { 
-        id: "bouee", 
-        activityNote: [
-            "Réservation confirmée avec paiement à l'avance.",
-            "Gilet fourni et obligatoire."
-        ],
-        name: "Bouée tractée", 
-        basePrice: 3000, 
-        category: "mer", 
-        icon: "fa-water", 
-        image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", 
-        desc: "Pour un moment plein de souvenirs et de fous rires, offrez-vous une activité riche en sensations et en adrénaline en famille ou entre amis.", 
-        hasChild: false 
-    },
-    { 
-        id: "jetski", 
-        activityNote: [
-            "Activité proposée uniquement en complément de la sortie bateau.",
-            "Pièce d'identité obligatoire en garantie en cas de casse.",
-            "Pièce d'identité restituée si aucune casse n'est constatée ou après paiement des réparations.",
-            "Aucun remboursement en cas d'arrêt de l'activité ou de retour du jet-ski.",
-            "Activité interdite à toute personne alcoolisée."
-        ],
-        name: "Jet Ski", 
-        basePrice: 30000, 
-        category: "mer", 
-        icon: "fa-jet-fighter", 
-        image: "assets/images/jetski.jpeg", 
-        desc: "Offrez-vous le plein de sensations en totale liberté avec l'activité jet-ski.", 
-        hasChild: false,
-        options: [
-            {label: "1h00", price: 30000},
-            {label: "1h30", price: 40000}
-        ]
-    },
-    { 
-        id: "bateau", 
-        activityNote: [
-            "Alcool interdit sur le bateau"
-        ],
-        name: "Excursion Bateau", 
-        basePrice: 20000, 
-        category: "mer", 
-        icon: "fa-ship", 
-        image: "assets/images/i.jpeg", 
-        desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", 
-        hasChild: false,
-        options: [
-            {label: "Offre découverte (1h30/2h) - Jusqu'à 5 pers", price: 20000},
-            {label: "Offre Évasion (3h/3h30) + brunch - Jusqu'à 5 pers", price: 35000},
-            {label: "Offre Détente (4h30/5h) + barbecue - Jusqu'à 5 pers", price: 55000}
-        ]
-    }
-];
-
-let currentAct = { id: '', name: '', pricePerAdult: 0, hasChild: false, childPrice: 0 };
-let boueeAdded = false;
-
-function renderCards(filter = "all") {
-    const grid = document.getElementById("activitiesGrid");
-    const filtered = filter === "all" ? activitiesCatalog : activitiesCatalog.filter(a => a.category === filter);
-    grid.innerHTML = filtered.map((act, idx) => {
-        // Plus d'options dans la carte - seulement le bouton Réserver
-        return `<div class="activity-card">
-            <div class="card-media">
-                <img src="${act.image}" alt="${act.name}" loading="lazy" onerror="this.src='assets/images/all.jpg'">
-            </div>
-            <div class="card-header">
-                <div class="icon-circle"><i class="fas ${act.icon}"></i></div>
-                <div class="price-badge">${act.basePrice.toLocaleString('fr-DZ') + " DA"}</div>
-            </div>
-            <h3 class="card-title">${act.name}</h3>
-            <p class="card-desc">${act.desc}</p>
-            <button class="btn-book" data-id="${act.id}" data-name="${act.name}" data-price="${act.basePrice}"><i class="fas fa-calendar-check"></i> Réserver</button>
-        </div>`;
-    }).join('');
-
-    document.querySelectorAll('.btn-book').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = btn.dataset.id;
-            const name = btn.dataset.name;
-            let price = parseInt(btn.dataset.price);
-            let hasChild = false;
-            let childPrice = 0;
-            if (id === 'quad') {
-                hasChild = true;
-                childPrice = 1000;
-            }
-            openModal(id, name, price, hasChild, childPrice);
-        });
-    });
-}
-
-// Variable pour stocker les notes de l'activité
-let currentActivityNotes = [];
-
-// MODIFIER la fonction openModal
-// Remplacer la fonction openModal par celle-ci
-function openModal(id, name, price, hasChild, childPrice) {
-    currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
-    boueeAdded = false;
-
-    // Récupérer les notes de l'activité
-    const activity = activitiesCatalog.find(a => a.id === id);
-    currentActivityNotes = activity?.activityNote || [];
-    
-    document.getElementById("modalTitle").innerHTML = `Réserver ${name}`;
-    
-    // Masquer toutes les options
-    document.getElementById("quadOptions").style.display = "none";
-    document.getElementById("parapenteOptions").style.display = "none";
-    document.getElementById("jetskiOptions").style.display = "none";
-    document.getElementById("bateauOptions").style.display = "none";
-
-    // Récupérer les groupes
-    const adultsGroup = document.getElementById("adultsGroup");
-    const childGroup = document.getElementById("childGroup");
-    const childLabel = document.getElementById("childExtraLabel");
-    
-    // Réinitialiser les champs
-    document.getElementById("fullName").value = "";
-    document.getElementById("date").value = "";
-    document.getElementById("specialRequests").value = "";
-    
-    // Afficher les options selon l'activité
-    if (id === "quad") {
-        document.getElementById("quadOptions").style.display = "block";
-        document.getElementById("quadSelect").value = "3000";
-        document.getElementById("quadChild").checked = false;
-        currentAct.pricePerAdult = 3000;
-        
-        // POUR LE QUAD : PAS D'ADULTES, CHAQUE QUAD = 1 PERSONNE
-        // On masque le champ adultes et on le fixe à 1
-        if (adultsGroup) {
-            adultsGroup.style.display = "none";
-            document.getElementById("adults").value = 1;
-        }
-        // Gestion enfant via la checkbox uniquement
-        if (childGroup) {
-            childGroup.style.display = "none";
-        }
-        document.getElementById("children").value = 0;
-        
-    } else if (id === "parapente") {
-        document.getElementById("parapenteOptions").style.display = "block";
-        document.getElementById("parapenteSelect").value = "6000";
-        currentAct.pricePerAdult = 6000;
-        if (adultsGroup) adultsGroup.style.display = "block";
-        if (childGroup) childGroup.style.display = "none";
-        document.getElementById("adults").value = 1;
-        
-    } else if (id === "jetski") {
-        document.getElementById("jetskiOptions").style.display = "block";
-        document.getElementById("jetskiSelect").value = "30000";
-        currentAct.pricePerAdult = 30000;
-        if (adultsGroup) adultsGroup.style.display = "block";
-        if (childGroup) childGroup.style.display = "none";
-        document.getElementById("adults").value = 1;
-        
-    } else if (id === "bateau") {
-        document.getElementById("bateauOptions").style.display = "block";
-        const firstRadio = document.querySelector('input[name="bateauOption"]:checked');
-        if (firstRadio) {
-            currentAct.pricePerAdult = parseInt(firstRadio.value);
-            toggleBoueeOption();
-        }
-        if (adultsGroup) adultsGroup.style.display = "block";
-        if (childGroup) childGroup.style.display = "none";
-        document.getElementById("adults").value = 1;
-        
-    } else {
-        // Autres activités (visite, cheval, bouee, parasailing)
-        if (adultsGroup) adultsGroup.style.display = "block";
-        if (hasChild && childGroup) {
-            childGroup.style.display = "block";
-            if (childLabel) childLabel.innerHTML = `(+${childPrice} DA/enfant)`;
-        } else if (childGroup) {
-            childGroup.style.display = "none";
-        }
-        document.getElementById("adults").value = 1;
-        document.getElementById("children").value = 0;
-    }
-    
-    // Afficher les notes en rouge
-    displayRedNotesAtTop();
-    
-    // Mettre à jour le prix
-    updateTotal();
-    
-    // Afficher la modale
-    document.getElementById("modalOverlay").classList.add("active");
-}
-
-// Remplacer la fonction updateTotal par celle-ci
-function updateTotal() {
-    let total = 0;
-    let adults = 1;
-    let children = 0;
-    
-    // Pour Quad : 1 quad = 1 personne, pas d'adultes à multiplier
-  // Dans la fonction submit, remplacer le calcul du total par :
-
-
-if (currentAct.id === 'quad') {
-    total = currentAct.pricePerAdult;
-    const quadChildCheckbox = document.getElementById("quadChild");
-    if (quadChildCheckbox && quadChildCheckbox.checked) {
-        total += 1000;
-    }
-} 
-else if (currentAct.id === 'bateau') {
-    total = currentAct.pricePerAdult;
-    if (boueeAdded) total += 5000;
-}
-else {
-    total = currentAct.pricePerAdult * adults;
-    if (currentAct.hasChild && currentAct.id !== 'quad') {
-        total += children * (currentAct.childPrice || 0);
-    }
-
-    else if (currentAct.id === 'bateau') {
-        adults = parseInt(document.getElementById("adults").value) || 1;
-        total = currentAct.pricePerAdult; // Prix déjà pour le bateau entier
-        if (boueeAdded) total += 5000;
-    }
-    else {
-        // Autres activités (parapente, jetski, visite, cheval, etc.)
-        adults = parseInt(document.getElementById("adults").value) || 1;
-        children = parseInt(document.getElementById("children").value) || 0;
-        total = currentAct.pricePerAdult * adults;
-        
-        // Enfants pour les activités qui en ont
-        if (currentAct.hasChild && currentAct.id !== 'quad') {
-            total += children * (currentAct.childPrice || 0);
-        }
-    }
-
-    const deposit = Math.round(total * 0.3);
-
-    const totalSpan = document.getElementById("totalPriceDisplay");
-    const depositSpan = document.getElementById("depositAmount");
-    
-    if (totalSpan) totalSpan.innerHTML = total.toLocaleString('fr-DZ') + " DA";
-    if (depositSpan) depositSpan.innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
-}
-
-// Corriger l'écouteur du bouton Quad
-document.getElementById("quadChild")?.addEventListener("change", function(e) {
-    if (currentAct.id === "quad") {
-        updateTotal();
-    }
-});
-
-document.getElementById("quadSelect")?.addEventListener("change", function() {
-    if (currentAct.id === "quad") {
-        currentAct.pricePerAdult = parseInt(this.value);
-        updateTotal();
-    }
-});    currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
-    boueeAdded = false;
-
-    // Récupérer les notes de l'activité correspondante
-    const activity = activitiesCatalog.find(a => a.id === id);
-    currentActivityNotes = activity?.activityNote || [];
-    
-    document.getElementById("modalTitle").innerHTML = `Réserver ${name}`;
-    
-    // Masquer toutes les options
-    document.getElementById("quadOptions").style.display = "none";
-    document.getElementById("parapenteOptions").style.display = "none";
-    document.getElementById("jetskiOptions").style.display = "none";
-    document.getElementById("bateauOptions").style.display = "none";
-
-    // Afficher les options selon l'activité
-    if (id === "quad") {
-        document.getElementById("quadOptions").style.display = "block";
-        document.getElementById("quadSelect").value = "3000";
-        document.getElementById("quadChild").checked = false;
-        currentAct.pricePerAdult = 3000;
-        currentAct.hasChild = true;
-    } else if (id === "parapente") {
-        document.getElementById("parapenteOptions").style.display = "block";
-        document.getElementById("parapenteSelect").value = "6000";
-        currentAct.pricePerAdult = 6000;
-    } else if (id === "jetski") {
-        document.getElementById("jetskiOptions").style.display = "block";
-        document.getElementById("jetskiSelect").value = "30000";
-        currentAct.pricePerAdult = 30000;
-     } else if (id === "bateau") {
-    document.getElementById("bateauOptions").style.display = "block";
-    const firstRadio = document.querySelector('input[name="bateauOption"]:checked');
-    if (firstRadio) {
-        currentAct.pricePerAdult = parseInt(firstRadio.value);
-        toggleBoueeOption(); // <-- AJOUTER CETTE LIGNE
-    }
-}
-    
-    // AFFICHER LES NOTES EN ROUGE EN HAUT
-    displayRedNotesAtTop();
-    
-    const childGroup = document.getElementById("childGroup");
-    if (hasChild) {
-        childGroup.style.display = "block";
-        document.getElementById("childExtraLabel").innerHTML = `(+${childPrice} DA/enfant)`;
-    } else {
-        childGroup.style.display = "none";
-    }
-    
-    document.getElementById("adults").value = 1;
-    document.getElementById("children").value = 0;
-    document.getElementById("fullName").value = "";
-    document.getElementById("fullName").classList.remove("error");
-    document.getElementById("fullNameError").classList.remove("show");
-    updateTotal();
-    document.getElementById("modalOverlay").classList.add("active");
-}
-
-// FONCTION - Affiche les notes en ROUGE avec puces
-function displayRedNotesAtTop() {
-    let notesContainer = document.getElementById("modalRedNotes");
-    const form = document.getElementById("reservationForm");
-    
-    // Créer le conteneur s'il n'existe pas
-    if (!notesContainer) {
-        notesContainer = document.createElement("div");
-        notesContainer.id = "modalRedNotes";
-        notesContainer.className = "red-notes-container";
-        
-        // Insérer au TOUT DÉBUT du formulaire (avant le premier champ)
-        if (form.firstChild) {
-            form.insertBefore(notesContainer, form.firstChild);
-        } else {
-            form.appendChild(notesContainer);
-        }
-    }
-    
-    // Afficher les notes en ROUGE avec puces
-    if (currentActivityNotes.length > 0) {
-        notesContainer.innerHTML = `
-            <div class="red-notes-header">
-                <i class="fas fa-exclamation-circle"></i>
-                <span>Informations importantes</span>
-            </div>
-          <div class="red-notes-list">
-    ${currentActivityNotes.map(note => `
-        <div class="red-note-item">
-            <i class="fas fa-circle" style="color: #dc2626; font-size: 0.7rem;"></i>
-            <span class="red-note-text">${note}</span>
-        </div>
-    `).join('')}
-</div>
-        `;
-        notesContainer.style.display = "block";
-    } else {
-        notesContainer.style.display = "none";
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    // Quad - sélection durée/prix
-    document.getElementById("quadSelect")?.addEventListener("change", function () {
-        if (currentAct.id === "quad") {
-            currentAct.pricePerAdult = parseInt(this.value);
-            updateTotal();
-        }
-        
-    });
-
-    
-
-    // Quad - enfant
-    document.getElementById("quadChild")?.addEventListener("change", function (e) {
-        if (currentAct.id === "quad") {
-
-            currentAct.hasChild = e.target.checked;
-
-            const childGroup = document.getElementById("childGroup");
-
-            if (currentAct.hasChild) {
-                childGroup.style.display = "block";
-                document.getElementById("childExtraLabel").innerHTML = "(+1000 DA/enfant)";
-            } else {
-                childGroup.style.display = "none";
-                document.getElementById("children").value = 0;
-            }
-
-            updateTotal();
-        }
-    });
-    // ? ICI (en dehors du change)
-    document.getElementById("children")?.addEventListener("input", updateTotal);
-    document.getElementById("adults")?.addEventListener("input", updateTotal);
-});
-
-// Écouteurs pour les options Parapente
-document.getElementById("parapenteSelect")?.addEventListener('change', function() {
-    if (currentAct.id === 'parapente') {
-        currentAct.pricePerAdult = parseInt(this.value);
-        updateTotal();
-    }
-});
-
-// Écouteurs pour les options Jet Ski
-document.getElementById("jetskiSelect")?.addEventListener('change', function() {
-    if (currentAct.id === 'jetski') {
-        currentAct.pricePerAdult = parseInt(this.value);
-        updateTotal();
-    }
-});
-
-// Écouteurs pour les options Bateau
-// ===== ÉCOUTEURS POUR LES OPTIONS BATEAU =====
-const bateauRadios = document.querySelectorAll('input[name="bateauOption"]');
-const boueeContainer = document.getElementById('boueeOptionContainer');
-const boueeCheckbox = document.getElementById('boueeOption');
-
-function toggleBoueeOption() {
-    const selectedRadio = document.querySelector('input[name="bateauOption"]:checked');
-    
-    if (selectedRadio) {
-        const offre = selectedRadio.getAttribute('data-offre');
-        const capacite = selectedRadio.getAttribute('data-capacite');
-        
-        if (offre === 'evasion' && capacite === '5') {
-            boueeContainer.style.display = 'block';
-        } else {
-            boueeContainer.style.display = 'none';
-            if (boueeCheckbox) {
-                boueeCheckbox.checked = false;
-                boueeAdded = false;
-            }
-        }
-    } else {
-        boueeContainer.style.display = 'none';
-    }
-}
-
-bateauRadios.forEach(radio => {
-    radio.addEventListener('change', function() {
-        if (currentAct.id === 'bateau') {
-            currentAct.pricePerAdult = parseInt(this.value);
-            toggleBoueeOption();
-            updateTotal();
-        }
-    });
-});
-
-if (boueeCheckbox) {
-    boueeCheckbox.addEventListener('change', function(e) {
-        if (currentAct.id === 'bateau') {
-            boueeAdded = e.target.checked;
-            updateTotal();
-        }
-    });
-}
-
-function updateTotal() {
-    let adults = parseInt(document.getElementById("adults").value) || 1;
-    let children = parseInt(document.getElementById("children").value) || 0;
-
-    let total = currentAct.pricePerAdult * adults; // ? correction ici
-
-    // enfants pour Quad
-    if (currentAct.id === 'quad' && currentAct.hasChild) {
-        total += children * 1000;
-    }
-
-    // bouée bateau
-    if (currentAct.id === 'bateau' && boueeAdded) {
-        total += 5000;
-    }
-
-    const deposit = Math.round(total * 0.3);
-
-    document.getElementById("totalPriceDisplay").innerHTML = total.toLocaleString('fr-DZ') + " DA";
-    document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
-}
-        // Écouteurs pour les options Quad
-        document.getElementById("quadSelect")?.addEventListener('change', function() {
-            if (currentAct.id === 'quad') {
-                currentAct.pricePerAdult = parseInt(this.value);
-                updateTotal();
-            }
-        });
-
-        document.getElementById("quadChild")?.addEventListener('change', function(e) {
-            if (currentAct.id === 'quad') {
-                currentAct.hasChild = e.target.checked;
-                const childGroup = document.getElementById("childGroup");
-                if (currentAct.hasChild) {
-                    childGroup.style.display = "block";
-                    document.getElementById("childExtraLabel").innerHTML = `(+1000 DA/enfant)`;
-                } else {
-                    childGroup.style.display = "none";
-                    document.getElementById("children").value = 0;
+            });
+            document.addEventListener('click', function(event) {
+                if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                    navMenu.classList.remove('active');
+                    const spans = hamburger.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
                 }
-                updateTotal();
-            }
-        });
-        function showToast(msg, type = "success") {
-            const toast = document.getElementById("toast");
-            toast.textContent = msg;
-            toast.className = `toast-notification ${type}`;
-            toast.classList.add("show");
-            setTimeout(() => toast.classList.remove("show"), 4000);
-        }
-
-        function setLoading(show) {
-            const loader = document.getElementById("loading");
-            if (show) loader.classList.add("active");
-            else loader.classList.remove("active");
-        }
-
-        function validateFullName(fullName) {
-            const trimmed = fullName.trim();
-            const parts = trimmed.split(/\s+/);
-            return parts.length >= 2 && parts[0].length > 0 && parts[1].length > 0;
-        }
-
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = () => reject(new Error("Impossible de lire le fichier de preuve"));
-                reader.readAsDataURL(file);
             });
         }
+    });
 
-        function updatePaymentProofVisibility() {
-            const paymentSelect = document.getElementById("paymentMethod");
-            const proofGroup = document.getElementById("paymentProofGroup");
-            const proofInput = document.getElementById("paymentProof");
-            const bankDetails = document.getElementById("bankDetails");
-            if (!paymentSelect || !proofGroup || !proofInput) return;
-
-            const isProofRequired = paymentSelect.value === "CCP" || paymentSelect.value === "BaridiMob";
-            proofGroup.style.display = isProofRequired ? "block" : "none";
-            proofInput.required = isProofRequired;
-            if (bankDetails) {
-                bankDetails.style.display = "block";
-            }
-
-            if (!isProofRequired) {
-                proofInput.value = "";
-            }
-        }
-
-        async function sendReservation(payload) {
-            const API_URL = `${API_BASE}/api/reservations`;
-            console.log("Envoi à l'API:", payload);
-            
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-                
-                const data = await response.json();
-                console.log("Réponse API:", response.status, data);
-                
-                if (!response.ok) {
-                    throw new Error(data.message || data.error || `Erreur ${response.status}`);
-                }
-                
-                return { success: true, data: data, apiResponse: true };
-                
-            } catch (error) {
-                console.error("Erreur API:", error);
-                const localReservations = JSON.parse(localStorage.getItem('bejaia_reservations') || '[]');
-                const newReservation = {
-                    ...payload,
-                    id: Date.now(),
-                    created_at: new Date().toISOString(),
-                    saved_locally: true
-                };
-                localReservations.push(newReservation);
-                localStorage.setItem('bejaia_reservations', JSON.stringify(localReservations));
-                return { success: true, local: true, data: newReservation };
-            }
-        }
-
-        function closeModal() {
-            document.getElementById("modalOverlay").classList.remove("active");
-        }
-
-        // événements
-        document.getElementById("fullName").addEventListener("input", function(e) {
-            const isValid = validateFullName(e.target.value);
-            const group = document.getElementById("fullNameGroup");
-            const errorDiv = document.getElementById("fullNameError");
-            
-            if (!isValid && e.target.value.trim().length > 0) {
-                group.classList.add("error");
-                errorDiv.classList.add("show");
-            } else {
-                group.classList.remove("error");
-                errorDiv.classList.remove("show");
-            }
-        });
-
-        document.getElementById("reservationForm").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            
-            const fullName = document.getElementById("fullName").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const phone = document.getElementById("phone").value.trim();
-            const date = document.getElementById("date").value;
-            const adults = parseInt(document.getElementById("adults").value);
-            const children = parseInt(document.getElementById("children").value) || 0;
-            const payment = document.getElementById("paymentMethod").value;
-            const transRef = document.getElementById("transactionRef").value.trim();
-            const special = document.getElementById("specialRequests").value;
-            const paymentProofFile = document.getElementById("paymentProof")?.files?.[0] || null;
-
-            if (!validateFullName(fullName)) {
-                showToast("⚠️ Veuillez entrer votre nom et prénom complets", "warning");
-                return;
-            }
-
-            if (!email || !phone || !date || !adults  ) {
-                showToast("Veuillez remplir tous les champs obligatoires", "error");
-                return;
-            }
-
-            // Vérifier si la date est bloquée
-            try {
-                const blockedResponse = await fetch(`${API_BASE}/api/availability/${encodeURIComponent(currentAct.name)}`);
-                if (blockedResponse.ok) {
-                    const blockedDates = await blockedResponse.json();
-                    if (blockedDates.includes(date)) {
-                        showToast(`❌ La date ${date} est bloquée pour cette activité. Veuillez choisir une autre date.`, "error");
+    // Gestion preuve de paiement
+    document.addEventListener('DOMContentLoaded', function() {
+        const uploadBtn = document.getElementById('uploadBtn');
+        const proofInput = document.getElementById('paymentProof');
+        const proofPreviewContainer = document.getElementById('proofPreviewContainer');
+        const proofPreviewImg = document.getElementById('proofPreviewImg');
+        const clearProofBtn = document.getElementById('clearProofBtn');
+        const proofError = document.getElementById('proofError');
+        
+        if (uploadBtn) uploadBtn.addEventListener('click', () => proofInput.click());
+        if (proofInput) {
+            proofInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+                    if (!allowedTypes.includes(file.type)) {
+                        showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error');
+                        proofInput.value = '';
+                        proofPreviewContainer.style.display = 'none';
+                        if (proofError) proofError.classList.remove('show');
                         return;
                     }
+                    if (file.size > 5 * 1024 * 1024) {
+                        showToast('Image trop volumineuse (max 5 Mo)', 'error');
+                        proofInput.value = '';
+                        proofPreviewContainer.style.display = 'none';
+                        if (proofError) proofError.classList.remove('show');
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        proofPreviewImg.src = e.target.result;
+                        proofPreviewContainer.style.display = 'block';
+                        if (proofError) proofError.classList.remove('show');
+                    };
+                    reader.readAsDataURL(file);
                 }
-            } catch (error) {
-                console.warn("Impossible de vérifier les dates bloquées:", error);
-                // Continue sans bloquer si l'API n'est pas disponible
-            }
+            });
+        }
+        if (clearProofBtn) {
+            clearProofBtn.addEventListener('click', function() {
+                proofInput.value = '';
+                proofPreviewContainer.style.display = 'none';
+                proofPreviewImg.src = '';
+            });
+        }
+    });
 
-            const proofRequired = payment === "CCP" || payment === "BaridiMob";
-            if (proofRequired && !paymentProofFile) {
-                showToast("Ajoutez une capture/scanner comme preuve de paiement", "warning");
-                return;
-            }
+    // Données incontournables
+    const mustSeeData = {
+        grotte: { title: "Les grottes de la côte ouest", rating: "⭐ 4.8 (2 345 avis)", description: "Explorez les magnifiques grottes marines de la côte ouest de Béjaïa.", details: [{ icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" }, { icon: "fa-users", text: "Groupe : 4-10 personnes" }, { icon: "fa-ship", text: "Transport en bateau inclus" }, { icon: "fa-utensils", text: "Repas inclus (demi-pension)" }], media: [{ type: "image", src: "images" }] },
+        ferme: { title: "Découvrir la ferme Djerba", rating: "⭐ 4.8 (1 890 avis)", description: "Immersion dans la vie rurale traditionnelle.", details: [{ icon: "fa-clock", text: "Durée : 3 jours / 2 nuits" }, { icon: "fa-users", text: "Groupe : 2-8 personnes" }, { icon: "fa-utensils", text: "Repas bio inclus" }, { icon: "fa-tree", text: "Activités agricoles" }], media: [{ type: "image", src: "image2" }] },
+        historique: { title: "Visite des sites historiques", rating: "⭐ 4.9 (3 102 avis)", description: "Plongez dans l'histoire riche de Béjaïa.", details: [{ icon: "fa-clock", text: "Durée : 2 jours / 1 nuit" }, { icon: "fa-users", text: "Groupe : 2-15 personnes" }, { icon: "fa-map", text: "Guide historien" }, { icon: "fa-camera", text: "Visite photo" }], media: [{ type: "image", src: "https://images.unsplash.com/photo-1549893074-4bc9fbb0f8f8?w=1200&q=80" }, { type: "image", src: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=80" }] },
+        vol: { title: "Vol au-dessus de la Méditerranée", rating: "⭐ 4.7 (1 567 avis)", description: "Expérience unique en parapente au-dessus des eaux turquoise.", details: [{ icon: "fa-clock", text: "Durée : 1 journée" }, { icon: "fa-users", text: "Groupe : 1-4 personnes" }, { icon: "fa-parachute-box", text: "Équipement inclus" }, { icon: "fa-video", text: "Vidéo de votre vol" }], media: [{ type: "image", src: "data:image" }] },
+        "petite-casbah": { title: "La petite Casbah de Béjaïa", rating: "⭐ 4.6 (2 001 avis)", description: "Balade dans les ruelles pittoresques.", details: [{ icon: "fa-clock", text: "Durée : 1 journée" }, { icon: "fa-users", text: "Groupe : 2-12 personnes" }, { icon: "fa-shopping-bag", text: "Marché artisanal" }, { icon: "fa-utensils", text: "Déjeuner typique" }], media: [{ type: "image", src: "data:image" }] },
+        fort: { title: "Fort Yemma Gouraya", rating: "⭐ 4.7 (2 890 avis)", description: "Vue panoramique exceptionnelle sur la baie.", details: [{ icon: "fa-clock", text: "Durée : 1 journée" }, { icon: "fa-users", text: "Groupe : 2-20 personnes" }, { icon: "fa-hiking", text: "Randonnée incluse" }, { icon: "fa-camera", text: "Point photo exceptionnel" }], media: [{ type: "image", src: "data:image" }, { type: "image", src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn0B0EYzm7wCaesEbQloprV0sJ1bDzpmje8Q&s" }] },
+        paddle: { title: "Initiation au paddle", rating: "⭐ 4.5 (978 avis)", description: "Découvrez la côte depuis la mer.", details: [{ icon: "fa-clock", text: "Durée : Demi-journée" }, { icon: "fa-users", text: "Groupe : 1-6 personnes" }, { icon: "fa-life-ring", text: "Équipement inclus" }, { icon: "fa-water", text: "Cours d'initiation" }], media: [{ type: "image", src: "data:image" }] }
+    };
 
-            if (paymentProofFile) {
-                const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-                if (!allowedTypes.includes(paymentProofFile.type)) {
-                    showToast("Format image non supporte (JPG, PNG, WEBP uniquement)", "error");
-                    return;
-                }
+    const mustModal = document.getElementById('mustModal');
+    const mustModalGallery = document.getElementById('mustModalGallery');
+    const mustModalMainMedia = document.getElementById('mustModalMainMedia');
+    const mustModalTitle = document.getElementById('mustModalTitle');
+    const mustModalRating = document.getElementById('mustModalRating');
+    const mustModalDescription = document.getElementById('mustModalDescription');
+    const mustModalDetails = document.getElementById('mustModalDetails');
+    let currentMedia = [];
 
-                const maxSizeInBytes = 5 * 1024 * 1024;
-                if (paymentProofFile.size > maxSizeInBytes) {
-                    showToast("Image trop volumineuse (max 5 Mo)", "error");
-                    return;
-                }
-            }
+    function setMainMedia(index) {
+        const media = currentMedia[index];
+        if (!media) return;
+        document.querySelectorAll('.must-modal-gallery-item').forEach((item, i) => { if (i === index) item.classList.add('active'); else item.classList.remove('active'); });
+        if (media.type === 'video') mustModalMainMedia.innerHTML = `<video controls autoplay loop muted src="${media.src}"></video>`;
+        else mustModalMainMedia.innerHTML = `<img src="${media.src}" alt="">`;
+    }
 
-            let total = currentAct.pricePerAdult * adults;
-
-// Ajout des enfants pour le Quad
-if (currentAct.id === 'quad' && currentAct.hasChild) {
-    total += children * 1000;
-}
-
-// Ajout de la bouée tractée (5000 DA) pour l'offre Évasion 5 personnes
-if (currentAct.id === 'bateau' && boueeAdded) {
-    total += 5000;
-}
-            const deposit = Math.round(total * 0.3);
-            
-            const nameParts = fullName.split(/\s+/);
-            const nom = nameParts[0];
-            const prenom = nameParts.slice(1).join(" ");
-            const paymentProofBase64 = paymentProofFile ? await fileToBase64(paymentProofFile) : null;
-
-            if (payment === "PayPal") {
-                const message = `✨ *NOUVELLE RÉSERVATION PAYPAL - VISIT BÉJAÏA* ✨
-
-• *Client:* ${nom} ${prenom}
-• *Email:* ${email}
-• *Téléphone:* ${phone}
-
-• *Activité:* ${currentAct.name}
-• *Date souhaitée:* ${date}
-• *Personnes:* ${adults + children} (${adults} adultes${children > 0 ? `, ${children} enfants` : ''})
-
-• *Montant total:* ${total.toLocaleString('fr-DZ')} DA
-• *Acompte 30 %:* ${deposit.toLocaleString('fr-DZ')} DA
-
-• *Mode de paiement:* PAYPAL
-
-• *Demandes spéciales:* ${special || 'Aucune'}
-
-• *Réservation faite le:* ${new Date().toLocaleString('fr-FR')}`;
-
-                const encodedMessage = encodeURIComponent(message);
-                const whatsappNumber = "33619501708";
-                window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-                closeModal();
-                document.getElementById("reservationForm").reset();
-                document.getElementById("adults").value = 1;
-                document.getElementById("children").value = 0;
-                updateTotal();
-                return;
-            }
-
-            setLoading(true);
-
-            const payload = {
-                nom: nom,
-                prenom: prenom,
-                email: email,
-                telephone: phone,
-                date_depart: date,
-                nb_personnes: adults + children,
-                nom_item: currentAct.name,
-                type_reservation: "activite",
-                prix_total: total,
-                acompte_30pct: deposit,
-                mode_paiement: payment,
-                transaction_ref: transRef || null,
-                demandes_speciales: special || null,
-                status: "en_attente",
-                paiement_statut: transRef ? "attente_validation" : "non_saisi",
-                payment_proof: paymentProofBase64
-            };
-
-            try {
-                const result = await sendReservation(payload);
-                setLoading(false);
-                
-                if (result.success) {
-                    const message = result.local ? 
-                        "✅ Réservation sauvegardée localement" :
-                        "✅ Réservation confirmée !";
-                    showToast(`${message} - Total : ${total.toLocaleString('fr-DZ')} DA`, "success");
-                    
-                    setTimeout(() => {
-                        closeModal();
-                        document.getElementById("reservationForm").reset();
-                        document.getElementById("adults").value = 1;
-                        document.getElementById("children").value = 0;
-                        updatePaymentProofVisibility();
-                        updateTotal();
-                    }, 2000);
-                } else {
-                    showToast("❌ Erreur lors de la réservation", "error");
-                }
-            } catch (error) {
-                console.error("Erreur:", error);
-                setLoading(false);
-                showToast("? Erreur: " + error.message, "error");
-            }
+    document.querySelectorAll('.must-see-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const key = card.dataset.modal;
+            const data = mustSeeData[key];
+            if (!data) return;
+            currentMedia = data.media;
+            mustModalTitle.textContent = data.title;
+            mustModalRating.innerHTML = `<i class="fas fa-star"></i> ${data.rating}`;
+            mustModalDescription.textContent = data.description;
+            mustModalDetails.innerHTML = '';
+            data.details.forEach(detail => { const div = document.createElement('div'); div.className = 'must-modal-detail-item'; div.innerHTML = `<i class="fas ${detail.icon}"></i> <span>${detail.text}</span>`; mustModalDetails.appendChild(div); });
+            mustModalGallery.innerHTML = '';
+            data.media.forEach((media, index) => {
+                const item = document.createElement('div');
+                item.className = 'must-modal-gallery-item';
+                if (index === 0) item.classList.add('active');
+                if (media.type === 'video') item.innerHTML = `<video src="${media.src}" muted></video>`;
+                else item.innerHTML = `<img src="${media.src}" alt="">`;
+                item.addEventListener('click', () => setMainMedia(index));
+                mustModalGallery.appendChild(item);
+            });
+            setMainMedia(0);
+            mustModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
+    });
 
-        document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-        document.getElementById("modalOverlay").addEventListener("click", (e) => { 
-            if (e.target === document.getElementById("modalOverlay")) closeModal(); 
-        });
-        document.getElementById("paymentMethod").addEventListener("change", updatePaymentProofVisibility);
-        document.getElementById("adults").addEventListener("input", updateTotal);
-        document.getElementById("children").addEventListener("input", updateTotal);
+    document.querySelector('.must-modal-close').addEventListener('click', () => { mustModal.classList.remove('active'); document.body.style.overflow = 'auto'; });
+    mustModal.addEventListener('click', (e) => { if (e.target === mustModal) { mustModal.classList.remove('active'); document.body.style.overflow = 'auto'; } });
 
-        document.querySelectorAll(".filter-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                renderCards(btn.dataset.filter);
+    window.openDestinationReservation = function(id, name, price) { alert(`Réservation pour ${name}  ${price} DZD`); }
+    window.closeDestinationReservation = function() { document.getElementById('destinationReservationModal').classList.remove('active'); }
+    window.submitDestinationReservation = function(event) { event.preventDefault(); alert('Réservation confirmée !'); closeDestinationReservation(); }
+
+    // Auto-scroll carousel (optionnel - décommentez si voulu)
+    const autoCarousel = document.querySelector('.activities-carousel');
+    if (autoCarousel) {
+        function getScrollSpeed() {
+            if (window.innerWidth < 480) return 0.5;
+            if (window.innerWidth < 768) return 0.8;
+            return 1;
+        }
+        let scrollSpeed = getScrollSpeed();
+        let isAutoScrolling = true;
+        let scrollInterval;
+        function startAutoScroll() { if (isAutoScrolling) return; isAutoScrolling = true; scrollSpeed = getScrollSpeed(); scrollInterval = setInterval(() => { autoCarousel.scrollLeft += scrollSpeed; if (autoCarousel.scrollLeft >= autoCarousel.scrollWidth - autoCarousel.clientWidth - 5) autoCarousel.scrollLeft = 0; }, 20); }
+        function stopAutoScroll() { isAutoScrolling = false; clearInterval(scrollInterval); }
+        setTimeout(() => { scrollSpeed = getScrollSpeed(); scrollInterval = setInterval(() => { if (isAutoScrolling) { autoCarousel.scrollLeft += scrollSpeed; if (autoCarousel.scrollLeft >= autoCarousel.scrollWidth - autoCarousel.clientWidth - 5) autoCarousel.scrollLeft = 0; } }, 20); }, 1000);
+        autoCarousel.addEventListener('mouseenter', stopAutoScroll);
+        autoCarousel.addEventListener('touchstart', stopAutoScroll);
+        autoCarousel.addEventListener('mouseleave', startAutoScroll);
+        autoCarousel.addEventListener('touchend', () => { setTimeout(startAutoScroll, 2000); });
+        window.addEventListener('resize', () => { scrollSpeed = getScrollSpeed(); });
+        autoCarousel.addEventListener('wheel', (e) => { stopAutoScroll(); setTimeout(startAutoScroll, 3000); });
+    }
+
+    console.log("=== PAGE INDEX - ACTIVITÉS ===");
+
+    // MÊMES ACTIVITÉS
+    const activitiesCatalog = [
+        { id: "visite", activityNote: ["Le prix inclut uniquement la visite guidée et non le transport.", "Prix dégressif à partir de la deuxième personne."], name: "Visite guidée", basePrice: 6000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Partez à la découverte de Bejaïa entre histoire et nature. Visitez les plus beaux spots de Béjaïa, de Gouraya à la cascade, en passant par la Casbah. Profitez d’un tour guidé avec un guide passionné, amoureux de la ville et connaisseur de tous ses recoins et de ses histoires.", hasChild: false },
+        { id: "quad", activityNote: ["Baskets et lunettes recommandées", "Casque quad fourni", "1 adulte par quad, conduite à partir de 16 ans", "Le guide se réserve le droit de vous reprendre le quad si vous ne respectez pas ces consignes, sans remboursement."], name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", image: "assets/images/quad.jpeg", desc: "Randonnée en quad (pas de course) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. À partir de 13h30, sans réservation : premier arrivé, premier sorti.", hasChild: true, childPrice: 1000, options: [{label: "30 min", price: 3000}, {label: "45 min (Réservation & paiement exigés)", price: 4000}] },
+        { id: "parapente", activityNote: ["Moniteur diplômé et reconnu.", "Les vols se déroulent en toute sécurité.", "Équipement de sécurité fourni.", "Les vols peuvent être annulés à la dernière minute si les conditions changent.", "Les vols peuvent être annulés si vous n'écoutez pas le moniteur."], name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", desc: "Envoyez-vous en l'air avec un baptême en parapente sur le plus beau spot de vol en Algérie, avec un atterrissage sur la plage.", hasChild: false, options: [{label: "avec vidéo GoPro 4K", price: 6000}, {label: "avec vidéo GoPro 5,3K", price: 7000}, {label: "avec vidéo Insta 360", price: 8000}] },
+        { id: "cheval", activityNote: ["Les randonnées se font sur une colline et un chemin forestier surplombant la mer, et non sur une plage.", "Les randonnées se déroulent le matin ou en fin d'après-midi par respect pour la santé de l'animal.", "Pique-nique interdit au sein de la ferme.", "1 personne par cheval."], name: "Randonnée à cheval", basePrice: 2500, category: "terre", icon: "fa-horse", image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", desc: "Entre le bleu de la Méditerranée et le vert du parc national de Gouraya, laissez-vous contempler les beaux paysages de la Kabylie à cheval pour une randonnée inoubliable d'environ 30 min.", hasChild: false },
+        { id: "parasailing", activityNote: ["L'activité peut être annulée en cas de changement de météo.", "Les réservations se font pour les créneaux du matin ; l'après-midi, premier arrivé, premier servi."], name: "Parasailing", basePrice: 10000, category: "mer", icon: "fa-parachute-box", image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", desc: "Pas besoin d'être un expert pour voler. Juste l'envie de voir l'horizon autrement. Le parachute ascensionnel : 100 % sensation, 0 % d'effort, 1000 souvenirs inoubliables.", hasChild: false },
+        { id: "bouee", activityNote: ["Réservation confirmée avec paiement à l'avance.", "Gilet fourni et obligatoire."], name: "Bouée tractée", basePrice: 4000, category: "mer", icon: "fa-water", image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", desc: "Pour un moment plein de souvenirs et de fous rires, offrez-vous une activité riche en sensations et en adrénaline en famille ou entre amis.", hasChild: false },
+        { id: "jetski", activityNote: ["Activité proposée uniquement en complément de la sortie bateau.", "Pièce d'identité obligatoire en garantie en cas de casse.", "Pièce d'identité restituée si aucune casse n'est constatée ou après paiement des réparations.", "Aucun remboursement en cas d'arrêt de l'activité ou de retour du jet-ski.", "Activité interdite à toute personne alcoolisée."], name: "Jet Ski", basePrice: 30000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jetski.jpeg", desc: "Offrez-vous le plein de sensations en totale liberté avec l'activité jet-ski.", hasChild: false, options: [{label: "1h00", price: 30000}, {label: "1h30", price: 40000}] },
+        { id: "bateau", activityNote: ["Alcool interdit sur le bateau", "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", "Offre découverte : 1h30/2h - Circuit classique", "Offre évasion : 3h/3h30 - Circuit classique + grottes de Gouraya + Tamelaht + snorkelling + brunch", "Offre détente : 4h30/5h - Circuit complet + barbecue + bouée tractée"], name: "Excursion Bateau", basePrice: "à partir de 16000", category: "mer", icon: "fa-ship", image: "assets/images/i.jpeg", desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", hasChild: false }
+    ];
+
+    let currentAct = { id: '', name: '', pricePerAdult: 0, hasChild: false, childPrice: 0 };
+    let boueeAdded = false;
+
+    function renderCards(filter = "all") {
+        const grid = document.getElementById("activitiesGrid");
+        const filtered = filter === "all" ? activitiesCatalog : activitiesCatalog.filter(a => a.category === filter);
+        grid.innerHTML = filtered.map((act, idx) => {
+            const priceDisplay = typeof act.basePrice === 'number' ? act.basePrice.toLocaleString('fr-DZ') : act.basePrice;
+            return `<div class="activity-card" data-category="${act.category}" data-id="${act.id}">
+                <div class="card-image">
+                    <img src="${act.image}" alt="${act.name}" loading="lazy" onerror="this.src='assets/images/all.jpg'">
+                    <span class="card-category">${act.category === 'mer' ? '🌊 Nautique' : act.category === 'terre' ? '🏞️ Terre' : '🏛️ Culture'}</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">${act.name}</h3>
+                    <p class="card-desc">${act.desc.substring(0, 120)}${act.desc.length > 120 ? '...' : ''}</p>
+                    <div class="card-price">
+                        <span class="price"> ${priceDisplay} DA</span>
+                        <button class="btn-reserve" data-id="${act.id}" data-name="${act.name}" data-price="${typeof act.basePrice === 'number' ? act.basePrice : act.basePrice.replace(/[^0-9]/g, '')}">Réserver</button>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+
+        document.querySelectorAll('.btn-reserve').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = btn.dataset.id;
+                const name = btn.dataset.name;
+                let price = parseInt(btn.dataset.price);
+                let hasChild = false;
+                let childPrice = 0;
+                if (id === 'quad') { hasChild = true; childPrice = 1000; }
+                openModal(id, name, price, hasChild, childPrice);
             });
         });
+    }
 
-        document.getElementById("date").min = new Date().toISOString().split('T')[0];
-        updatePaymentProofVisibility();
-        renderCards("all");
+    let currentActivityNotes = [];
 
-
-
- //proof of payment
- // ===== GESTION SIMPLIFIÉE DE LA PREUVE DE PAIEMENT =====
-let currentProofFile = null;
-
-function setupProofManagement() {
-    const proofInput = document.getElementById('paymentProof');
-    const proofPreviewContainer = document.getElementById('proofPreviewContainer');
-    const proofPreviewImg = document.getElementById('proofPreviewImg');
-    const clearProofBtn = document.getElementById('clearProofBtn');
-    const proofError = document.getElementById('proofError');
-    
-    if (!proofInput) return;
-    
-    proofInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            // Vérifier le type
-            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
-            if (!allowedTypes.includes(file.type)) {
-                showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error');
-                proofInput.value = '';
-                proofPreviewContainer.style.display = 'none';
-                currentProofFile = null;
-                return;
-            }
-            
-            // Vérifier la taille (max 5MB)
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('Image trop volumineuse (max 5 Mo)', 'error');
-                proofInput.value = '';
-                proofPreviewContainer.style.display = 'none';
-                currentProofFile = null;
-                return;
-            }
-            
-            currentProofFile = file;
-            
-            // Afficher l'aperçu
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                proofPreviewImg.src = e.target.result;
-                proofPreviewContainer.style.display = 'block';
-                proofError.classList.remove('show');
-            };
-            reader.readAsDataURL(file);
+    function openModal(id, name, price, hasChild, childPrice) {
+        warmUpApi();
+        currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
+        boueeAdded = false;
+        const activity = activitiesCatalog.find(a => a.id === id);
+        currentActivityNotes = activity?.activityNote || [];
+        document.getElementById("modalTitle").innerHTML = `Réserver ${name}`;
+        document.getElementById("quadOptions").style.display = "none";
+        document.getElementById("parapenteOptions").style.display = "none";
+        document.getElementById("jetskiOptions").style.display = "none";
+        document.getElementById("bateauOptions").style.display = "none";
+        const adultsGroup = document.getElementById("adultsGroup");
+        const childGroup = document.getElementById("childGroup");
+        const childLabel = document.getElementById("childExtraLabel");
+        document.getElementById("fullName").value = "";
+        document.getElementById("date").value = "";
+        document.getElementById("specialRequests").value = "";
+        
+        if (id === "quad") {
+            document.getElementById("quadOptions").style.display = "block";
+            document.getElementById("quadSelect").value = "3000";
+            document.getElementById("quadChild").checked = false;
+            currentAct.pricePerAdult = 3000;
+            if (adultsGroup) { adultsGroup.style.display = "none"; document.getElementById("adults").value = 1; }
+            if (childGroup) childGroup.style.display = "none";
+            document.getElementById("children").value = 0;
+        } else if (id === "parapente") {
+            document.getElementById("parapenteOptions").style.display = "block";
+            document.getElementById("parapenteSelect").value = "6000";
+            currentAct.pricePerAdult = 6000;
+            if (adultsGroup) adultsGroup.style.display = "block";
+            if (childGroup) childGroup.style.display = "none";
+            document.getElementById("adults").value = 1;
+        } else if (id === "jetski") {
+            document.getElementById("jetskiOptions").style.display = "block";
+            document.getElementById("jetskiSelect").value = "30000";
+            currentAct.pricePerAdult = 30000;
+            if (adultsGroup) adultsGroup.style.display = "block";
+            if (childGroup) childGroup.style.display = "none";
+            document.getElementById("adults").value = 1;
+        } else if (id === "bateau") {
+            document.getElementById("bateauOptions").style.display = "block";
+            const firstRadio = document.querySelector('input[name="bateauOption"]:checked');
+            if (firstRadio) { currentAct.pricePerAdult = parseInt(firstRadio.value); toggleBoueeOption(); }
+            if (adultsGroup) adultsGroup.style.display = "block";
+            if (childGroup) childGroup.style.display = "none";
+            document.getElementById("adults").value = 1;
+        } else {
+            if (adultsGroup) adultsGroup.style.display = "block";
+            if (hasChild && childGroup) { childGroup.style.display = "block"; if (childLabel) childLabel.innerHTML = `(+${childPrice} DA/enfant)`; }
+            else if (childGroup) childGroup.style.display = "none";
+            document.getElementById("adults").value = 1;
+            document.getElementById("children").value = 0;
         }
-    });
-    
-    if (clearProofBtn) {
-        clearProofBtn.addEventListener('click', function() {
-            proofInput.value = '';
-            proofPreviewContainer.style.display = 'none';
-            proofPreviewImg.src = '';
-            currentProofFile = null;
-            proofError.classList.remove('show');
-        });
+        displayRedNotesAtTop();
+        updateTotal();
+        document.getElementById("modalOverlay").classList.add("active");
     }
-}
 
-// Modifier la fonction updatePaymentProofVisibility
-const originalUpdatePaymentProofVisibility = updatePaymentProofVisibility;
-window.updatePaymentProofVisibility = function() {
-    const paymentSelect = document.getElementById("paymentMethod");
-    const proofGroup = document.getElementById("paymentProofGroup");
-    const bankDetails = document.getElementById("bankDetails");
-    
-    if (!paymentSelect || !proofGroup) return;
-    
-    const isProofRequired = paymentSelect.value === "CCP" || paymentSelect.value === "BaridiMob" || paymentSelect.value === "Virement";
-    proofGroup.style.display = isProofRequired ? "block" : "none";
-    
-    // Rendre le champ file required seulement si la preuve est requise
-    const proofInput = document.getElementById("paymentProof");
-    if (proofInput) {
-        proofInput.required = isProofRequired;
-    }
-    
-    if (bankDetails) {
-        bankDetails.style.display = "block";
-    }
-};
-
-// Modifier la fonction fileToBase64 pour utiliser currentProofFile
-window.fileToBase64 = function(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(new Error("Impossible de lire le fichier de preuve"));
-        reader.readAsDataURL(file);
-    });
-};
-
-// Modifier la fonction sendReservation (garder l'originale mais adapter)
-const originalSendReservation = window.sendReservation;
-window.sendReservation = async function(payload) {
-    const API_URL = `${API_BASE}/api/reservations`;
-    console.log("Envoi à l'API:", payload);
-    
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-        
-        const data = await response.json();
-        console.log("Réponse API:", response.status, data);
-        
-        if (!response.ok) {
-            throw new Error(data.message || data.error || `Erreur ${response.status}`);
+    function updateTotal() {
+        if (currentAct.id === 'quad') {
+            let total = currentAct.pricePerAdult;
+            const quadChildCheckbox = document.getElementById("quadChild");
+            if (quadChildCheckbox && quadChildCheckbox.checked) total += 1000;
+            const deposit = Math.round(total * 0.3);
+            document.getElementById("totalPriceDisplay").innerHTML = total.toLocaleString('fr-DZ') + " DA";
+            document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
+        } else if (currentAct.id === 'bateau') {
+            let total = currentAct.pricePerAdult;
+            if (boueeAdded) total += 5000;
+            const deposit = Math.round(total * 0.3);
+            document.getElementById("totalPriceDisplay").innerHTML = total.toLocaleString('fr-DZ') + " DA";
+            document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
+        } else {
+            let adults = parseInt(document.getElementById("adults").value) || 1;
+            let children = parseInt(document.getElementById("children").value) || 0;
+            let total = currentAct.pricePerAdult * adults;
+            if (currentAct.hasChild && currentAct.id !== 'quad') total += children * (currentAct.childPrice || 0);
+            const deposit = Math.round(total * 0.3);
+            document.getElementById("totalPriceDisplay").innerHTML = total.toLocaleString('fr-DZ') + " DA";
+            document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
         }
-        
-        return { success: true, data: data, apiResponse: true };
-        
-    } catch (error) {
-        console.error("Erreur API:", error);
-        const localReservations = JSON.parse(localStorage.getItem('bejaia_reservations') || '[]');
-        const newReservation = {
-            ...payload,
-            id: Date.now(),
-            created_at: new Date().toISOString(),
-            saved_locally: true
-        };
-        localReservations.push(newReservation);
-        localStorage.setItem('bejaia_reservations', JSON.stringify(localReservations));
-        return { success: true, local: true, data: newReservation };
     }
-};
-document.getElementById("uploadBtn").addEventListener("click", () => {
-    document.getElementById("paymentProof").click();
-});
 
-setTimeout(setupProofManagement, 100);
+    function displayRedNotesAtTop() {
+        let notesContainer = document.getElementById("modalRedNotes");
+        const form = document.getElementById("reservationForm");
+        if (!notesContainer) {
+            notesContainer = document.createElement("div");
+            notesContainer.id = "modalRedNotes";
+            notesContainer.className = "red-notes-container";
+            if (form.firstChild) form.insertBefore(notesContainer, form.firstChild);
+            else form.appendChild(notesContainer);
+        }
+        if (currentActivityNotes.length > 0) {
+            notesContainer.innerHTML = `<div class="red-notes-header"><i class="fas fa-exclamation-circle"></i><span>Informations importantes</span></div><div class="red-notes-list">${currentActivityNotes.map(note => `<div class="red-note-item"><i class="fas fa-circle" style="color: #dc2626; font-size: 0.7rem;"></i><span class="red-note-text">${note}</span></div>`).join('')}</div>`;
+            notesContainer.style.display = "block";
+        } else { notesContainer.style.display = "none"; }
+    }
 
-</script>
+    document.getElementById("quadSelect")?.addEventListener("change", function() { if (currentAct.id === "quad") { currentAct.pricePerAdult = parseInt(this.value); updateTotal(); } });
+    document.getElementById("quadChild")?.addEventListener("change", function(e) { if (currentAct.id === "quad") { currentAct.hasChild = e.target.checked; const childGroup = document.getElementById("childGroup"); if (currentAct.hasChild) { childGroup.style.display = "block"; document.getElementById("childExtraLabel").innerHTML = "(+1000 DA/enfant)"; } else { childGroup.style.display = "none"; document.getElementById("children").value = 0; } updateTotal(); } });
+    document.getElementById("parapenteSelect")?.addEventListener('change', function() { if (currentAct.id === 'parapente') { currentAct.pricePerAdult = parseInt(this.value); updateTotal(); } });
+    document.getElementById("jetskiSelect")?.addEventListener('change', function() { if (currentAct.id === 'jetski') { currentAct.pricePerAdult = parseInt(this.value); updateTotal(); } });
+    const bateauRadios = document.querySelectorAll('input[name="bateauOption"]');
+    const boueeContainer = document.getElementById('boueeOptionContainer');
+    const boueeCheckbox = document.getElementById('boueeOption');
+    function toggleBoueeOption() {
+        const selectedRadio = document.querySelector('input[name="bateauOption"]:checked');
+        if (selectedRadio) { const offre = selectedRadio.getAttribute('data-offre'); const capacite = selectedRadio.getAttribute('data-capacite'); if (offre === 'evasion' && capacite === '5') boueeContainer.style.display = 'block'; else { boueeContainer.style.display = 'none'; if (boueeCheckbox) { boueeCheckbox.checked = false; boueeAdded = false; } } }
+        else boueeContainer.style.display = 'none';
+    }
+    bateauRadios.forEach(radio => { radio.addEventListener('change', function() { if (currentAct.id === 'bateau') { currentAct.pricePerAdult = parseInt(this.value); toggleBoueeOption(); updateTotal(); } }); });
+    if (boueeCheckbox) boueeCheckbox.addEventListener('change', function(e) { if (currentAct.id === 'bateau') { boueeAdded = e.target.checked; updateTotal(); } });
 
-<!-- MODALE DE DÉTAIL ACTIVITÉ -->
-<div id="activityDetailModal" class="activity-modal-overlay">
-    <div class="activity-modal-container">
-        <button class="activity-modal-close" id="closeActivityModal">&times;</button>
-        <div id="activityDetailContent"></div>
-    </div>
-</div>
+    function showToast(msg, type) { const toast = document.getElementById("toast"); if (!toast) return; toast.textContent = msg; toast.className = `toast-notification ${type}`; toast.classList.add("show"); setTimeout(() => toast.classList.remove("show"), 4000); }
+    function setLoading(show) { const loader = document.getElementById("loading"); if (show) loader.classList.add("active"); else loader.classList.remove("active"); }
+    function validateFullName(fullName) { const trimmed = fullName.trim(); const parts = trimmed.split(/\s+/); return parts.length >= 2 && parts[0].length > 0 && parts[1].length > 0; }
+    async function compressImageForProof(file, maxWidth = 1200, quality = 0.75) { const objectUrl = URL.createObjectURL(file); try { const img = await new Promise((resolve, reject) => { const el = new Image(); el.onload = () => resolve(el); el.onerror = () => reject(new Error("Impossible de lire le fichier de preuve")); el.src = objectUrl; }); const scale = Math.min(1, maxWidth / img.width); const canvas = document.createElement("canvas"); canvas.width = Math.round(img.width * scale); canvas.height = Math.round(img.height * scale); canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height); return canvas.toDataURL("image/jpeg", quality); } finally { URL.revokeObjectURL(objectUrl); } }
+    function updatePaymentProofVisibility() { const paymentSelect = document.getElementById("paymentMethod"); const proofGroup = document.getElementById("paymentProofGroup"); const proofInput = document.getElementById("paymentProof"); const bankDetails = document.getElementById("bankDetails"); if (!paymentSelect || !proofGroup || !proofInput) return; const isProofRequired = paymentSelect.value === "CCP" || paymentSelect.value === "BaridiMob"; proofGroup.style.display = isProofRequired ? "block" : "none"; proofInput.required = isProofRequired; if (bankDetails) bankDetails.style.display = "block"; if (!isProofRequired) proofInput.value = ""; }
+    async function sendReservation(payload) { const API_URL = `${API_BASE}/api/reservations`; try { const response = await fetchWithTimeout(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) }); const data = await response.json(); if (!response.ok) throw new Error(data.message || data.error || `Erreur ${response.status}`); return { success: true, data: data, apiResponse: true }; } catch (error) { if (error.name === 'AbortError') throw new Error("Le serveur met trop de temps à répondre. Réessayez dans quelques secondes."); throw error; } }
+    function closeModal() { document.getElementById("modalOverlay").classList.remove("active"); }
+
+    document.getElementById("fullName").addEventListener("input", function(e) { const isValid = validateFullName(e.target.value); const group = document.getElementById("fullNameGroup"); const errorDiv = document.getElementById("fullNameError"); if (!isValid && e.target.value.trim().length > 0) { group.classList.add("error"); errorDiv.classList.add("show"); } else { group.classList.remove("error"); errorDiv.classList.remove("show"); } });
+    document.getElementById("reservationForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fullName = document.getElementById("fullName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const date = document.getElementById("date").value;
+        const adults = parseInt(document.getElementById("adults").value);
+        const children = parseInt(document.getElementById("children").value) || 0;
+        const payment = document.getElementById("paymentMethod").value;
+        const transRef = document.getElementById("transactionRef").value.trim();
+        const special = document.getElementById("specialRequests").value;
+        const paymentProofFile = document.getElementById("paymentProof")?.files?.[0] || null;
+        if (!validateFullName(fullName)) { showToast("⚠️ Veuillez entrer votre nom et prénom complets", "warning"); return; }
+        if (!email || !phone || !date || !adults) { showToast("Veuillez remplir tous les champs obligatoires", "error"); return; }
+        const proofRequired = payment === "CCP" || payment === "BaridiMob";
+        if (proofRequired && !paymentProofFile) { showToast("Ajoutez une capture/scanner comme preuve de paiement", "warning"); return; }
+        if (paymentProofFile) { const allowedTypes = ["image/jpeg", "image/png", "image/webp"]; if (!allowedTypes.includes(paymentProofFile.type)) { showToast("Format image non supporte (JPG, PNG, WEBP uniquement)", "error"); return; } if (paymentProofFile.size > 5 * 1024 * 1024) { showToast("Image trop volumineuse (max 5 Mo)", "error"); return; } }
+        let total = currentAct.pricePerAdult * adults;
+        if (currentAct.id === 'quad' && currentAct.hasChild) total += children * 1000;
+        if (currentAct.id === 'bateau' && boueeAdded) total += 5000;
+        const deposit = Math.round(total * 0.3);
+        const nameParts = fullName.split(/\s+/);
+        const nom = nameParts[0];
+        const prenom = nameParts.slice(1).join(" ");
+        if (payment === "PayPal") {
+            const message = `✨ *NOUVELLE RÉSERVATION PAYPAL - VISIT BÉJAÏA* ✨\n\n• *Client:* ${nom} ${prenom}\n• *Email:* ${email}\n• *Téléphone:* ${phone}\n\n• *Activité:* ${currentAct.name}\n• *Date souhaitée:* ${date}\n• *Personnes:* ${adults + children} (${adults} adultes${children > 0 ? `, ${children} enfants` : ''})\n\n• *Montant total:* ${total.toLocaleString('fr-DZ')} DA\n• *Acompte 30 %:* ${deposit.toLocaleString('fr-DZ')} DA\n\n• *Mode de paiement:* PAYPAL\n\n• *Demandes spéciales:* ${special || 'Aucune'}\n\n• *Réservation faite le:* ${new Date().toLocaleString('fr-FR')}`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = "33619501708";
+            window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            closeModal();
+            document.getElementById("reservationForm").reset();
+            document.getElementById("adults").value = 1;
+            document.getElementById("children").value = 0;
+            updateTotal();
+            return;
+        }
+        setLoading(true);
+        let paymentProofBase64 = null;
+        if (paymentProofFile) { try { paymentProofBase64 = await compressImageForProof(paymentProofFile); } catch (error) { setLoading(false); showToast(error.message || "Impossible de traiter l'image de preuve", "error"); return; } }
+        const payload = { nom: nom, prenom: prenom, email: email, telephone: phone, date_depart: date, nb_personnes: adults + children, nom_item: currentAct.name, type_reservation: "activite", prix_total: total, acompte_30pct: deposit, mode_paiement: payment, transaction_ref: transRef || null, demandes_speciales: special || null, status: "en_attente", paiement_statut: transRef ? "attente_validation" : "non_saisi", payment_proof: paymentProofBase64 };
+        try { const result = await sendReservation(payload); setLoading(false); if (result.success) { const message = result.local ? "✅ Réservation sauvegardée localement" : "✅ Réservation confirmée !"; showToast(`${message} - Total : ${total.toLocaleString('fr-DZ')} DA`, "success"); setTimeout(() => { closeModal(); document.getElementById("reservationForm").reset(); document.getElementById("adults").value = 1; document.getElementById("children").value = 0; updatePaymentProofVisibility(); updateTotal(); }, 2000); } else { showToast("❌ Erreur lors de la réservation", "error"); } } catch (error) { console.error("Erreur:", error); setLoading(false); showToast("? Erreur: " + error.message, "error"); } });
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    document.getElementById("modalOverlay").addEventListener("click", (e) => { if (e.target === document.getElementById("modalOverlay")) closeModal(); });
+    document.getElementById("paymentMethod").addEventListener("change", updatePaymentProofVisibility);
+    document.getElementById("adults").addEventListener("input", updateTotal);
+    document.getElementById("children").addEventListener("input", updateTotal);
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderCards(btn.dataset.filter);
+        });
+    });
+    document.getElementById("date").min = new Date().toISOString().split('T')[0];
+    updatePaymentProofVisibility();
+    renderCards("all");
+
+    let currentProofFile = null;
+    function setupProofManagement() {
+        const proofInput = document.getElementById('paymentProof');
+        const proofPreviewContainer = document.getElementById('proofPreviewContainer');
+        const proofPreviewImg = document.getElementById('proofPreviewImg');
+        const clearProofBtn = document.getElementById('clearProofBtn');
+        const proofError = document.getElementById('proofError');
+        if (!proofInput) return;
+        proofInput.addEventListener('change', function(e) { const file = e.target.files[0]; if (file) { const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg']; if (!allowedTypes.includes(file.type)) { showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error'); proofInput.value = ''; proofPreviewContainer.style.display = 'none'; currentProofFile = null; return; } if (file.size > 5 * 1024 * 1024) { showToast('Image trop volumineuse (max 5 Mo)', 'error'); proofInput.value = ''; proofPreviewContainer.style.display = 'none'; currentProofFile = null; return; } currentProofFile = file; const reader = new FileReader(); reader.onload = function(e) { proofPreviewImg.src = e.target.result; proofPreviewContainer.style.display = 'block'; proofError.classList.remove('show'); }; reader.readAsDataURL(file); } });
+        if (clearProofBtn) clearProofBtn.addEventListener('click', function() { proofInput.value = ''; proofPreviewContainer.style.display = 'none'; proofPreviewImg.src = ''; currentProofFile = null; proofError.classList.remove('show'); });
+    }
+    window.updatePaymentProofVisibility = function() { const paymentSelect = document.getElementById("paymentMethod"); const proofGroup = document.getElementById("paymentProofGroup"); const bankDetails = document.getElementById("bankDetails"); if (!paymentSelect || !proofGroup) return; const isProofRequired = paymentSelect.value === "CCP" || paymentSelect.value === "BaridiMob" || paymentSelect.value === "Virement"; proofGroup.style.display = isProofRequired ? "block" : "none"; const proofInput = document.getElementById("paymentProof"); if (proofInput) proofInput.required = isProofRequired; if (bankDetails) bankDetails.style.display = "block"; };
+    window.fileToBase64 = function(file) { return new Promise((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = () => reject(new Error("Impossible de lire le fichier de preuve")); reader.readAsDataURL(file); }); };
+    document.addEventListener('DOMContentLoaded', function() { const imageElement = document.querySelector('.hebergement-image'); if (imageElement) { const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('animated'); observer.unobserve(entry.target); } }); }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }); observer.observe(imageElement); } });
+    document.getElementById("uploadBtn").addEventListener("click", () => { document.getElementById("paymentProof").click(); });
+    setTimeout(setupProofManagement, 100);
+    </script>
 </body>
 </html>
-
-
-
-
-
-

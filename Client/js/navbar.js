@@ -155,3 +155,10 @@ window.speak("Bonjour et bienvenue. Nous sommes ravis de vous accompagner dans l
     }
 }
 
+(function loadWhatsAppWidget() {
+    if (document.querySelector('script[src*="whatsapp-float.js"]')) return;
+    const script = document.createElement('script');
+    script.src = 'js/whatsapp-float.js';
+    document.body.appendChild(script);
+})();
+

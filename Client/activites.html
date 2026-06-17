@@ -4,13 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Visit Bejaia | Expériences & Aventures</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
 
+/* Styles pour les cartes d'activités - INTÉGRÉ DIRECTEMENT */
+.activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
 
+.activity-card {
+    background: white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    position: relative;
+    cursor: pointer;
+}
+
+.activity-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 50px -15px rgba(249, 115, 22, 0.3);
+}
+
+.activity-card .card-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.activity-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.activity-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.activity-card .card-category {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.activity-card .card-content {
+    padding: 1.5rem;
+}
+
+.activity-card .card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.activity-card .card-desc {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.activity-card .card-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.activity-card .price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b, #334155;
+}
+
+.activity-card .price small {
+    font-size: 0.7rem;
+    font-weight: normal;
+    color: #94a3b8;
+}
+
+.activity-card .btn-reserve {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.activity-card .btn-reserve:hover {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .activities-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    .activity-card .card-image {
+        height: 200px;
+    }
+    .activity-card .card-title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .activities-grid {
+        gap: 1rem;
+    }
+    .activity-card .card-image {
+        height: 180px;
+    }
+    .activity-card .card-content {
+        padding: 1rem;
+    }
+}
 
 /* Styles pour le bouton d'upload */
 .proof-upload-area {
@@ -227,115 +366,6 @@
             box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
         }
 
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2rem;
-        }
-
-        .activity-card {
-            background: white;
-            border-radius: 2rem;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            min-height: 480px;
-        }
-
-        .card-media {
-            height: 220px;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .card-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .activity-card:hover .card-media img {
-            transform: scale(1.08);
-        }
-
-        .card-header {
-            padding: 1.5rem 1.5rem 0.8rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .icon-circle {
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, #fff5eb, #ffe6d5);
-            border-radius: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: #f97316;
-            transition: 0.3s;
-        }
-
-        .price-badge {
-            background: linear-gradient(135deg, #f97316, #fbbf24);
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 1rem;
-            color: white;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            padding: 0 1.5rem;
-            margin: 0.5rem 0 0.3rem;
-            font-family: 'Playfair Display', serif;
-            color: #1e293b;
-        }
-
-        .card-desc {
-            padding: 0 1.5rem;
-            color: #64748b;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-        }
-
-        .btn-book {
-            margin: auto 1.5rem 1.5rem 1.5rem;
-            background: linear-gradient(95deg, #a90303, #a90303);
-            border: none;
-            padding: 0.9rem;
-            border-radius: 3rem;
-            font-weight: 700;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-shrink: 0;
-        }
-
-        .btn-book:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -8px #a90303;
-        }
-
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -459,7 +489,6 @@
             cursor: pointer;
         }
 
-        /* Style sp�cifique pour les options bateau avec sous-options */
         .bateau-offre {
             background: white;
             border-radius: 0.8rem;
@@ -553,7 +582,7 @@
             border-radius: 1.2rem;
             text-align: center;
             margin: 1.2rem 0;
-            border: 1px solid #fed7aa;
+            border: 1px solid #600606;
         }
 
         .price-summary strong {
@@ -637,28 +666,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        .whatsapp-float {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: #25D366;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            z-index: 99;
-            transition: 0.3s;
-        }
-
-        .whatsapp-float:hover {
-            transform: scale(1.1);
-        }
-
         .error-message {
             color: #dc2626;
             font-size: 0.75rem;
@@ -712,26 +719,16 @@
 
         @media (max-width: 768px) {
             .container { padding: 1rem; }
-            .activities-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .activity-card { min-height: auto; }
-            .card-title { font-size: 1.3rem; }
-            .icon-circle { width: 55px; height: 55px; font-size: 1.5rem; }
-            .price-badge { font-size: 0.85rem; padding: 0.4rem 1rem; }
-            .card-header { padding: 1.2rem 1.2rem 0.5rem; }
-            .card-desc { padding: 0 1.2rem; font-size: 0.85rem; }
-            .btn-book { margin: auto 1.2rem 1.2rem 1.2rem; padding: 0.8rem; font-size: 0.9rem; }
             .modal-container { padding: 1.5rem; width: 95%; }
             .modal-header h3 { font-size: 1.4rem; }
             .hero-content h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
             .hero-badge { font-size: 0.75rem; padding: 0.4rem 1rem; }
             .filter-btn { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
-            .whatsapp-float { width: 50px; height: 50px; font-size: 1.6rem; bottom: 1rem; right: 1rem; }
         }
 
         @media (max-width: 480px) {
             .filter-section { gap: 0.7rem; }
             .filter-btn { padding: 0.4rem 1rem; font-size: 0.75rem; }
-            .card-media { height: 180px; }
         }
     </style>
 </head>
@@ -761,10 +758,10 @@
             <button class="filter-btn" data-filter="terre">Terre & Sensations</button>
             <button class="filter-btn" data-filter="culture">Culture & Détente</button>
         </div>
-        <div class="activities-grid" id="activitiesGrid"></div>
+        <div class="activities-showcase">
+            <div class="activities-grid" id="activitiesGrid"></div>
+        </div>
     </div>
-
-    <a href="https://wa.me/213557664089" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-container">
@@ -775,7 +772,6 @@
             <form id="reservationForm">
                 <div class="info-box" id="activityNote"></div>
                 
-                <!-- Options Quad -->
                 <div id="quadOptions" class="options-modal" style="display: none;">
                     <label>Choisissez votre formule :</label>
                     <select id="quadSelect">
@@ -788,7 +784,6 @@
                     </div>
                 </div>
 
-                <!-- Options Parapente -->
                 <div id="parapenteOptions" class="options-modal" style="display: none;">
                     <label>Choisissez votre formule vidéo :</label>
                     <select id="parapenteSelect">
@@ -798,7 +793,6 @@
                     </select>
                 </div>
 
-                <!-- Options Jet Ski -->
                 <div id="jetskiOptions" class="options-modal" style="display: none;">
                     <label>Choisissez la durée :</label>
                     <select id="jetskiSelect">
@@ -807,68 +801,41 @@
                     </select>
                 </div>
 
-                <!-- Options Bateau détaillées -->
                 <div id="bateauOptions" class="options-modal" style="display: none;">
                     <label>Choisissez votre offre :</label>
                     
-                    <!-- Offre Découverte -->
                     <div class="bateau-offre">
                         <div class="bateau-offre-title">
-                            <i class="fas fa-ship"></i> Offre Découverte (1h30/2h)
+                            <i class="fas fa-ship"></i> Circuit classique (1h30/2h)
                         </div>
                         <div class="bateau-capacite">
-                            <label>
-                                <input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5">
-                                Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7">
-                                Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9">
-                                Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span>
-                            </label>
+                            <label><input type="radio" name="bateauOption" value="16000" data-offre="classique" data-capacite="3"> 🚤 Bateau 3 personnes - <span class="price-detail">16000 DA</span></label>
+                            <label><input type="radio" name="bateauOption" value="20000" data-offre="decouverte" data-capacite="5"> ⛵ Bateau jusqu'à 5 personnes - <span class="price-detail">20000 DA</span></label>
+                            <label><input type="radio" name="bateauOption" value="25000" data-offre="decouverte" data-capacite="7"> ⛵ Bateau jusqu'à 7 personnes - <span class="price-detail">25000 DA</span></label>
+                            <label><input type="radio" name="bateauOption" value="30000" data-offre="decouverte" data-capacite="9"> ⛵ Bateau jusqu'à 9 personnes - <span class="price-detail">30000 DA</span></label>
                         </div>
                     </div>
-
-                    <!-- Offre Évasion -->
+                
                     <div class="bateau-offre">
                         <div class="bateau-offre-title">
                             <i class="fas fa-umbrella-beach"></i> Offre Évasion (3h/3h30) + Brunch
                         </div>
                         <div class="bateau-capacite">
-                            <label>
-                                <input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5">
-                                Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7">
-                                Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span>
-                            </label>
+                            <label><input type="radio" name="bateauOption" value="35000" data-offre="evasion" data-capacite="5" data-bouee="true"> Bateau jusqu'à 5 personnes - <span class="price-detail">35000 DA</span></label>
+                            <label><input type="radio" name="bateauOption" value="40000" data-offre="evasion" data-capacite="7" data-bouee="false"> Bateau jusqu'à 7 personnes - <span class="price-detail">40000 DA</span></label>
                         </div>
-                        <div class="option-bouee">
-                            <label>
-                                <input type="checkbox" id="boueeOption">
-                                + Bouée tractée (5000 DA supplémentaire)
-                            </label>
+                        <div class="option-bouee" id="boueeOptionContainer" style="display: none;">
+                            <label><input type="checkbox" id="boueeOption"> ➕ Bouée tractée (5000 DA supplémentaire)</label>
                         </div>
                     </div>
-
-                    <!-- Offre Détente -->
+                
                     <div class="bateau-offre">
                         <div class="bateau-offre-title">
                             <i class="fas fa-fire"></i> Offre Détente (4h30/5h) + Barbecue + Bouée
                         </div>
                         <div class="bateau-capacite">
-                            <label>
-                                <input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5">
-                                Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7">
-                                Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span>
-                            </label>
+                            <label><input type="radio" name="bateauOption" value="55000" data-offre="detente" data-capacite="5"> Bateau jusqu'à 5 personnes - <span class="price-detail">55000 DA</span></label>
+                            <label><input type="radio" name="bateauOption" value="60000" data-offre="detente" data-capacite="7"> Bateau jusqu'à 7 personnes - <span class="price-detail">60000 DA</span></label>
                         </div>
                     </div>
                 </div>
@@ -898,22 +865,23 @@
                     <small>Envoyez le virement à ce compte et saisissez la référence de transaction ci-dessous.</small>
                 </div>
                 <div class="form-group"><label>Référence transaction</label><input type="text" id="transactionRef" placeholder="ex: 123456"></div>
-                <!-- SECTION PREUVE DE PAIEMENT - SÉLECTION DEPUIS LA GALERIE -->
-<div class="form-group" id="paymentProofGroup">
-    <label>📸 Preuve de paiement *</label>
-    <div class="proof-upload-area">
-        <button type="button" id="uploadBtn" class="upload-btn">
-            <i class="fas fa-folder-open"></i> Choisir une image depuis la galerie
-        </button>
-        <input type="file" id="paymentProof" accept="image/*" style="display:none;">
-        <small style="display:block; margin-top:0.5rem; color:#666;">📱 Formats acceptés : JPG, PNG, WEBP (max 5 Mo)</small>
-    </div>
-    <div id="proofPreviewContainer" style="margin-top: 0.8rem; display: none;">
-        <img id="proofPreviewImg" style="max-width:100%; max-height:150px; border-radius:10px; border:1px solid #ddd;">
-        <button type="button" id="clearProofBtn" style="display:block; margin-top:0.5rem; background:#dc2626; color:white; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">🗑 Supprimer</button>
-    </div>
-    <div class="error-message" id="proofError">⚠️ Veuillez ajouter une preuve de paiement</div>
-</div>
+                
+                <div class="form-group" id="paymentProofGroup">
+                    <label>📸 Preuve de paiement *</label>
+                    <div class="proof-upload-area">
+                        <button type="button" id="uploadBtn" class="upload-btn"><i class="fas fa-folder-open"></i> Choisir une image depuis la galerie</button>
+                        <input type="file" id="paymentProof" accept="image/*" style="display:none;">
+                        <small style="display:block; margin-top:0.5rem; color:#666;">📱 Formats acceptés : JPG, PNG, WEBP (max 5 Mo)</small>
+                        <div style="margin-top:10px; padding:10px; background:#fff3cd; border-left:4px solid #f59e0b; border-radius:8px;">
+                            <strong>📌 Important :</strong><br>La preuve de paiement est obligatoire pour confirmer votre réservation.
+                        </div>
+                    </div>
+                    <div id="proofPreviewContainer" style="margin-top:0.8rem; display:none;">
+                        <img id="proofPreviewImg" style="max-width:100%; max-height:150px; border-radius:10px; border:1px solid #ddd;">
+                        <button type="button" id="clearProofBtn" style="display:block; margin-top:0.5rem; background:#dc2626; color:white; border:none; padding:0.3rem 0.8rem; border-radius:20px; cursor:pointer;">🗑 Supprimer</button>
+                    </div>
+                    <div class="error-message" id="proofError">⚠️ Veuillez ajouter une preuve de paiement pour continuer la réservation.</div>
+                </div>
                 <div class="form-group"><label>Demandes spéciales</label><textarea id="specialRequests" rows="2"></textarea></div>
                 <div class="price-summary"><strong>Total : <span id="totalPriceDisplay">0 DA</span></strong><br><small>Acompte 30% : <span id="depositAmount">0 DA</span></small></div>
                 <button type="submit" class="btn-submit">Confirmer la réservation</button>
@@ -926,10 +894,31 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="js/navbar.js"></script>
+    <script src="js/whatsapp-float.js"></script>
     <div data-include="footer"></div>
     <script src="js/include-footer.js"></script>
     <script>
         console.log("=== APPLICATION DÉMARRÉE ===");
+
+        const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || !location.hostname;
+        const API_BASE = isLocalHost
+            ? (location.port === '3000' ? window.location.origin : 'http://127.0.0.1:3000')
+            : 'https://visitebejai.onrender.com';
+        const FETCH_TIMEOUT_MS = 25000;
+
+        function fetchWithTimeout(url, options = {}, timeoutMs = FETCH_TIMEOUT_MS) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            return fetch(url, { ...options, signal: controller.signal })
+                .finally(() => clearTimeout(timer));
+        }
+
+        function warmUpApi() {
+            if (isLocalHost) return;
+            fetchWithTimeout(`${API_BASE}/api/test`, {}, 15000).catch(() => {});
+        }
+
+        warmUpApi();
         
         const heroSection = document.getElementById('heroSection');
         const filterSection = document.getElementById('filterSection');
@@ -954,184 +943,74 @@
         });
 
         const activitiesCatalog = [
-            { 
-                id: "visite", 
-                activityNote: [ 
-                    "Le prix englobe que la visite guidée et non le transport.",
-                    "Prix dégressif à partir de la deuxième personne."
-                ], 
-                name: "Visite Guidée", 
-                basePrice: 6000, 
-                category: "culture", 
-                icon: "fa-landmark", 
-                image: "assets/images/casbah.jpg", 
-                desc: "Partez à la découverte de Bejaia historique et nature à faire les plus beaux spots de bejaia de gouraya à la cascade en passant par la casbah, faites le tour avec un guide amoureux de la ville et connaisseur de tous les recoins et les histoires.", 
-                hasChild: false 
-            },
-            { 
-                id: "quad", 
-                activityNote: [
-                    "Baskets et lunettes recommandées",
-                    "Casque quad fourni",
-                    "1 adulte sur 1 quad et conduite à partir de 16 ans",
-                    "Le guide se réserve le droit de vous reprendre le quad si vous ne respectez pas ces consignes sans être remboursé."
-                ], 
-                name: "Randonnée Quad", 
-                basePrice: 3000, 
-                category: "terre", 
-                icon: "fa-motorcycle", 
-                image: "assets/images/quad.jpeg", 
-                desc: "Randonnée quad (pas de course) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. À partir de 13h30 sans réservation premier arrivé première sortie.", 
-                hasChild: false,  
-                childPrice: 0     
-            },
-            { 
-                id: "parapente", 
-                activityNote: [
-                    "Moniteur diplômé et reconnu.",
-                    "les vols se font en total sécurité.",
-                    "moyens de sécurité fournis.",
-                    "les vols peuvent être annulés à la dernière minute si les conditions changent.",
-                    "les vols peuvent être annulés si vous n'êtes pas à l'écoute du moniteur."
-                ], 
-                name: "Parapente", 
-                basePrice: 6000, 
-                category: "terre", 
-                icon: "fa-parachute-box", 
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", 
-                desc: "Envoyez-vous en l'air avec un baptême en parapente sur le plus beau spot de vol en parapente d'Algérie, avec un atterrissage sur la plage.", 
-                hasChild: false
-            },
-            { 
-                id: "cheval", 
-                activityNote: [
-                    "Les randonnées se font sur une colline sur un chemin forestier qui surplombe la mer et non sur une plage",
-                    "Les randonnées se font soit le matin ou en fin d'après midi par respect à la santé de l'animal.",
-                    "Picnique interdit au sein de la ferme.",
-                    "1 personne sur un cheval."
-                ],
-                name: "Randonnée à Cheval", 
-                basePrice: 2500, 
-                category: "terre", 
-                icon: "fa-horse", 
-                image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", 
-                desc: "Entre le bleu de la Méditerranée et le vert du parc national de Gouraya, laissez-vous contempler les beaux paysages de la Kabylie à cheval pour une randonnée inoubliable d'environ 30 min.", 
-                hasChild: false 
-            },
-            { 
-                id: "parasailing", 
-                activityNote: [
-                    "L'activité peut être annulée si changement de météo.",
-                    "Les réservations sont faites que pour les créneaux du matin, les après-midi premier arrivé première sortie"
-                ],
-                name: "Parasailing", 
-                basePrice: 10000, 
-                category: "mer", 
-                icon: "fa-parachute-box", 
-                image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", 
-                desc: "Pas besoin d'être un expert pour voler. Juste l'envie de voir l'horizon autrement. Le parachute ascensionnel : 100 % sensation, 0% d'effort, 1000 souvenirs inoubliables.", 
-                hasChild: false 
-            },
-            { 
-                id: "bouee", 
-                activityNote: [
-                    "Réservation confirmée avec paiement à l'avance.",
-                    "Gilet fourni et obligatoire."
-                ],
-                name: "Bouée Tractée", 
-                basePrice: 3000, 
-                category: "mer", 
-                icon: "fa-water", 
-                image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", 
-                desc: "Pour un moment plein de souvenirs et de fou rire offrez-vous l'activité pleine de sensation et d'adrénaline en famille ou entre amis.", 
-                hasChild: false 
-            },
-            { 
-                id: "jetski", 
-                activityNote: [
-                    "Activité seulement en supplément de la sortie bateau.",
-                    "Pièces d'identité obligatoire en garantie de toute casse.",
-                    "Pièce d'identité restituée si aucune casse ou paiement de casse dû à la location.",
-                    "Aucun remboursement si arrêt de l'activité ou jet ski retourné",
-                    "Activité interdite à toute personne alcoolisée."
-                ],
-                name: "Jet Ski", 
-                basePrice: 30000, 
-                category: "mer", 
-                icon: "fa-jet-fighter", 
-                image: "assets/images/jetski.jpeg", 
-                desc: "Offrez-vous le plein de sensations en totale liberté avec l'activité jet-ski.", 
-                hasChild: false
-            },
-            { 
-                id: "bateau", 
-                activityNote: [
-                    "Alcool interdit sur le bateau",
-                    "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte Anne, cap Carbon avec un arrêt de 15/20 min pour nager.",
-                    "Offre découverte : 1h30/2h - Circuit classique",
-                    "Offre évasion : 3h/3h30 - Circuit classique + grottes de Gouraya + Tamelaht + snorkelling + brunch",
-                    "Offre détente : 4h30/5h - Circuit complet + barbecue + bouée tractée"
-                ], 
-                name: "Excursion Bateau", 
-                basePrice: 20000, 
-                category: "mer", 
-                icon: "fa-ship", 
-                image: "assets/images/i.jpeg", 
-                desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", 
-                hasChild: false
-            }
+            { id: "visite", activityNote: ["Le prix englobe que la visite guidée et non le transport.", "Prix dégressif à partir de la deuxième personne."], name: "Visite Guidée", basePrice: 6000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Partez à la découverte de Bejaia historique et nature à faire les plus beaux spots de bejaia.", hasChild: false },
+            { id: "quad", activityNote: ["Baskets et lunettes recommandées", "Casque quad fourni", "1 adulte sur 1 quad et conduite à partir de 16 ans"], name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", image: "assets/images/quad.jpeg", desc: "Randonnée quad sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle.", hasChild: false, childPrice: 0 },
+            { id: "parapente", activityNote: ["Moniteur diplômé et reconnu.", "les vols se font en total sécurité."], name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", desc: "Envoyez-vous en l'air avec un baptême en parapente.", hasChild: false },
+            { id: "cheval", activityNote: ["Les randonnées se font sur une colline sur un chemin forestier"], name: "Randonnée à Cheval", basePrice: 2500, category: "terre", icon: "fa-horse", image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", desc: "Laissez-vous contempler les beaux paysages de la Kabylie à cheval.", hasChild: false },
+            { id: "parasailing", activityNote: ["L'activité peut être annulée si changement de météo."], name: "Parasailing", basePrice: 10000, category: "mer", icon: "fa-parachute-box", image: "https://t3.ftcdn.net/jpg/00/80/96/92/360_F_80969259_Qz6kdleQniMspYbHfcLAMgCxRGCgNEkd.jpg", desc: "Le parachute ascensionnel : 100% sensation, 0% d'effort.", hasChild: false },
+            { id: "bouee", activityNote: ["Réservation confirmée avec paiement à l'avance.", "Gilet fourni et obligatoire."], name: "Bouée Tractée", basePrice: 4000, category: "mer", icon: "fa-water", image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", desc: "Activité pleine de sensations et d'adrénaline.", hasChild: false },
+            { id: "jetski", activityNote: ["Activité seulement en supplément de la sortie bateau.", "Pièces d'identité obligatoire."], name: "Jet Ski", basePrice: 30000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jetski.jpeg", desc: "Offrez-vous le plein de sensations en totale liberté.", hasChild: false },
+            { id: "bateau", activityNote: ["Alcool interdit sur le bateau", "Circuit classique avec arrêt pour nager."], name: "Excursion Bateau", basePrice:"a partir  16000", category: "mer", icon: "fa-ship", image: "assets/images/i.jpeg", desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates.", hasChild: false }
         ];
 
         let currentAct = { id: '', name: '', pricePerAdult: 0, hasChild: false, childPrice: 0 };
         let boueeAdded = false;
 
+        // Fonction pour construire une carte HTML
+        function buildActivityCard(act) {
+            const priceDisplay = typeof act.basePrice === 'number' ? act.basePrice.toLocaleString('fr-DZ') : act.basePrice;
+            return `
+                <div class="activity-card" data-category="${act.category}" data-id="${act.id}">
+                    <div class="card-image">
+                        <img src="${act.image}" alt="${act.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x300?text=${act.name}'">
+                        <span class="card-category">${act.category === 'mer' ? '🌊 Nautique' : act.category === 'terre' ? '🏞️ Terre' : '🏛️ Culture'}</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${act.name}</h3>
+                        <p class="card-desc">${act.desc.substring(0, 100)}${act.desc.length > 100 ? '...' : ''}</p>
+                        <div class="card-price">
+                            <span class="price"> ${priceDisplay} DA</span>
+                            <button class="btn-reserve" data-id="${act.id}" data-name="${act.name}" data-price="${typeof act.basePrice === 'number' ? act.basePrice : act.basePrice.replace(/[^0-9]/g, '')}">Réserver</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function renderCards(filter = "all") {
             const grid = document.getElementById("activitiesGrid");
+            if (!grid) return;
+            
             const filtered = filter === "all" ? activitiesCatalog : activitiesCatalog.filter(a => a.category === filter);
-            grid.innerHTML = filtered.map((act) => {
-                return `<div class="activity-card">
-                    <div class="card-media">
-                        <img src="${act.image}" alt="${act.name}" loading="lazy" onerror="this.src='assets/images/all.jpg'">
-                    </div>
-                    <div class="card-header">
-                        <div class="icon-circle"><i class="fas ${act.icon}"></i></div>
-                        <div class="price-badge">${act.basePrice.toLocaleString('fr-DZ') + " DA"}</div>
-                    </div>
-                    <h3 class="card-title">${act.name}</h3>
-                    <p class="card-desc">${act.desc}</p>
-                    <button class="btn-book" data-id="${act.id}" data-name="${act.name}" data-price="${act.basePrice}"><i class="fas fa-calendar-check"></i> Réserver</button>
-                </div>`;
-            }).join('');
-
-            document.querySelectorAll('.btn-book').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const id = btn.dataset.id;
-                    const name = btn.dataset.name;
-                    let price = parseInt(btn.dataset.price);
-                    let hasChild = false;
-                    let childPrice = 0;
-                    if (id === 'quad') {
-                        hasChild = true;
-                        childPrice = 1000;
-                    }
+            grid.innerHTML = filtered.map(act => buildActivityCard(act)).join('');
+            
+            // Ajouter les événements aux boutons
+            document.querySelectorAll('.btn-reserve').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = this.dataset.id;
+                    const name = this.dataset.name;
+                    const price = parseInt(this.dataset.price);
+                    const activity = activitiesCatalog.find(a => a.id === id);
+                    const hasChild = activity?.hasChild || false;
+                    const childPrice = activity?.childPrice || 0;
                     openModal(id, name, price, hasChild, childPrice);
                 });
             });
         }
 
         function openModal(id, name, price, hasChild, childPrice) {
+            warmUpApi();
             currentAct = { id, name, pricePerAdult: price, hasChild, childPrice };
             boueeAdded = false;
 
-            document.getElementById("modalTitle").innerHTML = `Réserver à ${name}`;
+            document.getElementById("modalTitle").innerHTML = `Réserver ${name}`;
 
-            // Masquer toutes les options
             document.getElementById("quadOptions").style.display = "none";
             document.getElementById("parapenteOptions").style.display = "none";
             document.getElementById("jetskiOptions").style.display = "none";
             document.getElementById("bateauOptions").style.display = "none";
 
-            // Afficher les options selon l'activité
             if (id === "quad") {
                 document.getElementById("quadOptions").style.display = "block";
                 document.getElementById("quadSelect").value = "3000";
@@ -1148,26 +1027,21 @@
                 currentAct.pricePerAdult = 30000;
             } else if (id === "bateau") {
                 document.getElementById("bateauOptions").style.display = "block";
-                // Sélectionner la première option par défaut
                 const firstRadio = document.querySelector('input[name="bateauOption"]');
                 if (firstRadio) {
                     firstRadio.checked = true;
                     currentAct.pricePerAdult = parseInt(firstRadio.value);
                 }
+                toggleBoueeOption();
             }
 
-            // Affichage des notes
             const act = activitiesCatalog.find(a => a.id === id);
             const noteBox = document.getElementById("activityNote");
-            if (act && act.activityNote) {
-                let notes = act.activityNote;
-                if (!Array.isArray(notes)) notes = [notes];
-                noteBox.innerHTML = notes.map(note => `<div class="info-item"><span class="big-dot">            <i class="fas fa-circle" style="color: #dc2626; font-size: 0.7rem;"></i>
-</span> ${note}</div>`).join("");
-                noteBox.className = "info-box info-warning";
+            if (act && act.activityNote && act.activityNote.length > 0) {
+                noteBox.innerHTML = act.activityNote.map(note => `<div class="info-item"><i class="fas fa-circle" style="color:#dc2626; font-size:0.7rem; margin-top:0.3rem;"></i><span>${note}</span></div>`).join("");
+                noteBox.style.display = "block";
             } else {
-                noteBox.innerHTML = "";
-                noteBox.className = "info-box";
+                noteBox.style.display = "none";
             }
 
             const childGroup = document.getElementById("childGroup");
@@ -1183,16 +1057,25 @@
             document.getElementById("modalOverlay").classList.add("active");
         }
 
+        function toggleBoueeOption() {
+            const selectedRadio = document.querySelector('input[name="bateauOption"]:checked');
+            const boueeContainer = document.getElementById('boueeOptionContainer');
+            if (selectedRadio && selectedRadio.getAttribute('data-offre') === 'evasion' && selectedRadio.getAttribute('data-capacite') === '5') {
+                boueeContainer.style.display = 'block';
+            } else {
+                boueeContainer.style.display = 'none';
+                document.getElementById("boueeOption").checked = false;
+                boueeAdded = false;
+            }
+        }
+
         function updateTotal() {
             let children = parseInt(document.getElementById("children").value) || 0;
             let total = currentAct.pricePerAdult;
             
-            // Ajouter les enfants pour Quad
             if (currentAct.id === 'quad' && currentAct.hasChild) {
                 total += children * 1000;
             }
-            
-            // Ajouter la bou�e pour l'offre �vasion bateau
             if (currentAct.id === 'bateau' && boueeAdded) {
                 total += 5000;
             }
@@ -1202,7 +1085,7 @@
             document.getElementById("depositAmount").innerHTML = deposit.toLocaleString('fr-DZ') + " DA";
         }
 
-        // Écouteurs pour les options Quad
+        // Écouteurs
         document.getElementById("quadSelect")?.addEventListener('change', function() {
             if (currentAct.id === 'quad') {
                 currentAct.pricePerAdult = parseInt(this.value);
@@ -1225,7 +1108,6 @@
             }
         });
 
-        // Écouteurs pour les options Parapente
         document.getElementById("parapenteSelect")?.addEventListener('change', function() {
             if (currentAct.id === 'parapente') {
                 currentAct.pricePerAdult = parseInt(this.value);
@@ -1233,7 +1115,6 @@
             }
         });
 
-        // Écouteurs pour les options Jet Ski
         document.getElementById("jetskiSelect")?.addEventListener('change', function() {
             if (currentAct.id === 'jetski') {
                 currentAct.pricePerAdult = parseInt(this.value);
@@ -1241,17 +1122,11 @@
             }
         });
 
-        // �couteurs pour les options Bateau
         document.querySelectorAll('input[name="bateauOption"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 if (currentAct.id === 'bateau') {
                     currentAct.pricePerAdult = parseInt(this.value);
-                    // R�initialiser la bou�e si on change d'offre
-                    const offre = this.getAttribute('data-offre');
-                    if (offre !== 'evasion') {
-                        document.getElementById("boueeOption").checked = false;
-                        boueeAdded = false;
-                    }
+                    toggleBoueeOption();
                     updateTotal();
                 }
             });
@@ -1284,13 +1159,24 @@
             return parts.length >= 2 && parts[0].length > 0 && parts[1].length > 0;
         }
 
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = () => reject(new Error("Impossible de lire le fichier de preuve"));
-                reader.readAsDataURL(file);
-            });
+        async function compressImageForProof(file, maxWidth = 1200, quality = 0.75) {
+            const objectUrl = URL.createObjectURL(file);
+            try {
+                const img = await new Promise((resolve, reject) => {
+                    const el = new Image();
+                    el.onload = () => resolve(el);
+                    el.onerror = () => reject(new Error("Impossible de lire le fichier de preuve"));
+                    el.src = objectUrl;
+                });
+                const scale = Math.min(1, maxWidth / img.width);
+                const canvas = document.createElement("canvas");
+                canvas.width = Math.round(img.width * scale);
+                canvas.height = Math.round(img.height * scale);
+                canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                return canvas.toDataURL("image/jpeg", quality);
+            } finally {
+                URL.revokeObjectURL(objectUrl);
+            }
         }
 
         function updatePaymentProofVisibility() {
@@ -1303,62 +1189,29 @@
             const isProofRequired = paymentSelect.value === "CCP" || paymentSelect.value === "BaridiMob";
             proofGroup.style.display = isProofRequired ? "block" : "none";
             proofInput.required = isProofRequired;
-            if (bankDetails) {
-                bankDetails.style.display = "block";
-            }
-
-            if (!isProofRequired) {
-                proofInput.value = "";
-            }
+            if (bankDetails) bankDetails.style.display = "block";
+            if (!isProofRequired) proofInput.value = "";
         }
 
         async function sendReservation(payload) {
-    const API_URL = 'https://visitebejai.onrender.com/api/reservations';
-    console.log("Envoi à l'API:", payload);
-
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        // ⚠️ sécuriser la lecture JSON
-        let data;
-        try {
-            data = await response.json();
-        } catch (e) {
-            data = {};
+            const API_URL = `${API_BASE}/api/reservations`;
+            try {
+                const response = await fetchWithTimeout(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                let data;
+                try { data = await response.json(); } catch (e) { data = {}; }
+                if (!response.ok) throw new Error(data.message || data.error || `Erreur ${response.status}`);
+                return { success: true, data: data, apiResponse: true };
+            } catch (error) {
+                if (error.name === 'AbortError') throw new Error("Le serveur met trop de temps à répondre.");
+                throw error;
+            }
         }
 
-        if (!response.ok) {
-            throw new Error(data.message || data.error || `Erreur ${response.status}`);
-        }
-
-        return { success: true, data: data, apiResponse: true };
-
-    } catch (error) {
-        console.error("Erreur API:", error);
-
-        const localReservations = JSON.parse(localStorage.getItem('bejaia_reservations') || '[]');
-
-        const newReservation = {
-            ...payload,
-            id: Date.now(),
-            created_at: new Date().toISOString(),
-            saved_locally: true
-        };
-
-        localReservations.push(newReservation);
-        localStorage.setItem('bejaia_reservations', JSON.stringify(localReservations));
-
-        return { success: true, local: true, data: newReservation };
-    }
-}
-  function closeModal() {
+        function closeModal() {
             document.getElementById("modalOverlay").classList.remove("active");
         }
 
@@ -1389,7 +1242,7 @@
             const paymentProofFile = document.getElementById("paymentProof")?.files?.[0] || null;
 
             if (!validateFullName(fullName)) {
-                showToast(" Veuillez entrer votre NOM et PRENOM complets", "warning");
+                showToast("Veuillez entrer votre NOM et PRENOM complets", "warning");
                 return;
             }
             if (!email || !phone || !date) {
@@ -1397,59 +1250,33 @@
                 return;
             }
 
-            // V�rifier si la date est bloqu�e
-            const API_URL = 'https://visitebejai.onrender.com';
-
-try {
-    const blockedResponse = await fetch(`${API_URL}/availability/${encodeURIComponent(currentAct.name)}`);
-    if (blockedResponse.ok) {
-        const blockedDates = await blockedResponse.json();
-        if (blockedDates.includes(date)) {
-            showToast(`❌ La date ${date} est bloquée pour cette activité. Veuillez choisir une autre date.`, "error");
-            return;
-        }
-    }
-}catch (error) {
-                console.warn("Impossible de v�rifier les dates bloqu�es:", error);
-                // Continue sans bloquer si l'API n'est pas disponible
-            }
-
             const proofRequired = payment === "CCP" || payment === "BaridiMob";
             if (proofRequired && !paymentProofFile) {
-                showToast("Ajoutez une capture/scanner comme preuve de paiement", "warning");
+                showToast("Ajoutez une capture comme preuve de paiement", "warning");
                 return;
             }
 
             if (paymentProofFile) {
                 const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
                 if (!allowedTypes.includes(paymentProofFile.type)) {
-                    showToast("Format image non supporte (JPG, PNG, WEBP uniquement)", "error");
+                    showToast("Format non supporté (JPG, PNG, WEBP uniquement)", "error");
                     return;
                 }
-
-                const maxSizeInBytes = 5 * 1024 * 1024;
-                if (paymentProofFile.size > maxSizeInBytes) {
+                if (paymentProofFile.size > 5 * 1024 * 1024) {
                     showToast("Image trop volumineuse (max 5 Mo)", "error");
                     return;
                 }
             }
 
             let total = currentAct.pricePerAdult;
-            if (currentAct.id === 'quad' && currentAct.hasChild) {
-                total += children * 1000;
-            }
-            if (currentAct.id === 'bateau' && boueeAdded) {
-                total += 5000;
-            }
+            if (currentAct.id === 'quad' && currentAct.hasChild) total += children * 1000;
+            if (currentAct.id === 'bateau' && boueeAdded) total += 5000;
             
             const deposit = Math.round(total * 0.3);
-            
             const nameParts = fullName.split(/\s+/);
             const nom = nameParts[0];
             const prenom = nameParts.slice(1).join(" ");
-            const paymentProofBase64 = paymentProofFile ? await fileToBase64(paymentProofFile) : null;
 
-            // R�cup�rer l'option s�lectionn�e pour le bateau
             let selectedOption = "";
             if (currentAct.id === 'bateau') {
                 const selectedRadio = document.querySelector('input[name="bateauOption"]:checked');
@@ -1462,10 +1289,9 @@ try {
             }
 
             if (payment === "PayPal") {
-                const message = `??? *NOUVELLE RESERVATION PAYPAL - VISIT BEJAIA* ???\n\n?? *Client:* ${nom} ${prenom}\n?? *Email:* ${email}\n?? *Telephone:* ${phone}\n\n?? *Activite:* ${currentAct.name}\n${selectedOption ? `?? *Option:* ${selectedOption}\n` : ''}?? *Date souhaitee:* ${date}\n?? *Personnes:* ${children > 0 ? children + ' enfant(s)' : '1 personne'}\n\n?? *Montant total:* ${total.toLocaleString('fr-DZ')} DA\n?? *Acompte 30%:* ${deposit.toLocaleString('fr-DZ')} DA\n\n?? *Mode de paiement:* PAYPAL\n\n?? *Demandes speciales:* ${special || 'Aucune'}\n\n? *Reservation faite le:* ${new Date().toLocaleString('fr-FR')}`;
+                const message = `✨ NOUVELLE RESERVATION PAYPAL - VISIT BEJAIA ✨\n\n👤 Client: ${nom} ${prenom}\n📧 Email: ${email}\n📞 Telephone: ${phone}\n\n🎯 Activite: ${currentAct.name}\n${selectedOption ? `📌 Option: ${selectedOption}\n` : ''}📅 Date: ${date}\n👥 Personnes: ${children > 0 ? children + ' enfant(s)' : '1 personne'}\n\n💰 Montant total: ${total.toLocaleString('fr-DZ')} DA\n💳 Acompte 30%: ${deposit.toLocaleString('fr-DZ')} DA\n\n💵 Mode de paiement: PAYPAL\n\n📝 Demandes speciales: ${special || 'Aucune'}\n\n📅 Reservation faite le: ${new Date().toLocaleString('fr-FR')}`;
                 const encodedMessage = encodeURIComponent(message);
-                const whatsappNumber = "33619501708";
-                window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                window.location.href = `https://wa.me/33619501708?text=${encodedMessage}`;
                 closeModal();
                 document.getElementById("reservationForm").reset();
                 document.getElementById("children").value = 0;
@@ -1474,6 +1300,17 @@ try {
             }
 
             setLoading(true);
+            let paymentProofBase64 = null;
+            if (paymentProofFile) {
+                try {
+                    paymentProofBase64 = await compressImageForProof(paymentProofFile);
+                } catch (error) {
+                    setLoading(false);
+                    showToast(error.message || "Impossible de traiter l'image", "error");
+                    return;
+                }
+            }
+
             const payload = {
                 nom, prenom, email, telephone: phone, date_depart: date,
                 nb_personnes: 1 + children, nom_item: currentAct.name + (selectedOption ? ` (${selectedOption})` : ''), type_reservation: "activite",
@@ -1487,8 +1324,7 @@ try {
                 const result = await sendReservation(payload);
                 setLoading(false);
                 if (result.success) {
-                    const message = result.local ? " Reservation sauvegardee localement" : " Reservation confirmee !";
-                    showToast(`${message} - Total: ${total.toLocaleString('fr-DZ')} DA`, "success");
+                    showToast(`✅ Réservation confirmée ! Total: ${total.toLocaleString('fr-DZ')} DA`, "success");
                     setTimeout(() => {
                         closeModal();
                         document.getElementById("reservationForm").reset();
@@ -1497,76 +1333,65 @@ try {
                         updateTotal();
                     }, 2000);
                 } else {
-                    showToast(" Erreur lors de la reservation", "error");
+                    showToast("❌ Erreur lors de la reservation", "error");
                 }
             } catch (error) {
                 console.error("Erreur:", error);
                 setLoading(false);
-                showToast("? Erreur: " + error.message, "error");
+                showToast("❌ Erreur: " + error.message, "error");
             }
         });
-//proof
-// ===== GESTION DE LA PREUVE DE PAIEMENT DEPUIS LA GALERIE =====
-document.addEventListener('DOMContentLoaded', function() {
-    const uploadBtn = document.getElementById('uploadBtn');
-    const proofInput = document.getElementById('paymentProof');
-    const proofPreviewContainer = document.getElementById('proofPreviewContainer');
-    const proofPreviewImg = document.getElementById('proofPreviewImg');
-    const clearProofBtn = document.getElementById('clearProofBtn');
-    const proofError = document.getElementById('proofError');
-    
-    // Bouton pour ouvrir la galerie
-    if (uploadBtn) {
-        uploadBtn.addEventListener('click', function() {
-            proofInput.click();
-        });
-    }
-    
-    // Quand un fichier est sélectionné
-    if (proofInput) {
-        proofInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                // Vérifier le type
-                const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
-                if (!allowedTypes.includes(file.type)) {
-                    showToast('Format non supporté. Utilisez JPG, PNG ou WEBP', 'error');
+
+        // Gestion preuve de paiement
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadBtn = document.getElementById('uploadBtn');
+            const proofInput = document.getElementById('paymentProof');
+            const proofPreviewContainer = document.getElementById('proofPreviewContainer');
+            const proofPreviewImg = document.getElementById('proofPreviewImg');
+            const clearProofBtn = document.getElementById('clearProofBtn');
+            const proofError = document.getElementById('proofError');
+            
+            if (uploadBtn) {
+                uploadBtn.addEventListener('click', () => proofInput.click());
+            }
+            
+            if (proofInput) {
+                proofInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
+                        if (!allowedTypes.includes(file.type)) {
+                            showToast('Format non supporté', 'error');
+                            proofInput.value = '';
+                            proofPreviewContainer.style.display = 'none';
+                            return;
+                        }
+                        if (file.size > 5 * 1024 * 1024) {
+                            showToast('Image trop volumineuse (max 5 Mo)', 'error');
+                            proofInput.value = '';
+                            proofPreviewContainer.style.display = 'none';
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            proofPreviewImg.src = e.target.result;
+                            proofPreviewContainer.style.display = 'block';
+                            if (proofError) proofError.classList.remove('show');
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            if (clearProofBtn) {
+                clearProofBtn.addEventListener('click', function() {
                     proofInput.value = '';
                     proofPreviewContainer.style.display = 'none';
-                    if (proofError) proofError.classList.remove('show');
-                    return;
-                }
-                
-                // Vérifier la taille (max 5MB)
-                if (file.size > 5 * 1024 * 1024) {
-                    showToast('Image trop volumineuse (max 5 Mo)', 'error');
-                    proofInput.value = '';
-                    proofPreviewContainer.style.display = 'none';
-                    if (proofError) proofError.classList.remove('show');
-                    return;
-                }
-                
-                // Afficher l'aperçu
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    proofPreviewImg.src = e.target.result;
-                    proofPreviewContainer.style.display = 'block';
-                    if (proofError) proofError.classList.remove('show');
-                };
-                reader.readAsDataURL(file);
+                    proofPreviewImg.src = '';
+                });
             }
         });
-    }
-    
-    // Bouton pour supprimer la preuve
-    if (clearProofBtn) {
-        clearProofBtn.addEventListener('click', function() {
-            proofInput.value = '';
-            proofPreviewContainer.style.display = 'none';
-            proofPreviewImg.src = '';
-        });
-    }
-});
+
         document.getElementById("closeModalBtn").addEventListener("click", closeModal);
         document.getElementById("modalOverlay").addEventListener("click", (e) => { 
             if (e.target === document.getElementById("modalOverlay")) closeModal(); 
@@ -1592,4 +1417,3 @@ document.addEventListener('DOMContentLoaded', function() {
     </script>
 </body>
 </html>
-
