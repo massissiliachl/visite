@@ -1,154 +1,72 @@
-const { ReservationAdmin } = require("../models");
-
-function formatReservation(row) {
-  const data = row?.toJSON ? row.toJSON() : { ...row };
-  return {
-    ...data,
-    totalAPayer: parseFloat(data.totalAPayer) || 0,
-    versement: parseFloat(data.versement) || 0,
-    resteAPayer: parseFloat(data.resteAPayer) || 0,
-    note: data.note?.trim() || "Aucune note"
+// Modifier la fonction normalizeReservation pour mieux gérer les données
+function normalizeReservation(raw) {
+  if (!raw) return raw;
+  
+  console.log("🔍 Normalisation de la réservation:", raw.id);
+  
+  // Récupérer les valeurs avec des valeurs par défaut
+  const total = raw.totalAPayer !== undefined && raw.totalAPayer !== null 
+      ? parseFloat(raw.totalAPayer) 
+      : 0;
+      
+  const versement = raw.versement !== undefined && raw.versement !== null 
+      ? parseFloat(raw.versement) 
+      : 0;
+      
+  const reste = raw.resteAPayer !== undefined && raw.resteAPayer !== null 
+      ? parseFloat(raw.resteAPayer) 
+      : Math.max(0, total - versement);
+  
+  const note = raw.note && String(raw.note).trim() 
+      ? raw.note.trim() 
+      : "Aucune note";
+  
+  // Créer un objet normalisé avec toutes les valeurs
+  const normalized = {
+      ...raw,
+      totalAPayer: total,
+      versement: versement,
+      resteAPayer: reste,
+      note: note,
+      // S'assurer que les valeurs sont des nombres pour l'affichage
+      totalAPayerDisplay: `${total} DA`,
+      versementDisplay: `${versement} DA`,
+      resteAPayerDisplay: `${reste} DA`
   };
+  
+  console.log("✅ Réservation normalisée:", {
+      id: normalized.id,
+      nom: normalized.nom,
+      totalAPayer: normalized.totalAPayer,
+      versement: normalized.versement,
+      resteAPayer: normalized.resteAPayer,
+      note: normalized.note
+  });
+  
+  return normalized;
 }
 
-// ➕ Ajouter réservation
-exports.createReservation = async (req, res) => {
+// Modifier la fonction loadReservations pour mieux gérer les erreurs
+async function loadReservations() {
   try {
-    console.log("📦 BODY REÇU:", req.body);
-
-    // Calcul automatique du reste à payer
-    const totalAPayer = Number.isFinite(parseFloat(req.body.totalAPayer))
-      ? parseFloat(req.body.totalAPayer)
-      : 0;
-    const versement = Number.isFinite(parseFloat(req.body.versement))
-      ? parseFloat(req.body.versement)
-      : 0;
-    const resteAPayer = Math.max(0, totalAPayer - versement);
-
-    if (totalAPayer <= 0) {
-      return res.status(400).json({
-        error: "Le total à payer doit être supérieur à 0 DA"
-      });
-    }
-
-    if (versement > totalAPayer) {
-      return res.status(400).json({
-        error: "Le versement ne peut pas dépasser le total à payer"
-      });
-    }
-
-    const reservation = await ReservationAdmin.create({
-      nom: req.body.nom,
-      prenom: req.body.prenom,
-      tel: req.body.tel || "",
-      activite: req.body.activite,
-      heure: req.body.heure || "--:--",
-      date: req.body.date,
-      personnes: req.body.personnes || 1,
-      
-      // 🚤 BATEAU
-      slot: req.body.slot || null,
-      subslot: req.body.subslot || null,
-      bateau: req.body.bateau || null,
-      duree: req.body.duree || null,
-      
-      // 💰 PAIEMENT
-      totalAPayer: totalAPayer,
-      versement: versement,
-      resteAPayer: resteAPayer,
-      
-      // 📝 NOTE
-      note: req.body.note?.trim() || "Aucune note"
-    });
-
-    res.status(201).json(formatReservation(reservation));
-
-  } catch (err) {
-    console.error("❌ ERREUR CREATE:", err);
-    res.status(500).json({
-      error: err.message
-    });
-  }
-};
-
-// 📥 Récupérer toutes les réservations
-exports.getAllReservations = async (req, res) => {
-  try {
-    const reservations = await ReservationAdmin.findAll({
-      order: [['createdAt', 'DESC']]
-    });
-    console.log(`✅ ${reservations.length} réservations chargées`);
-    res.json(reservations.map(formatReservation));
-  } catch (err) {
-    console.error("❌ Erreur chargement:", err);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-// ❌ Supprimer une réservation
-exports.deleteReservation = async (req, res) => {
-  try {
-    const deleted = await ReservationAdmin.destroy({
-      where: { id: req.params.id }
-    });
-    
-    if (deleted) {
-      console.log(`✅ Réservation ${req.params.id} supprimée`);
-      res.json({ message: "Réservation supprimée" });
-    } else {
-      res.status(404).json({ error: "Réservation non trouvée" });
-    }
-  } catch (err) {
-    console.error("❌ Erreur suppression:", err);
-    res.status(500).json({ error: err.message });
-  }
-};
-
-// ✏️ Modifier une réservation
-exports.updateReservation = async (req, res) => {
-  try {
-    const reservation = await ReservationAdmin.findByPk(req.params.id);
-    if (!reservation) {
-      return res.status(404).json({ error: "Réservation non trouvée" });
-    }
-    
-    // Si totalAPayer ou versement sont modifiés, recalculer automatiquement le reste
-    const updateData = { ...req.body };
-    
-    if (req.body.totalAPayer !== undefined || req.body.versement !== undefined) {
-      const parsedTotal = parseFloat(req.body.totalAPayer);
-      const parsedVersement = parseFloat(req.body.versement);
-
-      const total = Number.isFinite(parsedTotal)
-        ? parsedTotal
-        : (parseFloat(reservation.totalAPayer) || 0);
-
-      const versement = Number.isFinite(parsedVersement)
-        ? parsedVersement
-        : (parseFloat(reservation.versement) || 0);
-
-      updateData.resteAPayer = Math.max(0, total - versement);
-
-      if (total <= 0) {
-        return res.status(400).json({
-          error: "Le total à payer doit être supérieur à 0 DA"
-        });
+      console.log("🔄 Chargement des réservations...");
+      let res = await fetch(API_BASE_URL);
+      if(res.ok) {
+          const data = await res.json();
+          console.log(`✅ ${data.length} réservations reçues du serveur`);
+          allReservationsData = data.map(normalizeReservation);
+      } else {
+          console.warn("⚠️ Erreur serveur, chargement local");
+          allReservationsData = (JSON.parse(localStorage.getItem("reservationsData")) || []).map(normalizeReservation);
       }
-
-      if (versement > total) {
-        return res.status(400).json({
-          error: "Le versement ne peut pas dépasser le total à payer"
-        });
-      }
-    }
-    
-    await reservation.update(updateData);
-    console.log(`✅ Réservation ${req.params.id} mise à jour`);
-    res.json(formatReservation(reservation));
-  } catch (err) {
-    console.error("❌ Erreur mise à jour:", err);
-    res.status(500).json({ error: err.message });
+  } catch(e) {
+      console.warn("⚠️ Erreur réseau, chargement local:", e);
+      allReservationsData = (JSON.parse(localStorage.getItem("reservationsData")) || []).map(normalizeReservation);
   }
-};
-
-console.log("MODEL:", ReservationAdmin);
+  
+  console.log(`📊 ${allReservationsData.length} réservations chargées au total`);
+  reservationsData = [...allReservationsData];
+  renderReservationsTable();
+  renderBoatTable();
+  buildCalendar();
+}
