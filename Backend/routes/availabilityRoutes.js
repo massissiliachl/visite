@@ -1,16 +1,14 @@
-// routes/availabilityRoutes.js
 const express = require('express');
 const router = express.Router();
 const blockedController = require('../controllers/blockedController');
 
-// Récupérer toutes les dates bloquées pour une activité
-router.get('/:nom_item', blockedController.getBlockedDates);
-
-// Bloquer une date
+// Routes pour les activités
+router.get('/activity/:nom_item', blockedController.getBlockedDates);
 router.post('/block', blockedController.blockDate);
+router.delete('/activity/block/:nom_item/:date', blockedController.unblockDate);
 
-// Débloquer une date
-router.delete('/block/:nom_item/:date', blockedController.unblockDate);
+// Routes pour les hébergements
+router.get('/property/:propertyId', blockedController.getBlockedDatesByProperty);
+router.delete('/property/block/:propertyId/:date', blockedController.unblockPropertyDate);
 
 module.exports = router;
-

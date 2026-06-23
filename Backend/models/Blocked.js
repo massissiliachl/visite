@@ -13,11 +13,20 @@ const Blocked = sequelize.define('Blocked', {
   reason: { 
     type: DataTypes.STRING, 
     defaultValue: 'bloqué par admin' 
+  },
+  // NOUVEAUX CHAMPS
+  item_type: { 
+    type: DataTypes.ENUM('activity', 'property'), 
+    allowNull: false,
+    defaultValue: 'activity'
+  },
+  item_id: { 
+    type: DataTypes.INTEGER, 
+    allowNull: true
   }
 }, {
   tableName: 'blocked',
   timestamps: true
 });
-
 module.exports = Blocked;
 
