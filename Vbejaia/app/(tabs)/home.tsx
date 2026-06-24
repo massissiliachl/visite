@@ -21,10 +21,17 @@ import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
+import {
+  BOAT_PRICE_BY_MINUTES,
+  buildApiPayload,
+  mergeSavedReservation,
+  normalizeReservation,
+} from '../../utils/reservationHelpers';
+import { API_BASE_URL } from '../../config/api';
 
 const { width, height } = Dimensions.get('window');
 
-const API_BASE_URL = 'https://visitebejai.onrender.com/api/reservations-admin';
+const API_USERS_URL = API_BASE_URL.replace('/reservations-admin', '/users');
 
 export default function App() {
   // États
@@ -58,6 +65,18 @@ export default function App() {
   const [boatNumber, setBoatNumber] = useState('1');
   const [boatDate, setBoatDate] = useState(new Date().toISOString().split('T')[0]);
   const [showBoatDatePicker, setShowBoatDatePicker] = useState(false);
+
+  // Paiement client
+  const [totalAPayer, setTotalAPayer] = useState('');
+  const [versement, setVersement] = useState('');
+  const [resteAPayer, setResteAPayer] = useState('0');
+  const [note, setNote] = useState('');
+
+  // Paiement bateau
+  const [boatTotalAPayer, setBoatTotalAPayer] = useState('');
+  const [boatVersement, setBoatVersement] = useState('');
+  const [boatResteAPayer, setBoatResteAPayer] = useState('0');
+  const [boatNote, setBoatNote] = useState('');
   
   // États des créneaux
   const [timeSlots, setTimeSlots] = useState(['09h-11h', '11h-13h', '13h-15h', '15h-17h', '17h-19h']);
@@ -81,6 +100,7 @@ export default function App() {
 
   // Chargement initial
   useEffect(() => {
+    console.log('📡 API réservations:', API_BASE_URL);
     loadSlots();
     loadReservations();
     animateEntrance();
@@ -91,6 +111,15 @@ export default function App() {
       generateSubSlots(boatSlot);
     }
   }, [boatSlot]);
+
+  useEffect(() => {
+    const price = BOAT_PRICE_BY_MINUTES[boatCircuit];
+    if (price && (!boatTotalAPayer || parseFloat(boatTotalAPayer) <= 0)) {
+      setBoatTotalAPayer(String(price));
+      const vers = parseFloat(boatVersement) || 0;
+      setBoatResteAPayer(String(Math.max(0, price - vers)));
+    }
+  }, [boatCircuit]);
 
   const animateEntrance = () => {
     Animated.parallel([
@@ -141,23 +170,26 @@ export default function App() {
       const response = await fetch(API_BASE_URL);
       if (response.ok) {
         const data = await response.json();
-        setReservations(data);
-        setFilteredReservations(data);
-        setBoatReservations(data.filter(r => r.activite === 'Bateau'));
+        const normalized = data.map(normalizeReservation);
+        setReservations(normalized);
+        setFilteredReservations(normalized);
+        setBoatReservations(normalized.filter((r) => r.activite === 'Bateau'));
       } else {
         const localData = await AsyncStorage.getItem('reservationsData');
         const data = localData ? JSON.parse(localData) : [];
-        setReservations(data);
-        setFilteredReservations(data);
-        setBoatReservations(data.filter(r => r.activite === 'Bateau'));
+        const normalized = data.map(normalizeReservation);
+        setReservations(normalized);
+        setFilteredReservations(normalized);
+        setBoatReservations(normalized.filter((r) => r.activite === 'Bateau'));
       }
     } catch (error) {
       console.error('Erreur chargement:', error);
       const localData = await AsyncStorage.getItem('reservationsData');
       const data = localData ? JSON.parse(localData) : [];
-      setReservations(data);
-      setFilteredReservations(data);
-      setBoatReservations(data.filter(r => r.activite === 'Bateau'));
+      const normalized = data.map(normalizeReservation);
+      setReservations(normalized);
+      setFilteredReservations(normalized);
+      setBoatReservations(normalized.filter((r) => r.activite === 'Bateau'));
     } finally {
       setLoading(false);
     }
@@ -189,6 +221,18 @@ export default function App() {
     setSearchDate('');
     setSearchName('');
     setFilteredReservations(reservations);
+  };
+
+  const calculerReste = (totalStr = totalAPayer, versStr = versement) => {
+    const total = parseFloat(totalStr) || 0;
+    const vers = parseFloat(versStr) || 0;
+    setResteAPayer(String(Math.max(0, total - vers)));
+  };
+
+  const calculerResteBateau = (totalStr = boatTotalAPayer, versStr = boatVersement) => {
+    const total = parseFloat(totalStr) || 0;
+    const vers = parseFloat(versStr) || 0;
+    setBoatResteAPayer(String(Math.max(0, total - vers)));
   };
 
   const generateSubSlots = (slot) => {
@@ -235,13 +279,29 @@ export default function App() {
       return;
     }
 
+    const total = parseFloat(totalAPayer) || 0;
+    if (total <= 0) {
+      Alert.alert('Erreur', 'Veuillez saisir le total à payer (supérieur à 0 DA)');
+      return;
+    }
+    const vers = parseFloat(versement) || 0;
+    if (vers > total) {
+      Alert.alert('Erreur', 'Le versement ne peut pas dépasser le total');
+      return;
+    }
+
     const newReservation = {
-      nom, prenom, tel, activite,
+      nom,
+      prenom,
+      tel,
+      activite,
       heure: heure || '--:--',
       date: date || new Date().toISOString().split('T')[0],
       personnes: parseInt(personnes) || 1,
-      paymentStatus: 'non_paye',
-      deposit: 0
+      totalAPayer: total,
+      versement: vers,
+      resteAPayer: Math.max(0, total - vers),
+      note: note.trim() || 'Aucune note',
     };
 
     try {
@@ -252,7 +312,7 @@ export default function App() {
       });
       
       if (response.ok) {
-        const saved = await response.json();
+        const saved = mergeSavedReservation(newReservation, await response.json());
         const updatedReservations = [...reservations, saved];
         setReservations(updatedReservations);
         setFilteredReservations(updatedReservations);
@@ -260,19 +320,14 @@ export default function App() {
         if (activite === 'Bateau') {
           setBoatReservations(updatedReservations.filter(r => r.activite === 'Bateau'));
         }
-        Alert.alert('Succès', 'Réservation ajoutée avec succès !');
+        Alert.alert('Succès', `Réservation ajoutée\nTotal: ${saved.totalAPayer} DA\nVersé: ${saved.versement} DA`);
         resetClientForm();
       } else {
-        throw new Error('Erreur serveur');
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || 'Erreur serveur');
       }
     } catch (error) {
-      const newResWithId = { ...newReservation, id: Date.now() };
-      const updatedReservations = [...reservations, newResWithId];
-      setReservations(updatedReservations);
-      setFilteredReservations(updatedReservations);
-      saveReservationsToLocal(updatedReservations);
-      Alert.alert('Info', 'Réservation sauvegardée localement (hors ligne)');
-      resetClientForm();
+      Alert.alert('Erreur', error.message || 'Impossible d\'enregistrer la réservation');
     }
   };
 
@@ -286,17 +341,29 @@ export default function App() {
       return;
     }
 
+    const total = parseFloat(boatTotalAPayer) || 0;
+    if (total <= 0) {
+      Alert.alert('Erreur', 'Veuillez saisir le total à payer (supérieur à 0 DA)');
+      return;
+    }
+    const vers = parseFloat(boatVersement) || 0;
+    if (vers > total) {
+      Alert.alert('Erreur', 'Le versement ne peut pas dépasser le total');
+      return;
+    }
+
     const subSlots = getSubSlots();
     const selectedSubSlot = subSlots[parseInt(boatSubSlot)] || boatSubSlot;
 
-    // Vérifier si le créneau est disponible
     if (checkSlotAvailability(boatDate, boatSlot, selectedSubSlot, boatNumber)) {
       Alert.alert('Erreur', 'Ce créneau est déjà réservé pour cette date et ce bateau !');
       return;
     }
 
     const reservationDB = {
-      nom: boatNom, prenom: boatPrenom, tel: boatTel,
+      nom: boatNom,
+      prenom: boatPrenom,
+      tel: boatTel,
       activite: 'Bateau',
       heure: selectedSubSlot?.split('-')[0] || '',
       date: boatDate,
@@ -305,8 +372,10 @@ export default function App() {
       subslot: selectedSubSlot,
       bateau: `Bateau ${boatNumber}`,
       duree: boatCircuit + ' min',
-      paymentStatus: 'non_paye',
-      deposit: 0
+      totalAPayer: total,
+      versement: vers,
+      resteAPayer: Math.max(0, total - vers),
+      note: boatNote.trim() || 'Aucune note',
     };
 
     try {
@@ -317,19 +386,23 @@ export default function App() {
       });
       
       if (response.ok) {
-        const saved = await response.json();
+        const saved = mergeSavedReservation(reservationDB, await response.json());
         const updatedReservations = [...reservations, saved];
         setReservations(updatedReservations);
         setFilteredReservations(updatedReservations);
         setBoatReservations(updatedReservations.filter(r => r.activite === 'Bateau'));
         saveReservationsToLocal(updatedReservations);
-        Alert.alert('Succès', `Réservation confirmée !\nBateau ${boatNumber} - ${boatSlot} : ${selectedSubSlot}\nDate: ${boatDate}`);
+        Alert.alert(
+          'Succès',
+          `Réservation confirmée !\nBateau ${boatNumber} - ${boatSlot} : ${selectedSubSlot}\nTotal: ${saved.totalAPayer} DA\nVersé: ${saved.versement} DA\nReste: ${saved.resteAPayer} DA`
+        );
         resetBoatForm();
       } else {
-        throw new Error('Erreur serveur');
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.message || 'Erreur serveur');
       }
     } catch (error) {
-      Alert.alert('Erreur', 'Impossible de sauvegarder la réservation');
+      Alert.alert('Erreur', error.message || 'Impossible de sauvegarder la réservation');
     }
   };
 
@@ -365,28 +438,63 @@ export default function App() {
     ]);
   };
 
-  const updatePaymentStatus = (id, status, deposit = 0) => {
-    const updatedReservations = reservations.map(r => {
-      if (r.id === id) {
-        return { ...r, paymentStatus: status, deposit: deposit };
-      }
-      return r;
+  const updatePaymentStatus = async (id, status, amount = 0) => {
+    const res = reservations.find((r) => r.id === id);
+    if (!res) return;
+
+    const total = parseFloat(String(res.totalAPayer)) || 0;
+    let vers = parseFloat(String(res.versement)) || 0;
+    if (status === 'verse') vers = Math.min(parseFloat(String(amount)) || 0, total);
+    else if (status === 'paye') vers = total;
+    else vers = 0;
+
+    const updated = normalizeReservation({
+      ...res,
+      versement: vers,
+      resteAPayer: Math.max(0, total - vers),
     });
+
+    const updatedReservations = reservations.map((r) => (r.id === id ? updated : r));
     setReservations(updatedReservations);
     setFilteredReservations(updatedReservations);
+    setBoatReservations(updatedReservations.filter((r) => r.activite === 'Bateau'));
     saveReservationsToLocal(updatedReservations);
     if (selectedReservation && selectedReservation.id === id) {
-      setSelectedReservation({ ...selectedReservation, paymentStatus: status, deposit: deposit });
+      setSelectedReservation(updated);
+    }
+
+    try {
+      await fetch(`${API_BASE_URL}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildApiPayload(updated)),
+      });
+    } catch (e) {
+      console.error('Erreur mise à jour paiement:', e);
     }
   };
 
   const resetClientForm = () => {
-    setNom(''); setPrenom(''); setTel(''); setPersonnes('1'); setHeure('');
+    setNom('');
+    setPrenom('');
+    setTel('');
+    setPersonnes('1');
+    setHeure('');
+    setTotalAPayer('');
+    setVersement('');
+    setResteAPayer('0');
+    setNote('');
     setModalVisible(false);
   };
 
   const resetBoatForm = () => {
-    setBoatNom(''); setBoatPrenom(''); setBoatTel('');
+    setBoatNom('');
+    setBoatPrenom('');
+    setBoatTel('');
+    setBoatTotalAPayer('');
+    setBoatVersement('');
+    setBoatResteAPayer('0');
+    setBoatNote('');
     setModalVisible(false);
   };
 
@@ -591,6 +699,21 @@ export default function App() {
                 <View style={styles.detailSection}>
                   <Text style={styles.detailSectionTitle}>💰 Paiement</Text>
                   <View style={styles.detailRow}>
+                    <Ionicons name="cash-outline" size={20} color="#0077b6" />
+                    <Text style={styles.detailLabel}>Total:</Text>
+                    <Text style={styles.detailValue}>{selectedReservation.totalAPayer || 0} DA</Text>
+                  </View>
+                  <View style={styles.detailRow}>
+                    <Ionicons name="card-outline" size={20} color="#0077b6" />
+                    <Text style={styles.detailLabel}>Versé:</Text>
+                    <Text style={styles.detailValue}>{selectedReservation.versement || 0} DA</Text>
+                  </View>
+                  <View style={styles.detailRow}>
+                    <Ionicons name="trending-down-outline" size={20} color="#0077b6" />
+                    <Text style={styles.detailLabel}>Reste:</Text>
+                    <Text style={styles.detailValue}>{selectedReservation.resteAPayer || 0} DA</Text>
+                  </View>
+                  <View style={styles.detailRow}>
                     <Ionicons name="card" size={20} color="#0077b6" />
                     <Text style={styles.detailLabel}>Statut:</Text>
                     <View style={[styles.paymentBadge, { backgroundColor: getPaymentStatusText(selectedReservation.paymentStatus || 'non_paye').color }]}>
@@ -598,13 +721,6 @@ export default function App() {
                       <Text style={styles.paymentBadgeText}>{getPaymentStatusText(selectedReservation.paymentStatus || 'non_paye').text}</Text>
                     </View>
                   </View>
-                  {selectedReservation.deposit > 0 && (
-                    <View style={styles.detailRow}>
-                      <Ionicons name="cash" size={20} color="#0077b6" />
-                      <Text style={styles.detailLabel}>Acompte versé:</Text>
-                      <Text style={styles.detailValue}>{selectedReservation.deposit} DA</Text>
-                    </View>
-                  )}
                   
                   <View style={styles.paymentButtons}>
                     <TouchableOpacity 
@@ -644,6 +760,15 @@ export default function App() {
                     >
                       <Text style={styles.paymentBtnText}>✅ Payé</Text>
                     </TouchableOpacity>
+                  </View>
+                </View>
+
+                <View style={styles.detailSection}>
+                  <Text style={styles.detailSectionTitle}>📝 Note</Text>
+                  <View style={styles.detailRow}>
+                    <Ionicons name="document-text-outline" size={20} color="#0077b6" />
+                    <Text style={styles.detailLabel}>Remarque:</Text>
+                    <Text style={styles.detailValue}>{selectedReservation.note || 'Aucune note'}</Text>
                   </View>
                 </View>
 
@@ -710,6 +835,12 @@ export default function App() {
                                   <Text style={styles.boatTodayTime}>⏰ {r.subslot || r.heure}</Text>
                                   <Text style={styles.boatTodayName}>👤 {r.nom} {r.prenom}</Text>
                                   <Text style={styles.boatTodayPhone}>📞 {r.tel}</Text>
+                                  <Text style={styles.boatTodayPayment}>💰 Total: {r.totalAPayer || 0} DA</Text>
+                                  <Text style={styles.boatTodayPayment}>💳 Versé: {r.versement || 0} DA</Text>
+                                  <Text style={styles.boatTodayPayment}>📊 Reste: {r.resteAPayer || 0} DA</Text>
+                                  {r.note && r.note !== 'Aucune note' ? (
+                                    <Text style={styles.boatTodayPayment}>📝 {r.note}</Text>
+                                  ) : null}
                                 </TouchableOpacity>
                               ))}
                             </View>
@@ -888,6 +1019,16 @@ export default function App() {
                         <Text style={styles.paymentBadgeSmallText}>{payment.text}</Text>
                       </View>
                     </View>
+                    <View style={styles.reservationRow}>
+                      <Ionicons name="cash-outline" size={16} color="#666" />
+                      <Text style={styles.reservationValue}>Total: {r.totalAPayer || 0} DA · Versé: {r.versement || 0} DA · Reste: {r.resteAPayer || 0} DA</Text>
+                    </View>
+                    {r.note && r.note !== 'Aucune note' ? (
+                      <View style={styles.reservationRow}>
+                        <Ionicons name="document-text-outline" size={16} color="#666" />
+                        <Text style={styles.reservationValue}>{r.note}</Text>
+                      </View>
+                    ) : null}
                   </View>
                 </LinearGradient>
               </View>
@@ -984,6 +1125,57 @@ export default function App() {
                 </TouchableOpacity>
               ))}
             </View>
+          </View>
+
+          <View style={styles.paymentContainer}>
+            <Text style={styles.paymentTitle}>💰 Paiement</Text>
+            <View style={styles.paymentRow}>
+              <View style={styles.paymentField}>
+                <Text style={styles.paymentLabel}>Total à payer (DA)</Text>
+                <TextInput
+                  style={styles.paymentInput}
+                  placeholder="Ex: 16000"
+                  keyboardType="numeric"
+                  value={boatTotalAPayer}
+                  onChangeText={(text) => {
+                    setBoatTotalAPayer(text);
+                    calculerResteBateau(text, boatVersement);
+                  }}
+                />
+              </View>
+              <View style={styles.paymentField}>
+                <Text style={styles.paymentLabel}>Versement (DA)</Text>
+                <TextInput
+                  style={styles.paymentInput}
+                  placeholder="0"
+                  keyboardType="numeric"
+                  value={boatVersement}
+                  onChangeText={(text) => {
+                    setBoatVersement(text);
+                    calculerResteBateau(boatTotalAPayer, text);
+                  }}
+                />
+              </View>
+            </View>
+            <View style={styles.paymentRow}>
+              <View style={[styles.paymentField, styles.paymentFieldFull]}>
+                <Text style={[styles.paymentLabel, styles.paymentLabelReste]}>Reste à payer (DA)</Text>
+                <TextInput
+                  style={[styles.paymentInput, styles.paymentInputReste]}
+                  value={boatResteAPayer}
+                  editable={false}
+                />
+              </View>
+            </View>
+            <Text style={styles.paymentLabel}>📝 Note / Remarque</Text>
+            <TextInput
+              style={[styles.paymentInput, styles.noteInput]}
+              placeholder="Ex: Client VIP, allergies..."
+              value={boatNote}
+              onChangeText={setBoatNote}
+              multiline
+              numberOfLines={2}
+            />
           </View>
 
           <TouchableOpacity style={styles.submitBtn} onPress={addBoatReservation}>
@@ -1269,6 +1461,57 @@ export default function App() {
                   <Text style={styles.dateBtnText}>📅 Date: {date}</Text>
                 </TouchableOpacity>
 
+                <View style={styles.paymentContainer}>
+                  <Text style={styles.paymentTitle}>💰 Paiement</Text>
+                  <View style={styles.paymentRow}>
+                    <View style={styles.paymentField}>
+                      <Text style={styles.paymentLabel}>Total (DA)</Text>
+                      <TextInput
+                        style={styles.paymentInput}
+                        placeholder="Ex: 6000"
+                        keyboardType="numeric"
+                        value={totalAPayer}
+                        onChangeText={(text) => {
+                          setTotalAPayer(text);
+                          calculerReste(text, versement);
+                        }}
+                      />
+                    </View>
+                    <View style={styles.paymentField}>
+                      <Text style={styles.paymentLabel}>Versement (DA)</Text>
+                      <TextInput
+                        style={styles.paymentInput}
+                        placeholder="0"
+                        keyboardType="numeric"
+                        value={versement}
+                        onChangeText={(text) => {
+                          setVersement(text);
+                          calculerReste(totalAPayer, text);
+                        }}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.paymentRow}>
+                    <View style={[styles.paymentField, styles.paymentFieldFull]}>
+                      <Text style={[styles.paymentLabel, styles.paymentLabelReste]}>Reste (DA)</Text>
+                      <TextInput
+                        style={[styles.paymentInput, styles.paymentInputReste]}
+                        value={resteAPayer}
+                        editable={false}
+                      />
+                    </View>
+                  </View>
+                  <Text style={styles.paymentLabel}>📝 Note / Remarque</Text>
+                  <TextInput
+                    style={[styles.paymentInput, styles.noteInput]}
+                    placeholder="Infos complémentaires..."
+                    value={note}
+                    onChangeText={setNote}
+                    multiline
+                    numberOfLines={2}
+                  />
+                </View>
+
                 <TouchableOpacity style={styles.submitBtn} onPress={addReservation}>
                   <Text style={styles.submitBtnText}>✅ Ajouter la réservation</Text>
                 </TouchableOpacity>
@@ -1498,6 +1741,63 @@ const styles = StyleSheet.create({
   boatTodayPhone: {
     fontSize: 9,
     color: '#666',
+  },
+  boatTodayPayment: {
+    fontSize: 9,
+    color: '#444',
+  },
+  paymentContainer: {
+    backgroundColor: '#f0f7ff',
+    padding: 15,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#0077b6',
+    marginVertical: 10,
+  },
+  paymentTitle: {
+    fontWeight: 'bold',
+    color: '#0077b6',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  paymentRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 8,
+  },
+  paymentField: {
+    flex: 1,
+  },
+  paymentFieldFull: {
+    flex: 1,
+  },
+  paymentLabel: {
+    fontSize: 12,
+    color: '#0077b6',
+    marginBottom: 4,
+  },
+  paymentLabelReste: {
+    color: '#c62828',
+    fontWeight: 'bold',
+  },
+  paymentInput: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#0077b6',
+    borderRadius: 8,
+    padding: 10,
+    fontSize: 14,
+  },
+  paymentInputReste: {
+    backgroundColor: '#fff3e0',
+    borderColor: '#f44336',
+    fontWeight: 'bold',
+    color: '#c62828',
+  },
+  noteInput: {
+    minHeight: 60,
+    textAlignVertical: 'top',
+    marginTop: 4,
   },
   todayTableContainer: {
     marginHorizontal: 15,

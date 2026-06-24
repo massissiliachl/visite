@@ -7,23 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ===== STYLES DE BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f4f8; color: #1e293b; }
+        .admin-layout { display: flex; min-height: 100vh; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f4f8;
-            color: #1e293b;
-        }
-
-        .admin-layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
+        /* ===== SIDEBAR ===== */
         .sidebar {
             width: 280px;
             background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
@@ -34,12 +23,7 @@
             transition: all 0.3s;
             z-index: 10;
         }
-
-        .sidebar-header {
-            padding: 1.8rem 1.5rem;
-            border-bottom: 1px solid #334155;
-        }
-
+        .sidebar-header { padding: 1.8rem 1.5rem; border-bottom: 1px solid #334155; }
         .sidebar-header h2 {
             font-size: 1.4rem;
             font-weight: 700;
@@ -48,13 +32,7 @@
             background-clip: text;
             color: transparent;
         }
-
-        .sidebar-header p {
-            font-size: 0.7rem;
-            color: #94a3b8;
-            margin-top: 0.3rem;
-        }
-
+        .sidebar-header p { font-size: 0.7rem; color: #94a3b8; margin-top: 0.3rem; }
         .nav-item {
             display: flex;
             align-items: center;
@@ -65,12 +43,7 @@
             transition: all 0.2s;
             color: #cbd5e1;
         }
-
-        .nav-item i {
-            width: 24px;
-            font-size: 1.2rem;
-        }
-
+        .nav-item i { width: 24px; font-size: 1.2rem; }
         .nav-item.active {
             background: #f97316;
             color: white;
@@ -78,7 +51,6 @@
             margin: 0.3rem 1rem;
             padding: 0.9rem 1rem;
         }
-
         .nav-item:hover:not(.active) {
             background: #334155;
             border-radius: 12px;
@@ -86,12 +58,8 @@
             padding: 0.9rem 1rem;
         }
 
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            padding: 2rem 2rem;
-        }
-
+        /* ===== MAIN CONTENT ===== */
+        .main-content { flex: 1; margin-left: 280px; padding: 2rem; }
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -100,27 +68,17 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
+        .page-title h1 { font-size: 1.8rem; font-weight: 700; }
+        .page-content { display: none; }
+        .page-content.active-page { display: block; }
 
-        .page-title h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .page-content {
-            display: none;
-        }
-
-        .page-content.active-page {
-            display: block;
-        }
-
+        /* ===== STATS ===== */
         .stats-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.2rem;
             margin-bottom: 2rem;
         }
-
         .stat-card {
             background: white;
             border-radius: 1.2rem;
@@ -128,19 +86,10 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
         }
+        .stat-card h3 { font-size: 0.8rem; text-transform: uppercase; color: #64748b; }
+        .stat-number { font-size: 2rem; font-weight: 800; margin-top: 0.3rem; }
 
-        .stat-card h3 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: #64748b;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-top: 0.3rem;
-        }
-
+        /* ===== FILTRES ===== */
         .filter-bar {
             background: white;
             border-radius: 1rem;
@@ -152,7 +101,6 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .search-box {
             display: flex;
             align-items: center;
@@ -161,15 +109,7 @@
             border-radius: 2rem;
             gap: 0.5rem;
         }
-
-        .search-box input {
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 0.9rem;
-            width: 220px;
-        }
-
+        .search-box input { border: none; background: transparent; outline: none; font-size: 0.9rem; width: 220px; }
         .status-filter select {
             padding: 0.5rem 1rem;
             border-radius: 2rem;
@@ -177,6 +117,7 @@
             background: white;
         }
 
+        /* ===== TABLEAUX ===== */
         .table-container {
             background: white;
             border-radius: 1.5rem;
@@ -184,20 +125,8 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
         }
-
-        .table-section-title {
-            margin: 1.5rem 0 0.8rem;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
+        .table-section-title { margin: 1.5rem 0 0.8rem; font-size: 1rem; font-weight: 700; color: #0f172a; }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
         th {
             text-align: left;
             padding: 1rem 1.2rem;
@@ -205,13 +134,9 @@
             font-weight: 600;
             border-bottom: 1px solid #e2e8f0;
         }
+        td { padding: 1rem 1.2rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
 
-        td {
-            padding: 1rem 1.2rem;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: middle;
-        }
-
+        /* ===== BADGES ===== */
         .status-badge {
             display: inline-block;
             padding: 0.25rem 0.7rem;
@@ -219,16 +144,12 @@
             font-size: 0.7rem;
             font-weight: 600;
         }
-
         .status-en_attente { background: #fef3c7; color: #b45309; }
         .status-acceptee { background: #dcfce7; color: #166534; }
         .status-refusee { background: #fee2e2; color: #991b1b; }
 
-        .action-btns {
-            display: flex;
-            gap: 0.5rem;
-        }
-
+        /* ===== BOUTONS ===== */
+        .action-btns { display: flex; gap: 0.5rem; }
         .btn-icon {
             background: none;
             border: none;
@@ -238,7 +159,6 @@
             border-radius: 8px;
             transition: 0.2s;
         }
-
         .btn-accept { color: #16a34a; }
         .btn-accept:hover { background: #dcfce7; }
         .btn-refuse { color: #dc2626; }
@@ -246,6 +166,41 @@
         .btn-view { color: #3b82f6; }
         .btn-view:hover { background: #eff6ff; }
 
+        .btn-primary {
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover { background: #ea580c; }
+        .btn-secondary {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-secondary:hover { background: #475569; }
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-danger:hover { background: #b91c1c; }
+
+        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -259,10 +214,7 @@
             opacity: 0;
             transition: 0.2s;
         }
-        .modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
         .modal-card {
             background: white;
             border-radius: 1.5rem;
@@ -273,20 +225,7 @@
             max-height: 90vh;
             overflow-y: auto;
         }
-        .modal-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .detail-row {
-            display: flex;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .detail-label {
-            width: 130px;
-            font-weight: 600;
-            color: #475569;
-        }
+        .modal-card h3 { font-size: 1.5rem; margin-bottom: 1rem; }
         .close-modal {
             position: absolute;
             top: 1rem;
@@ -294,28 +233,14 @@
             font-size: 1.6rem;
             cursor: pointer;
         }
-
-        .proof-preview {
-            margin-top: 0.5rem;
-            max-width: 100%;
-            max-height: 240px;
-            border-radius: 0.8rem;
-            border: 1px solid #e2e8f0;
-            object-fit: contain;
-            background: #f8fafc;
-            cursor: zoom-in;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            transform-origin: center;
+        .detail-row {
+            display: flex;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #e2e8f0;
         }
+        .detail-label { width: 130px; font-weight: 600; color: #475569; }
 
-        .proof-preview.zoomed {
-            transform: scale(1.8);
-            cursor: zoom-out;
-            z-index: 20;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-        }
-
+        /* ===== CONTAINERS ===== */
         .bloquer-container {
             background: white;
             border-radius: 1.5rem;
@@ -323,79 +248,192 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e2e8f0;
         }
+        .bloquer-container h2 { margin-bottom: 1rem; color: #0f172a; }
+        .bloquer-container p { color: #64748b; margin-bottom: 1.5rem; }
 
-        .bloquer-container h2 {
-            margin-bottom: 1rem;
-            color: #0f172a;
-        }
-
-        .bloquer-container p {
-            color: #64748b;
-            margin-bottom: 1.5rem;
-        }
-
-        .date-picker-group {
-            margin-bottom: 1.5rem;
-        }
-
+        /* ===== FORMULAIRES ===== */
+        .date-picker-group { margin-bottom: 1.5rem; }
         .date-picker-group label {
             display: block;
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: #1e293b;
         }
-
-        .date-picker-group input, .date-picker-group select, .date-picker-group textarea {
+        .date-picker-group input,
+        .date-picker-group select,
+        .date-picker-group textarea {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid #cbd5e1;
             border-radius: 0.75rem;
             font-size: 1rem;
         }
-
-        .btn-primary {
-            background: #f97316;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
+        .date-range-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 600px) { .date-range-group { grid-template-columns: 1fr; } }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .checkbox-group input { width: auto; transform: scale(1.2); }
+        .checkbox-group label { margin: 0; }
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
         }
 
-        .btn-primary:hover {
-            background: #ea580c;
-        }
-
-        .btn-secondary {
-            background: #64748b;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-secondary:hover {
-            background: #475569;
-        }
-
+        /* ===== DATES BLOQUEES ===== */
         .dates-bloquees {
             margin-top: 2rem;
             padding-top: 1rem;
             border-top: 1px solid #e2e8f0;
         }
+        .blocked-date-item {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .blocked-date-item .reason { font-size: 0.7rem; color: #666; }
+        .blocked-date-item .date-range { font-weight: 600; }
+        .blocked-dates-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
 
+        /* ===== CALENDRIER ===== */
+        .calendar-container {
+            margin-top: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: white;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .calendar-header .month-year {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .calendar-nav-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.5rem;
+            color: #64748b;
+            transition: 0.2s;
+        }
+        .calendar-nav-btn:hover { background: #e2e8f0; color: #0f172a; }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e2e8f0;
+        }
+        .calendar-day-header {
+            background: #f1f5f9;
+            padding: 0.6rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+        .calendar-day {
+            background: white;
+            padding: 0.6rem;
+            text-align: center;
+            min-height: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            cursor: default;
+            transition: 0.1s;
+            position: relative;
+        }
+        .calendar-day.empty { background: #f8fafc; }
+        .calendar-day.blocked {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .calendar-day.blocked::after {
+            content: "✕";
+            position: absolute;
+            top: 1px;
+            right: 4px;
+            font-size: 0.5rem;
+            color: #991b1b;
+        }
+        .calendar-day.today {
+            border: 2px solid #f97316;
+            border-radius: 0.3rem;
+        }
+        .calendar-day .block-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #dc2626;
+            border-radius: 50%;
+            margin-top: 2px;
+        }
+        .calendar-legend {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0.8rem 1.5rem;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.75rem;
+            color: #64748b;
+            flex-wrap: wrap;
+        }
+        .calendar-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .calendar-legend-item .color-box {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        .calendar-legend-item .color-box.blocked-color {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+        }
+        .calendar-legend-item .color-box.free-color {
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* ===== IMAGES ===== */
         .image-preview-container {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             margin-top: 0.5rem;
         }
-        
         .image-preview {
             position: relative;
             width: 80px;
@@ -405,13 +443,11 @@
             border: 1px solid #e2e8f0;
             background: #f8fafc;
         }
-        
         .image-preview img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
         .image-preview .remove-image {
             position: absolute;
             top: -5px;
@@ -428,7 +464,61 @@
             cursor: pointer;
             z-index: 10;
         }
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .upload-area:hover { border-color: #f97316; background: #fff7ed; }
+        .upload-area i { font-size: 2rem; color: #64748b; margin-bottom: 0.5rem; }
+        .upload-area p { margin: 0; font-size: 0.9rem; }
+        .upload-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .btn-upload {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .btn-upload:hover { background: #475569; }
 
+        /* ===== ALERTES ===== */
+        .alert-warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            color: #78350f;
+        }
+
+        /* ===== LOGIN ===== */
+        .admin-layout { display: none; }
+        .admin-layout.visible { display: flex; }
+        #loginPage {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #loginPage[style*="display:none"] { display: none !important; }
+
+        /* ===== MOBILE ===== */
         .menu-toggle {
             display: none;
             position: fixed;
@@ -446,149 +536,36 @@
             transition: all 0.2s;
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
-        .menu-toggle:hover {
-            background: #ea580c;
-            transform: scale(1.05);
-        }
-        
+        .menu-toggle:hover { background: #ea580c; transform: scale(1.05); }
         .sidebar-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            inset: 0;
             background: rgba(0,0,0,0.5);
             z-index: 9;
         }
-        .sidebar-overlay.active {
-            display: block;
-        }
+        .sidebar-overlay.active { display: block; }
 
-        @media (max-width: 1024px) {
-            .main-content {
-                padding: 1.5rem;
-            }
-        }
-        
+        @media (max-width: 1024px) { .main-content { padding: 1.5rem; } }
         @media (max-width: 768px) {
             .menu-toggle {
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-            
             .sidebar {
                 transform: translateX(-100%);
                 width: 280px;
                 transition: transform 0.3s ease;
                 z-index: 20;
             }
-            .sidebar.mobile-open {
-                transform: translateX(0);
-            }
-            
+            .sidebar.mobile-open { transform: translateX(0); }
             .main-content {
                 margin-left: 0;
                 padding: 1rem;
                 padding-top: 4.5rem;
             }
-            
-            .stats-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .admin-layout {
-            display: none;
-        }
-
-        .admin-layout.visible {
-            display: flex;
-        }
-        
-        #loginPage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 2000;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .alert-warning {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 0.5rem;
-            color: #78350f;
-        }
-
-        .upload-area {
-            border: 2px dashed #cbd5e1;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            background: #f8fafc;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .upload-area:hover {
-            border-color: #f97316;
-            background: #fff7ed;
-        }
-        .upload-area i {
-            font-size: 2rem;
-            color: #64748b;
-            margin-bottom: 0.5rem;
-        }
-        .upload-area p {
-            margin: 0;
-            font-size: 0.9rem;
-        }
-        .upload-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 0.5rem;
-        }
-        .btn-upload {
-            background: #64748b;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.8rem;
-            cursor: pointer;
-        }
-        .btn-upload:hover {
-            background: #475569;
-        }
-
-        .form-grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        .checkbox-group input {
-            width: auto;
-            transform: scale(1.2);
-        }
-        .checkbox-group label {
-            margin: 0;
+            .stats-cards { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -600,32 +577,30 @@
     
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     
-    <div id="loginPage" style="display:none;">
+    <!-- ===== LOGIN ===== -->
+    <div id="loginPage">
         <div style="background:white; border-radius:2rem; padding:2.5rem; max-width:400px; width:90%; box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);">
             <div style="text-align:center; margin-bottom:2rem;">
                 <i class="fas fa-umbrella-beach" style="font-size:3rem; color:#f97316;"></i>
                 <h2 style="margin-top:1rem; color:#1e293b;">Visit Bejaia</h2>
                 <p style="color:#64748b;">Administration</p>
             </div>
-            
             <div style="margin-bottom:1.5rem;">
                 <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#334155;">📧 Email</label>
                 <input type="email" id="adminEmail" placeholder="admin@visitbejaia.com" style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:1rem; font-size:1rem;">
             </div>
-            
             <div style="margin-bottom:1.5rem;">
                 <label style="display:block; margin-bottom:0.5rem; font-weight:600; color:#334155;">🔒 Mot de passe</label>
                 <input type="password" id="adminPassword" placeholder="••••••••" style="width:100%; padding:0.8rem; border:1px solid #cbd5e1; border-radius:1rem; font-size:1rem;">
             </div>
-            
             <button onclick="loginAdmin()" style="width:100%; background:#f97316; color:white; border:none; padding:0.8rem; border-radius:1rem; font-size:1rem; font-weight:600; cursor:pointer; transition:0.2s;">
                 <i class="fas fa-sign-in-alt"></i> Se connecter
             </button>
-            
             <p id="loginError" style="color:#dc2626; text-align:center; margin-top:1rem; font-size:0.85rem; display:none;"></p>
         </div>
     </div>
     
+    <!-- ===== ADMIN LAYOUT ===== -->
     <div class="admin-layout visible">
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -644,6 +619,9 @@
             <div class="nav-item" data-page="bloquer">
                 <i class="fas fa-ban"></i> <span>Bloquer une date</span>
             </div>
+            <div class="nav-item" data-page="bloquer-hebergement">
+                <i class="fas fa-home"></i> <span>Bloquer Hébergement</span>
+            </div>
             <div class="nav-item" data-page="stats">
                 <i class="fas fa-chart-line"></i> <span>Statistiques</span>
             </div>
@@ -656,6 +634,7 @@
         </div>
 
         <div class="main-content">
+            <!-- ==================== PAGE RÉSERVATIONS ==================== -->
             <div id="page-reservations" class="page-content active-page">
                 <div class="top-bar">
                     <div class="page-title">
@@ -664,14 +643,12 @@
                     </div>
                     <button id="refreshBtn" style="background:#f97316; border:none; padding:0.6rem 1.2rem; border-radius:2rem; color:white; cursor:pointer;"><i class="fas fa-sync-alt"></i> Actualiser</button>
                 </div>
-
                 <div class="stats-cards" id="statsCards">
                     <div class="stat-card"><h3>Total réservations</h3><div class="stat-number" id="totalCount">0</div></div>
                     <div class="stat-card"><h3>En attente</h3><div class="stat-number" id="pendingCount">0</div></div>
                     <div class="stat-card"><h3>Acceptées</h3><div class="stat-number" id="acceptedCount">0</div></div>
                     <div class="stat-card"><h3>Refusées</h3><div class="stat-number" id="refusedCount">0</div></div>
                 </div>
-
                 <div class="filter-bar">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
@@ -686,43 +663,29 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody id="pendingTableBody">
-                            <tr><td colspan="8" style="text-align:center;">Chargement...</td></tr>
-                        </tbody>
+                        <thead><tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr></thead>
+                        <tbody id="pendingTableBody"><tr><td colspan="8" style="text-align:center;">Chargement...</td></tr></tbody>
                     </table>
                 </div>
-
                 <h3 class="table-section-title"><i class="fas fa-check-circle" style="color:#16a34a;"></i> Réservations acceptées</h3>
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody id="acceptedTableBody">
-                            <tr><td colspan="8" style="text-align:center;">Aucune réservation acceptée</td></tr>
-                        </tbody>
+                        <thead><tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr></thead>
+                        <tbody id="acceptedTableBody"><tr><td colspan="8" style="text-align:center;">Aucune réservation acceptée</td></tr></tbody>
                     </table>
                 </div>
-
                 <h3 class="table-section-title"><i class="fas fa-times-circle" style="color:#dc2626;"></i> Réservations refusées</h3>
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody id="refusedTableBody">
-                            <tr><td colspan="8" style="text-align:center;">Aucune réservation refusée</td></tr>
-                        </tbody>
+                        <thead><tr><th>ID</th><th>Client</th><th>Activité</th><th>Date</th><th>Participants</th><th>Total</th><th>Statut</th><th>Actions</th></tr></thead>
+                        <tbody id="refusedTableBody"><tr><td colspan="8" style="text-align:center;">Aucune réservation refusée</td></tr></tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- ==================== PAGE RÉSERVATIONS HÉBERGEMENTS ==================== -->
             <div id="page-reservations-hebergement" class="page-content">
                 <div class="top-bar">
                     <div class="page-title">
@@ -731,14 +694,12 @@
                     </div>
                     <button id="refreshPropertyBtn" style="background:#f97316; border:none; padding:0.6rem 1.2rem; border-radius:2rem; color:white; cursor:pointer;"><i class="fas fa-sync-alt"></i> Actualiser</button>
                 </div>
-
                 <div class="stats-cards" id="propertyStatsCards">
                     <div class="stat-card"><h3>Total réservations</h3><div class="stat-number" id="propertyTotalCount">0</div></div>
                     <div class="stat-card"><h3>En attente</h3><div class="stat-number" id="propertyPendingCount">0</div></div>
                     <div class="stat-card"><h3>Acceptées</h3><div class="stat-number" id="propertyAcceptedCount">0</div></div>
                     <div class="stat-card"><h3>Refusées</h3><div class="stat-number" id="propertyRefusedCount">0</div></div>
                 </div>
-
                 <div class="filter-bar">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
@@ -753,19 +714,15 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="table-container">
                     <table>
-                        <thead>
-                            <tr><th>ID</th><th>Client</th><th>Hébergement</th><th>Dates</th><th>Nuits</th><th>Personnes</th><th>Total</th><th>Statut</th><th>Actions</th></tr>
-                        </thead>
-                        <tbody id="propertyReservationsBody">
-                            <tr><td colspan="9" style="text-align:center;">Chargement...</td></tr>
-                        </tbody>
+                        <thead><tr><th>ID</th><th>Client</th><th>Hébergement</th><th>Dates</th><th>Nuits</th><th>Personnes</th><th>Total</th><th>Statut</th><th>Actions</th></tr></thead>
+                        <tbody id="propertyReservationsBody"><tr><td colspan="9" style="text-align:center;">Chargement...</td></tr></tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- ==================== PAGE GESTION HÉBERGEMENTS ==================== -->
             <div id="page-properties" class="page-content">
                 <div class="top-bar">
                     <div class="page-title">
@@ -776,15 +733,12 @@
                         <i class="fas fa-sync-alt"></i> Actualiser
                     </button>
                 </div>
-
                 <div class="alert-warning">
                     <i class="fas fa-info-circle"></i> <strong>Images :</strong> Vous pouvez télécharger des images depuis votre appareil (appareil photo ou galerie). Les images sont stockées en base64 dans le navigateur.
                 </div>
-
                 <div class="bloquer-container" style="margin-bottom: 2rem;">
                     <h2 id="propertyFormTitle"><i class="fas fa-plus-circle"></i> Ajouter un hébergement</h2>
                     <input type="hidden" id="editingPropertyId" value="">
-                    
                     <div class="form-grid-2">
                         <div class="date-picker-group">
                             <label><i class="fas fa-tag"></i> Titre *</label>
@@ -831,17 +785,14 @@
                             <input type="text" id="propertyFeatures" placeholder="Ex: 3 chambres, Piscine, Wi-Fi">
                         </div>
                     </div>
-                    
                     <div class="date-picker-group">
                         <label><i class="fas fa-align-left"></i> Description courte *</label>
                         <textarea id="propertyDescription" rows="2" placeholder="Description courte de l'hébergement..."></textarea>
                     </div>
-
                     <div class="date-picker-group">
                         <label><i class="fas fa-file-alt"></i> Description longue</label>
                         <textarea id="propertyLongDescription" rows="3" placeholder="Description détaillée pour la page de l'hébergement..."></textarea>
                     </div>
-
                     <div class="form-grid-2">
                         <div class="checkbox-group">
                             <input type="checkbox" id="propertyIsDevis">
@@ -852,58 +803,42 @@
                             <label for="propertyPopular"><i class="fas fa-star"></i> Marquer comme populaire</label>
                         </div>
                     </div>
-                    
                     <div class="date-picker-group">
                         <label><i class="fas fa-images"></i> Images</label>
-                        
                         <div class="upload-area" id="uploadArea">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <p>Cliquez ou glissez-déposez des images</p>
                             <p style="font-size: 0.75rem; color: #64748b;">JPEG, PNG, WEBP (max 5MB)</p>
                             <div class="upload-buttons">
-                                <button type="button" class="btn-upload" id="cameraBtn">
-                                    <i class="fas fa-camera"></i> Appareil photo
-                                </button>
-                                <button type="button" class="btn-upload" id="galleryBtn">
-                                    <i class="fas fa-images"></i> Galerie
-                                </button>
+                                <button type="button" class="btn-upload" id="cameraBtn"><i class="fas fa-camera"></i> Appareil photo</button>
+                                <button type="button" class="btn-upload" id="galleryBtn"><i class="fas fa-images"></i> Galerie</button>
                             </div>
                             <input type="file" id="imageFileInput" multiple accept="image/jpeg,image/png,image/jpg,image/webp" capture="environment" style="display: none;">
                         </div>
-                        
                         <div class="image-preview-container" id="imagePreviewContainer"></div>
                     </div>
-                    
-                    <div style="display: flex; gap: 1rem;">
-                        <button class="btn-primary" onclick="saveProperty()">
-                            <i class="fas fa-save"></i> Enregistrer
-                        </button>
-                        <button class="btn-secondary" onclick="resetPropertyForm()">
-                            <i class="fas fa-undo"></i> Annuler
-                        </button>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="saveProperty()"><i class="fas fa-save"></i> Enregistrer</button>
+                        <button class="btn-secondary" onclick="resetPropertyForm()"><i class="fas fa-undo"></i> Annuler</button>
                     </div>
                 </div>
-
                 <div class="bloquer-container">
                     <h2><i class="fas fa-list"></i> Liste des hébergements</h2>
                     <div class="table-container">
                         <table>
-                            <thead>
-                                <tr><th>ID</th><th>Titre</th><th>Localisation</th><th>Type</th><th>Prix (DA)</th><th>Images</th><th>Actions</th></tr>
-                            </thead>
-                            <tbody id="propertiesTableBody">
-                                <tr><td colspan="7" style="text-align:center;">Chargement...</td></tr>
-                            </tbody>
+                            <thead><tr><th>ID</th><th>Titre</th><th>Localisation</th><th>Type</th><th>Prix (DA)</th><th>Images</th><th>Actions</th></tr></thead>
+                            <tbody id="propertiesTableBody"><tr><td colspan="7" style="text-align:center;">Chargement...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
+            <!-- ==================== PAGE BLOQUER ACTIVITÉS ==================== -->
             <div id="page-bloquer" class="page-content">
                 <div class="top-bar">
                     <div class="page-title">
                         <h1><i class="fas fa-ban"></i> Bloquer une date</h1>
-                        <p>Bloquez des dates pour lesquelles les réservations ne seront pas disponibles</p>
+                        <p>Bloquez des dates pour lesquelles les réservations d'activités ne seront pas disponibles</p>
                     </div>
                 </div>
                 <div class="bloquer-container">
@@ -924,25 +859,90 @@
                             <option value="Bouée tractée">Bouée tractée</option>
                         </select>
                     </div>
-                    
                     <div class="date-picker-group">
                         <label for="blockedDate"><i class="fas fa-calendar-alt"></i> Date à bloquer :</label>
                         <input type="date" id="blockedDate">
                     </div>
-                    
-                    <button class="btn-primary" onclick="blockDate()">
-                        <i class="fas fa-lock"></i> Bloquer cette date
-                    </button>
-                    
+                    <button class="btn-primary" onclick="blockDate()"><i class="fas fa-lock"></i> Bloquer cette date</button>
                     <div class="dates-bloquees">
                         <h3><i class="fas fa-calendar-times"></i> Dates déjà bloquées</h3>
-                        <div id="blockedDatesList">
-                            <p>Sélectionnez une activité pour voir les dates bloquées.</p>
+                        <div id="blockedDatesList"><p>Sélectionnez une activité pour voir les dates bloquées.</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== PAGE BLOQUER HÉBERGEMENT ==================== -->
+            <div id="page-bloquer-hebergement" class="page-content">
+                <div class="top-bar">
+                    <div class="page-title">
+                        <h1><i class="fas fa-home"></i> Bloquer des dates pour hébergements</h1>
+                        <p>Bloquez une période pour laquelle un hébergement ne sera pas disponible</p>
+                    </div>
+                </div>
+                <div class="bloquer-container">
+                    <h2>Bloquer une période pour un hébergement</h2>
+                    
+                    <div class="date-picker-group">
+                        <label for="propertyBlockSelect"><i class="fas fa-building"></i> Hébergement :</label>
+                        <select id="propertyBlockSelect" style="width:100%; padding:0.75rem;">
+                            <option value="">Choisir un hébergement</option>
+                        </select>
+                    </div>
+                    
+                    <div class="date-picker-group">
+                        <label><i class="fas fa-calendar-alt"></i> Période à bloquer :</label>
+                        <div class="date-range-group">
+                            <div>
+                                <label style="font-weight:400; font-size:0.9rem;">Date de début</label>
+                                <input type="date" id="blockedPropertyDateStart">
+                            </div>
+                            <div>
+                                <label style="font-weight:400; font-size:0.9rem;">Date de fin</label>
+                                <input type="date" id="blockedPropertyDateEnd">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="date-picker-group">
+                        <label for="blockPropertyReason"><i class="fas fa-comment"></i> Raison (optionnel) :</label>
+                        <input type="text" id="blockPropertyReason" placeholder="Ex: Maintenance, Réservation privée...">
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn-primary" onclick="blockPropertyDateRange()"><i class="fas fa-lock"></i> Bloquer cette période</button>
+                        <button class="btn-danger" onclick="clearAllPropertyBlocked()"><i class="fas fa-trash"></i> Tout débloquer</button>
+                    </div>
+                    
+                    <div class="dates-bloquees">
+                        <h3><i class="fas fa-calendar-times"></i> Périodes déjà bloquées</h3>
+                        <div id="blockedPropertyDatesList">
+                            <p>Sélectionnez un hébergement pour voir les périodes bloquées.</p>
+                        </div>
+                    </div>
+
+                    <!-- ===== CALENDRIER ===== -->
+                    <div class="calendar-container" id="propertyCalendarContainer">
+                        <div class="calendar-header">
+                            <button class="calendar-nav-btn" onclick="changeCalendarMonth(-1)">‹</button>
+                            <span class="month-year" id="calendarMonthYear">Sélectionnez un hébergement</span>
+                            <button class="calendar-nav-btn" onclick="changeCalendarMonth(1)">›</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Généré par JavaScript -->
+                        </div>
+                        <div class="calendar-legend">
+                            <span class="calendar-legend-item">
+                                <span class="color-box blocked-color"></span> Dates bloquées
+                            </span>
+                            <span class="calendar-legend-item">
+                                <span class="color-box free-color"></span> Dates disponibles
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- ==================== PAGE STATISTIQUES ==================== -->
             <div id="page-stats" class="page-content">
                 <div class="top-bar">
                     <div class="page-title">
@@ -958,40 +958,23 @@
                 </div>
             </div>
 
+            <!-- ==================== PAGE EMPLOYEURS ==================== -->
             <div id="page-employeurs" class="page-content">
                 <div class="top-bar">
                     <div class="page-title">
                         <h1><i class="fas fa-users"></i> Gestion des employeurs</h1>
                         <p>Créez et gérez les comptes employeurs</p>
                     </div>
-                    <button id="refreshEmployersBtn" style="background:#f97316; border:none; padding:0.6rem 1.2rem; border-radius:2rem; color:white; cursor:pointer;">
-                        <i class="fas fa-sync-alt"></i> Actualiser
-                    </button>
+                    <button id="refreshEmployersBtn" style="background:#f97316; border:none; padding:0.6rem 1.2rem; border-radius:2rem; color:white; cursor:pointer;"><i class="fas fa-sync-alt"></i> Actualiser</button>
                 </div>
-
                 <div class="bloquer-container" style="margin-bottom: 2rem;">
                     <h2><i class="fas fa-user-plus"></i> Créer un nouvel employeur</h2>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                        <div class="date-picker-group">
-                            <label>👤 Nom</label>
-                            <input type="text" id="employeurNom" placeholder="Nom">
-                        </div>
-                        <div class="date-picker-group">
-                            <label>👤 Prénom</label>
-                            <input type="text" id="employeurPrenom" placeholder="Prénom">
-                        </div>
-                        <div class="date-picker-group">
-                            <label>📧 Email</label>
-                            <input type="email" id="employeurEmail" placeholder="email@exemple.com">
-                        </div>
-                        <div class="date-picker-group">
-                            <label>🔒 Mot de passe</label>
-                            <input type="password" id="employeurPassword" placeholder="Mot de passe">
-                        </div>
-                        <div class="date-picker-group">
-                            <label>📞 Téléphone</label>
-                            <input type="tel" id="employeurTelephone" placeholder="Téléphone">
-                        </div>
+                        <div class="date-picker-group"><label>👤 Nom</label><input type="text" id="employeurNom" placeholder="Nom"></div>
+                        <div class="date-picker-group"><label>👤 Prénom</label><input type="text" id="employeurPrenom" placeholder="Prénom"></div>
+                        <div class="date-picker-group"><label>📧 Email</label><input type="email" id="employeurEmail" placeholder="email@exemple.com"></div>
+                        <div class="date-picker-group"><label>🔒 Mot de passe</label><input type="password" id="employeurPassword" placeholder="Mot de passe"></div>
+                        <div class="date-picker-group"><label>📞 Téléphone</label><input type="tel" id="employeurTelephone" placeholder="Téléphone"></div>
                         <div class="date-picker-group">
                             <label>👔 Rôle</label>
                             <select id="employeurRole">
@@ -1000,26 +983,20 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn-primary" onclick="createEmployeur()" style="margin-top: 1rem;">
-                        <i class="fas fa-save"></i> Créer le compte
-                    </button>
+                    <button class="btn-primary" onclick="createEmployeur()" style="margin-top: 1rem;"><i class="fas fa-save"></i> Créer le compte</button>
                 </div>
-
                 <div class="bloquer-container">
                     <h2><i class="fas fa-list"></i> Liste des employeurs</h2>
                     <div class="table-container">
                         <table>
-                            <thead>
-                                <tr><th>ID</th><th>Nom complet</th><th>Email</th><th>Téléphone</th><th>Rôle</th><th>Statut</th><th>Actions</th></tr>
-                            </thead>
-                            <tbody id="employeursTableBody">
-                                <tr><td colspan="7" style="text-align:center;">Chargement...<\/td></tr>
-                            </tbody>
+                            <thead><tr><th>ID</th><th>Nom complet</th><th>Email</th><th>Téléphone</th><th>Rôle</th><th>Statut</th><th>Actions</th></tr></thead>
+                            <tbody id="employeursTableBody"><tr><td colspan="7" style="text-align:center;">Chargement...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
+            <!-- ==================== PAGE PARAMÈTRES ==================== -->
             <div id="page-settings" class="page-content">
                 <div class="top-bar">
                     <div class="page-title">
@@ -1039,6 +1016,7 @@
         </div>
     </div>
 
+    <!-- ===== MODAL DÉTAILS ===== -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal-card">
             <span class="close-modal" id="closeDetailModal">&times;</span>
@@ -1047,7 +1025,9 @@
         </div>
     </div>
 
+    <!-- ============================ JAVASCRIPT ============================ -->
     <script>
+        // ===== CONFIGURATION =====
         const isLocalHost = ["localhost", "127.0.0.1"].includes(window.location.hostname);
         const isFileProtocol = window.location.protocol === "file:";
         const API_BASE = (isLocalHost || isFileProtocol)
@@ -1060,12 +1040,16 @@
         let propertiesList = [];
         let blockedDatesByActivity = {};
         let currentImageFiles = [];
+        let blockedPropertyDates = {};
+        let propertyBlockList = [];
+        let calendarCurrentDate = new Date();
 
         const ADMIN_CREDENTIALS = {
             email: "admin@visitbejaia.com",
             password: "adminvb2026"
         };
 
+        // ===== FONCTIONS UTILITAIRES =====
         function parsePropertyImages(images) {
             if (!images) return [];
             if (Array.isArray(images)) return images;
@@ -1080,22 +1064,22 @@
             return [String(images)];
         }
 
-        async function loadPropertiesFromDB() {
-            try {
-                const response = await fetch(`${API_BASE}/admin/properties`);
-                if (!response.ok) throw new Error('Erreur chargement propriétés');
-                const properties = await response.json();
-                propertiesList = properties.map(property => ({
-                    ...property,
-                    images: parsePropertyImages(property.images),
-                    ambiance: property.ambiance ? (Array.isArray(property.ambiance) ? property.ambiance : (typeof property.ambiance === 'string' ? JSON.parse(property.ambiance || '[]') : [])) : [],
-                    features: property.features ? (Array.isArray(property.features) ? property.features : (typeof property.features === 'string' ? JSON.parse(property.features || '[]') : [])) : []
-                }));
-                renderPropertiesTable();
-            } catch (error) {
-                console.error('Erreur loadPropertiesFromDB:', error);
-                renderPropertiesTable();
-            }
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        function calculateNights(startDate, endDate) {
+            if (!startDate || !endDate) return 0;
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffTime = Math.abs(end - start);
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         }
 
         function convertFileToBase64(file) {
@@ -1107,14 +1091,33 @@
             });
         }
 
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            return new Date(dateStr).toLocaleDateString('fr-FR');
+        }
+
+        function getDateRange(startDate, endDate) {
+            const dates = [];
+            let current = new Date(startDate);
+            const end = new Date(endDate);
+            while (current <= end) {
+                dates.push(current.toISOString().split('T')[0]);
+                current.setDate(current.getDate() + 1);
+            }
+            return dates;
+        }
+
+        function formatDateKey(date) {
+            return date.toISOString().split('T')[0];
+        }
+
+        // ===== GESTION IMAGES =====
         async function handleImageUpload(files) {
             if (!files || files.length === 0) return;
-            
             const galleryBtn = document.querySelector('#galleryBtn');
             const originalText = galleryBtn.innerHTML;
             galleryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Conversion...';
             galleryBtn.disabled = true;
-            
             try {
                 for (const file of files) {
                     if (file.size > 5 * 1024 * 1024) {
@@ -1141,7 +1144,6 @@
                 container.innerHTML = '';
                 return;
             }
-            
             container.innerHTML = currentImageFiles.map((base64, index) => `
                 <div class="image-preview">
                     <img src="${base64}" alt="Aperçu">
@@ -1160,6 +1162,7 @@
             updateImagePreviewFromBase64();
         }
 
+        // ===== AUTHENTIFICATION =====
         function checkAdminSession() {
             document.getElementById('loginPage').style.display = 'none';
             document.querySelector('.admin-layout').classList.add('visible');
@@ -1167,32 +1170,48 @@
             fetchReservations();
             fetchPropertyReservations();
             loadPropertiesFromDB();
+            loadPropertiesForBlocking();
+            
+            // Initialiser le calendrier
+            setTimeout(() => {
+                const propertyId = document.getElementById('propertyBlockSelect')?.value;
+                if (propertyId) {
+                    loadBlockedPropertyDates(propertyId);
+                } else {
+                    renderCalendar(null);
+                }
+            }, 500);
         }
 
         function loginAdmin() {
             const email = document.getElementById('adminEmail').value.trim();
             const password = document.getElementById('adminPassword').value;
             const errorDiv = document.getElementById('loginError');
-            
             if (!email || !password) {
                 errorDiv.textContent = '❌ Veuillez entrer votre email et mot de passe';
                 errorDiv.style.display = 'block';
                 return;
             }
-            
             if (email === ADMIN_CREDENTIALS.email && password === ADMIN_CREDENTIALS.password) {
                 sessionStorage.setItem('admin_logged_in', 'true');
                 sessionStorage.setItem('admin_email', email);
-                
                 document.getElementById('loginPage').style.display = 'none';
                 document.querySelector('.admin-layout').classList.add('visible');
                 addLogoutButton();
                 fetchReservations();
                 fetchPropertyReservations();
                 loadPropertiesFromDB();
+                loadPropertiesForBlocking();
+                setTimeout(() => {
+                    const propertyId = document.getElementById('propertyBlockSelect')?.value;
+                    if (propertyId) {
+                        loadBlockedPropertyDates(propertyId);
+                    } else {
+                        renderCalendar(null);
+                    }
+                }, 500);
                 return;
             }
-            
             errorDiv.textContent = '❌ Email ou mot de passe incorrect';
             errorDiv.style.display = 'block';
         }
@@ -1200,10 +1219,8 @@
         function logoutAdmin() {
             sessionStorage.removeItem('admin_logged_in');
             sessionStorage.removeItem('admin_email');
-            
             document.getElementById('loginPage').style.display = 'flex';
             document.querySelector('.admin-layout').classList.remove('visible');
-            
             document.getElementById('adminEmail').value = '';
             document.getElementById('adminPassword').value = '';
         }
@@ -1220,6 +1237,7 @@
             }
         }
 
+        // ===== GESTION RÉSERVATIONS ACTIVITÉS =====
         async function fetchReservations(retry = 0) {
             try {
                 const response = await fetch(`${API_BASE}/reservations`);
@@ -1306,7 +1324,6 @@
             const pending = reservations.filter(r => r.status === 'en_attente');
             const accepted = reservations.filter(r => r.status === 'acceptee');
             const refused = reservations.filter(r => r.status === 'refusee');
-
             document.getElementById('pendingTableBody').innerHTML = pending.length ? pending.map(getRowHtml).join('') : '<tr><td colspan="8">Aucune réservation en attente<\/td></tr>';
             document.getElementById('acceptedTableBody').innerHTML = accepted.length ? accepted.map(getRowHtml).join('') : '<tr><td colspan="8">Aucune réservation acceptée<\/td></tr>';
             document.getElementById('refusedTableBody').innerHTML = refused.length ? refused.map(getRowHtml).join('') : '<tr><td colspan="8">Aucune réservation refusée<\/td></tr>';
@@ -1350,9 +1367,7 @@
         function viewDetails(id) {
             const reservation = reservationsData.find(r => r.id === id);
             if (!reservation) return;
-
             const paymentProofHtml = reservation.payment_proof ? `<a href="${reservation.payment_proof}" target="_blank">Ouvrir la capture<\/a><br><img src="${reservation.payment_proof}" alt="Preuve" class="proof-preview">` : 'Aucune capture';
-            
             const detailHtml = `
                 <div class="detail-row"><div class="detail-label">ID :<\/div><div>#${reservation.id}<\/div><\/div>
                 <div class="detail-row"><div class="detail-label">Client :<\/div><div>${reservation.nom} ${reservation.prenom}<\/div><\/div>
@@ -1370,6 +1385,7 @@
             document.getElementById('detailModal').classList.add('active');
         }
 
+        // ===== GESTION RÉSERVATIONS HÉBERGEMENTS =====
         async function fetchPropertyReservations(retry = 0) {
             const tbody = document.getElementById('propertyReservationsBody');
             tbody.innerHTML = '<tr><td colspan="9"><i class="fas fa-spinner fa-spin"><\/i> Chargement...<\/td></tr>';
@@ -1398,18 +1414,9 @@
             document.getElementById('propertyRefusedCount').innerText = refused;
         }
 
-        function calculateNights(startDate, endDate) {
-            if (!startDate || !endDate) return 0;
-            const start = new Date(startDate);
-            const end = new Date(endDate);
-            const diffTime = Math.abs(end - start);
-            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        }
-
         function renderPropertyReservations() {
             const searchTerm = document.getElementById('propertySearchInput')?.value.toLowerCase() || '';
             const statusFilter = document.getElementById('propertyStatusFilter')?.value || 'all';
-            
             let filtered = [...propertyReservations];
             if (searchTerm) {
                 filtered = filtered.filter(r => 
@@ -1419,20 +1426,17 @@
                 );
             }
             if (statusFilter !== 'all') filtered = filtered.filter(r => r.status === statusFilter);
-            
             const tbody = document.getElementById('propertyReservationsBody');
             if (filtered.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="9">Aucune réservation<\/td></tr>';
                 return;
             }
-            
             tbody.innerHTML = filtered.map(res => {
                 const statusClass = `status-${res.status}`;
                 const statusLabel = res.status === 'en_attente' ? 'En attente' : (res.status === 'acceptee' ? 'Acceptée' : 'Refusée');
                 const fullName = `${res.nom || ''} ${res.prenom || ''}`.trim() || '—';
                 const nights = calculateNights(res.date_arrivee, res.date_depart);
                 const propertyName = res.Property?.title || res.propertyId || '—';
-                
                 return `
                     <tr>
                         <td>#${res.id}<\/td>
@@ -1459,7 +1463,6 @@
         function viewPropertyDetails(id) {
             const reservation = propertyReservations.find(r => r.id === id);
             if (!reservation) return;
-            
             const nights = calculateNights(reservation.date_arrivee, reservation.date_depart);
             const detailHtml = `
                 <div class="detail-row"><div class="detail-label">ID :<\/div><div>#${reservation.id}<\/div><\/div>
@@ -1509,13 +1512,32 @@
             }
         }
 
+        // ===== GESTION HÉBERGEMENTS =====
+        async function loadPropertiesFromDB() {
+            try {
+                const response = await fetch(`${API_BASE}/admin/properties`);
+                if (!response.ok) throw new Error('Erreur chargement propriétés');
+                const properties = await response.json();
+                propertiesList = properties.map(property => ({
+                    ...property,
+                    images: parsePropertyImages(property.images),
+                    ambiance: property.ambiance ? (Array.isArray(property.ambiance) ? property.ambiance : (typeof property.ambiance === 'string' ? JSON.parse(property.ambiance || '[]') : [])) : [],
+                    features: property.features ? (Array.isArray(property.features) ? property.features : (typeof property.features === 'string' ? JSON.parse(property.features || '[]') : [])) : []
+                }));
+                renderPropertiesTable();
+                loadPropertiesForBlocking();
+            } catch (error) {
+                console.error('Erreur loadPropertiesFromDB:', error);
+                renderPropertiesTable();
+            }
+        }
+
         function renderPropertiesTable() {
             const tbody = document.getElementById('propertiesTableBody');
             if (!propertiesList || propertiesList.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="7">Aucun hébergement<\/td></tr>';
                 return;
             }
-            
             tbody.innerHTML = propertiesList.map(property => `
                 <tr>
                     <td>#${property.id}<\/td>
@@ -1536,16 +1558,6 @@
                      <\/td>
                  </tr>
             `).join('');
-        }
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
         }
 
         function resetPropertyForm() {
@@ -1571,7 +1583,6 @@
         function editProperty(id) {
             const property = propertiesList.find(p => p.id == id);
             if (!property) return;
-            
             document.getElementById('editingPropertyId').value = property.id;
             document.getElementById('propertyFormTitle').innerHTML = '<i class="fas fa-edit"></i> Modifier l\'hébergement';
             document.getElementById('propertyTitle').value = property.title || '';
@@ -1586,7 +1597,6 @@
             document.getElementById('propertyRating').value = property.rating || '';
             document.getElementById('propertyIsDevis').checked = Boolean(property.isDevis);
             document.getElementById('propertyPopular').checked = Boolean(property.popular);
-            
             if (property.ambiance) {
                 if (Array.isArray(property.ambiance)) {
                     document.getElementById('propertyAmbiance').value = property.ambiance.join(', ');
@@ -1596,7 +1606,6 @@
             } else {
                 document.getElementById('propertyAmbiance').value = '';
             }
-            
             if (property.features) {
                 if (Array.isArray(property.features)) {
                     const featuresText = property.features.map(f => typeof f === 'string' ? f : (f.text || '')).filter(Boolean).join(', ');
@@ -1607,7 +1616,6 @@
             } else {
                 document.getElementById('propertyFeatures').value = '';
             }
-            
             currentImageFiles = parsePropertyImages(property.images);
             updateImagePreviewFromBase64();
             document.querySelector('#page-properties .bloquer-container').scrollIntoView({ behavior: 'smooth' });
@@ -1615,7 +1623,6 @@
 
         async function saveProperty() {
             const id = document.getElementById('editingPropertyId').value;
-            
             const title = document.getElementById('propertyTitle').value.trim();
             const location = document.getElementById('propertyLocation').value.trim();
             const price = parseFloat(document.getElementById('propertyPrice').value);
@@ -1628,76 +1635,47 @@
             const capacity = parseInt(document.getElementById('propertyCapacity').value);
             const rating = parseFloat(document.getElementById('propertyRating').value);
             const popular = document.getElementById('propertyPopular').checked;
-            
             const ambianceStr = document.getElementById('propertyAmbiance').value;
             const ambiance = ambianceStr ? ambianceStr.split(',').map(item => item.trim()).filter(Boolean) : [];
-            
             const featuresStr = document.getElementById('propertyFeatures').value;
             let features = [];
             if (featuresStr) {
-                features = featuresStr.split(',').map(item => item.trim()).filter(Boolean).map(text => ({ 
-                    icon: "fa-check", 
-                    text: text 
-                }));
+                features = featuresStr.split(',').map(item => item.trim()).filter(Boolean).map(text => ({ icon: "fa-check", text: text }));
             }
-            
             const images = [...currentImageFiles];
-            
             if (!title || !location || !description) {
                 alert('❌ Veuillez remplir tous les champs obligatoires (Titre, Localisation, Description)');
                 return;
             }
-            
             if (isNaN(price) || price <= 0) {
                 alert('❌ Veuillez entrer un prix valide');
                 return;
             }
-            
             const propertyData = {
-                title: title,
-                location: location,
-                description: description,
-                longDescription: longDescription || description,
-                price: parseInt(price),
-                type: type,
-                images: images,
+                title, location, description, longDescription: longDescription || description,
+                price: parseInt(price), type, images,
                 priceHaute: isNaN(priceHaute) ? null : parseInt(priceHaute),
                 priceBasse: isNaN(priceBasse) ? null : parseInt(priceBasse),
-                isDevis: isDevis,
-                capacity: isNaN(capacity) ? null : capacity,
-                rating: isNaN(rating) ? null : rating,
-                popular: popular,
-                ambiance: ambiance,
-                features: features
+                isDevis, capacity: isNaN(capacity) ? null : capacity,
+                rating: isNaN(rating) ? null : rating, popular,
+                ambiance, features
             };
-            
-            console.log('📦 Envoi des données:', JSON.stringify(propertyData, null, 2));
-            
             try {
                 const url = id ? `${API_BASE}/admin/properties/${id}` : `${API_BASE}/admin/properties`;
                 const method = id ? 'PUT' : 'POST';
-                
                 const response = await fetch(url, {
                     method: method,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(propertyData)
                 });
-                
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('Erreur réponse:', errorText);
                     throw new Error(`Erreur HTTP ${response.status}: ${errorText}`);
                 }
-                
                 const result = await response.json();
-                console.log('✅ Réponse serveur:', result);
-                
                 alert(id ? '✅ Hébergement modifié avec succès !' : '✅ Hébergement ajouté avec succès !');
                 resetPropertyForm();
                 await loadPropertiesFromDB();
-                
             } catch (error) {
                 console.error('❌ Erreur saveProperty:', error);
                 alert('❌ Erreur lors de l\'enregistrement: ' + error.message);
@@ -1706,17 +1684,12 @@
 
         async function deleteProperty(id) {
             if (!confirm('⚠️ Supprimer définitivement cet hébergement ?')) return;
-
             try {
-                const response = await fetch(`${API_BASE}/admin/properties/${id}`, {
-                    method: 'DELETE'
-                });
-
+                const response = await fetch(`${API_BASE}/admin/properties/${id}`, { method: 'DELETE' });
                 if (!response.ok) {
                     const error = await response.json().catch(() => ({}));
                     throw new Error(error.error || 'Erreur suppression');
                 }
-
                 await loadPropertiesFromDB();
                 alert('✅ Hébergement supprimé avec succès');
             } catch (error) {
@@ -1725,6 +1698,7 @@
             }
         }
 
+        // ===== GESTION BLOCAGE ACTIVITÉS =====
         async function blockDate() {
             const activity = document.getElementById('activitySelect').value;
             const date = document.getElementById('blockedDate').value;
@@ -1734,14 +1708,26 @@
                 const response = await fetch(`${API_BASE}/availability/block`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nom_item: activity, date: date, reason: 'Bloqué par admin' })
+                    body: JSON.stringify({ 
+                        nom_item: activity, 
+                        date: date, 
+                        reason: 'Bloqué par admin',
+                        item_type: 'activity',
+                        item_id: null
+                    })
                 });
                 if (response.ok) {
-                    alert('Date bloquée avec succès');
+                    alert('✅ Date bloquée avec succès');
                     document.getElementById('blockedDate').value = '';
                     loadBlockedDates(activity);
-                } else alert('Erreur lors du blocage');
-            } catch (error) { alert('Erreur réseau'); }
+                } else {
+                    const error = await response.json();
+                    alert('❌ Erreur: ' + (error.error || 'Erreur inconnue'));
+                }
+            } catch (error) { 
+                console.error('Erreur:', error);
+                alert('❌ Erreur réseau'); 
+            }
         }
 
         async function loadBlockedDates(activity) {
@@ -1750,39 +1736,345 @@
                 return;
             }
             try {
-                const response = await fetch(`${API_BASE}/availability/${encodeURIComponent(activity)}`);
+                const response = await fetch(`${API_BASE}/availability/activity/${encodeURIComponent(activity)}`);
                 if (response.ok) {
                     const blockedDates = await response.json();
                     blockedDatesByActivity[activity] = blockedDates;
                     renderBlockedDates(activity);
-                } else { blockedDatesByActivity[activity] = []; renderBlockedDates(activity); }
-            } catch (error) { blockedDatesByActivity[activity] = []; renderBlockedDates(activity); }
+                } else { 
+                    blockedDatesByActivity[activity] = []; 
+                    renderBlockedDates(activity); 
+                }
+            } catch (error) { 
+                blockedDatesByActivity[activity] = []; 
+                renderBlockedDates(activity); 
+            }
         }
 
         function renderBlockedDates(activity) {
             const container = document.getElementById('blockedDatesList');
             const dates = blockedDatesByActivity[activity] || [];
-            if (dates.length === 0) { container.innerHTML = '<p>Aucune date bloquée.</p>'; return; }
-            let html = '<div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">';
-            dates.forEach(date => {
-                html += `<div style="background:#fee2e2; color:#991b1b; padding:0.5rem 1rem; border-radius:0.5rem;">
-                            <i class="fas fa-ban"></i> ${new Date(date).toLocaleDateString('fr-FR')}
-                            <button onclick="unblockDate('${activity}', '${date}')" style="background:none; border:none; color:#991b1b; cursor:pointer;"><i class="fas fa-times"></i><\/button>
-                        <\/div>`;
+            if (dates.length === 0) { 
+                container.innerHTML = '<p>Aucune date bloquée.</p>'; 
+                return; 
+            }
+            let html = '<div class="blocked-dates-grid">';
+            dates.forEach(item => {
+                const dateStr = item.date || item;
+                const reason = item.reason || 'Bloqué par admin';
+                html += `
+                    <div class="blocked-date-item">
+                        <i class="fas fa-ban"></i> 
+                        <span class="date-range">${formatDate(dateStr)}</span>
+                        <span class="reason">${reason}</span>
+                        <button onclick="unblockDate('${activity}', '${dateStr}')" 
+                                style="background:none; border:none; color:#991b1b; cursor:pointer; padding:0 0.3rem;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
             });
-            html += '<\/div>';
+            html += '</div>';
             container.innerHTML = html;
         }
 
         async function unblockDate(activity, date) {
-            if (!confirm(`Débloquer ?`)) return;
+            if (!confirm(`Débloquer la date ${formatDate(date)} ?`)) return;
             try {
-                await fetch(`${API_BASE}/availability/block/${encodeURIComponent(activity)}/${date}`, { method: 'DELETE' });
-                alert('Date débloquée');
+                await fetch(`${API_BASE}/availability/activity/block/${encodeURIComponent(activity)}/${date}`, { method: 'DELETE' });
+                alert('✅ Date débloquée');
                 loadBlockedDates(activity);
-            } catch (error) { alert('Erreur'); }
+            } catch (error) { 
+                console.error('Erreur:', error);
+                alert('❌ Erreur'); 
+            }
         }
 
+        // ===== GESTION BLOCAGE HÉBERGEMENTS =====
+        async function loadPropertiesForBlocking() {
+            try {
+                const response = await fetch(`${API_BASE}/admin/properties`);
+                if (!response.ok) throw new Error('Erreur chargement');
+                const properties = await response.json();
+                propertyBlockList = properties;
+                const select = document.getElementById('propertyBlockSelect');
+                if (!select) return;
+                select.innerHTML = '<option value="">Choisir un hébergement</option>';
+                properties.forEach(property => {
+                    const option = document.createElement('option');
+                    option.value = property.id;
+                    option.textContent = `${property.title} - ${property.location}`;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erreur chargement hébergements:', error);
+            }
+        }
+
+        async function blockPropertyDateRange() {
+            const propertyId = document.getElementById('propertyBlockSelect').value;
+            const dateStart = document.getElementById('blockedPropertyDateStart').value;
+            const dateEnd = document.getElementById('blockedPropertyDateEnd').value;
+            const reason = document.getElementById('blockPropertyReason').value || 'Bloqué par admin';
+            
+            if (!propertyId) {
+                alert('❌ Veuillez sélectionner un hébergement');
+                return;
+            }
+            if (!dateStart || !dateEnd) {
+                alert('❌ Veuillez sélectionner une période (date de début et date de fin)');
+                return;
+            }
+            if (new Date(dateStart) > new Date(dateEnd)) {
+                alert('❌ La date de début doit être antérieure à la date de fin');
+                return;
+            }
+            
+            try {
+                const property = propertyBlockList.find(p => p.id == propertyId);
+                if (!property) {
+                    alert('❌ Hébergement non trouvé');
+                    return;
+                }
+                const dates = getDateRange(dateStart, dateEnd);
+                let successCount = 0;
+                let errorCount = 0;
+                for (const date of dates) {
+                    try {
+                        const response = await fetch(`${API_BASE}/availability/block`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                nom_item: property.title,
+                                date: date, 
+                                reason: reason,
+                                item_type: 'property',
+                                item_id: parseInt(propertyId)
+                            })
+                        });
+                        if (response.ok) {
+                            successCount++;
+                        } else {
+                            errorCount++;
+                        }
+                    } catch (e) {
+                        errorCount++;
+                    }
+                }
+                if (successCount > 0) {
+                    alert(`✅ ${successCount} date(s) bloquée(s) avec succès${errorCount > 0 ? ` (${errorCount} erreur(s))` : ''}`);
+                    document.getElementById('blockedPropertyDateStart').value = '';
+                    document.getElementById('blockedPropertyDateEnd').value = '';
+                    document.getElementById('blockPropertyReason').value = '';
+                    loadBlockedPropertyDates(propertyId);
+                } else {
+                    alert('❌ Erreur lors du blocage des dates');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('❌ Erreur réseau');
+            }
+        }
+
+        async function loadBlockedPropertyDates(propertyId) {
+            if (!propertyId) {
+                document.getElementById('blockedPropertyDatesList').innerHTML = '<p>Sélectionnez un hébergement pour voir les périodes bloquées.</p>';
+                renderCalendar(null);
+                return;
+            }
+            try {
+                const response = await fetch(`${API_BASE}/availability/property/${propertyId}`);
+                if (response.ok) {
+                    const blockedDates = await response.json();
+                    blockedPropertyDates[propertyId] = blockedDates;
+                    renderBlockedPropertyDates(propertyId);
+                    renderCalendar(propertyId);
+                } else {
+                    blockedPropertyDates[propertyId] = [];
+                    renderBlockedPropertyDates(propertyId);
+                    renderCalendar(propertyId);
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                blockedPropertyDates[propertyId] = [];
+                renderBlockedPropertyDates(propertyId);
+                renderCalendar(propertyId);
+            }
+        }
+
+        function renderBlockedPropertyDates(propertyId) {
+            const container = document.getElementById('blockedPropertyDatesList');
+            const dates = blockedPropertyDates[propertyId] || [];
+            if (dates.length === 0) {
+                container.innerHTML = '<p>Aucune date bloquée pour cet hébergement.</p>';
+                return;
+            }
+            const sortedDates = [...dates].sort((a, b) => new Date(a.date || a) - new Date(b.date || b));
+            const periods = [];
+            let currentPeriod = null;
+            sortedDates.forEach(item => {
+                const dateStr = item.date || item;
+                const dateObj = new Date(dateStr);
+                const reason = item.reason || 'Bloqué par admin';
+                if (!currentPeriod) {
+                    currentPeriod = { start: dateStr, end: dateStr, reason: reason, dates: [dateStr] };
+                } else {
+                    const lastDate = new Date(currentPeriod.end);
+                    const diffDays = (dateObj - lastDate) / (1000 * 60 * 60 * 24);
+                    if (diffDays === 1 && reason === currentPeriod.reason) {
+                        currentPeriod.end = dateStr;
+                        currentPeriod.dates.push(dateStr);
+                    } else {
+                        periods.push(currentPeriod);
+                        currentPeriod = { start: dateStr, end: dateStr, reason: reason, dates: [dateStr] };
+                    }
+                }
+            });
+            if (currentPeriod) periods.push(currentPeriod);
+            let html = '<div class="blocked-dates-grid">';
+            periods.forEach(period => {
+                const isRange = period.start !== period.end;
+                const dateDisplay = isRange 
+                    ? `${formatDate(period.start)} → ${formatDate(period.end)}`
+                    : formatDate(period.start);
+                html += `
+                    <div class="blocked-date-item">
+                        <i class="fas fa-ban"></i> 
+                        <span class="date-range">${dateDisplay}</span>
+                        <span class="reason">${period.reason}</span>
+                        <span style="font-size:0.65rem; color:#666;">(${period.dates.length} jour${period.dates.length > 1 ? 's' : ''})</span>
+                        <button onclick="unblockPropertyDateRange('${propertyId}', '${period.start}', '${period.end}')" 
+                                style="background:none; border:none; color:#991b1b; cursor:pointer; padding:0 0.3rem;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function unblockPropertyDateRange(propertyId, startDate, endDate) {
+            const dateDisplay = startDate === endDate 
+                ? formatDate(startDate) 
+                : `${formatDate(startDate)} → ${formatDate(endDate)}`;
+            if (!confirm(`Débloquer la période ${dateDisplay} pour cet hébergement ?`)) return;
+            try {
+                const dates = getDateRange(startDate, endDate);
+                let successCount = 0;
+                let errorCount = 0;
+                for (const date of dates) {
+                    try {
+                        const response = await fetch(`${API_BASE}/availability/property/block/${propertyId}/${date}`, { method: 'DELETE' });
+                        if (response.ok) successCount++;
+                        else errorCount++;
+                    } catch (e) { errorCount++; }
+                }
+                if (successCount > 0) {
+                    alert(`✅ ${successCount} date(s) débloquée(s) avec succès${errorCount > 0 ? ` (${errorCount} erreur(s))` : ''}`);
+                    loadBlockedPropertyDates(propertyId);
+                } else {
+                    alert('❌ Erreur lors du déblocage');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('❌ Erreur réseau');
+            }
+        }
+
+        async function clearAllPropertyBlocked() {
+            const propertyId = document.getElementById('propertyBlockSelect').value;
+            if (!propertyId) {
+                alert('❌ Veuillez sélectionner un hébergement');
+                return;
+            }
+            const dates = blockedPropertyDates[propertyId] || [];
+            if (dates.length === 0) {
+                alert('Aucune date bloquée pour cet hébergement');
+                return;
+            }
+            if (!confirm(`⚠️ Supprimer tous les blocages (${dates.length} dates) pour cet hébergement ?`)) return;
+            try {
+                let successCount = 0;
+                let errorCount = 0;
+                for (const item of dates) {
+                    const dateStr = item.date || item;
+                    try {
+                        const response = await fetch(`${API_BASE}/availability/property/block/${propertyId}/${dateStr}`, { method: 'DELETE' });
+                        if (response.ok) successCount++;
+                        else errorCount++;
+                    } catch (e) { errorCount++; }
+                }
+                if (successCount > 0) {
+                    alert(`✅ ${successCount} date(s) débloquée(s) avec succès${errorCount > 0 ? ` (${errorCount} erreur(s))` : ''}`);
+                    loadBlockedPropertyDates(propertyId);
+                } else {
+                    alert('❌ Erreur lors du déblocage');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('❌ Erreur réseau');
+            }
+        }
+
+        // ===== CALENDRIER =====
+        function renderCalendar(propertyId) {
+            const grid = document.getElementById('calendarGrid');
+            const monthYear = document.getElementById('calendarMonthYear');
+            if (!grid) return;
+            
+            const year = calendarCurrentDate.getFullYear();
+            const month = calendarCurrentDate.getMonth();
+            const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+            monthYear.textContent = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            let startDay = firstDay.getDay();
+            startDay = startDay === 0 ? 6 : startDay - 1;
+            const daysInMonth = lastDay.getDate();
+            const today = new Date();
+            const todayStr = formatDateKey(today);
+            
+            // Récupérer les dates bloquées (si un propertyId est fourni)
+            const blockedDates = (propertyId && blockedPropertyDates[propertyId]) ? blockedPropertyDates[propertyId] : [];
+            const blockedSet = new Set();
+            blockedDates.forEach(item => {
+                const dateStr = item.date || item;
+                blockedSet.add(dateStr);
+            });
+            
+            const dayNames = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+            let html = '';
+            dayNames.forEach(name => {
+                html += `<div class="calendar-day-header">${name}</div>`;
+            });
+            for (let i = 0; i < startDay; i++) {
+                html += `<div class="calendar-day empty"></div>`;
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(year, month, day);
+                const dateStr = formatDateKey(dateObj);
+                const isToday = dateStr === todayStr;
+                const isBlocked = blockedSet.has(dateStr);
+                let classes = 'calendar-day';
+                if (isToday) classes += ' today';
+                if (isBlocked) classes += ' blocked';
+                html += `<div class="${classes}" title="${isBlocked ? 'Date bloquée' : 'Date disponible'}">
+                    ${day}
+                    ${isBlocked ? '<span class="block-dot"></span>' : ''}
+                </div>`;
+            }
+            grid.innerHTML = html;
+        }
+
+        function changeCalendarMonth(delta) {
+            calendarCurrentDate.setMonth(calendarCurrentDate.getMonth() + delta);
+            const propertyId = document.getElementById('propertyBlockSelect')?.value;
+            renderCalendar(propertyId || null);
+        }
+
+        // ===== GESTION EMPLOYEURS =====
         async function fetchEmployeurs() {
             try {
                 const response = await fetch(`${API_BASE}/auth/employeurs`);
@@ -1823,10 +2115,8 @@
             const password = document.getElementById('employeurPassword').value;
             const telephone = document.getElementById('employeurTelephone').value.trim();
             const role = document.getElementById('employeurRole').value;
-            
             if (!nom || !prenom || !email || !password) { alert('Champs obligatoires'); return; }
             if (password.length < 6) { alert('6 caractères minimum'); return; }
-            
             try {
                 const response = await fetch(`${API_BASE}/auth/register`, {
                     method: 'POST',
@@ -1841,7 +2131,10 @@
                 document.getElementById('employeurPassword').value = '';
                 document.getElementById('employeurTelephone').value = '';
                 fetchEmployeurs();
-            } catch (error) { alert('❌ Erreur création'); }
+            } catch (error) { 
+                console.error('Erreur:', error);
+                alert('❌ Erreur création'); 
+            }
         }
 
         async function toggleEmployeurStatus(userId, newStatus) {
@@ -1855,7 +2148,10 @@
                 });
                 alert(`✅ Compte ${action}`);
                 fetchEmployeurs();
-            } catch (error) { alert('❌ Erreur'); }
+            } catch (error) { 
+                console.error('Erreur:', error);
+                alert('❌ Erreur'); 
+            }
         }
 
         async function deleteEmployeur(userId) {
@@ -1864,9 +2160,13 @@
                 await fetch(`${API_BASE}/auth/${userId}`, { method: 'DELETE' });
                 alert('✅ Compte supprimé');
                 fetchEmployeurs();
-            } catch (error) { alert('❌ Erreur suppression'); }
+            } catch (error) { 
+                console.error('Erreur:', error);
+                alert('❌ Erreur suppression'); 
+            }
         }
 
+        // ===== NAVIGATION =====
         function showPage(pageName) {
             document.querySelectorAll('.page-content').forEach(page => page.classList.remove('active-page'));
             const activePage = document.getElementById(`page-${pageName}`);
@@ -1876,8 +2176,18 @@
             if (pageName === 'stats') updateStatsPage();
             if (pageName === 'employeurs') fetchEmployeurs();
             if (pageName === 'properties') loadPropertiesFromDB();
+            if (pageName === 'bloquer-hebergement') {
+                loadPropertiesForBlocking();
+                const propertyId = document.getElementById('propertyBlockSelect')?.value;
+                if (propertyId) {
+                    loadBlockedPropertyDates(propertyId);
+                } else {
+                    renderCalendar(null);
+                }
+            }
         }
 
+        // ===== ÉCOUTEURS =====
         document.getElementById('searchInput')?.addEventListener('input', applyFiltersAndRender);
         document.getElementById('statusFilter')?.addEventListener('change', applyFiltersAndRender);
         document.getElementById('refreshBtn')?.addEventListener('click', () => fetchReservations());
@@ -1887,9 +2197,22 @@
         document.getElementById('propertySearchInput')?.addEventListener('input', () => renderPropertyReservations());
         document.getElementById('propertyStatusFilter')?.addEventListener('change', () => renderPropertyReservations());
         document.getElementById('closeDetailModal')?.addEventListener('click', () => document.getElementById('detailModal').classList.remove('active'));
-        document.getElementById('detailModal')?.addEventListener('click', (e) => { if(e.target === document.getElementById('detailModal')) document.getElementById('detailModal').classList.remove('active'); });
+        document.getElementById('detailModal')?.addEventListener('click', (e) => { 
+            if(e.target === document.getElementById('detailModal')) 
+                document.getElementById('detailModal').classList.remove('active'); 
+        });
         document.getElementById('activitySelect')?.addEventListener('change', (e) => loadBlockedDates(e.target.value));
+        document.getElementById('propertyBlockSelect')?.addEventListener('change', (e) => {
+            const propertyId = e.target.value;
+            if (propertyId) {
+                loadBlockedPropertyDates(propertyId);
+            } else {
+                document.getElementById('blockedPropertyDatesList').innerHTML = '<p>Sélectionnez un hébergement pour voir les périodes bloquées.</p>';
+                renderCalendar(null);
+            }
+        });
 
+        // ===== GESTION IMAGES =====
         const imageFileInput = document.getElementById('imageFileInput');
         const cameraBtn = document.getElementById('cameraBtn');
         const galleryBtn = document.getElementById('galleryBtn');
@@ -1899,17 +2222,14 @@
             imageFileInput.setAttribute('capture', 'environment');
             imageFileInput.click();
         });
-
         galleryBtn?.addEventListener('click', () => {
             imageFileInput.removeAttribute('capture');
             imageFileInput.click();
         });
-
         uploadArea?.addEventListener('click', (e) => {
             if (e.target === cameraBtn || e.target === galleryBtn || cameraBtn?.contains(e.target) || galleryBtn?.contains(e.target)) return;
             galleryBtn?.click();
         });
-
         imageFileInput?.addEventListener('change', async (e) => {
             const files = Array.from(e.target.files);
             if (files.length > 0) {
@@ -1918,6 +2238,7 @@
             e.target.value = '';
         });
 
+        // ===== NAVIGATION SIDEBAR =====
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', () => {
                 document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -1931,10 +2252,12 @@
             });
         });
 
+        // ===== ZOOM IMAGE =====
         document.addEventListener('click', (e) => {
             if (e.target.classList.contains('proof-preview')) e.target.classList.toggle('zoomed');
         });
 
+        // ===== MENU MOBILE =====
         const menuToggleBtn = document.getElementById('menuToggle');
         const sidebarElement = document.querySelector('.sidebar');
         const overlayElement = document.getElementById('sidebarOverlay');
@@ -1953,8 +2276,10 @@
             }
         });
 
+        // ===== INITIALISATION =====
         checkAdminSession();
 
+        // ===== EXPOSITION DES FONCTIONS =====
         window.loginAdmin = loginAdmin;
         window.logoutAdmin = logoutAdmin;
         window.updateStatus = updateStatus;
@@ -1965,6 +2290,10 @@
         window.viewPropertyDetails = viewPropertyDetails;
         window.blockDate = blockDate;
         window.unblockDate = unblockDate;
+        window.blockPropertyDateRange = blockPropertyDateRange;
+        window.unblockPropertyDateRange = unblockPropertyDateRange;
+        window.clearAllPropertyBlocked = clearAllPropertyBlocked;
+        window.changeCalendarMonth = changeCalendarMonth;
         window.saveProperty = saveProperty;
         window.editProperty = editProperty;
         window.deleteProperty = deleteProperty;

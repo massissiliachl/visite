@@ -1,0 +1,2917 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Visit Béjaïa - Administration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        body {
+            background: #f4f7fb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+        #root {
+            width: 100%;
+            max-width: 1400px;
+            min-height: 100vh;
+            background: #f4f7fb;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
+
+        /* ===== LOADING ===== */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .loading-spinner {
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #FF6B35;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text {
+            margin-top: 16px;
+            font-size: 16px;
+            color: #FF6B35;
+            font-weight: 500;
+        }
+
+        /* ===== LOGIN ===== */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a2540, #1a3a5c, #2a4a6c);
+            padding: 20px;
+        }
+        .login-card {
+            background: white;
+            border-radius: 28px;
+            padding: 40px 32px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .login-card .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-card .logo .icon {
+            font-size: 48px;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .login-card .logo h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #0a2540;
+        }
+        .login-card .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+        .login-card .form-group {
+            margin-bottom: 16px;
+        }
+        .login-card .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: #444;
+            margin-bottom: 6px;
+        }
+        .login-card .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 14px;
+            font-size: 15px;
+            transition: border 0.2s;
+            background: #f8f9fa;
+        }
+        .login-card .form-group input:focus {
+            outline: none;
+            border-color: #0077b6;
+            background: white;
+        }
+        .login-card .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #0077b6, #005f8c);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-top: 8px;
+        }
+        .login-card .login-btn:hover { opacity: 0.9; }
+        .login-card .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 12px;
+            display: none;
+        }
+        .login-card .error.show { display: block; }
+
+        /* ===== APP CONTAINER ===== */
+        .app-container {
+            background: #f4f7fb;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #0a2540 0%, #1a3a5c 50%, #2a4a6c 100%);
+            padding: 20px 20px 16px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+        .logo-subtext {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 1px;
+        }
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            border: none;
+            color: white;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .icon-btn:hover { background: rgba(255,255,255,0.22); }
+        .notif-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #FF6B6B;
+            border-radius: 50%;
+            min-width: 18px;
+            height: 18px;
+            font-size: 9px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+        }
+        .profile-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 15px;
+            color: white;
+            cursor: pointer;
+        }
+        .welcome-section {
+            margin-top: 14px;
+        }
+        .welcome-greeting {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+        }
+        .welcome-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin: 2px 0 4px;
+        }
+        .welcome-date {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+        .header-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 14px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .header-stat {
+            text-align: center;
+        }
+        .header-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+        .header-stat-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 2px;
+        }
+        .header-stat-divider {
+            width: 1px;
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 200px;
+            background: white;
+            padding: 20px 10px 20px;
+            border-right: 1px solid #edf2f7;
+            flex-shrink: 0;
+            height: calc(100vh - 180px);
+            position: sticky;
+            top: 180px;
+            overflow-y: auto;
+        }
+        .sidebar-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #9aa0a6;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 0 12px;
+            margin-bottom: 12px;
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 2px;
+            transition: all 0.15s;
+        }
+        .nav-item:hover { background: #f0f4f8; }
+        .nav-item.active {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+        }
+        .nav-item i { width: 20px; font-size: 14px; text-align: center; }
+        .nav-item.active i { color: white; }
+
+        /* ===== CONTENT ===== */
+        .content {
+            flex: 1;
+            padding: 16px 16px 80px;
+            min-height: 600px;
+        }
+        .tab-content {
+            animation: fadeUp 0.4s ease;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            margin-bottom: 16px;
+            border: 1px solid #f0f0f0;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #0a2540;
+        }
+
+        /* ===== TODAY ===== */
+        .today-header {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .today-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0a2540;
+        }
+        .today-header .date {
+            font-size: 13px;
+            color: #6b7a8f;
+            margin-top: 4px;
+        }
+        .today-header .count {
+            font-size: 13px;
+            color: #0077b6;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .date-picker-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8f9fa;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #333;
+        }
+        .date-picker-btn:hover { background: #f0f0f0; }
+
+        /* ===== BOAT TODAY ===== */
+        .boat-today-section {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .boat-today-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2e7d32;
+            padding: 14px 16px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        .boat-today-row {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .boat-today-row:last-child { border-bottom: none; }
+        .boat-today-slot {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .boat-today-boats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .boat-today-cell {
+            background: #f8fbf8;
+            padding: 10px 12px;
+            border-radius: 10px;
+        }
+        .boat-today-cell h4 {
+            font-size: 12px;
+            color: #2e7d32;
+            margin-bottom: 6px;
+        }
+        .boat-today-reservation {
+            background: #e8f5e9;
+            padding: 8px 10px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            border-left: 3px solid #4caf50;
+            cursor: pointer;
+        }
+        .boat-today-reservation:hover { background: #d4edda; }
+        .boat-today-reservation p {
+            font-size: 11px;
+            color: #333;
+            margin: 1px 0;
+        }
+        .boat-today-reservation .label { font-weight: 600; }
+
+        /* ===== TABLE ===== */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 700px;
+        }
+        .table-container th {
+            background: #0a2540;
+            color: white;
+            font-weight: 600;
+            padding: 10px 8px;
+            text-align: left;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+        .table-container td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+        .table-container tr:hover td { background: #fafbfc; }
+        .table-container tr:last-child td { border-bottom: none; }
+
+        .activity-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 16px;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .payment-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 16px;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .payment-badge i { font-size: 10px; }
+
+        .note-input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 60px;
+        }
+        .reste-positive { color: #c62828; font-weight: 700; }
+        .reste-zero { color: #4caf50; font-weight: 700; }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px 16px;
+        }
+        .empty-state .emoji { font-size: 40px; margin-bottom: 8px; }
+        .empty-state h3 { color: #666; font-weight: 500; font-size: 15px; }
+        .empty-state p { color: #999; font-size: 13px; margin-top: 4px; }
+
+        /* ===== RESERVATION CARD ===== */
+        .reservation-card {
+            background: white;
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+        .reservation-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+        .reservation-card .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .reservation-card .header-row .id {
+            font-weight: 700;
+            color: #0077b6;
+            font-size: 13px;
+        }
+        .reservation-card .header-row .delete-btn {
+            color: #dc3545;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .reservation-card .header-row .delete-btn:hover { background: #fee8e8; }
+        .reservation-card .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 4px 12px;
+            font-size: 12px;
+            color: #333;
+        }
+        .reservation-card .info-grid .item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .reservation-card .info-grid .item i { color: #888; width: 16px; font-size: 12px; }
+
+        /* ===== BOAT FORM ===== */
+        .boat-form {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .boat-form .form-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0a2540;
+            margin-bottom: 16px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 12px;
+            color: #444;
+            margin-bottom: 4px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 13px;
+            background: #f8f9fa;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #0077b6;
+            background: white;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .chip {
+            padding: 6px 14px;
+            border-radius: 16px;
+            border: 1px solid #0077b6;
+            background: white;
+            color: #0077b6;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .chip:hover { background: #e3f2fd; }
+        .chip.active {
+            background: #0077b6;
+            color: white;
+            border-color: #0077b6;
+        }
+        .slot-item {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            text-align: center;
+            min-width: 70px;
+            font-weight: 500;
+            font-size: 12px;
+        }
+        .slot-item.available { border-color: #4caf50; background: #e8f5e9; color: #2e7d32; }
+        .slot-item.unavailable { border-color: #f44336; background: #ffebee; color: #c62828; opacity: 0.6; cursor: not-allowed; }
+        .slot-item.selected { border-color: #0077b6; background: #e3f2fd; color: #0077b6; }
+        .slot-item .status { font-size: 9px; display: block; margin-top: 2px; }
+        .slot-item .status.free { color: #4caf50; }
+        .slot-item .status.occupied { color: #f44336; }
+        .slot-item .status.selected { color: #0077b6; }
+
+        .selected-time {
+            margin-top: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0077b6;
+            text-align: center;
+        }
+        .select-hint {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* ===== PAYMENT ===== */
+        .payment-section {
+            background: #f0f7ff;
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 2px solid #0077b6;
+            margin: 12px 0;
+        }
+        .payment-section h4 {
+            color: #0077b6;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .payment-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .payment-row .full { grid-column: 1 / -1; }
+        .payment-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #0077b6;
+            margin-bottom: 3px;
+        }
+        .payment-field input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #0077b6;
+            border-radius: 8px;
+            background: white;
+            font-size: 13px;
+        }
+        .payment-field input:focus { outline: none; border-color: #005f8c; }
+        .payment-field .reste-input {
+            background: #fff3e0;
+            border-color: #f44336;
+            font-weight: 700;
+            color: #c62828;
+        }
+        .payment-field .reste-label { color: #c62828; }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #0077b6, #005f8c);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        .btn-submit:hover { opacity: 0.9; }
+
+        /* ===== ADMIN ===== */
+        .admin-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .admin-row input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 13px;
+            background: #f8f9fa;
+            min-width: 120px;
+        }
+        .admin-row input:focus { outline: none; border-color: #f97316; background: white; }
+        .btn-add {
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-add:hover { background: #e86a0a; }
+
+        .slot-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .slot-tag {
+            padding: 4px 12px;
+            border-radius: 16px;
+            background: #e3f2fd;
+            color: #0a2540;
+            font-size: 12px;
+            cursor: pointer;
+            border: none;
+        }
+        .slot-tag:hover { background: #bbdefb; }
+        .slot-tag.delete-mode { background: #f44336; color: white; }
+        .slot-tag.delete-mode:hover { background: #d32f2f; }
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .admin-actions button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .admin-actions button:hover { opacity: 0.85; }
+        .btn-delete-mode { background: #dc3545; color: white; }
+        .btn-reset { background: #ff9800; color: white; }
+
+        /* ===== EMPLOYEURS ===== */
+        .online-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .online-stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .online-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .online-dot.green { background: #4caf50; box-shadow: 0 0 8px rgba(76,175,80,0.4); }
+        .online-dot.gray { background: #9e9e9e; }
+        .online-stat .number { font-size: 20px; font-weight: 700; color: #0a2540; }
+        .online-stat .label { font-size: 12px; color: #666; }
+
+        .filter-online {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .filter-online button {
+            padding: 6px 16px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            background: #f0f0f0;
+            color: #666;
+            font-size: 12px;
+        }
+        .filter-online button.active {
+            background: #0077b6;
+            color: white;
+        }
+
+        .btn-create-employeur {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+        .btn-create-employeur:hover { opacity: 0.9; }
+
+        .employeur-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .employeur-card .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .employeur-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #0077b6;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            position: relative;
+        }
+        .employeur-avatar .status-dot {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        .employeur-avatar .status-dot.online { background: #4caf50; }
+        .employeur-avatar .status-dot.offline { background: #9e9e9e; }
+
+        .employeur-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0a2540;
+        }
+        .employeur-info h4 .online-badge {
+            font-size: 9px;
+            font-weight: 400;
+            color: #4caf50;
+            margin-left: 6px;
+        }
+        .employeur-info p {
+            font-size: 11px;
+            color: #666;
+            margin: 1px 0;
+        }
+        .employeur-info .last-active {
+            font-size: 10px;
+            color: #999;
+        }
+        .employeur-delete {
+            background: none;
+            border: none;
+            color: #dc3545;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .employeur-delete:hover { background: #fee8e8; }
+        .employeur-footer {
+            display: flex;
+            gap: 10px;
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+        }
+        .employeur-footer .status-tag {
+            padding: 2px 10px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 10px;
+        }
+        .status-tag.active { background: #4caf50; }
+        .status-tag.inactive { background: #9e9e9e; }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal {
+            background: white;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #0a2540, #1a3a5c);
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+        }
+        .modal-header h2 {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .modal-header .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        .modal-body {
+            padding: 20px;
+        }
+        .modal-body .form-group { margin-bottom: 12px; }
+
+        /* ===== DETAIL MODAL ===== */
+        .detail-section {
+            margin-bottom: 16px;
+            background: #f8f9fa;
+            padding: 14px;
+            border-radius: 12px;
+        }
+        .detail-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0a2540;
+            margin-bottom: 8px;
+        }
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 3px 0;
+            font-size: 13px;
+        }
+        .detail-row i { color: #0077b6; width: 18px; font-size: 14px; }
+        .detail-row .label { color: #666; min-width: 90px; }
+        .detail-row .value { font-weight: 500; color: #333; }
+
+        .payment-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .payment-actions button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            min-width: 70px;
+            font-size: 11px;
+        }
+        .payment-actions button:hover { opacity: 0.85; }
+        .btn-non-paye { background: #f44336; }
+        .btn-verse { background: #ff9800; }
+        .btn-paye { background: #4caf50; }
+        .btn-delete-detail {
+            width: 100%;
+            padding: 12px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+        .btn-delete-detail:hover { opacity: 0.85; }
+
+        /* ===== PROFILE MODAL ===== */
+        .profile-modal .profile-header {
+            background: linear-gradient(135deg, #0a2540, #1a3a5c);
+            padding: 28px;
+            text-align: center;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+        }
+        .profile-modal .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 10px;
+        }
+        .profile-modal .profile-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .profile-modal .profile-email {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        .profile-modal .profile-phone {
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+        .profile-menu-item:hover { background: #f8f9fa; }
+        .profile-menu-item.logout { color: #dc3545; }
+        .profile-menu-item i { width: 20px; }
+
+        /* ===== NOTIF MODAL ===== */
+        .notif-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .notif-item .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0077b6;
+            font-size: 16px;
+        }
+        .notif-item .content { flex: 1; }
+        .notif-item .content h4 { font-size: 13px; font-weight: 500; color: #333; }
+        .notif-item .content p { font-size: 11px; color: #999; margin-top: 2px; }
+
+        /* ===== FAB ===== */
+        .fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255,107,53,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .fab:hover { transform: scale(1.05); }
+
+        /* ===== BOTTOM NAV (mobile) ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background: white;
+            padding: 6px 0;
+            padding-bottom: env(safe-area-inset-bottom, 8px);
+            border-top: 1px solid #f0f0f0;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+            z-index: 40;
+            display: none;
+        }
+        .bottom-nav .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            padding: 4px 0;
+            font-size: 10px;
+            color: #666;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .bottom-nav .nav-item i { font-size: 18px; }
+        .bottom-nav .nav-item.active { color: #FF6B6B; font-weight: 600; }
+        .bottom-nav .nav-item .nav-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bottom-nav .nav-item.active .nav-icon {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 769px) {
+            .bottom-nav { display: none !important; }
+            .sidebar { display: block !important; }
+            .content { padding: 20px 28px 100px; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { display: none !important; }
+            .bottom-nav { display: flex !important; }
+            .content { padding: 12px 12px 80px; }
+            .header { padding: 14px 16px 12px; }
+            .logo-text { font-size: 16px; }
+            .welcome-name { font-size: 18px; }
+            .header-stat-value { font-size: 18px; }
+            .boat-today-boats { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .payment-row { grid-template-columns: 1fr; }
+            .reservation-card .info-grid { grid-template-columns: 1fr; }
+            .table-container table { font-size: 10px; min-width: 500px; }
+            .table-container th, .table-container td { padding: 6px 4px; }
+            .modal { max-width: 100%; border-radius: 0; border-top-left-radius: 24px; border-top-right-radius: 24px; }
+            .modal-overlay { align-items: flex-end; }
+        }
+        @media (max-width: 400px) {
+            .header-stats { flex-wrap: wrap; gap: 4px; }
+            .header-stat { flex: 1; min-width: 50px; }
+            .header-stat-value { font-size: 16px; }
+            .slot-item { min-width: 60px; font-size: 11px; padding: 6px 10px; }
+            .chip { font-size: 11px; padding: 4px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script>
+        // ============================================================
+        // ADMIN DASHBOARD — VERSION WEB (CORRIGÉE)
+        // ============================================================
+    
+        // ---- API CONFIG ----
+        const isLocalHost = location.hostname === 'localhost' || location.hostname === '127.0.0.1' || !location.hostname;
+        const API_BASE_URL = isLocalHost
+            ? (location.port === '3000' ? `${window.location.origin}/api/reservations-admin` : 'http://127.0.0.1:3000/api/reservations-admin')
+            : 'https://visitebejai.onrender.com/api/reservations-admin';
+        const API_USERS_URL = isLocalHost
+            ? (location.port === '3000' ? `${window.location.origin}/api/users` : 'http://127.0.0.1:3000/api/users')
+            : 'https://visitebejai.onrender.com/api/users';
+
+        const BOAT_PRICE_BY_MINUTES = {
+            30: 8000,
+            60: 16000,
+            90: 20000,
+            120: 20000,
+            150: 25000,
+            180: 35000,
+            210: 40000
+        };
+
+        function derivePaymentStatus(total, versement, reste) {
+            const t = parseFloat(total) || 0;
+            const v = parseFloat(versement) || 0;
+            const r = reste != null ? (parseFloat(reste) || 0) : Math.max(0, t - v);
+            if (t > 0 && (v >= t || r <= 0)) return 'paye';
+            if (v > 0) return 'verse';
+            return 'non_paye';
+        }
+
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function normalizeReservation(raw) {
+            if (!raw) return raw;
+            const total = parseFloat(raw.totalAPayer ?? raw.totalapayer) || 0;
+            const versement = parseFloat(raw.versement) || 0;
+            const reste = raw.resteAPayer != null || raw.resteapayer != null
+                ? (parseFloat(raw.resteAPayer ?? raw.resteapayer) || 0)
+                : Math.max(0, total - versement);
+            const note = (raw.note && String(raw.note).trim()) || 'Aucune note';
+            return {
+                ...raw,
+                totalAPayer: total,
+                versement,
+                resteAPayer: reste,
+                note,
+                paymentStatus: derivePaymentStatus(total, versement, reste)
+            };
+        }
+
+        function suggestBoatTotal() {
+            const minutes = parseInt(state.boatCircuit, 10);
+            if (!BOAT_PRICE_BY_MINUTES[minutes]) return;
+            if (!state.boatTotalAPayer || parseFloat(state.boatTotalAPayer) <= 0) {
+                state.boatTotalAPayer = String(BOAT_PRICE_BY_MINUTES[minutes]);
+                calculerResteBateau();
+            }
+        }
+    
+        // ---- ÉTAT GLOBAL ----
+        const state = {
+            isLoggedIn: false,
+            loginError: '',
+            userInfo: { id: 1, nom: 'Admin', prenom: 'Super', email: 'admin@visitbejai.com', telephone: '0555123456', role: 'admin' },
+            loading: true,
+            reservations: [],
+            filteredReservations: [],
+            reservationsLoading: false,
+            refreshing: false,
+            activeTab: 'today',
+            searchDate: '',
+            searchName: '',
+            showDatePicker: false,
+            nom: '', prenom: '', tel: '', personnes: '1', activite: 'Bateau', heure: '', date: '',
+            showTimePicker: false,
+            showDatePickerClient: false,
+            totalAPayer: '', versement: '', resteAPayer: '0', note: '',
+            boatNom: '', boatPrenom: '', boatTel: '', boatCircuit: '60', boatSlot: '09h-11h',
+            boatNumber: '1', boatDate: '', showBoatDatePicker: false, boatSelectedTime: '',
+            boatTotalAPayer: '', boatVersement: '', boatResteAPayer: '0', boatNote: '',
+            timeSlots: ['09h-11h', '11h-13h', '13h-15h', '15h-17h', '17h-19h'],
+            newSlot: '',
+            deleteMode: false,
+            boatReservations: [],
+            employeurs: [],
+            employeursLoading: false,
+            showCreateEmployeurModal: false,
+            onlineEmployeurs: [],
+            showOnlineOnly: false,
+            newEmployeur: { nom: '', prenom: '', email: '', password: '', telephone: '', role: 'employeur' },
+            modalVisible: false,
+            profileModalVisible: false,
+            notifModalVisible: false,
+            detailModalVisible: false,
+            selectedReservation: null,
+            editProfileModalVisible: false,
+            editProfile: { nom: '', prenom: '', telephone: '', email: '' },
+            todaySelectedDate: new Date().toISOString().split('T')[0],
+            showDatePickerToday: false,
+            // Nouveau: pour éviter les re-rendus inutiles
+            updatingFromInput: false
+        };
+    
+        let rootEl = document.getElementById('root');
+    
+        // ---- FONCTIONS UTILES ----
+        function formatDateFR(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+        }
+    
+        function getTodayStr() {
+            return new Date().toISOString().split('T')[0];
+        }
+    
+        function timeToMinutes(timeStr) {
+            if (!timeStr) return 0;
+            const parts = timeStr.split(':');
+            if (parts.length === 2) return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+            const match = timeStr.match(/(\d+)h(\d+)/);
+            if (match) return parseInt(match[1]) * 60 + parseInt(match[2]);
+            return 0;
+        }
+    
+        function formatLastActive(date) {
+            if (!date) return 'Jamais';
+            const now = new Date();
+            const diff = now - new Date(date);
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            if (minutes < 1) return 'À l\'instant';
+            if (minutes < 60) return `Il y a ${minutes} min`;
+            if (hours < 24) return `Il y a ${hours} h`;
+            return `Il y a ${days} j`;
+        }
+    
+        function getPaymentStatusText(status) {
+            switch(status) {
+                case 'paye': return { text: 'Payé', color: '#4caf50', icon: 'fa-check-circle' };
+                case 'verse': return { text: 'Acompte versé', color: '#ff9800', icon: 'fa-clock' };
+                default: return { text: 'Non payé', color: '#f44336', icon: 'fa-times-circle' };
+            }
+        }
+    
+        function getActivityColor(activite) {
+            const colors = {
+                'Bateau': '#4caf50',
+                'Visite guidée': '#2196f3',
+                'Quad': '#ff9800',
+                'Cheval': '#8bc34a',
+                'Jetski': '#00bcd4',
+                'Parapente': '#9c27b0',
+                'Kayak': '#ff6f00',
+                'Bouée tractée': '#e91e63'
+            };
+            return colors[activite] || '#757575';
+        }
+    
+        // ---- STORAGE ----
+        function storageGet(key) {
+            try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+        }
+        function storageSet(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+    
+        // ---- API HELPERS ----
+        async function apiFetch(url, options = {}) {
+            const token = localStorage.getItem('token');
+            const headers = {
+                'Content-Type': 'application/json',
+                ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+                ...options.headers,
+            };
+            const res = await fetch(url, { ...options, headers });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.message || data.error || `HTTP ${res.status}`);
+            return data;
+        }
+    
+        // ---- AUTHENTIFICATION ----
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+    
+            if (email === 'admin' && password === 'visitbejaia2026') {
+                state.isLoggedIn = true;
+                state.loginError = '';
+                localStorage.setItem('token', 'fake-token');
+                localStorage.setItem('user', JSON.stringify(state.userInfo));
+                init();
+            } else {
+                state.loginError = 'Email ou mot de passe incorrect';
+                render();
+            }
+        }
+    
+        function handleLogout() {
+            if (!confirm('Voulez-vous vraiment vous déconnecter ?')) return;
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            state.isLoggedIn = false;
+            render();
+        }
+    
+        // ---- CHARGEMENT INITIAL ----
+        async function init() {
+            const token = localStorage.getItem('token');
+            const userStr = localStorage.getItem('user');
+    
+            if (token && userStr) {
+                state.isLoggedIn = true;
+                try {
+                    state.userInfo = JSON.parse(userStr);
+                    await loadInitialData();
+                } catch (e) {
+                    console.error('Erreur chargement:', e);
+                }
+            } else {
+                state.isLoggedIn = false;
+            }
+    
+            state.loading = false;
+            render();
+        }
+    
+        async function loadInitialData() {
+            await Promise.all([
+                loadSlots(),
+                loadReservations(),
+                loadEmployeurs()
+            ]);
+        }
+    
+        async function loadSlots() {
+            try {
+                const saved = localStorage.getItem('timeSlots');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    state.timeSlots = parsed;
+                    if (parsed.length > 0 && !state.boatSlot) state.boatSlot = parsed[0];
+                } else {
+                    const defaultSlots = ['09h-11h', '11h-13h', '13h-15h', '15h-17h', '17h-19h'];
+                    state.timeSlots = defaultSlots;
+                    state.boatSlot = defaultSlots[0];
+                    localStorage.setItem('timeSlots', JSON.stringify(defaultSlots));
+                }
+            } catch (e) { console.error('Erreur chargement créneaux:', e); }
+        }
+    
+        async function loadReservations() {
+            state.reservationsLoading = true;
+            try {
+                const data = await apiFetch(API_BASE_URL);
+                state.reservations = data.map(normalizeReservation);
+                state.filteredReservations = state.reservations;
+                state.boatReservations = state.reservations.filter(r => r.activite === 'Bateau');
+            } catch (e) {
+                console.error('Erreur chargement réservations:', e);
+                const local = localStorage.getItem('reservationsData');
+                const data = local ? JSON.parse(local) : [];
+                state.reservations = data;
+                state.filteredReservations = data;
+                state.boatReservations = data.filter(r => r.activite === 'Bateau');
+            }
+            state.reservationsLoading = false;
+            render();
+        }
+    
+        async function loadEmployeurs() {
+            state.employeursLoading = true;
+            try {
+                const data = await apiFetch(`${API_USERS_URL}/employeurs`);
+                state.employeurs = data;
+                const now = new Date();
+                const onlineStatus = data.map(emp => ({
+                    ...emp,
+                    isOnline: Math.random() > 0.5,
+                    lastActive: new Date(now.getTime() - Math.random() * 7200000),
+                    lastActiveStr: formatLastActive(new Date(now.getTime() - Math.random() * 7200000))
+                }));
+                state.onlineEmployeurs = onlineStatus;
+            } catch (e) {
+                console.error('Erreur chargement employeurs:', e);
+                state.employeurs = [];
+                state.onlineEmployeurs = [];
+            }
+            state.employeursLoading = false;
+            render();
+        }
+    
+        function saveSlots(slots) {
+            localStorage.setItem('timeSlots', JSON.stringify(slots));
+            state.timeSlots = slots;
+            if (slots.length > 0 && !slots.includes(state.boatSlot)) {
+                state.boatSlot = slots[0];
+            }
+            render();
+        }
+    
+        // ---- RECHERCHE ----
+        function searchReservations() {
+            let filtered = [...state.reservations];
+            if (state.searchDate) {
+                filtered = filtered.filter(r => r.date === state.searchDate);
+            }
+            if (state.searchName) {
+                const q = state.searchName.toLowerCase();
+                filtered = filtered.filter(r =>
+                    (r.nom && r.nom.toLowerCase().includes(q)) ||
+                    (r.prenom && r.prenom.toLowerCase().includes(q))
+                );
+            }
+            state.filteredReservations = filtered;
+            render();
+        }
+    
+        function clearSearch() {
+            state.searchDate = '';
+            state.searchName = '';
+            state.filteredReservations = state.reservations;
+            render();
+        }
+    
+        // ---- CALCULS PAIEMENT ----
+        function updatePaymentStatusPreview(total, versement, elementId) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            const status = derivePaymentStatus(total, versement);
+            const info = getPaymentStatusText(status);
+            el.innerHTML = `<span class="payment-badge" style="background:${info.color}"><i class="fas ${info.icon}"></i> ${info.text}</span>`;
+        }
+
+        function calculerReste() {
+            const total = parseFloat(state.totalAPayer) || 0;
+            const vers = parseFloat(state.versement) || 0;
+            state.resteAPayer = Math.max(0, total - vers).toString();
+            const resteInput = document.getElementById('reste-client');
+            if (resteInput) resteInput.value = state.resteAPayer;
+            updatePaymentStatusPreview(total, vers, 'status-client');
+        }
+
+        function calculerResteBateau() {
+            const total = parseFloat(state.boatTotalAPayer) || 0;
+            const vers = parseFloat(state.boatVersement) || 0;
+            state.boatResteAPayer = Math.max(0, total - vers).toString();
+            const resteInput = document.getElementById('reste-bateau');
+            if (resteInput) resteInput.value = state.boatResteAPayer;
+            updatePaymentStatusPreview(total, vers, 'status-bateau');
+        }
+    
+        // ---- GESTION DES INPUTS SANS RE-RENDU ----
+        function updateStateFromInput(field, value) {
+            state[field] = value;
+            // Mettre à jour les calculs si nécessaire
+            if (field === 'totalAPayer' || field === 'versement') {
+                calculerReste();
+            } else if (field === 'boatTotalAPayer' || field === 'boatVersement') {
+                calculerResteBateau();
+            }
+        }
+    
+        // ---- AJOUT RÉSERVATION CLIENT ----
+        async function addReservation() {
+            if (!state.nom || !state.prenom) {
+                alert('Veuillez remplir le nom et prénom');
+                return;
+            }
+            if (!state.date) {
+                alert('Veuillez sélectionner une date');
+                return;
+            }
+            if (!state.heure) {
+                alert('Veuillez sélectionner une heure');
+                return;
+            }
+    
+            const total = parseFloat(state.totalAPayer) || 0;
+            if (total <= 0) {
+                alert('Veuillez saisir un total > 0 DA');
+                return;
+            }
+            const vers = parseFloat(state.versement) || 0;
+            if (vers > total) {
+                alert('Le versement ne peut pas dépasser le total');
+                return;
+            }
+    
+            const reste = Math.max(0, total - vers);
+            const note = state.note.trim() || 'Aucune note';
+
+            const newRes = {
+                nom: state.nom,
+                prenom: state.prenom,
+                tel: state.tel || "",
+                activite: state.activite,
+                heure: state.heure,
+                date: state.date,
+                personnes: parseInt(state.personnes) || 1,
+                totalAPayer: total,
+                versement: vers,
+                resteAPayer: reste,
+                note
+            };
+    
+            console.log("📤 ENVOI API:", newRes);
+    
+            try {
+                const saved = normalizeReservation(await apiFetch(API_BASE_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(newRes)
+                }));
+    
+                console.log("✅ REPONSE BACKEND:", saved);
+    
+                state.reservations = [...state.reservations, saved];
+                state.filteredReservations = state.reservations;
+                state.boatReservations = state.reservations.filter(r => r.activite === 'Bateau');
+                localStorage.setItem('reservationsData', JSON.stringify(state.reservations));
+    
+                alert(`✅ Réservation ajoutée\nTotal: ${saved.totalAPayer || total} DA\nVersé: ${saved.versement || vers} DA\nReste: ${saved.resteAPayer || reste} DA\nStatut: ${getPaymentStatusText(saved.paymentStatus).text}`);
+                resetClientForm();
+            } catch (err) {
+                console.error('❌ Erreur API:', err);
+                alert('❌ Impossible d\'enregistrer dans la base de données');
+            }
+        }
+    
+        function resetClientForm() {
+            state.nom = '';
+            state.prenom = '';
+            state.tel = '';
+            state.personnes = '1';
+            state.heure = '';
+            state.date = '';
+            state.totalAPayer = '';
+            state.versement = '';
+            state.resteAPayer = '0';
+            state.note = '';
+            state.modalVisible = false;
+            render();
+        }
+    
+        // ---- AJOUT RÉSERVATION BATEAU ----
+        function checkBoatAvailability(date, startTime, boatNum, durationMinutes) {
+            if (!date) return false;
+            const startTotal = timeToMinutes(startTime);
+            const endTotal = startTotal + durationMinutes;
+            return state.boatReservations.some(r => {
+                if (r.date !== date) return false;
+                if (r.bateau !== `Bateau ${boatNum}`) return false;
+                const rStart = timeToMinutes(r.heure);
+                const rEnd = rStart + (parseInt(r.duree) || 60);
+                return (startTotal < rEnd && endTotal > rStart);
+            });
+        }
+    
+        function getBoatStartTimes() {
+            return state.timeSlots.map(slot => {
+                const [start] = slot.split('-');
+                const hour = parseInt(start.replace('h', ''));
+                return `${hour.toString().padStart(2, '0')}:00`;
+            });
+        }
+    
+        async function addBoatReservation() {
+            if (!state.boatNom || !state.boatPrenom) {
+                alert('Veuillez remplir nom et prénom');
+                return;
+            }
+            if (!state.boatTel) {
+                alert('Veuillez entrer un téléphone');
+                return;
+            }
+            if (!state.boatDate) {
+                alert('Veuillez sélectionner une date');
+                return;
+            }
+            if (!state.boatSelectedTime) {
+                alert('Veuillez sélectionner un créneau');
+                return;
+            }
+    
+            const total = parseFloat(state.boatTotalAPayer) || 0;
+            if (total <= 0) {
+                alert('Veuillez saisir un total > 0 DA');
+                return;
+            }
+            const vers = parseFloat(state.boatVersement) || 0;
+            if (vers > total) {
+                alert('Le versement ne peut pas dépasser le total');
+                return;
+            }
+    
+            const reste = Math.max(0, total - vers);
+            const note = state.boatNote.trim() || 'Aucune note';
+            const durationMinutes = parseInt(state.boatCircuit);
+            const startTime = state.boatSelectedTime;
+            const boatNum = state.boatNumber;
+    
+            if (checkBoatAvailability(state.boatDate, startTime, boatNum, durationMinutes)) {
+                alert(`❌ Ce créneau est déjà réservé pour cette date et le bateau ${boatNum} !`);
+                return;
+            }
+    
+            const res = {
+                nom: state.boatNom,
+                prenom: state.boatPrenom,
+                tel: state.boatTel,
+                activite: 'Bateau',
+                heure: startTime,
+                date: state.boatDate,
+                personnes: 1,
+                slot: state.boatSlot,
+                bateau: `Bateau ${boatNum}`,
+                duree: durationMinutes + ' min',
+                totalAPayer: total,
+                versement: vers,
+                resteAPayer: reste,
+                note
+            };
+
+            try {
+                const saved = normalizeReservation(await apiFetch(API_BASE_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(res)
+                }));
+
+                state.reservations = [...state.reservations, saved];
+                state.filteredReservations = state.reservations;
+                state.boatReservations = state.reservations.filter(r => r.activite === 'Bateau');
+                localStorage.setItem('reservationsData', JSON.stringify(state.reservations));
+
+                const statusText = getPaymentStatusText(saved.paymentStatus).text;
+                alert(`✅ Réservation confirmée !\nBateau ${boatNum} - ${state.boatDate} à ${startTime}\nDurée: ${durationMinutes} min\nTotal: ${total} DA\nVersé: ${vers} DA\nReste: ${reste} DA\nStatut: ${statusText}`);
+                resetBoatForm();
+            } catch (err) {
+                console.error('❌ Erreur API bateau:', err);
+                alert('❌ Erreur lors de la sauvegarde');
+            }
+        }
+    
+        function resetBoatForm() {
+            state.boatNom = '';
+            state.boatPrenom = '';
+            state.boatTel = '';
+            state.boatDate = '';
+            state.boatTotalAPayer = '';
+            state.boatVersement = '';
+            state.boatResteAPayer = '0';
+            state.boatNote = '';
+            state.boatSelectedTime = '';
+            state.modalVisible = false;
+            render();
+        }
+    
+        // ---- SUPPRESSION RÉSERVATION ----
+        async function deleteReservation(id) {
+            if (!confirm('Supprimer cette réservation ?')) return;
+            try {
+                await apiFetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });
+                state.reservations = state.reservations.filter(r => r.id !== id);
+                state.filteredReservations = state.reservations;
+                state.boatReservations = state.reservations.filter(r => r.activite === 'Bateau');
+                localStorage.setItem('reservationsData', JSON.stringify(state.reservations));
+                alert('✅ Réservation supprimée');
+                render();
+            } catch (e) {
+                state.reservations = state.reservations.filter(r => r.id !== id);
+                state.filteredReservations = state.reservations;
+                state.boatReservations = state.reservations.filter(r => r.activite === 'Bateau');
+                localStorage.setItem('reservationsData', JSON.stringify(state.reservations));
+                alert('ℹ️ Réservation supprimée localement');
+                render();
+            }
+        }
+    
+        // ---- CRÉNEAUX ----
+        function addTimeSlot() {
+            const s = state.newSlot.trim();
+            if (!s) {
+                alert('Veuillez entrer un créneau (ex: 19h-21h)');
+                return;
+            }
+            if (state.timeSlots.includes(s)) {
+                alert('Ce créneau existe déjà');
+                return;
+            }
+            const updated = [...state.timeSlots, s].sort();
+            saveSlots(updated);
+            state.newSlot = '';
+            render();
+        }
+    
+        function deleteSlot(slot) {
+            if (!state.deleteMode) return;
+            if (!confirm(`Supprimer le créneau "${slot}" ?`)) return;
+            const updated = state.timeSlots.filter(s => s !== slot);
+            saveSlots(updated);
+            if (state.boatSlot === slot && updated.length > 0) state.boatSlot = updated[0];
+            render();
+        }
+    
+        // ---- EMPLOYEURS ----
+        async function createEmployeur() {
+            const emp = state.newEmployeur;
+            if (!emp.nom || !emp.prenom || !emp.email || !emp.password) {
+                alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            if (emp.password.length < 6) {
+                alert('Le mot de passe doit contenir au moins 6 caractères');
+                return;
+            }
+            try {
+                await apiFetch(`${API_USERS_URL}/register`, {
+                    method: 'POST',
+                    body: JSON.stringify(emp)
+                });
+                alert('✅ Compte employeur créé avec succès');
+                state.showCreateEmployeurModal = false;
+                state.newEmployeur = { nom: '', prenom: '', email: '', password: '', telephone: '', role: 'employeur' };
+                await loadEmployeurs();
+            } catch (e) {
+                alert('❌ Erreur lors de la création');
+            }
+        }
+    
+        async function deleteEmployeur(id) {
+            if (!confirm('Supprimer cet employeur ?')) return;
+            try {
+                await apiFetch(`${API_USERS_URL}/${id}`, { method: 'DELETE' });
+                alert('✅ Employeur supprimé');
+                await loadEmployeurs();
+            } catch (e) {
+                alert('❌ Erreur');
+            }
+        }
+    
+        // ---- PROFIL ----
+        async function updateUserProfile() {
+            try {
+                await apiFetch(`${API_USERS_URL}/${state.userInfo.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(state.editProfile)
+                });
+                const updated = { ...state.userInfo, ...state.editProfile };
+                state.userInfo = updated;
+                localStorage.setItem('user', JSON.stringify(updated));
+                state.editProfileModalVisible = false;
+                alert('✅ Profil mis à jour');
+                render();
+            } catch (e) {
+                alert('❌ Erreur réseau');
+            }
+        }
+    
+        // ---- MISE À JOUR STATUT PAIEMENT ----
+        async function updatePaymentStatus(id, status, amount) {
+            const res = state.reservations.find(r => r.id === id);
+            if (!res) return;
+
+            const total = parseFloat(res.totalAPayer) || 0;
+            if (status === 'verse') {
+                res.versement = Math.min(parseFloat(amount) || 0, total);
+            } else if (status === 'paye') {
+                res.versement = total;
+            } else {
+                res.versement = 0;
+            }
+            res.resteAPayer = Math.max(0, total - res.versement);
+            const normalized = normalizeReservation(res);
+
+            const updatedReservations = state.reservations.map(r => r.id === id ? normalized : r);
+            state.reservations = updatedReservations;
+            state.filteredReservations = updatedReservations;
+            state.boatReservations = updatedReservations.filter(r => r.activite === 'Bateau');
+            localStorage.setItem('reservationsData', JSON.stringify(updatedReservations));
+            if (state.selectedReservation && state.selectedReservation.id === id) {
+                state.selectedReservation = normalized;
+            }
+            render();
+
+            try {
+                const payload = {
+                    nom: normalized.nom,
+                    prenom: normalized.prenom,
+                    tel: normalized.tel,
+                    activite: normalized.activite,
+                    heure: normalized.heure,
+                    date: normalized.date,
+                    personnes: normalized.personnes,
+                    slot: normalized.slot || null,
+                    subslot: normalized.subslot || null,
+                    bateau: normalized.bateau || null,
+                    duree: normalized.duree || null,
+                    totalAPayer: normalized.totalAPayer,
+                    versement: normalized.versement,
+                    resteAPayer: normalized.resteAPayer,
+                    note: normalized.note
+                };
+                await apiFetch(`${API_BASE_URL}/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+            } catch (e) {
+                console.error('Erreur mise à jour paiement:', e);
+            }
+        }
+    
+        // ============================================================
+        // RENDU AVEC GESTION D'ÉVÉNEMENTS OPTIMISÉE
+        // ============================================================
+    
+        function render() {
+            if (!state.isLoggedIn) {
+                rootEl.innerHTML = `
+                    <div class="login-container">
+                        <div class="login-card">
+                            <div class="logo">
+                                <div class="icon">🌊</div>
+                                <h1>Visit Béjaïa</h1>
+                                <p>Administration</p>
+                            </div>
+                            <form onsubmit="handleLogin(event)">
+                                <div class="error ${state.loginError ? 'show' : ''}">${state.loginError}</div>
+                                <div class="form-group">
+                                    <label>Identifiant</label>
+                                    <input type="text" id="login-email" placeholder="admin" value="admin" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Mot de passe</label>
+                                    <input type="password" id="login-password" placeholder="••••••••" value="visitbejaia2026" />
+                                </div>
+                                <button type="submit" class="login-btn">Se connecter</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+    
+            if (state.loading) {
+                rootEl.innerHTML = `
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Chargement...</div>
+                    </div>
+                `;
+                return;
+            }
+    
+            const user = state.userInfo;
+            const todayRes = state.reservations.filter(r => r.date === getTodayStr());
+            const notificationCount = todayRes.length;
+    
+            const tabs = ['today', 'reservations', 'boat', 'admin', 'employeurs'];
+            const tabLabels = {
+                today: 'Aujourd\'hui',
+                reservations: 'Réservations',
+                boat: 'Bateau',
+                admin: 'Admin',
+                employeurs: 'Employeurs'
+            };
+            const tabIcons = {
+                today: 'fa-calendar-day',
+                reservations: 'fa-list',
+                boat: 'fa-ship',
+                admin: 'fa-gear',
+                employeurs: 'fa-users'
+            };
+    
+            let contentHtml = '';
+            switch (state.activeTab) {
+                case 'today': contentHtml = renderToday(); break;
+                case 'reservations': contentHtml = renderReservations(); break;
+                case 'boat': contentHtml = renderBoat(); break;
+                case 'admin': contentHtml = renderAdmin(); break;
+                case 'employeurs': contentHtml = renderEmployeurs(); break;
+            }
+    
+            const html = `
+                <div class="app-container">
+                    <div class="header">
+                        <div class="header-top">
+                            <div class="logo-container">
+                                <div class="logo-icon">🌊</div>
+                                <div>
+                                    <div class="logo-text">Visit Béjaïa</div>
+                                    <div class="logo-subtext">Administration</div>
+                                </div>
+                            </div>
+                            <div class="header-icons">
+                                <button class="icon-btn" onclick="state.notifModalVisible=true; render();">
+                                    <i class="fas fa-bell"></i>
+                                    ${notificationCount > 0 ? `<span class="notif-badge">${notificationCount}</span>` : ''}
+                                </button>
+                                <div class="profile-icon" onclick="state.profileModalVisible=true; render();">
+                                    ${user.prenom ? user.prenom[0] : 'A'}${user.nom ? user.nom[0] : 'D'}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="welcome-section">
+                            <div class="welcome-greeting">Bonjour,</div>
+                            <div class="welcome-name">${user.prenom} ${user.nom} 👋</div>
+                            <div class="welcome-date">${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>
+                        </div>
+                        <div class="header-stats">
+                            <div class="header-stat">
+                                <div class="header-stat-value">${todayRes.length}</div>
+                                <div class="header-stat-label">Aujourd'hui</div>
+                            </div>
+                            <div class="header-stat-divider"></div>
+                            <div class="header-stat">
+                                <div class="header-stat-value">${state.reservations.length}</div>
+                                <div class="header-stat-label">Total</div>
+                            </div>
+                            <div class="header-stat-divider"></div>
+                            <div class="header-stat">
+                                <div class="header-stat-value">${state.boatReservations.length}</div>
+                                <div class="header-stat-label">Bateaux</div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="main-layout">
+                        <div class="sidebar">
+                            <div class="sidebar-label">Navigation</div>
+                            ${tabs.map(t => `
+                                <div class="nav-item ${state.activeTab === t ? 'active' : ''}" onclick="state.activeTab='${t}'; render();">
+                                    <i class="fas ${tabIcons[t]}"></i>
+                                    ${tabLabels[t]}
+                                </div>
+                            `).join('')}
+                        </div>
+    
+                        <div class="content">
+                            <div class="tab-content">
+                                ${contentHtml}
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="bottom-nav">
+                        ${tabs.map(t => `
+                            <button class="nav-item ${state.activeTab === t ? 'active' : ''}" onclick="state.activeTab='${t}'; render();">
+                                <div class="nav-icon ${state.activeTab === t ? 'active' : ''}">
+                                    <i class="fas ${tabIcons[t]}"></i>
+                                </div>
+                                <span>${tabLabels[t]}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+    
+                    <button class="fab" onclick="state.modalVisible=true; render();">
+                        <i class="fas fa-plus"></i>
+                    </button>
+    
+                    ${state.modalVisible ? renderAddReservationModal() : ''}
+                    ${state.profileModalVisible ? renderProfileModal() : ''}
+                    ${state.notifModalVisible ? renderNotifModal() : ''}
+                    ${state.detailModalVisible ? renderDetailModal() : ''}
+                    ${state.editProfileModalVisible ? renderEditProfileModal() : ''}
+                    ${state.showCreateEmployeurModal ? renderCreateEmployeurModal() : ''}
+                </div>
+            `;
+            rootEl.innerHTML = html;
+    
+            // --- Attacher les événements après le rendu ---
+            attachEvents();
+        }
+    
+        // ---- ATTACHER LES ÉVÉNEMENTS APRÈS RENDU ----
+        function attachEvents() {
+            // Événements pour les champs de recherche (sans re-rendu)
+            const searchInput = document.getElementById('search-name-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', function(e) {
+                    state.searchName = this.value;
+                    // Recherche en temps réel sans re-rendu complet
+                    const filtered = state.reservations.filter(r => {
+                        const q = state.searchName.toLowerCase();
+                        return (r.nom && r.nom.toLowerCase().includes(q)) ||
+                               (r.prenom && r.prenom.toLowerCase().includes(q));
+                    });
+                    state.filteredReservations = filtered;
+                    // Mettre à jour uniquement la liste des réservations
+                    updateReservationsList();
+                });
+            }
+    
+            // Événements pour les inputs du formulaire client
+            const clientInputs = document.querySelectorAll('.client-input');
+            clientInputs.forEach(input => {
+                const handler = function() {
+                    const field = this.dataset.field;
+                    if (field) {
+                        state[field] = this.value;
+                        if (field === 'totalAPayer' || field === 'versement') {
+                            calculerReste();
+                        }
+                    }
+                };
+                input.addEventListener('input', handler);
+                if (input.tagName === 'TEXTAREA') input.addEventListener('change', handler);
+            });
+    
+            // Événements pour les inputs du formulaire bateau
+            const boatInputs = document.querySelectorAll('.boat-input');
+            boatInputs.forEach(input => {
+                const handler = function() {
+                    const field = this.dataset.field;
+                    if (field) {
+                        state[field] = this.value;
+                        if (field === 'boatTotalAPayer' || field === 'boatVersement') {
+                            calculerResteBateau();
+                        }
+                    }
+                };
+                input.addEventListener('input', handler);
+                if (input.tagName === 'TEXTAREA') input.addEventListener('change', handler);
+            });
+    
+            // Événements pour les date pickers
+            document.querySelectorAll('.date-picker-native').forEach(el => {
+                el.addEventListener('change', function(e) {
+                    const val = e.target.value;
+                    const action = this.dataset.action;
+                    if (action === 'today') {
+                        state.todaySelectedDate = val;
+                        render();
+                    } else if (action === 'search') {
+                        state.searchDate = val;
+                        render();
+                    } else if (action === 'client') {
+                        state.date = val;
+                    } else if (action === 'boat') {
+                        state.boatDate = val;
+                        render();
+                    }
+                });
+            });
+    
+            // Événements pour les time pickers
+            document.querySelectorAll('.time-picker-native').forEach(el => {
+                el.addEventListener('change', function(e) {
+                    const val = e.target.value;
+                    if (this.dataset.action === 'client') {
+                        state.heure = val;
+                    }
+                });
+            });
+
+            suggestBoatTotal();
+            calculerResteBateau();
+            const totalC = parseFloat(state.totalAPayer) || 0;
+            const versC = parseFloat(state.versement) || 0;
+            updatePaymentStatusPreview(totalC, versC, 'status-client');
+            const totalB = parseFloat(state.boatTotalAPayer) || 0;
+            const versB = parseFloat(state.boatVersement) || 0;
+            updatePaymentStatusPreview(totalB, versB, 'status-bateau');
+        }
+    
+        // ---- METTRE À JOUR UNIQUEMENT LA LISTE DES RÉSERVATIONS ----
+        function updateReservationsList() {
+            const container = document.getElementById('reservations-list');
+            if (!container) return;
+    
+            const list = state.filteredReservations.length > 0 ? state.filteredReservations : state.reservations;
+            let cards = list.map((r, i) => {
+                const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
+                return `
+                    <div class="reservation-card" onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
+                        <div class="header-row">
+                            <span class="id">#${r.id || i+1}</span>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteReservation(${r.id});"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <div class="info-grid">
+                            <div class="item"><i class="fas fa-user"></i> ${r.nom} ${r.prenom}</div>
+                            <div class="item"><i class="fas fa-phone"></i> ${r.tel || 'Non renseigné'}</div>
+                            <div class="item"><i class="fas fa-users"></i> ${r.personnes} personne(s)</div>
+                            <div class="item"><i class="fas fa-clock"></i> ${r.heure}</div>
+                            <div class="item"><i class="fas fa-calendar"></i> ${r.date}</div>
+                            <div class="item"><i class="fas fa-tag"></i> <span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 8px;border-radius:10px;font-size:10px;">${r.activite}</span></div>
+                            <div class="item"><i class="fas fa-money-bill"></i> Total: ${r.totalAPayer || 0} DA</div>
+                            <div class="item"><i class="fas fa-credit-card"></i> Versé: ${r.versement || 0} DA</div>
+                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</span></div>
+                            <div class="item"><i class="fas fa-check-circle"></i> <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></div>
+                            ${r.note && r.note !== 'Aucune note' ? `<div class="item" style="grid-column:1/-1;"><i class="fas fa-sticky-note"></i> ${escapeHtml(r.note)}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = cards || `
+                <div class="empty-state">
+                    <div class="emoji">📭</div>
+                    <h3>Aucune réservation trouvée</h3>
+                </div>
+            `;
+        }
+    
+        // ---- RENDU ONGLETS AVEC IDs POUR MISE À JOUR CIBLÉE ----
+    
+        function renderToday() {
+            const date = state.todaySelectedDate || getTodayStr();
+            const reservations = state.reservations.filter(r => r.date === date);
+            const boatRes = reservations.filter(r => r.activite === 'Bateau');
+    
+            let boatRows = '';
+            state.timeSlots.forEach(slot => {
+                const slotsInSlot = boatRes.filter(r => r.slot === slot);
+                if (slotsInSlot.length === 0) return;
+                let boatsHtml = '';
+                ['1', '2'].forEach(boatNum => {
+                    const boatReservations = slotsInSlot.filter(r => r.bateau === `Bateau ${boatNum}`);
+                    let resHtml = boatReservations.map(r => {
+                        const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
+                        return `
+                        <div class="boat-today-reservation" onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
+                            <p><span class="label">⏰</span> ${r.heure}</p>
+                            <p><span class="label">👤</span> ${r.nom} ${r.prenom}</p>
+                            <p><span class="label">📞</span> ${r.tel}</p>
+                            <p><span class="label">💰</span> Total: ${r.totalAPayer || 0} DA</p>
+                            <p><span class="label">💳</span> Versé: ${r.versement || 0} DA</p>
+                            <p><span class="label">📊</span> Reste: ${r.resteAPayer || 0} DA</p>
+                            <p><span class="label">✅</span> <span class="payment-badge" style="background:${payment.color};font-size:10px;padding:2px 8px;"><i class="fas ${payment.icon}"></i> ${payment.text}</span></p>
+                            ${r.note && r.note !== 'Aucune note' ? `<p><span class="label">📝</span> ${escapeHtml(r.note)}</p>` : ''}
+                        </div>
+                    `;}).join('');
+                    boatsHtml += `
+                        <div class="boat-today-cell">
+                            <h4>Bateau ${boatNum}</h4>
+                            ${resHtml || '<p style="color:#999;font-size:11px;">Aucune réservation</p>'}
+                        </div>
+                    `;
+                });
+                boatRows += `
+                    <div class="boat-today-row">
+                        <div class="boat-today-slot">${slot}</div>
+                        <div class="boat-today-boats">${boatsHtml}</div>
+                    </div>
+                `;
+            });
+    
+            const otherRes = reservations.filter(r => r.activite !== 'Bateau');
+            let tableRows = otherRes.map(r => {
+                const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
+                return `
+                    <tr onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
+                        <td>${r.heure || '--:--'}</td>
+                        <td><strong>${r.nom} ${r.prenom}</strong></td>
+                        <td>${r.tel || '---'}</td>
+                        <td><span class="activity-badge" style="background:${getActivityColor(r.activite)}">${r.activite}</span></td>
+                        <td>${r.personnes}</td>
+                        <td>${r.totalAPayer || 0} DA</td>
+                        <td>${r.versement || 0} DA</td>
+                        <td class="${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</td>
+                        <td><span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></td>
+                    </tr>
+                `;
+            }).join('');
+    
+            return `
+                <div class="today-header">
+                    <h2>📅 Réservations</h2>
+                    <input type="date" class="date-picker-native" data-action="today" value="${date}" style="padding:6px 12px; border-radius:10px; border:1px solid #ddd; margin-top:8px; font-size:13px; width:auto; display:inline-block;" />
+                    <div class="date">${formatDateFR(date)}</div>
+                    <div class="count">${reservations.length} réservation(s)</div>
+                </div>
+    
+                ${state.reservationsLoading ? '<div style="text-align:center;padding:32px;"><div class="loading-spinner" style="margin:0 auto;"></div></div>' : ''}
+    
+                ${boatRows ? `
+                    <div class="boat-today-section">
+                        <div class="boat-today-title">🚤 Réservations Bateau</div>
+                        ${boatRows}
+                    </div>
+                ` : ''}
+    
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Heure</th>
+                                <th>Client</th>
+                                <th>Téléphone</th>
+                                <th>Activité</th>
+                                <th>Pers.</th>
+                                <th>Total</th>
+                                <th>Versé</th>
+                                <th>Reste</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${tableRows || `
+                                <tr><td colspan="9" style="text-align:center;padding:32px;color:#999;">Aucune réservation pour cette date</td></tr>
+                            `}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+    
+        function renderReservations() {
+            const list = state.filteredReservations.length > 0 ? state.filteredReservations : state.reservations;
+            let cards = list.map((r, i) => {
+                const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
+                return `
+                    <div class="reservation-card" onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
+                        <div class="header-row">
+                            <span class="id">#${r.id || i+1}</span>
+                            <button class="delete-btn" onclick="event.stopPropagation(); deleteReservation(${r.id});"><i class="fas fa-trash"></i></button>
+                        </div>
+                        <div class="info-grid">
+                            <div class="item"><i class="fas fa-user"></i> ${r.nom} ${r.prenom}</div>
+                            <div class="item"><i class="fas fa-phone"></i> ${r.tel || 'Non renseigné'}</div>
+                            <div class="item"><i class="fas fa-users"></i> ${r.personnes} personne(s)</div>
+                            <div class="item"><i class="fas fa-clock"></i> ${r.heure}</div>
+                            <div class="item"><i class="fas fa-calendar"></i> ${r.date}</div>
+                            <div class="item"><i class="fas fa-tag"></i> <span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 8px;border-radius:10px;font-size:10px;">${r.activite}</span></div>
+                            <div class="item"><i class="fas fa-money-bill"></i> Total: ${r.totalAPayer || 0} DA</div>
+                            <div class="item"><i class="fas fa-credit-card"></i> Versé: ${r.versement || 0} DA</div>
+                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</span></div>
+                            <div class="item"><i class="fas fa-check-circle"></i> <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></div>
+                            ${r.note && r.note !== 'Aucune note' ? `<div class="item" style="grid-column:1/-1;"><i class="fas fa-sticky-note"></i> ${escapeHtml(r.note)}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="card">
+                    <div class="card-title">🔍 Recherche avancée</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+                        <input type="date" class="date-picker-native" data-action="search" value="${state.searchDate}" style="padding:8px 12px; border-radius:10px; border:1px solid #ddd; flex:1; min-width:140px; font-size:13px;" />
+                        <input type="text" id="search-name-input" placeholder="Nom ou prénom..." value="${state.searchName}" style="padding:8px 12px; border-radius:10px; border:1px solid #ddd; flex:2; min-width:140px; font-size:13px;" />
+                        <button onclick="searchReservations();" style="padding:8px 16px; background:#FF6B6B; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:13px;">🔍 Rechercher</button>
+                        <button onclick="clearSearch();" style="padding:8px 16px; background:#6c757d; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:13px;">🗑️ Effacer</button>
+                    </div>
+                    <div style="padding:8px 12px; background:#e3f2fd; border-radius:8px; font-size:13px; color:#0a2540;">
+                        📊 ${list.length} réservation(s)
+                    </div>
+                </div>
+    
+                <div style="margin-top:8px;">
+                    <h3 style="font-size:16px; font-weight:700; color:#0a2540; margin-bottom:12px;">📋 Liste des réservations</h3>
+                    ${state.reservationsLoading ? '<div style="text-align:center;padding:32px;"><div class="loading-spinner" style="margin:0 auto;"></div></div>' : ''}
+                    <div id="reservations-list">
+                        ${cards || `
+                            <div class="empty-state">
+                                <div class="emoji">📭</div>
+                                <h3>Aucune réservation trouvée</h3>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+    
+        function renderBoat() {
+            const startTimes = getBoatStartTimes();
+            const boatNum = state.boatNumber;
+            const boatDate = state.boatDate;
+            const circuit = parseInt(state.boatCircuit);
+    
+            let slotsHtml = startTimes.map((time, idx) => {
+                const isAvailable = boatDate ? !checkBoatAvailability(boatDate, time, boatNum, circuit) : false;
+                const isSelected = state.boatSelectedTime === time;
+                let cls = 'slot-item';
+                if (!isAvailable && boatDate) cls += ' unavailable';
+                else if (isSelected) cls += ' selected';
+                else if (boatDate) cls += ' available';
+                else cls += '';
+    
+                let statusText = '';
+                if (!boatDate) statusText = '<span class="status" style="color:#999;">📅 Choisir date</span>';
+                else if (!isAvailable) statusText = '<span class="status occupied">❌ Occupé</span>';
+                else if (isSelected) statusText = '<span class="status selected">✅ Sélectionné</span>';
+                else statusText = '<span class="status free">✓ Libre</span>';
+    
+                const onclick = boatDate ? `state.boatSelectedTime='${time}'; render();` : `alert('Veuillez d\\'abord sélectionner une date')`;
+    
+                return `
+                    <div class="${cls}" onclick="${onclick}" style="${!boatDate ? 'cursor:pointer;border-color:#ccc;background:#f5f5f5;color:#999;' : ''}">
+                        ${time}
+                        ${statusText}
+                    </div>
+                `;
+            }).join('');
+    
+            return `
+                <div class="boat-form">
+                    <div class="form-title">🚤 Nouvelle réservation bateau</div>
+    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <input type="text" class="boat-input" data-field="boatNom" placeholder="Nom" value="${state.boatNom}" />
+                        </div>
+                        <div class="form-group">
+                            <label>Prénom</label>
+                            <input type="text" class="boat-input" data-field="boatPrenom" placeholder="Prénom" value="${state.boatPrenom}" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" class="boat-input" data-field="boatTel" placeholder="Téléphone" value="${state.boatTel}" />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" class="date-picker-native" data-action="boat" value="${state.boatDate}" style="width:100%;padding:8px 12px; border-radius:10px; border:1px solid #ddd;" />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Durée</label>
+                        <div class="chip-group">
+                            ${['60','90','120','150','180','210'].map(d => `
+                                <div class="chip ${state.boatCircuit === d ? 'active' : ''}" onclick="state.boatCircuit='${d}'; state.boatSelectedTime=''; suggestBoatTotal(); render();">${parseInt(d)/60}h</div>
+                            `).join('')}
+                        </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Créneaux disponibles</label>
+                        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
+                            ${slotsHtml}
+                        </div>
+                        ${state.boatSelectedTime ? `<div class="selected-time">⏰ Créneau sélectionné: ${state.boatSelectedTime}</div>` : ''}
+                        ${state.boatDate && !state.boatSelectedTime ? `<div class="select-hint">👆 Cliquez sur un créneau libre</div>` : ''}
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Bateau</label>
+                        <div class="chip-group">
+                            ${['1','2'].map(b => `
+                                <div class="chip ${state.boatNumber === b ? 'active' : ''}" onclick="state.boatNumber='${b}'; state.boatSelectedTime=''; render();">Bateau ${b}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+    
+                    <div class="payment-section">
+                        <h4>💰 Paiement</h4>
+                        <div class="payment-row">
+                            <div class="payment-field">
+                                <label>Total à payer (DA)</label>
+                                <input type="number" class="boat-input" data-field="boatTotalAPayer" placeholder="Ex: 16000" value="${state.boatTotalAPayer}" />
+                            </div>
+                            <div class="payment-field">
+                                <label>Versement (DA)</label>
+                                <input type="number" class="boat-input" data-field="boatVersement" placeholder="0" value="${state.boatVersement}" />
+                            </div>
+                        </div>
+                        <div class="payment-row" style="margin-top:6px;">
+                            <div class="payment-field full">
+                                <label class="reste-label">Reste à payer (DA)</label>
+                                <input type="text" id="reste-bateau" class="reste-input" value="${state.boatResteAPayer}" disabled />
+                            </div>
+                        </div>
+                        <div style="margin-top:8px;">
+                            <label style="font-size:12px;color:#666;">Statut paiement</label>
+                            <div id="status-bateau" style="margin-top:4px;"></div>
+                        </div>
+                        <div class="form-group" style="margin-top:8px;">
+                            <label>📝 Note / Remarque</label>
+                            <textarea class="boat-input note-input" data-field="boatNote" rows="2" placeholder="Ex: Client VIP, allergies, demande spéciale...">${escapeHtml(state.boatNote)}</textarea>
+                        </div>
+                    </div>
+    
+                    <button class="btn-submit" onclick="addBoatReservation();">🚤 Réserver</button>
+                </div>
+            `;
+        }
+    
+        function renderAdmin() {
+            return `
+                <div class="card">
+                    <div class="card-title">⚙️ Administration des créneaux</div>
+    
+                    <div class="admin-row">
+                        <input type="text" placeholder="Ex: 19h-21h" value="${state.newSlot}" oninput="state.newSlot=this.value; render();" />
+                        <button class="btn-add" onclick="addTimeSlot();">➕ Ajouter</button>
+                    </div>
+    
+                    <div style="margin-bottom:12px;">
+                        <div style="font-weight:600; margin-bottom:8px; color:#444; font-size:13px;">📋 Créneaux existants (${state.timeSlots.length}):</div>
+                        <div class="slot-tags">
+                            ${state.timeSlots.map(slot => `
+                                <span class="slot-tag ${state.deleteMode ? 'delete-mode' : ''}" onclick="deleteSlot('${slot}');" title="${state.deleteMode ? 'Cliquer pour supprimer' : 'Cliquer pour modifier'}">
+                                    ${slot} ${state.deleteMode ? '🗑️' : '✏️'}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+    
+                    <div class="admin-actions">
+                        <button class="btn-delete-mode" onclick="state.deleteMode=!state.deleteMode; render();">${state.deleteMode ? '❌ Annuler' : '🗑️ Supprimer'}</button>
+                        <button class="btn-reset" onclick="if(confirm('Réinitialiser tous les créneaux par défaut ?')){ const def=['09h-11h','11h-13h','13h-15h','15h-17h','17h-19h']; saveSlots(def); state.boatSlot=def[0]; render(); }">🔄 Réinitialiser</button>
+                    </div>
+                </div>
+            `;
+        }
+    
+        function renderEmployeurs() {
+            const onlineCount = state.onlineEmployeurs.filter(e => e.isOnline).length;
+            const offlineCount = state.onlineEmployeurs.filter(e => !e.isOnline).length;
+            const displayList = state.showOnlineOnly
+                ? state.onlineEmployeurs.filter(e => e.isOnline)
+                : state.onlineEmployeurs;
+    
+            let employeurCards = displayList.map(emp => `
+                <div class="employeur-card">
+                    <div class="left">
+                        <div class="employeur-avatar">
+                            ${emp.prenom?.[0] || ''}${emp.nom?.[0] || ''}
+                            <span class="status-dot ${emp.isOnline ? 'online' : 'offline'}"></span>
+                        </div>
+                        <div class="employeur-info">
+                            <h4>${emp.nom} ${emp.prenom} ${emp.isOnline ? '<span class="online-badge">🟢 En ligne</span>' : ''}</h4>
+                            <p>📧 ${emp.email}</p>
+                            <p>📞 ${emp.telephone || 'Non renseigné'}</p>
+                            <div class="last-active">🕐 ${emp.isOnline ? 'En ligne' : `Dernière activité: ${emp.lastActiveStr || 'Jamais'}`}</div>
+                            <div class="employeur-footer">
+                                <span class="status-tag ${emp.isOnline ? 'active' : 'inactive'}">${emp.isOnline ? 'Actif' : 'Inactif'}</span>
+                                <span style="color:#888;">${emp.role === 'admin' ? 'Administrateur' : 'Employeur'}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="employeur-delete" onclick="deleteEmployeur(${emp.id});"><i class="fas fa-trash"></i></button>
+                </div>
+            `).join('');
+    
+            return `
+                <div class="card">
+                    <div class="card-title">👥 Gestion des employeurs</div>
+    
+                    <div class="online-stats">
+                        <div class="online-stat">
+                            <span class="online-dot green"></span>
+                            <span class="number">${onlineCount}</span>
+                            <span class="label">En ligne</span>
+                        </div>
+                        <div class="online-stat">
+                            <span class="online-dot gray"></span>
+                            <span class="number">${offlineCount}</span>
+                            <span class="label">Hors ligne</span>
+                        </div>
+                        <div class="online-stat">
+                            <span class="number">${state.employeurs.length}</span>
+                            <span class="label">Total</span>
+                        </div>
+                    </div>
+    
+                    <div class="filter-online">
+                        <button class="${!state.showOnlineOnly ? 'active' : ''}" onclick="state.showOnlineOnly=false; render();">Tous</button>
+                        <button class="${state.showOnlineOnly ? 'active' : ''}" onclick="state.showOnlineOnly=true; render();">🟢 En ligne uniquement</button>
+                    </div>
+    
+                    <button class="btn-create-employeur" onclick="state.showCreateEmployeurModal=true; render();">
+                        <i class="fas fa-user-plus"></i> Nouvel employeur
+                    </button>
+    
+                    ${state.employeursLoading ? '<div style="text-align:center;padding:16px;"><div class="loading-spinner" style="margin:0 auto;"></div></div>' : ''}
+                    ${employeurCards || `
+                        <div class="empty-state">
+                            <div class="emoji">👥</div>
+                            <h3>${state.showOnlineOnly ? 'Aucun employeur en ligne' : 'Aucun employeur'}</h3>
+                        </div>
+                    `}
+                </div>
+            `;
+        }
+    
+        // ---- MODALS ----
+    
+        function renderAddReservationModal() {
+            return `
+                <div class="modal-overlay" onclick="if(event.target===this){state.modalVisible=false; render();}">
+                    <div class="modal">
+                        <div class="modal-header" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53);">
+                            <h2>➕ Nouvelle réservation</h2>
+                            <button class="close-btn" onclick="state.modalVisible=false; render();"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nom</label>
+                                <input type="text" class="client-input" data-field="nom" placeholder="Nom" value="${state.nom}" />
+                            </div>
+                            <div class="form-group">
+                                <label>Prénom</label>
+                                <input type="text" class="client-input" data-field="prenom" placeholder="Prénom" value="${state.prenom}" />
+                            </div>
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <input type="tel" class="client-input" data-field="tel" placeholder="Téléphone" value="${state.tel}" />
+                            </div>
+                            <div class="form-group">
+                                <label>Personnes</label>
+                                <input type="number" class="client-input" data-field="personnes" placeholder="Personnes" value="${state.personnes}" />
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Activité</label>
+                                <div class="chip-group">
+                                    ${['Bateau','Visite guidée','Quad','Cheval','Jetski','Parapente','Kayak','Bouée tractée'].map(a => `
+                                        <div class="chip ${state.activite === a ? 'active' : ''}" onclick="state.activite='${a}'; render();">${a}</div>
+                                    `).join('')}
+                                </div>
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Heure</label>
+                                <input type="time" class="time-picker-native" data-action="client" value="${state.heure}" style="width:100%;padding:8px 12px; border-radius:10px; border:1px solid #ddd;" />
+                            </div>
+    
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" class="date-picker-native" data-action="client" value="${state.date}" style="width:100%;padding:8px 12px; border-radius:10px; border:1px solid #ddd;" />
+                            </div>
+    
+                            <div class="payment-section" style="margin:10px 0;">
+                                <h4>💰 Paiement</h4>
+                                <div class="payment-row">
+                                    <div class="payment-field">
+                                        <label>Total à payer (DA)</label>
+                                        <input type="number" class="client-input" data-field="totalAPayer" placeholder="Ex: 6000" value="${state.totalAPayer}" />
+                                    </div>
+                                    <div class="payment-field">
+                                        <label>Versement (DA)</label>
+                                        <input type="number" class="client-input" data-field="versement" placeholder="0" value="${state.versement}" />
+                                    </div>
+                                </div>
+                                <div class="payment-row" style="margin-top:6px;">
+                                    <div class="payment-field full">
+                                        <label class="reste-label">Reste à payer (DA)</label>
+                                        <input type="text" id="reste-client" class="reste-input" value="${state.resteAPayer}" disabled />
+                                    </div>
+                                </div>
+                                <div style="margin-top:8px;">
+                                    <label style="font-size:12px;color:#666;">Statut paiement</label>
+                                    <div id="status-client" style="margin-top:4px;"></div>
+                                </div>
+                                <div class="form-group" style="margin-top:8px;">
+                                    <label>📝 Note / Remarque</label>
+                                    <textarea class="client-input note-input" data-field="note" rows="2" placeholder="Ex: Allergies, préférences, infos complémentaires...">${escapeHtml(state.note)}</textarea>
+                                </div>
+                            </div>
+    
+                            <button class="btn-submit" onclick="addReservation();">✅ Ajouter la réservation</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    
+        function renderProfileModal() {
+            const u = state.userInfo;
+            return `
+                <div class="modal-overlay" onclick="if(event.target===this){state.profileModalVisible=false; render();}">
+                    <div class="modal profile-modal" style="max-width:450px;">
+                        <div class="profile-header">
+                            <div class="profile-avatar">${u.prenom?.[0] || ''}${u.nom?.[0] || ''}</div>
+                            <div class="profile-name">${u.prenom} ${u.nom}</div>
+                            <div class="profile-email">${u.email}</div>
+                            <div class="profile-phone">📞 ${u.telephone || 'Non renseigné'}</div>
+                        </div>
+                        <div style="padding:8px 0;">
+                            <button class="profile-menu-item" onclick="state.profileModalVisible=false; state.editProfile={nom:'${u.nom}',prenom:'${u.prenom}',telephone:'${u.telephone||''}',email:'${u.email}'}; state.editProfileModalVisible=true; render();">
+                                <i class="fas fa-user"></i> Modifier mon profil
+                            </button>
+                            <button class="profile-menu-item">
+                                <i class="fas fa-chart-bar"></i> Statistiques
+                            </button>
+                            <button class="profile-menu-item">
+                                <i class="fas fa-cog"></i> Paramètres
+                            </button>
+                            <button class="profile-menu-item logout" onclick="handleLogout();">
+                                <i class="fas fa-sign-out-alt"></i> Déconnexion
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    
+        function renderEditProfileModal() {
+            return `
+                <div class="modal-overlay" onclick="if(event.target===this){state.editProfileModalVisible=false; render();}">
+                    <div class="modal">
+                        <div class="modal-header" style="background:linear-gradient(135deg,#0a2540,#1a3a5c);">
+                            <h2>✏️ Modifier mon profil</h2>
+                            <button class="close-btn" onclick="state.editProfileModalVisible=false; render();"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nom</label>
+                                <input type="text" value="${state.editProfile.nom}" oninput="state.editProfile.nom=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Prénom</label>
+                                <input type="text" value="${state.editProfile.prenom}" oninput="state.editProfile.prenom=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" value="${state.editProfile.email}" oninput="state.editProfile.email=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <input type="tel" value="${state.editProfile.telephone}" oninput="state.editProfile.telephone=this.value; render();" />
+                            </div>
+                            <button class="btn-submit" style="background:linear-gradient(135deg,#4caf50,#45a049);" onclick="updateUserProfile();">💾 Sauvegarder</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    
+        function renderNotifModal() {
+            const onlineCount = state.onlineEmployeurs.filter(e => e.isOnline).length;
+            return `
+                <div class="modal-overlay" onclick="if(event.target===this){state.notifModalVisible=false; render();}">
+                    <div class="modal" style="max-width:450px;">
+                        <div class="modal-header" style="background:white; border-bottom:1px solid #f0f0f0;">
+                            <h2 style="color:#0a2540;">🔔 Notifications</h2>
+                            <button class="close-btn" style="color:#333;" onclick="state.notifModalVisible=false; render();"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div style="padding:4px 0;">
+                            ${[
+                                { icon: 'fa-calendar-day', text: `📅 ${state.reservations.filter(r => r.date === getTodayStr()).length} réservation(s) aujourd'hui`, sub: new Date().toLocaleDateString('fr-FR') },
+                                { icon: 'fa-ship', text: `🚤 ${state.boatReservations.length} réservation(s) bateau au total`, sub: 'Statistiques' },
+                                { icon: 'fa-users', text: `👥 ${state.reservations.length} réservation(s) totale(s)`, sub: 'Toutes activités confondues' },
+                                { icon: 'fa-users', text: `👥 ${state.employeurs.length} employeur(s) enregistré(s)`, sub: 'Comptes actifs' },
+                                { icon: 'fa-cloud', text: `🟢 ${onlineCount} employeur(s) en ligne`, sub: 'Actuellement actifs' }
+                            ].map(item => `
+                                <div class="notif-item">
+                                    <div class="icon"><i class="fas ${item.icon}"></i></div>
+                                    <div class="content">
+                                        <h4>${item.text}</h4>
+                                        <p>${item.sub}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    
+        function renderDetailModal() {
+            const r = state.selectedReservation;
+            if (!r) return '';
+            const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
+            return `
+                <div class="modal-overlay" onclick="if(event.target===this){state.detailModalVisible=false; render();}">
+                    <div class="modal" style="max-width:550px;">
+                        <div class="modal-header" style="background:linear-gradient(135deg,#0a2540,#1a3a5c);">
+                            <h2>Détails de la réservation</h2>
+                            <button class="close-btn" onclick="state.detailModalVisible=false; render();"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="detail-section">
+                                <h4>👤 Informations client</h4>
+                                <div class="detail-row"><i class="fas fa-user"></i><span class="label">Nom complet:</span><span class="value">${r.nom} ${r.prenom}</span></div>
+                                <div class="detail-row"><i class="fas fa-phone"></i><span class="label">Téléphone:</span><span class="value">${r.tel || 'Non renseigné'}</span></div>
+                            </div>
+    
+                            <div class="detail-section">
+                                <h4>📅 Informations réservation</h4>
+                                <div class="detail-row"><i class="fas fa-calendar"></i><span class="label">Date:</span><span class="value">${r.date}</span></div>
+                                <div class="detail-row"><i class="fas fa-clock"></i><span class="label">Heure:</span><span class="value">${r.heure || '--:--'}</span></div>
+                                <div class="detail-row"><i class="fas fa-users"></i><span class="label">Personnes:</span><span class="value">${r.personnes}</span></div>
+                                <div class="detail-row"><i class="fas fa-tag"></i><span class="label">Activité:</span><span class="value"><span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 10px;border-radius:10px;font-size:11px;">${r.activite}</span></span></div>
+                                ${r.bateau ? `<div class="detail-row"><i class="fas fa-ship"></i><span class="label">Bateau:</span><span class="value">${r.bateau}</span></div>` : ''}
+                                ${r.duree ? `<div class="detail-row"><i class="fas fa-hourglass"></i><span class="label">Durée:</span><span class="value">${r.duree}</span></div>` : ''}
+                            </div>
+    
+                            <div class="detail-section">
+                                <h4>💰 Paiement</h4>
+                                <div class="detail-row"><i class="fas fa-money-bill"></i><span class="label">Total à payer:</span><span class="value">${r.totalAPayer || 0} DA</span></div>
+                                <div class="detail-row"><i class="fas fa-credit-card"></i><span class="label">Versement:</span><span class="value">${r.versement || 0} DA</span></div>
+                                <div class="detail-row"><i class="fas fa-arrow-down"></i><span class="label">Reste à payer:</span><span class="value ${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</span></div>
+                                <div class="detail-row"><i class="fas fa-check-circle"></i><span class="label">Statut:</span><span class="value"><span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></span></div>
+
+                                <div class="payment-actions">
+                                    <button class="btn-non-paye" onclick="updatePaymentStatus(${r.id},'non_paye',0); state.detailModalVisible=false; render();">❌ Non payé</button>
+                                    <button class="btn-verse" onclick="const amt=prompt('Montant de l\\'acompte (DA):'); if(amt!==null && !isNaN(amt)){updatePaymentStatus(${r.id},'verse',parseInt(amt)); state.detailModalVisible=false; render();}">💰 Acompte</button>
+                                    <button class="btn-paye" onclick="updatePaymentStatus(${r.id},'paye',0); state.detailModalVisible=false; render();">✅ Payé</button>
+                                </div>
+                            </div>
+
+                            <div class="detail-section">
+                                <h4>📝 Note</h4>
+                                <div class="detail-row"><i class="fas fa-sticky-note"></i><span class="label">Remarque:</span><span class="value">${escapeHtml(r.note || 'Aucune note')}</span></div>
+                            </div>
+    
+                            <button class="btn-delete-detail" onclick="state.detailModalVisible=false; deleteReservation(${r.id});">
+                                <i class="fas fa-trash"></i> Supprimer la réservation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    
+        function renderCreateEmployeurModal() {
+            const emp = state.newEmployeur;
+            return `
+                <div class="modal-overlay" onclick="if(event.target===this){state.showCreateEmployeurModal=false; render();}">
+                    <div class="modal">
+                        <div class="modal-header" style="background:linear-gradient(135deg,#4caf50,#45a049);">
+                            <h2>👥 Nouvel employeur</h2>
+                            <button class="close-btn" onclick="state.showCreateEmployeurModal=false; render();"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Nom *</label>
+                                <input type="text" placeholder="Nom" value="${emp.nom}" oninput="state.newEmployeur.nom=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Prénom *</label>
+                                <input type="text" placeholder="Prénom" value="${emp.prenom}" oninput="state.newEmployeur.prenom=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Email *</label>
+                                <input type="email" placeholder="Email" value="${emp.email}" oninput="state.newEmployeur.email=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Mot de passe * (min 6 caractères)</label>
+                                <input type="password" placeholder="Mot de passe" value="${emp.password}" oninput="state.newEmployeur.password=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <input type="tel" placeholder="Téléphone" value="${emp.telephone}" oninput="state.newEmployeur.telephone=this.value; render();" />
+                            </div>
+                            <div class="form-group">
+                                <label>Rôle</label>
+                                <div class="chip-group">
+                                    <div class="chip ${emp.role === 'employeur' ? 'active' : ''}" onclick="state.newEmployeur.role='employeur'; render();">Employeur</div>
+                                    <div class="chip ${emp.role === 'admin' ? 'active' : ''}" onclick="state.newEmployeur.role='admin'; render();">Admin</div>
+                                </div>
+                            </div>
+                            <button class="btn-submit" style="background:linear-gradient(135deg,#4caf50,#45a049);" onclick="createEmployeur();">✅ Créer le compte</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    
+        // ---- LANCEMENT ----
+        init();
+    </script>
+
+</body>
+</html>
