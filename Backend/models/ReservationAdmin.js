@@ -46,26 +46,31 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
     type: DataTypes.STRING,
     allowNull: true
   },
-  totalapayer: {
-    type: DataTypes.DECIMAL(10, 2),
+  totalAPayer: {
+    type: DataTypes.DECIMAL(10,2),
+    field: "totalapayer",
     defaultValue: 0,
-    allowNull: false
+    allowNull:false
   },
+  
   versement: {
-    type: DataTypes.DECIMAL(10, 2),
-    defaultValue: 0,
-    allowNull: false
+    type: DataTypes.DECIMAL(10,2),
+    field:"versement",
+    defaultValue:0,
+    allowNull:false
   },
-  resteapayer: {
-    type: DataTypes.DECIMAL(10, 2),
-    defaultValue: 0,
-    allowNull: false
+  
+  resteAPayer: {
+    type: DataTypes.DECIMAL(10,2),
+    field:"resteapayer",
+    defaultValue:0,
+    allowNull:false
   },
-  note: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  }
-}, {
+  
+  note:{
+   type:DataTypes.TEXT,
+   field:"note"
+  }}, {
   tableName: "ReservationAdmins",
   timestamps: true
 });
