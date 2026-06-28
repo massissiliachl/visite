@@ -54,21 +54,21 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
     defaultValue: 0,
     allowNull: false
   },
-
+  
   versement: {
     type: DataTypes.DECIMAL(10, 2),
     field: "versement",
     defaultValue: 0,
     allowNull: false
   },
-
+  
   resteAPayer: {
     type: DataTypes.DECIMAL(10, 2),
     field: "resteapayer",
     defaultValue: 0,
     allowNull: false
   },
-
+  
   note: {
     type: DataTypes.TEXT,
     field: "note",
@@ -76,6 +76,7 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
   }
 }, {
   tableName: "ReservationAdmins",
+  freezeTableName: true, 
   timestamps: true
   // Pas de hooks : le contrôleur envoie déjà les bons noms d'attributs
   // (totalAPayer, resteAPayer) qui sont mappés nativement par Sequelize

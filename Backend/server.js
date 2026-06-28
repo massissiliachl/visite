@@ -1,6 +1,5 @@
 require("dotenv").config();
-// app.js
-console.log("🏷️ VERSION DEPLOY MARKER: 2026-06-28-v3");
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
