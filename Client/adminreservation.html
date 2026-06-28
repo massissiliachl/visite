@@ -1252,7 +1252,7 @@
 
     <script>
         // ============================================================
-        // ADMIN DASHBOARD — VERSION WEB (CORRIGÉE)
+        // ADMIN DASHBOARD — VERSION WEB (CORRIGÉE POUR POSTGRESQL)
         // ============================================================
     
         // ---- API CONFIG ----
@@ -1291,19 +1291,20 @@
                 .replace(/"/g, '&quot;');
         }
 
+        // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
         function normalizeReservation(raw) {
             if (!raw) return raw;
-            const total = parseFloat(raw.totalAPayer ?? raw.totalapayer) || 0;
+            const total = parseFloat(raw.totalAPayer ?? raw.totalAPayer) || 0;
             const versement = parseFloat(raw.versement) || 0;
-            const reste = raw.resteAPayer != null || raw.resteapayer != null
-                ? (parseFloat(raw.resteAPayer ?? raw.resteapayer) || 0)
+            const reste = raw.resteapayer != null || raw.resteAPayer != null
+                ? (parseFloat(raw.resteapayer ?? raw.resteAPayer) || 0)
                 : Math.max(0, total - versement);
             const note = (raw.note && String(raw.note).trim()) || 'Aucune note';
             return {
                 ...raw,
                 totalAPayer: total,
                 versement,
-                resteAPayer: reste,
+                resteapayer: reste,
                 note,
                 paymentStatus: derivePaymentStatus(total, versement, reste)
             };
@@ -1358,7 +1359,6 @@
             editProfile: { nom: '', prenom: '', telephone: '', email: '' },
             todaySelectedDate: new Date().toISOString().split('T')[0],
             showDatePickerToday: false,
-            // Nouveau: pour éviter les re-rendus inutiles
             updatingFromInput: false
         };
     
@@ -1616,7 +1616,6 @@
         // ---- GESTION DES INPUTS SANS RE-RENDU ----
         function updateStateFromInput(field, value) {
             state[field] = value;
-            // Mettre à jour les calculs si nécessaire
             if (field === 'totalAPayer' || field === 'versement') {
                 calculerReste();
             } else if (field === 'boatTotalAPayer' || field === 'boatVersement') {
@@ -1624,7 +1623,7 @@
             }
         }
     
-        // ---- AJOUT RÉSERVATION CLIENT ----
+        // ---- AJOUT RÉSERVATION CLIENT (CORRIGÉ) ----
         async function addReservation() {
             if (!state.nom || !state.prenom) {
                 alert('Veuillez remplir le nom et prénom');
@@ -1638,7 +1637,7 @@
                 alert('Veuillez sélectionner une heure');
                 return;
             }
-    
+
             const total = parseFloat(state.totalAPayer) || 0;
             if (total <= 0) {
                 alert('Veuillez saisir un total > 0 DA');
@@ -1649,10 +1648,11 @@
                 alert('Le versement ne peut pas dépasser le total');
                 return;
             }
-    
+
             const reste = Math.max(0, total - vers);
             const note = state.note.trim() || 'Aucune note';
 
+            // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
             const newRes = {
                 nom: state.nom,
                 prenom: state.prenom,
@@ -1663,26 +1663,30 @@
                 personnes: parseInt(state.personnes) || 1,
                 totalAPayer: total,
                 versement: vers,
-                resteAPayer: reste,
-                note
+                resteapayer: reste,
+                note: note,
+                slot: state.slot || null,
+                subslot: state.subslot || null,
+                bateau: state.bateau || null,
+                duree: state.duree || null
             };
-    
-            console.log("📤 ENVOI API:", newRes);
-    
+
+            console.log("📤 ENVOI API:", JSON.stringify(newRes, null, 2));
+
             try {
                 const saved = normalizeReservation(await apiFetch(API_BASE_URL, {
                     method: 'POST',
                     body: JSON.stringify(newRes)
                 }));
-    
+
                 console.log("✅ REPONSE BACKEND:", saved);
-    
+
                 state.reservations = [...state.reservations, saved];
                 state.filteredReservations = state.reservations;
                 state.boatReservations = state.reservations.filter(r => r.activite === 'Bateau');
                 localStorage.setItem('reservationsData', JSON.stringify(state.reservations));
-    
-                alert(`✅ Réservation ajoutée\nTotal: ${saved.totalAPayer || total} DA\nVersé: ${saved.versement || vers} DA\nReste: ${saved.resteAPayer || reste} DA\nStatut: ${getPaymentStatusText(saved.paymentStatus).text}`);
+
+                alert(`✅ Réservation ajoutée\nTotal: ${saved.totalAPayer || total} DA\nVersé: ${saved.versement || vers} DA\nReste: ${saved.resteapayer || reste} DA\nStatut: ${getPaymentStatusText(saved.paymentStatus).text}`);
                 resetClientForm();
             } catch (err) {
                 console.error('❌ Erreur API:', err);
@@ -1705,7 +1709,7 @@
             render();
         }
     
-        // ---- AJOUT RÉSERVATION BATEAU ----
+        // ---- AJOUT RÉSERVATION BATEAU (CORRIGÉ) ----
         function checkBoatAvailability(date, startTime, boatNum, durationMinutes) {
             if (!date) return false;
             const startTotal = timeToMinutes(startTime);
@@ -1744,7 +1748,7 @@
                 alert('Veuillez sélectionner un créneau');
                 return;
             }
-    
+
             const total = parseFloat(state.boatTotalAPayer) || 0;
             if (total <= 0) {
                 alert('Veuillez saisir un total > 0 DA');
@@ -1755,18 +1759,19 @@
                 alert('Le versement ne peut pas dépasser le total');
                 return;
             }
-    
+
             const reste = Math.max(0, total - vers);
             const note = state.boatNote.trim() || 'Aucune note';
             const durationMinutes = parseInt(state.boatCircuit);
             const startTime = state.boatSelectedTime;
             const boatNum = state.boatNumber;
-    
+
             if (checkBoatAvailability(state.boatDate, startTime, boatNum, durationMinutes)) {
                 alert(`❌ Ce créneau est déjà réservé pour cette date et le bateau ${boatNum} !`);
                 return;
             }
-    
+
+            // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
             const res = {
                 nom: state.boatNom,
                 prenom: state.boatPrenom,
@@ -1780,8 +1785,8 @@
                 duree: durationMinutes + ' min',
                 totalAPayer: total,
                 versement: vers,
-                resteAPayer: reste,
-                note
+                resteapayer: reste,
+                note: note
             };
 
             try {
@@ -1919,7 +1924,7 @@
             }
         }
     
-        // ---- MISE À JOUR STATUT PAIEMENT ----
+        // ---- MISE À JOUR STATUT PAIEMENT (CORRIGÉ) ----
         async function updatePaymentStatus(id, status, amount) {
             const res = state.reservations.find(r => r.id === id);
             if (!res) return;
@@ -1932,7 +1937,7 @@
             } else {
                 res.versement = 0;
             }
-            res.resteAPayer = Math.max(0, total - res.versement);
+            res.resteapayer = Math.max(0, total - res.versement);
             const normalized = normalizeReservation(res);
 
             const updatedReservations = state.reservations.map(r => r.id === id ? normalized : r);
@@ -1946,6 +1951,7 @@
             render();
 
             try {
+                // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
                 const payload = {
                     nom: normalized.nom,
                     prenom: normalized.prenom,
@@ -1960,10 +1966,16 @@
                     duree: normalized.duree || null,
                     totalAPayer: normalized.totalAPayer,
                     versement: normalized.versement,
-                    resteAPayer: normalized.resteAPayer,
+                    resteapayer: normalized.resteapayer,
                     note: normalized.note
                 };
-                await apiFetch(`${API_BASE_URL}/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+                
+                console.log("📤 Mise à jour paiement:", JSON.stringify(payload, null, 2));
+                
+                await apiFetch(`${API_BASE_URL}/${id}`, { 
+                    method: 'PUT', 
+                    body: JSON.stringify(payload) 
+                });
             } catch (e) {
                 console.error('Erreur mise à jour paiement:', e);
             }
@@ -2127,30 +2139,25 @@
             `;
             rootEl.innerHTML = html;
     
-            // --- Attacher les événements après le rendu ---
             attachEvents();
         }
     
         // ---- ATTACHER LES ÉVÉNEMENTS APRÈS RENDU ----
         function attachEvents() {
-            // Événements pour les champs de recherche (sans re-rendu)
             const searchInput = document.getElementById('search-name-input');
             if (searchInput) {
                 searchInput.addEventListener('input', function(e) {
                     state.searchName = this.value;
-                    // Recherche en temps réel sans re-rendu complet
                     const filtered = state.reservations.filter(r => {
                         const q = state.searchName.toLowerCase();
                         return (r.nom && r.nom.toLowerCase().includes(q)) ||
                                (r.prenom && r.prenom.toLowerCase().includes(q));
                     });
                     state.filteredReservations = filtered;
-                    // Mettre à jour uniquement la liste des réservations
                     updateReservationsList();
                 });
             }
     
-            // Événements pour les inputs du formulaire client
             const clientInputs = document.querySelectorAll('.client-input');
             clientInputs.forEach(input => {
                 const handler = function() {
@@ -2166,7 +2173,6 @@
                 if (input.tagName === 'TEXTAREA') input.addEventListener('change', handler);
             });
     
-            // Événements pour les inputs du formulaire bateau
             const boatInputs = document.querySelectorAll('.boat-input');
             boatInputs.forEach(input => {
                 const handler = function() {
@@ -2182,7 +2188,6 @@
                 if (input.tagName === 'TEXTAREA') input.addEventListener('change', handler);
             });
     
-            // Événements pour les date pickers
             document.querySelectorAll('.date-picker-native').forEach(el => {
                 el.addEventListener('change', function(e) {
                     const val = e.target.value;
@@ -2202,7 +2207,6 @@
                 });
             });
     
-            // Événements pour les time pickers
             document.querySelectorAll('.time-picker-native').forEach(el => {
                 el.addEventListener('change', function(e) {
                     const val = e.target.value;
@@ -2245,7 +2249,7 @@
                             <div class="item"><i class="fas fa-tag"></i> <span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 8px;border-radius:10px;font-size:10px;">${r.activite}</span></div>
                             <div class="item"><i class="fas fa-money-bill"></i> Total: ${r.totalAPayer || 0} DA</div>
                             <div class="item"><i class="fas fa-credit-card"></i> Versé: ${r.versement || 0} DA</div>
-                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</span></div>
+                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</span></div>
                             <div class="item"><i class="fas fa-check-circle"></i> <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></div>
                             ${r.note && r.note !== 'Aucune note' ? `<div class="item" style="grid-column:1/-1;"><i class="fas fa-sticky-note"></i> ${escapeHtml(r.note)}</div>` : ''}
                         </div>
@@ -2261,7 +2265,7 @@
             `;
         }
     
-        // ---- RENDU ONGLETS AVEC IDs POUR MISE À JOUR CIBLÉE ----
+        // ---- RENDU ONGLETS ----
     
         function renderToday() {
             const date = state.todaySelectedDate || getTodayStr();
@@ -2284,7 +2288,7 @@
                             <p><span class="label">📞</span> ${r.tel}</p>
                             <p><span class="label">💰</span> Total: ${r.totalAPayer || 0} DA</p>
                             <p><span class="label">💳</span> Versé: ${r.versement || 0} DA</p>
-                            <p><span class="label">📊</span> Reste: ${r.resteAPayer || 0} DA</p>
+                            <p><span class="label">📊</span> Reste: ${r.resteapayer || 0} DA</p>
                             <p><span class="label">✅</span> <span class="payment-badge" style="background:${payment.color};font-size:10px;padding:2px 8px;"><i class="fas ${payment.icon}"></i> ${payment.text}</span></p>
                             ${r.note && r.note !== 'Aucune note' ? `<p><span class="label">📝</span> ${escapeHtml(r.note)}</p>` : ''}
                         </div>
@@ -2316,7 +2320,7 @@
                         <td>${r.personnes}</td>
                         <td>${r.totalAPayer || 0} DA</td>
                         <td>${r.versement || 0} DA</td>
-                        <td class="${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</td>
+                        <td class="${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</td>
                         <td><span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></td>
                     </tr>
                 `;
@@ -2383,7 +2387,7 @@
                             <div class="item"><i class="fas fa-tag"></i> <span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 8px;border-radius:10px;font-size:10px;">${r.activite}</span></div>
                             <div class="item"><i class="fas fa-money-bill"></i> Total: ${r.totalAPayer || 0} DA</div>
                             <div class="item"><i class="fas fa-credit-card"></i> Versé: ${r.versement || 0} DA</div>
-                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</span></div>
+                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</span></div>
                             <div class="item"><i class="fas fa-check-circle"></i> <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></div>
                             ${r.note && r.note !== 'Aucune note' ? `<div class="item" style="grid-column:1/-1;"><i class="fas fa-sticky-note"></i> ${escapeHtml(r.note)}</div>` : ''}
                         </div>
@@ -2841,7 +2845,7 @@
                                 <h4>💰 Paiement</h4>
                                 <div class="detail-row"><i class="fas fa-money-bill"></i><span class="label">Total à payer:</span><span class="value">${r.totalAPayer || 0} DA</span></div>
                                 <div class="detail-row"><i class="fas fa-credit-card"></i><span class="label">Versement:</span><span class="value">${r.versement || 0} DA</span></div>
-                                <div class="detail-row"><i class="fas fa-arrow-down"></i><span class="label">Reste à payer:</span><span class="value ${(r.resteAPayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteAPayer || 0} DA</span></div>
+                                <div class="detail-row"><i class="fas fa-arrow-down"></i><span class="label">Reste à payer:</span><span class="value ${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</span></div>
                                 <div class="detail-row"><i class="fas fa-check-circle"></i><span class="label">Statut:</span><span class="value"><span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></span></div>
 
                                 <div class="payment-actions">

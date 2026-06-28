@@ -136,9 +136,9 @@ function buildPayload(body) {
         subslot: getStringValue(body, 'subslot', 'subslot') || null,
         bateau: getStringValue(body, 'bateau', 'bateau') || null,
         duree: getStringValue(body, 'duree', 'duree') || null,
-        totalapayer: totalAPayer,
+        totalAPayer: totalAPayer,
         versement: versement,
-        resteapayer: resteFinal,
+        resteAPayer: resteFinal,
         note: getStringValue(body, 'note', 'note') || "Aucune note"
     };
     
@@ -156,7 +156,7 @@ function buildPayload(body) {
  * Valide les données de paiement
  */
 function validatePayment(payload) {
-    const total = parseFloat(payload.totalapayer) || 0;
+    const total = parseFloat(payload.totalAPayer) || 0;
     const vers = parseFloat(payload.versement) || 0;
     
     // Validation du nom
@@ -530,9 +530,9 @@ exports.getReservationsStats = async (req, res) => {
             stats.byActivity[res.activite] = (stats.byActivity[res.activite] || 0) + 1;
             
             // Revenus
-            const total = parseFloat(res.totalapayer) || 0;
+            const total = parseFloat(res.totalAPayer) || 0;
             const versement = parseFloat(res.versement) || 0;
-            const reste = parseFloat(res.resteapayer) || 0;
+            const reste = parseFloat(res.resteAPayer) || 0;
             
             stats.totalRevenue += total;
             stats.totalPaid += versement;

@@ -1,3 +1,4 @@
+// ReservationAdmin.js - VERSION FINALE CORRIGÉE
 const { DataTypes } = require("sequelize");
 const sequelize = require("./database");
 
@@ -46,33 +47,59 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
     type: DataTypes.STRING,
     allowNull: true
   },
-  totalAPayer: {
+  
+  // ✅ Seul le champ en minuscules existe en base
+  totalapayer: {
     type: DataTypes.DECIMAL(10,2),
     field: "totalapayer",
     defaultValue: 0,
-    allowNull:false
+    allowNull: false
   },
   
   versement: {
     type: DataTypes.DECIMAL(10,2),
-    field:"versement",
-    defaultValue:0,
-    allowNull:false
+    field: "versement",
+    defaultValue: 0,
+    allowNull: false
   },
   
-  resteAPayer: {
+  resteapayer: {
     type: DataTypes.DECIMAL(10,2),
-    field:"resteapayer",
-    defaultValue:0,
-    allowNull:false
+    field: "resteapayer",
+    defaultValue: 0,
+    allowNull: false
   },
   
-  note:{
-   type:DataTypes.TEXT,
-   field:"note"
-  }}, {
+  note: {
+    type: DataTypes.TEXT,
+    field: "note",
+    allowNull: true
+  }
+}, {
   tableName: "ReservationAdmins",
-  timestamps: true
+  timestamps: true,
+  
+  // ✅ Hook pour normaliser les noms de champs
+  hooks: {
+    beforeValidate: (instance, options) => {
+      // Copier les valeurs camelCase vers snake_case
+      if (instance.dataValues.totalAPayer !== undefined) {
+        instance.totalapayer = instance.dataValues.totalAPayer;
+        delete instance.dataValues.totalAPayer;
+      }
+      
+      if (instance.dataValues.resteAPayer !== undefined) {
+        instance.resteapayer = instance.dataValues.resteAPayer;
+        delete instance.dataValues.resteAPayer;
+      }
+      
+      // Gérer le cas où Note est envoyé
+      if (instance.dataValues.Note !== undefined) {
+        instance.note = instance.dataValues.Note;
+        delete instance.dataValues.Note;
+      }
+    }
+  }
 });
 
 module.exports = ReservationAdmin;
