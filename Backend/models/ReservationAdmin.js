@@ -1,7 +1,6 @@
-// ReservationAdmin.js - VERSION FINALE CORRIGÉE
 const { DataTypes } = require("sequelize");
 const sequelize = require("./database");
-
+console.log("🔥🔥🔥 MODELE CHARGÉ - VERSION CAMELCASE -", new Date().toISOString());
 const ReservationAdmin = sequelize.define("ReservationAdmin", {
   nom: {
     type: DataTypes.STRING,
@@ -47,29 +46,29 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
     type: DataTypes.STRING,
     allowNull: true
   },
-  
-  // ✅ Seul le champ en minuscules existe en base
-  totalapayer: {
-    type: DataTypes.DECIMAL(10,2),
+
+  // ✅ Attribut JS en camelCase, mappé vers la colonne SQL existante en minuscule
+  totalAPayer: {
+    type: DataTypes.DECIMAL(10, 2),
     field: "totalapayer",
     defaultValue: 0,
     allowNull: false
   },
-  
+
   versement: {
-    type: DataTypes.DECIMAL(10,2),
+    type: DataTypes.DECIMAL(10, 2),
     field: "versement",
     defaultValue: 0,
     allowNull: false
   },
-  
-  resteapayer: {
-    type: DataTypes.DECIMAL(10,2),
+
+  resteAPayer: {
+    type: DataTypes.DECIMAL(10, 2),
     field: "resteapayer",
     defaultValue: 0,
     allowNull: false
   },
-  
+
   note: {
     type: DataTypes.TEXT,
     field: "note",
@@ -77,29 +76,10 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
   }
 }, {
   tableName: "ReservationAdmins",
-  timestamps: true,
-  
-  // ✅ Hook pour normaliser les noms de champs
-  hooks: {
-    beforeValidate: (instance, options) => {
-      // Copier les valeurs camelCase vers snake_case
-      if (instance.dataValues.totalAPayer !== undefined) {
-        instance.totalapayer = instance.dataValues.totalAPayer;
-        delete instance.dataValues.totalAPayer;
-      }
-      
-      if (instance.dataValues.resteAPayer !== undefined) {
-        instance.resteapayer = instance.dataValues.resteAPayer;
-        delete instance.dataValues.resteAPayer;
-      }
-      
-      // Gérer le cas où Note est envoyé
-      if (instance.dataValues.Note !== undefined) {
-        instance.note = instance.dataValues.Note;
-        delete instance.dataValues.Note;
-      }
-    }
-  }
+  timestamps: true
+  // Pas de hooks : le contrôleur envoie déjà les bons noms d'attributs
+  // (totalAPayer, resteAPayer) qui sont mappés nativement par Sequelize
+  // vers les colonnes SQL "totalapayer" / "resteapayer" via `field`.
 });
 
 module.exports = ReservationAdmin;
