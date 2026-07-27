@@ -1,12 +1,13 @@
 // controllers/propertyReservationController.js
 const { PropertyReservation, Property } = require("../models");
+const nodemailer = require("nodemailer");
 
 /* =========================
    PHONE FORMAT
 ========================= */
 function formatPhone(phone) {
   if (!phone) return null;
-  phone = phone.replace(/\s/g, "");
+  phone = String(phone).replace(/[\s.\-()]/g, "");
   if (phone.startsWith("0")) {
     return "213" + phone.substring(1);
   }
@@ -16,32 +17,51 @@ function formatPhone(phone) {
   return phone;
 }
 
+function isValidWhatsAppPhone(phone) {
+  const formatted = formatPhone(phone);
+  if (!formatted) return false;
+  // Numéro international : 8 à 15 chiffres
+  return /^[1-9]\d{7,14}$/.test(formatted);
+}
+
 const BUSINESS_WHATSAPP_DISPLAY = "+213 660 43 48 72";
 
+const emailTransporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: { rejectUnauthorized: false }
+});
+
 /* =========================
-   WHATSAPP MESSAGE
+   MESSAGE CLIENT
 ========================= */
 function formatDateFr(dateStr) {
   if (!dateStr) return "—";
   return new Date(dateStr).toLocaleDateString("fr-FR");
 }
 
-function generateWhatsAppMessage(status, reservation) {
+function generateClientMessage(status, reservation) {
   const nom = `${reservation.nom || ""} ${reservation.prenom || ""}`.trim();
   const propertyName = reservation.Property?.title || "votre hébergement";
   const arrivee = formatDateFr(reservation.date_arrivee);
   const depart = formatDateFr(reservation.date_depart);
+  const nb = reservation.nb_personnes || 1;
 
   if (status === "acceptee" || status === "en_attente") {
     const greeting = nom ? `Bonjour ${nom},\n\n` : "Bonjour,\n\n";
-    return `${greeting}c'est Visite Bejaia.\n\nNous avons reçu votre demande de réservation de *${propertyName}* du ${arrivee} jusqu'au ${depart} pour ${reservation.nb_personnes || 1} personne${(reservation.nb_personnes || 1) > 1 ? "s" : ""}.`;
+    return `${greeting}c'est Visite Bejaia.\n\nNous avons reçu votre demande de réservation de ${propertyName} du ${arrivee} jusqu'au ${depart} pour ${nb} personne${nb > 1 ? "s" : ""}.`;
   }
   if (status === "refusee") {
     return `Bonjour${nom ? ` ${nom}` : ""},
 
 c'est Visite Bejaia.
 
-Nous sommes désolés, votre demande de réservation pour *${propertyName}* du ${arrivee} jusqu'au ${depart} n'a pas pu être acceptée.
+Nous sommes désolés, votre demande de réservation pour ${propertyName} du ${arrivee} jusqu'au ${depart} n'a pas pu être acceptée.
 
 Pour d'autres disponibilités, contactez-nous au ${BUSINESS_WHATSAPP_DISPLAY}.`;
   }
@@ -52,10 +72,49 @@ Pour d'autres disponibilités, contactez-nous au ${BUSINESS_WHATSAPP_DISPLAY}.`;
    WHATSAPP LINK
 ========================= */
 function generateWhatsAppLink(phone, status, reservation) {
+  if (!isValidWhatsAppPhone(phone)) return null;
   const formattedPhone = formatPhone(phone);
-  const message = generateWhatsAppMessage(status, reservation);
+  const message = generateClientMessage(status, reservation);
   if (!formattedPhone || !message) return null;
   return `https://wa.me/${formattedPhone}?text=${encodeURIComponent(message)}`;
+}
+
+/* =========================
+   EMAIL FALLBACK
+========================= */
+async function sendReservationEmail(reservation, status) {
+  const to = reservation.email;
+  if (!to || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    return { sent: false, reason: "email_ou_config_manquant" };
+  }
+
+  const message = generateClientMessage(status, reservation);
+  if (!message) return { sent: false, reason: "message_vide" };
+
+  const subject =
+    status === "refusee"
+      ? "Visite Bejaia — Votre demande de réservation"
+      : "Visite Bejaia — Confirmation de réception de votre demande";
+
+  const info = await emailTransporter.sendMail({
+    from: `"Visit Béjaïa" <${process.env.EMAIL_USER}>`,
+    to,
+    subject,
+    text: message,
+    html: `
+      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;">
+        <div style="background:linear-gradient(135deg,#1a3a6b,#d32f2f);color:white;padding:20px;text-align:center;border-radius:10px 10px 0 0;">
+          <h2 style="margin:0;">Visit Béjaïa</h2>
+        </div>
+        <div style="background:#f5f5f5;padding:20px;border-radius:0 0 10px 10px;">
+          ${message.replace(/\n/g, "<br>")}
+          <p style="margin-top:24px;">WhatsApp : ${BUSINESS_WHATSAPP_DISPLAY}</p>
+        </div>
+      </div>
+    `
+  });
+
+  return { sent: true, messageId: info.messageId };
 }
 
 /* =========================
@@ -220,22 +279,40 @@ exports.updateStatus = async (req, res) => {
     }
 
     const oldStatus = reservation.status;
-    await reservation.update({ status: req.body.status });
+    const newStatus = req.body.status;
+    await reservation.update({ status: newStatus });
 
-    // Générer le lien WhatsApp avec le prix total
     const whatsappLink = generateWhatsAppLink(
       reservation.telephone,
-      req.body.status,
+      newStatus,
       reservation
     );
 
-    console.log(`📱 Statut mis à jour: ${oldStatus} → ${req.body.status}`);
+    let emailSent = false;
+    let emailError = null;
+
+    // Si le numéro WhatsApp est invalide/absent → envoi par email
+    if (!whatsappLink) {
+      try {
+        const emailResult = await sendReservationEmail(reservation, newStatus);
+        emailSent = !!emailResult.sent;
+        if (!emailSent) emailError = emailResult.reason || "echec_envoi";
+        console.log(emailSent ? `📧 Email envoyé à ${reservation.email}` : `⚠️ Email non envoyé: ${emailError}`);
+      } catch (mailErr) {
+        emailError = mailErr.message;
+        console.error("❌ Erreur envoi email fallback:", mailErr);
+      }
+    }
+
+    console.log(`📱 Statut mis à jour: ${oldStatus} → ${newStatus}`);
     console.log(`💰 Prix total: ${reservation.prix_total} DZD`);
 
     return res.json({
       success: true,
       message: "Statut mis à jour",
       whatsappLink,
+      emailSent,
+      emailError,
       data: reservation
     });
 
