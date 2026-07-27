@@ -165,6 +165,8 @@
         .btn-refuse:hover { background: #fee2e2; }
         .btn-view { color: #3b82f6; }
         .btn-view:hover { background: #eff6ff; }
+        .btn-whatsapp { color: #25d366; }
+        .btn-whatsapp:hover { background: #dcfce7; }
 
         .btn-primary {
             background: #f97316;
@@ -1034,6 +1036,7 @@
             ? 'http://localhost:3000/api'
             : 'https://visitebejai.onrender.com/api';
         const PROPERTY_API = `${API_BASE}/property-reservations`;
+        const BUSINESS_WHATSAPP_DISPLAY = '+213 660 43 48 72';
         
         let reservationsData = [];
         let propertyReservations = [];
@@ -1080,6 +1083,47 @@
             const end = new Date(endDate);
             const diffTime = Math.abs(end - start);
             return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        function formatPhoneForWhatsApp(phone) {
+            if (!phone) return null;
+            let cleaned = String(phone).replace(/\s/g, '');
+            if (cleaned.startsWith('0')) return '213' + cleaned.substring(1);
+            if (cleaned.startsWith('+')) return cleaned.replace('+', '');
+            return cleaned;
+        }
+
+        function buildPropertyWhatsAppLink(reservation, status) {
+            const phone = formatPhoneForWhatsApp(reservation.telephone);
+            if (!phone) return null;
+
+            const nom = `${reservation.nom || ''} ${reservation.prenom || ''}`.trim();
+            const propertyName = reservation.Property?.title || 'votre hébergement';
+            const arrivee = reservation.date_arrivee
+                ? new Date(reservation.date_arrivee).toLocaleDateString('fr-FR')
+                : '—';
+            const depart = reservation.date_depart
+                ? new Date(reservation.date_depart).toLocaleDateString('fr-FR')
+                : '—';
+            const nb = reservation.nb_personnes || 1;
+
+            let message = '';
+            if (status === 'acceptee' || status === 'en_attente') {
+                const greeting = nom ? `Bonjour ${nom},\n\n` : 'Bonjour,\n\n';
+                message = `${greeting}c'est Visite Bejaia.\n\nNous avons reçu votre demande de réservation de *${propertyName}* du ${arrivee} jusqu'au ${depart} pour ${nb} personne${nb > 1 ? 's' : ''}.`;
+            } else if (status === 'refusee') {
+                message = `Bonjour${nom ? ` ${nom}` : ''},\n\nc'est Visite Bejaia.\n\nNous sommes désolés, votre demande de réservation pour *${propertyName}* du ${arrivee} jusqu'au ${depart} n'a pas pu être acceptée.\n\nPour d'autres disponibilités, contactez-nous au ${BUSINESS_WHATSAPP_DISPLAY}.`;
+            }
+
+            return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        }
+
+        function openWhatsAppLink(link) {
+            if (!link) {
+                alert('❌ Aucun numéro de téléphone pour ce client.');
+                return;
+            }
+            window.open(link, '_blank');
         }
 
         function convertFileToBase64(file) {
@@ -1449,6 +1493,7 @@
                         <td><span class="status-badge ${statusClass}">${statusLabel}<\/span><\/td>
                         <td class="action-btns">
                             <button class="btn-icon btn-view" onclick="viewPropertyDetails(${res.id})"><i class="fas fa-eye"><\/i><\/button>
+                            ${res.telephone ? `<button class="btn-icon btn-whatsapp" title="Contacter sur WhatsApp" onclick="openWhatsAppLink(buildPropertyWhatsAppLink(propertyReservations.find(r => r.id === ${res.id}), 'en_attente'))"><i class="fab fa-whatsapp"><\/i><\/button>` : ''}
                             ${res.status === 'en_attente' ? `
                                 <button class="btn-icon btn-accept" onclick="updatePropertyStatus(${res.id}, 'acceptee')"><i class="fas fa-check-circle"><\/i><\/button>
                                 <button class="btn-icon btn-refuse" onclick="updatePropertyStatus(${res.id}, 'refusee')"><i class="fas fa-times-circle"><\/i><\/button>
@@ -1489,11 +1534,24 @@
                     body: JSON.stringify({ status: newStatus })
                 });
                 if (!response.ok) throw new Error('Erreur');
+                const result = await response.json();
                 const index = propertyReservations.findIndex(r => r.id === id);
-                if (index !== -1) propertyReservations[index].status = newStatus;
+                if (index !== -1) {
+                    propertyReservations[index].status = newStatus;
+                    if (result.data) propertyReservations[index] = { ...propertyReservations[index], ...result.data };
+                }
                 renderPropertyStats();
                 renderPropertyReservations();
-                alert(`✅ Réservation ${newStatus === 'acceptee' ? 'acceptée' : 'refusée'}.`);
+
+                const whatsappLink = result.whatsappLink
+                    || buildPropertyWhatsAppLink(propertyReservations.find(r => r.id === id), newStatus);
+
+                if (whatsappLink) {
+                    openWhatsAppLink(whatsappLink);
+                    alert(`✅ Réservation ${newStatus === 'acceptee' ? 'acceptée' : 'refusée'}.\n\n📱 WhatsApp s'ouvre avec le message pré-rempli — appuyez sur Envoyer pour le client.`);
+                } else {
+                    alert(`✅ Réservation ${newStatus === 'acceptee' ? 'acceptée' : 'refusée'}.\n\n⚠️ Pas de numéro de téléphone pour envoyer le message WhatsApp.`);
+                }
             } catch (err) {
                 alert("❌ Erreur lors de la modification.");
             }
@@ -2286,6 +2344,8 @@
         window.deleteReservation = deleteReservation;
         window.viewDetails = viewDetails;
         window.updatePropertyStatus = updatePropertyStatus;
+        window.openWhatsAppLink = openWhatsAppLink;
+        window.buildPropertyWhatsAppLink = buildPropertyWhatsAppLink;
         window.deletePropertyReservation = deletePropertyReservation;
         window.viewPropertyDetails = viewPropertyDetails;
         window.blockDate = blockDate;

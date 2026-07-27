@@ -16,15 +16,34 @@ function formatPhone(phone) {
   return phone;
 }
 
+const BUSINESS_WHATSAPP_DISPLAY = "+213 660 43 48 72";
+
 /* =========================
    WHATSAPP MESSAGE
 ========================= */
+function formatDateFr(dateStr) {
+  if (!dateStr) return "—";
+  return new Date(dateStr).toLocaleDateString("fr-FR");
+}
+
 function generateWhatsAppMessage(status, reservation) {
-  if (status === "acceptee") {
-    return `Bonjour 👋, c'est Visit Bejaia. Votre réservation pour ${reservation.nom} ${reservation.prenom} a été acceptée ✅. Montant total: ${reservation.prix_total} DZD.`;
+  const nom = `${reservation.nom || ""} ${reservation.prenom || ""}`.trim();
+  const propertyName = reservation.Property?.title || "votre hébergement";
+  const arrivee = formatDateFr(reservation.date_arrivee);
+  const depart = formatDateFr(reservation.date_depart);
+
+  if (status === "acceptee" || status === "en_attente") {
+    const greeting = nom ? `Bonjour ${nom},\n\n` : "Bonjour,\n\n";
+    return `${greeting}c'est Visite Bejaia.\n\nNous avons reçu votre demande de réservation de *${propertyName}* du ${arrivee} jusqu'au ${depart} pour ${reservation.nb_personnes || 1} personne${(reservation.nb_personnes || 1) > 1 ? "s" : ""}.`;
   }
   if (status === "refusee") {
-    return `Bonjour 👋, c'est Visit Bejaia. Votre réservation pour ${reservation.nom} ${reservation.prenom} a été refusée ❌.`;
+    return `Bonjour${nom ? ` ${nom}` : ""},
+
+c'est Visite Bejaia.
+
+Nous sommes désolés, votre demande de réservation pour *${propertyName}* du ${arrivee} jusqu'au ${depart} n'a pas pu être acceptée.
+
+Pour d'autres disponibilités, contactez-nous au ${BUSINESS_WHATSAPP_DISPLAY}.`;
   }
   return "";
 }
