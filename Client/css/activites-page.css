@@ -1,0 +1,388 @@
+/* Page activités — Visit Béjaïa (sans promo) */
+
+:root {
+    --navy: #1a3a6b;
+    --navy-light: #2d5a9f;
+    --accent: #c8272c;
+    --accent-dark: #9c1f23;
+    --sun: #f4a03c;
+    --cream: #f4f7f8;
+    --text: #2c3e3d;
+    --text-muted: #5c6b66;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.ferme-focus-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem 1.25rem;
+    margin: 0 0 1.25rem;
+    padding: 1rem 1.15rem;
+    background: #fff;
+    border: 1px solid rgba(26, 58, 107, 0.1);
+    border-left: 3px solid var(--sun);
+    border-radius: 1rem;
+    box-shadow: 0 10px 28px rgba(26, 58, 107, 0.06);
+}
+
+.ferme-focus-banner[hidden] {
+    display: none !important;
+}
+
+.ferme-focus-banner strong {
+    display: block;
+    color: var(--navy);
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.ferme-focus-banner p {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    margin: 0;
+}
+
+.ferme-focus-clear {
+    border: 0;
+    background: var(--navy);
+    color: #fff;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.ferme-focus-clear:hover {
+    background: var(--accent);
+}
+    padding: 1.5rem 1.25rem 4rem;
+}
+
+/* ===== HERO ===== */
+.hero-section {
+    position: relative;
+    min-height: min(92svh, 780px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 6rem 1.25rem 5rem;
+}
+
+.hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.06);
+    animation: heroKenBurns 20s ease-out forwards;
+    will-change: transform;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(180deg, rgba(8, 22, 45, 0.35) 0%, rgba(8, 22, 45, 0.45) 45%, rgba(8, 22, 45, 0.7) 100%),
+        linear-gradient(90deg, rgba(8, 22, 45, 0.35) 0%, transparent 55%);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 720px;
+    padding: 0 0.5rem;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--navy);
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+    animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 8vw, 4.5rem);
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.9rem;
+    line-height: 1.08;
+    text-shadow: 0 10px 30px rgba(0, 20, 40, 0.35);
+    animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+}
+
+.hero-content h1 span { color: #f0b429; }
+
+.hero-content p {
+    color: rgba(255, 250, 240, 0.9);
+    font-size: clamp(0.98rem, 2.5vw, 1.12rem);
+    font-weight: 300;
+    max-width: 34rem;
+    margin: 0 auto 1.6rem;
+    line-height: 1.6;
+    animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background: rgba(26, 58, 107, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(240, 180, 41, 0.75);
+    color: #fff;
+    padding: 0.9rem 1.4rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    transition: background 0.25s ease, transform 0.25s ease;
+    animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both;
+}
+
+.hero-cta:hover {
+    background: var(--navy);
+    transform: translateY(-2px);
+}
+
+.hero-wave {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    z-index: 3;
+    color: #fff;
+    line-height: 0;
+    pointer-events: none;
+}
+
+.hero-wave svg {
+    display: block;
+    width: 100%;
+    height: clamp(42px, 7vw, 72px);
+}
+
+@keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroKenBurns {
+    from { transform: scale(1.06); }
+    to { transform: scale(1); }
+}
+
+/* ===== LISTE ===== */
+.activities-sheet {
+    position: relative;
+    z-index: 4;
+    background: #fff;
+    margin-top: 0;
+    padding-top: 0.5rem;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.activities-page-header {
+    text-align: center;
+    margin: 1.25rem 0 0.25rem;
+}
+
+.activities-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.activities-page-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+}
+
+.activities-page-header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 28rem;
+    margin: 0 auto;
+}
+
+.section-divider {
+    width: 48px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--sun));
+    margin: 0.85rem auto 0;
+    border-radius: 3px;
+}
+
+.filter-section {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin: 1.35rem 0 1.1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.15rem 0.1rem 0.55rem;
+    scrollbar-width: none;
+}
+
+.filter-section::-webkit-scrollbar { display: none; }
+
+.filter-btn {
+    background: rgba(244, 247, 248, 0.95);
+    border: 1px solid rgba(26, 58, 107, 0.1);
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: inherit;
+}
+
+.filter-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    display: inline-flex;
+}
+
+.filter-icon svg { width: 100%; height: 100%; display: block; }
+
+.filter-btn[data-filter="mer"] .filter-icon { color: #1d6fb8; }
+.filter-btn[data-filter="terre"] .filter-icon { color: #2f8f5b; }
+.filter-btn[data-filter="culture"] .filter-icon { color: #b07a2a; }
+.filter-btn[data-filter="all"] .filter-icon { color: var(--navy); }
+
+.filter-btn.active {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+}
+
+.filter-btn.active .filter-icon { color: #fff; }
+
+.filter-btn:hover:not(.active) {
+    background: #fff;
+    color: var(--navy);
+    transform: translateY(-1px);
+}
+
+.filter-btn.filter-pop {
+    animation: filterPop 0.35s ease;
+}
+
+@keyframes filterPop {
+    40% { transform: scale(1.06); }
+}
+
+.activity-card.glass-card.card-swap {
+    animation: cardSwapIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 0.06s);
+}
+
+@keyframes cardSwapIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.94); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (min-width: 768px) {
+    .filter-section {
+        justify-content: center;
+        overflow: visible;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 78svh;
+        padding: 5.5rem 1rem 4rem;
+    }
+
+    /* Page activités : cartes en pile verticale */
+    .activities-sheet .activities-showcase {
+        margin: 0;
+        padding: 0;
+    }
+
+    .activities-sheet .activities-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.15rem;
+        padding: 0.5rem 0 1.25rem;
+        overflow: visible;
+        scroll-snap-type: none;
+    }
+
+    .activities-sheet .activity-card.glass-card {
+        flex: none;
+        width: 100%;
+        min-height: 360px;
+    }
+
+    .activities-sheet .activities-dots {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-bg-image,
+    .hero-badge,
+    .hero-content h1,
+    .hero-content p,
+    .hero-cta {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

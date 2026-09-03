@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard Immobilier · Villas & Appartements</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+  :root{
+    --navy:#10243a;
+    --navy-2:#16324a;
+    --accent:#2563eb;
+    --accent-dark:#1d4ed8;
+    --teal:#0d9488;
+    --bg:#f4f6f9;
+    --panel:#ffffff;
+    --border:#e2e8f0;
+    --text:#0f172a;
+    --muted:#64748b;
+    --gray-block:#eceff2;
+    --gray-block-text:#94a3b8;
+    --amber:#d97706;
+    --amber-bg:#fef3c7;
+    --green:#16a34a;
+    --red:#dc2626;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Segoe UI', Roboto, system-ui, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+
+  .app{ display:flex; min-height:100vh; }
+  .sidebar{
+    width:230px; background:var(--navy); color:#cbd8e3;
+    padding:28px 20px; flex-shrink:0;
+    display:flex; flex-direction:column; gap:24px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; color:#fff; font-weight:700; font-size:18px; }
+  .brand i{ color:var(--teal); font-size:20px; }
+  .sidebar-stats{ display:flex; flex-direction:column; gap:10px; }
+  .sidebar-stat{ background:rgba(255,255,255,0.05); border-radius:12px; padding:12px 14px; }
+  .sidebar-stat .num{ font-size:22px; font-weight:700; color:#fff; }
+  .sidebar-stat .lbl{ font-size:12px; color:#9fb2c4; margin-top:2px; }
+
+  .sidebar-section-label{ font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#6b8299; font-weight:700; margin-bottom:2px; }
+  .sidebar-nav{ display:flex; flex-direction:column; gap:4px; }
+  .sidebar-nav button{
+    background:none; border:none; color:#a9bccc; text-align:left;
+    padding:10px 12px; border-radius:10px; font-size:13px; cursor:pointer;
+    display:flex; align-items:center; gap:10px; width:100%;
+  }
+  .sidebar-nav button.active, .sidebar-nav button:hover{ background:rgba(255,255,255,0.08); color:#fff; }
+  .sidebar-nav.tabs button.active{ background:var(--teal); color:#fff; }
+
+  .main{ flex:1; padding:32px 40px; max-width:1400px; }
+
+  .topbar{ display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between; align-items:center; margin-bottom:28px; }
+  .topbar h1{ font-size:24px; color:var(--navy); font-weight:700; }
+  .topbar p{ font-size:13px; color:var(--muted); margin-top:2px; }
+  .topbar-actions{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .search-wrap{ position:relative; }
+  .search-wrap input{ padding:10px 14px 10px 36px; border-radius:10px; border:1px solid var(--border); font-size:14px; width:230px; background:#fff; }
+  .search-wrap i{ position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:13px; }
+
+  .btn-primary{ background:var(--accent); border:none; color:#fff; padding:10px 20px; border-radius:10px; font-weight:600; font-size:14px; display:flex; align-items:center; gap:8px; cursor:pointer; }
+  .btn-primary:hover{ background:var(--accent-dark); }
+  .btn-secondary{ background:#fff; border:1px solid var(--border); color:var(--navy-2); padding:10px 16px; border-radius:10px; font-weight:500; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:8px; }
+  .btn-secondary:hover{ background:#f1f5f9; }
+  .btn-success{ background:var(--green); border:none; color:#fff; padding:10px 20px; border-radius:10px; font-weight:600; font-size:14px; display:flex; align-items:center; gap:8px; cursor:pointer; }
+  .btn-success:hover{ background:#15803d; }
+  .btn-danger{ background:var(--red); border:none; color:#fff; padding:10px 20px; border-radius:10px; font-weight:600; font-size:14px; display:flex; align-items:center; gap:8px; cursor:pointer; }
+  .btn-danger:hover{ background:#b91c1c; }
+
+  section.view{ display:none; }
+  section.view.active{ display:block; }
+
+  .cards-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:20px; }
+  .property-card{ background:var(--panel); border-radius:16px; overflow:hidden; border:1px solid var(--border); cursor:pointer; transition:.15s; display:flex; flex-direction:column; }
+  .property-card:hover{ box-shadow:0 12px 30px rgba(16,36,58,0.10); transform:translateY(-3px); border-color:#cbd5e1; }
+  .card-image{ width:100%; height:160px; background:var(--gray-block); display:flex; align-items:center; justify-content:center; color:var(--gray-block-text); overflow:hidden; }
+  .card-image img{ width:100%; height:100%; object-fit:cover; }
+  .card-body{ padding:16px; display:flex; flex-direction:column; gap:8px; }
+  .card-title{ font-weight:700; font-size:15px; color:var(--navy); }
+  .card-meta{ display:flex; flex-direction:column; gap:4px; font-size:12.5px; color:var(--muted); }
+  .card-meta span{ display:flex; align-items:center; gap:6px; }
+  .card-meta i{ width:14px; color:var(--teal); font-size:11px; }
+  .card-footer{ display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding-top:10px; border-top:1px solid var(--border); }
+  .price{ font-weight:700; color:var(--navy); font-size:14px; }
+  .pill{ padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; white-space:nowrap; }
+  .pill.dispo{ background:#dcfce7; color:#15803d; }
+  .pill.indispo{ background:#f1f5f9; color:var(--gray-block-text); }
+  .pill.villa{ background:#dbeafe; color:#1d4ed8; }
+  .pill.appartement{ background:#fce7f3; color:#be185d; }
+  .pill.chalet{ background:#d1fae5; color:#065f46; }
+
+  .empty-state{ grid-column:1/-1; text-align:center; padding:70px 20px; color:var(--muted); }
+  .empty-state i{ font-size:40px; opacity:.3; margin-bottom:10px; display:block; }
+
+  .overlay{ display:none; position:fixed; inset:0; background:rgba(10,20,35,0.5); z-index:100; align-items:center; justify-content:center; padding:20px; }
+  .overlay.active{ display:flex; }
+  .panel{ background:#fff; border-radius:22px; width:100%; box-shadow:0 30px 70px rgba(0,0,0,0.25); max-height:92vh; overflow-y:auto; position:relative; }
+  .panel.detail{ max-width:760px; padding:28px 32px; }
+  .panel.form{ max-width:520px; padding:26px 28px; }
+  .panel.large{ max-width:700px; }
+
+  .close-btn{ position:absolute; top:16px; right:16px; background:#f1f5f9; border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; color:var(--navy-2); }
+  .close-btn:hover{ background:#e2e8f0; }
+
+  .detail-head{ display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px; }
+  .detail-image{ width:150px; height:150px; border-radius:16px; overflow:hidden; background:var(--gray-block); flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--gray-block-text); }
+  .detail-image img{ width:100%; height:100%; object-fit:cover; }
+  .detail-info h2{ font-size:20px; color:var(--navy); margin-bottom:6px; }
+  .detail-info .row{ display:flex; gap:18px; flex-wrap:wrap; font-size:13.5px; color:var(--muted); margin-bottom:6px; }
+  .detail-info .row i{ color:var(--teal); margin-right:5px; width:14px; }
+
+  .cal-legend{ display:flex; gap:16px; font-size:12px; color:var(--muted); margin:18px 0 6px; flex-wrap:wrap; }
+  .legend-dot{ width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:5px; }
+  .legend-dot.avail{ background:#bbf7d0; border:1px solid #4ade80; }
+  .legend-dot.unavail{ background:var(--gray-block); border:1px solid #cbd5e1; }
+  .legend-dot.reserved{ background:#bfdbfe; border:1px solid #60a5fa; }
+
+  .cal-month-nav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .cal-month-label{ font-weight:700; color:var(--navy); font-size:14px; }
+  .cal-nav-btn{ background:#f1f5f9; border:none; border-radius:8px; width:28px; height:28px; cursor:pointer; color:var(--navy-2); }
+  .cal-nav-btn:hover{ background:#e2e8f0; }
+  .calendar-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .cal-day-label{ font-size:11px; font-weight:700; text-transform:uppercase; color:var(--muted); text-align:center; padding:4px 0; }
+  .calendar-day{ aspect-ratio:1/1; min-height:38px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; border-radius:10px; cursor:pointer; border:1px solid transparent; transition:.1s; }
+  .calendar-day.available{ background:#dcfce7; color:#15803d; border-color:#bbf7d0; }
+  .calendar-day.available:hover{ background:#bbf7d0; }
+  .calendar-day.unavailable{ background:var(--gray-block); color:var(--gray-block-text); border-color:#e2e8f0; }
+  .calendar-day.unavailable:hover{ background:#e2e8f0; }
+  .calendar-day.reserved{ background:#bfdbfe; color:#1d4ed8; border-color:#93c5fd; }
+  .calendar-day.reserved:hover{ background:#93c5fd; }
+  .calendar-day.today{ box-shadow:inset 0 0 0 2px var(--accent); }
+  .calendar-day.empty-cell{ background:transparent; cursor:default; }
+
+  .detail-actions{ display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
+  .btn-sm{ background:#f1f5f9; border:none; padding:9px 16px; border-radius:10px; font-size:13px; font-weight:500; color:var(--navy-2); cursor:pointer; display:flex; align-items:center; gap:7px; }
+  .btn-sm:hover{ background:#e2e8f0; }
+  .btn-sm.danger{ background:#fee2e2; color:#b91c1c; }
+  .btn-sm.danger:hover{ background:#fecaca; }
+  .btn-sm.primary{ background:var(--accent); color:#fff; }
+  .btn-sm.primary:hover{ background:var(--accent-dark); }
+
+  .form-group{ display:flex; flex-direction:column; gap:5px; margin-bottom:14px; }
+  .form-row{ display:flex; gap:12px; }
+  .form-row .form-group{ flex:1; }
+  .form-group label{ font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.02em; }
+  .form-group input, .form-group select, .form-group textarea{ padding:10px 12px; border:1px solid var(--border); border-radius:10px; font-size:14px; font-family:inherit; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,0.12); }
+  .form-hint{ font-size:12px; color:var(--muted); margin-top:-8px; margin-bottom:12px; }
+  .form-hint.warn{ color:var(--amber); }
+
+  .image-drop{ border:2px dashed var(--border); border-radius:14px; padding:16px; text-align:center; cursor:pointer; color:var(--muted); font-size:13px; position:relative; overflow:hidden; min-height:110px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; }
+  .image-drop.has-image{ border-style:solid; padding:0; }
+  .image-drop img{ width:100%; height:130px; object-fit:cover; }
+  .image-drop i{ font-size:22px; opacity:.5; }
+  .image-drop input[type="file"]{ position:absolute; inset:0; opacity:0; cursor:pointer; }
+
+  .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:18px; }
+
+  .table-wrap{ background:var(--panel); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  table.res-table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.res-table thead{ background:#f8fafc; }
+  table.res-table th{ text-align:left; padding:12px 16px; font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); border-bottom:1px solid var(--border); }
+  table.res-table td{ padding:12px 16px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
+  table.res-table tr:last-child td{ border-bottom:none; }
+  table.res-table tr:hover td{ background:#fafbfc; }
+  .row-actions{ display:flex; gap:6px; }
+  .row-actions button{ background:#f1f5f9; border:none; width:30px; height:30px; border-radius:8px; cursor:pointer; color:var(--navy-2); }
+  .row-actions button:hover{ background:#e2e8f0; }
+  .row-actions button.danger{ background:#fee2e2; color:#b91c1c; }
+  .row-actions button.danger:hover{ background:#fecaca; }
+  .notes-cell{ max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--muted); font-size:12px; cursor:help; }
+
+  .chat-wrap{ background:var(--panel); border:1px solid var(--border); border-radius:16px; display:flex; flex-direction:column; height:560px; overflow:hidden; }
+  .chat-messages{ flex:1; overflow-y:auto; padding:22px; display:flex; flex-direction:column; gap:14px; }
+  .chat-msg{ max-width:78%; padding:12px 16px; border-radius:14px; font-size:14px; line-height:1.55; }
+  .chat-msg.bot{ background:#f1f5f9; color:var(--text); align-self:flex-start; border-bottom-left-radius:4px; }
+  .chat-msg.user{ background:var(--accent); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .chat-msg.bot strong{ color:var(--navy); }
+  .chat-suggestion-card{ border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-top:10px; background:#fff; }
+  .chat-suggestion-card + .chat-suggestion-card{ margin-top:8px; }
+  .chat-suggestion-card .cs-title{ font-weight:700; color:var(--navy); font-size:13.5px; margin-bottom:4px; }
+  .chat-suggestion-card .cs-meta{ font-size:12px; color:var(--muted); display:flex; gap:12px; flex-wrap:wrap; margin-bottom:6px; }
+  .chat-suggestion-card .cs-price{ font-weight:700; color:var(--teal); font-size:13px; }
+  .chat-typing{ display:flex; gap:4px; align-self:flex-start; padding:12px 16px; }
+  .chat-typing span{ width:6px; height:6px; border-radius:50%; background:#94a3b8; animation:blink 1.2s infinite ease-in-out; }
+  .chat-typing span:nth-child(2){ animation-delay:.2s; }
+  .chat-typing span:nth-child(3){ animation-delay:.4s; }
+  @keyframes blink{ 0%,80%,100%{opacity:.2;} 40%{opacity:1;} }
+  .chat-input-bar{ display:flex; gap:10px; padding:16px 18px; border-top:1px solid var(--border); }
+  .chat-input-bar input{ flex:1; border:1px solid var(--border); border-radius:12px; padding:12px 14px; font-size:14px; }
+  .chat-input-bar input:focus{ outline:none; border-color:var(--accent); }
+  .chat-input-bar button{ background:var(--accent); color:#fff; border:none; border-radius:12px; width:46px; cursor:pointer; }
+  .chat-input-bar button:hover{ background:var(--accent-dark); }
+  .chat-examples{ display:flex; gap:8px; flex-wrap:wrap; padding:0 18px 14px; }
+  .chat-example-chip{ background:#f1f5f9; border:none; padding:7px 12px; border-radius:20px; font-size:12px; color:var(--navy-2); cursor:pointer; }
+  .chat-example-chip:hover{ background:#e2e8f0; }
+
+  .capacity-badge{ display:inline-flex; align-items:center; gap:5px; background:#eef2ff; color:#4338ca; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; }
+  .empty-state-small{ text-align:center; padding:50px 20px; color:var(--muted); }
+  .empty-state-small i{ font-size:32px; opacity:.3; margin-bottom:8px; display:block; }
+
+  .owner-card{ background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:14px 16px; display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .owner-card:hover{ background:#f8fafc; }
+  .owner-card .owner-info{ display:flex; flex-direction:column; gap:2px; }
+  .owner-card .owner-name{ font-weight:600; color:var(--navy); }
+  .owner-card .owner-detail{ font-size:12px; color:var(--muted); }
+  .owner-card .owner-stats{ font-size:12px; color:var(--muted); display:flex; gap:12px; flex-wrap:wrap; }
+  .owner-card .owner-stats span{ background:var(--bg); padding:2px 10px; border-radius:12px; }
+  .owner-card .owner-actions{ display:flex; gap:6px; }
+
+  @media (max-width:900px){
+    .sidebar{ display:none; }
+    .main{ padding:24px 18px; }
+    .chat-msg{ max-width:92%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><i class="fas fa-building"></i> Visit Bejaia </div>
+    <div class="sidebar-stats" id="sidebarStats"></div>
+    <div>
+      <div class="sidebar-section-label" style="margin-bottom:8px;">Navigation</div>
+      <nav class="sidebar-nav tabs">
+        <button class="view-nav active" data-view="biens"><i class="fas fa-house"></i> Biens</button>
+        <button class="view-nav" data-view="proprietaires"><i class="fas fa-users"></i> Propriétaires</button>
+        <button class="view-nav" data-view="reservations"><i class="fas fa-calendar-check"></i> Réservations</button>
+        <button class="view-nav" data-view="assistant"><i class="fas fa-robot"></i> Assistant IA</button>
+      </nav>
+    </div>
+    <div style="margin-top:auto;">
+      <div class="sidebar-section-label" style="margin-bottom:8px;">Filtrer les biens</div>
+      <nav class="sidebar-nav">
+        <button class="filter-nav active" data-filter="tous"><i class="fas fa-layer-group"></i> Tous les biens</button>
+        <button class="filter-nav" data-filter="disponible"><i class="fas fa-circle-check"></i> Disponibles</button>
+        <button class="filter-nav" data-filter="indisponible"><i class="fas fa-circle-xmark"></i> Indisponibles</button>
+      </nav>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- VUE BIENS -->
+    <section class="view active" id="view-biens">
+      <div class="topbar">
+        <div>
+          <h1>Portefeuille de biens</h1>
+          <p>Gérez vos villas, appartements et chalets en location par nuit</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Rechercher un bien...">
+          </div>
+          <button class="btn-secondary" id="exportBiensPdfBtn"><i class="fas fa-file-pdf"></i> Exporter PDF</button>
+          <button class="btn-secondary" id="refreshBtn"><i class="fas fa-rotate"></i> Actualiser</button>
+          <button class="btn-primary" id="openAddModalBtn"><i class="fas fa-plus"></i> Ajouter un bien</button>
+        </div>
+      </div>
+      <div class="cards-grid" id="cardsGrid"></div>
+    </section>
+
+    <!-- VUE PROPRIETAIRES -->
+    <section class="view" id="view-proprietaires">
+      <div class="topbar">
+        <div>
+          <h1>Liste des propriétaires</h1>
+          <p>Gérez vos propriétaires et leurs biens associés</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchOwnerInput" placeholder="Rechercher un propriétaire...">
+          </div>
+          <button class="btn-primary" id="openAddOwnerModalBtn"><i class="fas fa-plus"></i> Ajouter un propriétaire</button>
+        </div>
+      </div>
+      <div id="ownersList"></div>
+    </section>
+
+    <!-- VUE RESERVATIONS -->
+    <section class="view" id="view-reservations">
+      <div class="topbar">
+        <div>
+          <h1>Réservations clients</h1>
+          <p>Suivez qui a réservé, pour quelles dates, et le montant total</p>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchResInput" placeholder="Rechercher un client...">
+          </div>
+          <button class="btn-secondary" id="exportResPdfBtn"><i class="fas fa-file-pdf"></i> Exporter PDF</button>
+          <button class="btn-primary" id="openAddResModalBtn"><i class="fas fa-plus"></i> Nouvelle réservation</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="res-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Bien</th>
+              <th>Du</th>
+              <th>Au</th>
+              <th>Nuits</th>
+              <th>Personnes</th>
+              <th>Total</th>
+              <th>Notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="resTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- VUE ASSISTANT IA -->
+    <section class="view" id="view-assistant">
+      <div class="topbar">
+        <div>
+          <h1>Assistant de recommandation</h1>
+          <p>Décrivez votre demande en langage naturel, l'assistant compare vos biens et propose le meilleur choix</p>
+        </div>
+      </div>
+      <div class="chat-wrap">
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-examples">
+          <button class="chat-example-chip" data-example="Je cherche un bien pour 10 personnes dont 3 enfants pour 5 nuits">10 pers., 3 enfants, 5 nuits</button>
+          <button class="chat-example-chip" data-example="Un logement pour 4 personnes pas trop cher pour le week-end">4 pers., week-end</button>
+          <button class="chat-example-chip" data-example="Il me faut un chalet pour 15 personnes à partir du 1er août pour 3 nuits">15 pers., chalet, 1er août</button>
+        </div>
+        <div class="chat-input-bar">
+          <input type="text" id="chatInput" placeholder="ex: 10 personnes dont 3 enfants, 5 nuits...">
+          <button id="chatSendBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- MODALE AJOUT / EDITION BIEN -->
+<div class="overlay" id="addModal">
+  <div class="panel form">
+    <button class="close-btn" id="closeAddModalBtn"><i class="fas fa-times"></i></button>
+    <h2 id="addModalTitle" style="color:var(--navy); margin-bottom:18px;"><i class="fas fa-plus-circle" style="color:var(--teal);"></i> Nouveau bien</h2>
+    <input type="hidden" id="propIdInput">
+    <div class="form-group">
+      <label>Type de bien</label>
+      <select id="typeInput">
+        <option value="Villa">🏠 Villa</option>
+        <option value="Appartement">🏢 Appartement</option>
+        <option value="Chalet">🏔️ Chalet</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Nom / Titre</label>
+      <input type="text" id="nomInput" placeholder="ex: Villa Azur, Chalet des Neiges">
+    </div>
+    <div class="form-group">
+      <label>Propriétaire</label>
+      <select id="proprioSelect"></select>
+    </div>
+    <div class="form-group">
+      <label>Lieu</label>
+      <input type="text" id="lieuInput" placeholder="ex: Sétif, centre-ville">
+    </div>
+    <div class="form-group">
+      <label>Téléphone</label>
+      <input type="text" id="telInput" placeholder="06 12 34 56 78">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Prix par nuit</label>
+        <input type="number" id="prixInput" placeholder="150" step="0.01" min="0">
+      </div>
+      <div class="form-group">
+        <label>Capacité (personnes)</label>
+        <input type="number" id="capaciteInput" placeholder="6" step="1" min="1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Photo du bien</label>
+      <div class="image-drop" id="imageDrop">
+        <i class="fas fa-camera"></i>
+        <span id="imageDropText">Cliquez ou déposez une image ici</span>
+        <input type="file" id="fileUpload" accept="image/*">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="cancelAddBtn">Annuler</button>
+      <button class="btn-primary" id="confirmAddBtn"><i class="fas fa-check"></i> Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE AJOUT / EDITION PROPRIETAIRE -->
+<div class="overlay" id="ownerModal">
+  <div class="panel form">
+    <button class="close-btn" id="closeOwnerModalBtn"><i class="fas fa-times"></i></button>
+    <h2 id="ownerModalTitle" style="color:var(--navy); margin-bottom:18px;"><i class="fas fa-user-plus" style="color:var(--teal);"></i> Nouveau propriétaire</h2>
+    <input type="hidden" id="ownerIdInput">
+    <div class="form-group">
+      <label>Nom complet</label>
+      <input type="text" id="ownerNameInput" placeholder="ex: visit bejaia">
+    </div>
+    <div class="form-group">
+      <label>Téléphone</label>
+      <input type="text" id="ownerTelInput" placeholder="06 12 34 56 78">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="ownerEmailInput" placeholder="visit.bejaiat@email.com">
+    </div>
+    <div class="form-group">
+      <label>Adresse</label>
+      <input type="text" id="ownerAdresseInput" placeholder="bejaia">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="cancelOwnerBtn">Annuler</button>
+      <button class="btn-primary" id="confirmOwnerBtn"><i class="fas fa-check"></i> Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE AJOUT / EDITION RESERVATION -->
+<div class="overlay" id="resModal">
+  <div class="panel form">
+    <button class="close-btn" id="closeResModalBtn"><i class="fas fa-times"></i></button>
+    <h2 id="resModalTitle" style="color:var(--navy); margin-bottom:18px;"><i class="fas fa-calendar-plus" style="color:var(--teal);"></i> Nouvelle réservation</h2>
+    <input type="hidden" id="resIdInput">
+    <div class="form-group">
+      <label>Bien concerné</label>
+      <select id="resPropSelect"></select>
+    </div>
+    <div class="form-group">
+      <label>Nom du client</label>
+      <input type="text" id="resClientNom" placeholder="ex: Mme Benali">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Téléphone</label>
+        <input type="text" id="resClientTel" placeholder="06 12 34 56 78">
+      </div>
+      <div class="form-group">
+        <label>Email (optionnel)</label>
+        <input type="text" id="resClientEmail" placeholder="client@email.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Date d'arrivée</label>
+        <input type="date" id="resDateDebut">
+      </div>
+      <div class="form-group">
+        <label>Date de départ</label>
+        <input type="date" id="resDateFin">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nb personnes</label>
+        <input type="number" id="resNbPersonnes" min="1" step="1" placeholder="4">
+      </div>
+      <div class="form-group">
+        <label>Dont enfants</label>
+        <input type="number" id="resNbEnfants" min="0" step="1" placeholder="0">
+      </div>
+    </div>
+    <div id="resAvailabilityWarning" class="form-hint warn" style="display:none;"></div>
+    <div class="form-group">
+      <label>Prix total</label>
+      <input type="number" id="resPrixTotal" step="0.01" min="0" placeholder="0.00">
+    </div>
+    <div class="form-hint" id="resPrixHint"></div>
+    <div class="form-group">
+      <label>Notes (optionnel)</label>
+      <textarea id="resNotes" rows="3" placeholder="Remarques particulières, demandes spéciales, informations importantes..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="cancelResBtn">Annuler</button>
+      <button class="btn-primary" id="confirmResBtn"><i class="fas fa-check"></i> Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL DÉTAIL BIEN -->
+<div class="overlay" id="detailOverlay">
+  <div class="panel detail">
+    <button class="close-btn" id="closeDetailBtn"><i class="fas fa-times"></i></button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  let properties = [];
+  let reservations = [];
+  let owners = [];
+  let currentFilter = 'tous';
+  let currentView = 'biens';
+  let pendingImage = '';
+  let editingPropId = null;
+  let editingResId = null;
+  let editingOwnerId = null;
+  let detailMonthOffset = 0;
+  let currentDetailPropId = null;
+
+  /* ===================== STOCKAGE PERSISTANT AVEC localStorage ===================== */
+
+  function loadAll(){
+    try{
+      const propsData = localStorage.getItem('immo_properties');
+      properties = propsData ? JSON.parse(propsData) : [];
+    }catch(e){ properties = []; }
+    
+    try{
+      const resData = localStorage.getItem('immo_reservations');
+      reservations = resData ? JSON.parse(resData) : [];
+    }catch(e){ reservations = []; }
+    
+    try{
+      const ownersData = localStorage.getItem('immo_owners');
+      owners = ownersData ? JSON.parse(ownersData) : [];
+    }catch(e){ owners = []; }
+  }
+
+  function saveProperties(){
+    try{
+      localStorage.setItem('immo_properties', JSON.stringify(properties));
+      return true;
+    }catch(e){ 
+      console.error('Erreur de sauvegarde des biens', e); 
+      alert("Erreur lors de l'enregistrement du bien dans localStorage."); 
+      return false;
+    }
+  }
+
+  function saveReservations(){
+    try{
+      localStorage.setItem('immo_reservations', JSON.stringify(reservations));
+      return true;
+    }catch(e){ 
+      console.error('Erreur de sauvegarde des réservations', e); 
+      alert("Erreur lors de l'enregistrement de la réservation dans localStorage."); 
+      return false;
+    }
+  }
+
+  function saveOwners(){
+    try{
+      localStorage.setItem('immo_owners', JSON.stringify(owners));
+      return true;
+    }catch(e){ 
+      console.error('Erreur de sauvegarde des propriétaires', e); 
+      alert("Erreur lors de l'enregistrement du propriétaire dans localStorage."); 
+      return false;
+    }
+  }
+
+  // Sauvegarde automatique de toutes les données
+  function saveAllData(){
+    saveProperties();
+    saveReservations();
+    saveOwners();
+  }
+
+  function generateId(){
+    return Date.now().toString(36) + Math.random().toString(36).substring(2,6);
+  }
+
+  function escapeHtml(text){
+    if(text === undefined || text === null) return '';
+    return String(text).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  }
+
+  function fmtMoney(n){
+    return Number(n || 0).toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+
+  function fmtDateHuman(dateStr){
+    if(!dateStr) return '-';
+    const d = new Date(dateStr + 'T00:00:00');
+    if(isNaN(d)) return dateStr;
+    return d.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', year:'numeric'});
+  }
+
+  function dateRangeDays(startStr, endStr){
+    const out = [];
+    let cur = new Date(startStr + 'T00:00:00');
+    const end = new Date(endStr + 'T00:00:00');
+    while(cur < end){
+      out.push(cur.toISOString().split('T')[0]);
+      cur.setDate(cur.getDate()+1);
+    }
+    return out;
+  }
+
+  function nightsBetween(startStr, endStr){
+    if(!startStr || !endStr) return 0;
+    const a = new Date(startStr + 'T00:00:00');
+    const b = new Date(endStr + 'T00:00:00');
+    const diff = Math.round((b-a) / 86400000);
+    return diff > 0 ? diff : 0;
+  }
+
+  function getOwnerName(ownerId){
+    const owner = owners.find(o => o.id === ownerId);
+    return owner ? owner.nom : 'Propriétaire inconnu';
+  }
+
+  function getOwnerTel(ownerId){
+    const owner = owners.find(o => o.id === ownerId);
+    return owner ? owner.telephone : '';
+  }
+
+  /* ===================== DISPONIBILITÉ ===================== */
+
+  function getReservationsForProperty(propId, excludeResId){
+    return reservations.filter(r => r.propertyId === propId && r.id !== excludeResId);
+  }
+
+  function getReservationOnDate(propId, dateStr){
+    return reservations.find(r => r.propertyId === propId && dateRangeDays(r.dateDebut, r.dateFin).includes(dateStr));
+  }
+
+  function isDateManuallyBlocked(prop, dateStr){
+    return !!(prop.blocked && prop.blocked[dateStr]);
+  }
+
+  function isDateAvailable(prop, dateStr){
+    if(isDateManuallyBlocked(prop, dateStr)) return false;
+    if(getReservationOnDate(prop.id, dateStr)) return false;
+    return true;
+  }
+
+  function isRangeAvailable(prop, startStr, endStr, excludeResId){
+    const days = dateRangeDays(startStr, endStr);
+    const resList = getReservationsForProperty(prop.id, excludeResId);
+    for(const d of days){
+      if(isDateManuallyBlocked(prop, d)) return false;
+      const conflict = resList.some(r => dateRangeDays(r.dateDebut, r.dateFin).includes(d));
+      if(conflict) return false;
+    }
+    return true;
+  }
+
+  function computeStatut(prop){
+    const today = new Date();
+    for(let i=0;i<30;i++){
+      const d = new Date(today);
+      d.setDate(today.getDate()+i);
+      const dateStr = d.toISOString().split('T')[0];
+      if(isDateAvailable(prop, dateStr)) return 'disponible';
+    }
+    return 'indisponible';
+  }
+
+  function getTypePill(type){
+    const classes = {
+      'Villa': 'villa',
+      'Appartement': 'appartement',
+      'Chalet': 'chalet'
+    };
+    return classes[type] || 'villa';
+  }
+
+  /* ===================== RENDU : STATS SIDEBAR ===================== */
+
+  function renderSidebarStats(){
+    const total = properties.length;
+    const dispo = properties.filter(p => computeStatut(p) === 'disponible').length;
+    const indispo = total - dispo;
+    document.getElementById('sidebarStats').innerHTML = `
+      <div class="sidebar-stat"><div class="num">${total}</div><div class="lbl">Biens au total</div></div>
+      <div class="sidebar-stat"><div class="num" style="color:#4ade80">${dispo}</div><div class="lbl">Disponibles</div></div>
+      <div class="sidebar-stat"><div class="num" style="color:#94a3b8">${indispo}</div><div class="lbl">Indisponibles</div></div>
+      <div class="sidebar-stat"><div class="num" style="color:#60a5fa">${reservations.length}</div><div class="lbl">Réservations</div></div>
+      <div class="sidebar-stat"><div class="num" style="color:#fbbf24">${owners.length}</div><div class="lbl">Propriétaires</div></div>
+    `;
+  }
+
+  /* ===================== RENDU : CARTES BIENS ===================== */
+
+  function renderCards(){
+    renderSidebarStats();
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const grid = document.getElementById('cardsGrid');
+
+    let filtered = properties.filter(p => {
+      const statut = computeStatut(p);
+      const ownerName = getOwnerName(p.proprietaireId);
+      const matchesSearch = (p.nom + ownerName + (p.lieu||'') + p.type).toLowerCase().includes(search);
+      const matchesFilter = currentFilter === 'tous' || statut === currentFilter;
+      return matchesSearch && matchesFilter;
+    });
+
+    if(filtered.length === 0){
+      grid.innerHTML = `<div class="empty-state"><i class="fas fa-house"></i><p><strong>Aucun bien trouvé</strong></p><p>Ajoutez votre première villa, appartement ou chalet.</p></div>`;
+      return;
+    }
+
+    let html = '';
+    filtered.forEach(prop => {
+      const statut = computeStatut(prop);
+      const pillClass = statut === 'disponible' ? 'dispo' : 'indispo';
+      const pillLabel = statut === 'disponible' ? 'Disponible' : 'Indisponible';
+      const prix = fmtMoney(prop.prix);
+      const typePill = getTypePill(prop.type);
+      const typeEmoji = prop.type === 'Villa' ? '🏠' : prop.type === 'Appartement' ? '🏢' : '🏔️';
+      const ownerName = getOwnerName(prop.proprietaireId);
+      html += `
+        <div class="property-card" data-id="${prop.id}">
+          <div class="card-image">
+            ${prop.image ? `<img src="${escapeHtml(prop.image)}" alt="${escapeHtml(prop.nom)}" loading="lazy">` : `<i class="fas fa-image" style="font-size:2.5rem;"></i>`}
+          </div>
+          <div class="card-body">
+            <div class="card-title">${escapeHtml(prop.nom)} <span class="pill ${typePill}" style="font-size:10px;padding:2px 8px;">${typeEmoji} ${escapeHtml(prop.type)}</span></div>
+            <div class="card-meta">
+              <span><i class="fas fa-user"></i> ${escapeHtml(ownerName)}</span>
+              <span><i class="fas fa-location-dot"></i> ${escapeHtml(prop.lieu || '-')}</span>
+              <span><i class="fas fa-phone"></i> ${escapeHtml(prop.telephone)}</span>
+              <span><i class="fas fa-users"></i> Capacité : ${prop.capacite || '?'} pers.</span>
+            </div>
+            <div class="card-footer">
+              <span class="pill ${pillClass}">${pillLabel}</span>
+              <span class="price">${prix} / nuit</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    grid.innerHTML = html;
+
+    grid.querySelectorAll('.property-card').forEach(card => {
+      card.addEventListener('click', function(){
+        const id = this.dataset.id;
+        const prop = properties.find(p => p.id === id);
+        if(prop) openDetail(prop);
+      });
+    });
+  }
+
+  /* ===================== DÉTAIL BIEN + CALENDRIER ===================== */
+
+  function openDetail(prop){
+    currentDetailPropId = prop.id;
+    detailMonthOffset = 0;
+    renderDetail();
+    document.getElementById('detailOverlay').classList.add('active');
+  }
+
+  function renderDetail(){
+    const prop = properties.find(p => p.id === currentDetailPropId);
+    if(!prop){ closeDetail(); return; }
+    const container = document.getElementById('detailContent');
+    const statut = computeStatut(prop);
+    const pillClass = statut === 'disponible' ? 'dispo' : 'indispo';
+    const pillLabel = statut === 'disponible' ? 'Disponible' : 'Indisponible';
+    const prix = fmtMoney(prop.prix);
+    const typePill = getTypePill(prop.type);
+    const typeEmoji = prop.type === 'Villa' ? '🏠' : prop.type === 'Appartement' ? '🏢' : '🏔️';
+    const ownerName = getOwnerName(prop.proprietaireId);
+    const ownerTel = getOwnerTel(prop.proprietaireId);
+
+    const today = new Date();
+    const baseDate = new Date(today.getFullYear(), today.getMonth() + detailMonthOffset, 1);
+    const year = baseDate.getFullYear();
+    const month = baseDate.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const startOffset = firstDay.getDay();
+    const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    const weekDays = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+    const todayStr = today.toISOString().split('T')[0];
+
+    let calHtml = `
+      <div class="cal-month-nav">
+        <button class="cal-nav-btn" id="calPrevBtn"><i class="fas fa-chevron-left"></i></button>
+        <div class="cal-month-label"><i class="fas fa-calendar" style="color:var(--teal); margin-right:6px;"></i>${monthNames[month]} ${year}</div>
+        <button class="cal-nav-btn" id="calNextBtn"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div class="cal-legend">
+        <span><span class="legend-dot avail"></span>Disponible</span>
+        <span><span class="legend-dot reserved"></span>Réservé</span>
+        <span><span class="legend-dot unavail"></span>Bloqué manuellement</span>
+      </div>
+      <div class="calendar-grid">`;
+
+    weekDays.forEach(wd => calHtml += `<div class="cal-day-label">${wd}</div>`);
+    for(let i=0;i<startOffset;i++) calHtml += `<div class="calendar-day empty-cell"></div>`;
+
+    for(let d=1; d<=daysInMonth; d++){
+      const dateObj = new Date(year, month, d);
+      const dateStr = dateObj.toISOString().split('T')[0];
+      const isToday = dateStr === todayStr;
+      const reservation = getReservationOnDate(prop.id, dateStr);
+      let cls = 'calendar-day';
+      let title = '';
+      if(reservation){
+        cls += ' reserved';
+        title = `Réservé : ${reservation.clientNom}`;
+      } else if(isDateManuallyBlocked(prop, dateStr)){
+        cls += ' unavailable';
+        title = 'Bloqué manuellement';
+      } else {
+        cls += ' available';
+        title = 'Disponible';
+      }
+      if(isToday) cls += ' today';
+      calHtml += `<div class="${cls}" data-date="${dateStr}" title="${escapeHtml(title)}">${d}</div>`;
+    }
+    calHtml += `</div>`;
+
+    container.innerHTML = `
+      <div class="detail-head">
+        <div class="detail-image">
+          ${prop.image ? `<img src="${escapeHtml(prop.image)}" alt="${escapeHtml(prop.nom)}">` : `<i class="fas fa-image" style="font-size:2.5rem;"></i>`}
+        </div>
+        <div class="detail-info">
+          <h2>${escapeHtml(prop.nom)} <span class="pill ${typePill}" style="font-size:12px;padding:2px 10px;">${typeEmoji} ${escapeHtml(prop.type)}</span></h2>
+          <div class="row">
+            <span><i class="fas fa-user"></i>${escapeHtml(ownerName)}</span>
+            <span><i class="fas fa-location-dot"></i>${escapeHtml(prop.lieu || '-')}</span>
+          </div>
+          <div class="row">
+            <span><i class="fas fa-phone"></i>${escapeHtml(prop.telephone)}</span>
+            ${ownerTel ? `<span><i class="fas fa-phone"></i>Propriétaire : ${escapeHtml(ownerTel)}</span>` : ''}
+            <span><i class="fas fa-euro-sign"></i>${prix} / nuit</span>
+            <span><i class="fas fa-users"></i>${prop.capacite || '?'} pers. max</span>
+          </div>
+          <span class="pill ${pillClass}">${pillLabel}</span>
+        </div>
+      </div>
+      ${calHtml}
+      <div class="detail-actions">
+        <button class="btn-sm primary" id="detailEditBtn"><i class="fas fa-pen"></i> Modifier ce bien</button>
+        <button class="btn-sm" id="detailNewResBtn"><i class="fas fa-calendar-plus"></i> Nouvelle réservation</button>
+        <button class="btn-sm danger" id="detailDeleteBtn"><i class="fas fa-trash"></i> Supprimer ce bien</button>
+      </div>
+    `;
+
+    container.querySelectorAll('.calendar-day[data-date]').forEach(dayEl => {
+      dayEl.addEventListener('click', async function(){
+        const dateStr = this.dataset.date;
+        const reservation = getReservationOnDate(prop.id, dateStr);
+        if(reservation){
+          const msg = `Réservation existante\n\nClient : ${reservation.clientNom}\nTéléphone : ${reservation.clientTelephone || '-'}\nDu ${fmtDateHuman(reservation.dateDebut)} au ${fmtDateHuman(reservation.dateFin)}\nPersonnes : ${reservation.nbPersonnes}\nTotal : ${fmtMoney(reservation.prixTotal)}\nNotes : ${reservation.notes || 'Aucune'}\n\nCliquez sur OK pour annuler cette réservation, ou Annuler pour fermer.`;
+          if(confirm(msg)){
+            reservations = reservations.filter(r => r.id !== reservation.id);
+            saveReservations();
+            renderDetail();
+            renderCards();
+            renderReservationsTable();
+          }
+          return;
+        }
+        if(!prop.blocked) prop.blocked = {};
+        prop.blocked[dateStr] = !prop.blocked[dateStr];
+        if(!prop.blocked[dateStr]) delete prop.blocked[dateStr];
+        saveProperties();
+        renderDetail();
+        renderCards();
+      });
+    });
+
+    document.getElementById('calPrevBtn').addEventListener('click', () => { detailMonthOffset--; renderDetail(); });
+    document.getElementById('calNextBtn').addEventListener('click', () => { detailMonthOffset++; renderDetail(); });
+
+    document.getElementById('detailEditBtn').addEventListener('click', () => openEditPropertyModal(prop));
+    document.getElementById('detailNewResBtn').addEventListener('click', () => {
+      closeDetail();
+      openAddResModal(prop.id);
+    });
+    document.getElementById('detailDeleteBtn').addEventListener('click', function(){
+      if(!confirm('Supprimer ce bien ? Les réservations associées seront aussi supprimées.')) return;
+      properties = properties.filter(x => x.id !== prop.id);
+      reservations = reservations.filter(r => r.propertyId !== prop.id);
+      saveProperties();
+      saveReservations();
+      closeDetail();
+      renderCards();
+      renderReservationsTable();
+    });
+  }
+
+  function closeDetail(){
+    document.getElementById('detailOverlay').classList.remove('active');
+    currentDetailPropId = null;
+  }
+
+  /* ===================== GESTION PROPRIETAIRES ===================== */
+
+  function populateOwnerSelect(){
+    const sel = document.getElementById('proprioSelect');
+    const currentVal = sel.value;
+    sel.innerHTML = '<option value="">-- Sélectionner un propriétaire --</option>' + 
+      owners.map(o => `<option value="${o.id}">${escapeHtml(o.nom)}</option>`).join('');
+    if(currentVal) sel.value = currentVal;
+  }
+
+  function renderOwnersList(){
+    const search = (document.getElementById('searchOwnerInput').value || '').toLowerCase();
+    const container = document.getElementById('ownersList');
+
+    let filtered = owners.filter(o => {
+      const propCount = properties.filter(p => p.proprietaireId === o.id).length;
+      const searchStr = (o.nom + o.telephone + o.email).toLowerCase();
+      return searchStr.includes(search);
+    });
+
+    if(filtered.length === 0){
+      container.innerHTML = `<div class="empty-state-small"><i class="fas fa-users"></i><p><strong>Aucun propriétaire</strong></p><p>Ajoutez votre premier propriétaire.</p></div>`;
+      return;
+    }
+
+    container.innerHTML = filtered.map(o => {
+      const propCount = properties.filter(p => p.proprietaireId === o.id).length;
+      const resCount = reservations.filter(r => {
+        const prop = properties.find(p => p.id === r.propertyId);
+        return prop && prop.proprietaireId === o.id;
+      }).length;
+      return `
+        <div class="owner-card">
+          <div class="owner-info">
+            <div class="owner-name">${escapeHtml(o.nom)}</div>
+            <div class="owner-detail">
+              <i class="fas fa-phone"></i> ${escapeHtml(o.telephone || '-')}
+              ${o.email ? `· <i class="fas fa-envelope"></i> ${escapeHtml(o.email)}` : ''}
+              ${o.adresse ? `· <i class="fas fa-map-pin"></i> ${escapeHtml(o.adresse)}` : ''}
+            </div>
+            <div class="owner-stats">
+              <span><i class="fas fa-house"></i> ${propCount} bien${propCount > 1 ? 's' : ''}</span>
+              <span><i class="fas fa-calendar-check"></i> ${resCount} réservation${resCount > 1 ? 's' : ''}</span>
+            </div>
+          </div>
+          <div class="owner-actions">
+            <button class="btn-sm" onclick="window.editOwner('${o.id}')"><i class="fas fa-pen"></i></button>
+            <button class="btn-sm danger" onclick="window.deleteOwner('${o.id}')"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.editOwner = function(ownerId){
+    const owner = owners.find(o => o.id === ownerId);
+    if(!owner) return;
+    editingOwnerId = ownerId;
+    document.getElementById('ownerModalTitle').innerHTML = '<i class="fas fa-pen" style="color:var(--teal);"></i> Modifier le propriétaire';
+    document.getElementById('confirmOwnerBtn').innerHTML = '<i class="fas fa-check"></i> Enregistrer';
+    document.getElementById('ownerIdInput').value = owner.id;
+    document.getElementById('ownerNameInput').value = owner.nom || '';
+    document.getElementById('ownerTelInput').value = owner.telephone || '';
+    document.getElementById('ownerEmailInput').value = owner.email || '';
+    document.getElementById('ownerAdresseInput').value = owner.adresse || '';
+    document.getElementById('ownerModal').classList.add('active');
+  };
+
+  window.deleteOwner = function(ownerId){
+    const owner = owners.find(o => o.id === ownerId);
+    if(!owner) return;
+    const propCount = properties.filter(p => p.proprietaireId === ownerId).length;
+    if(propCount > 0){
+      if(!confirm(`Ce propriétaire possède ${propCount} bien(s). Les supprimer également ?`)) return;
+      properties = properties.filter(p => p.proprietaireId !== ownerId);
+      saveProperties();
+    }
+    owners = owners.filter(o => o.id !== ownerId);
+    saveOwners();
+    renderOwnersList();
+    renderCards();
+    populateOwnerSelect();
+  };
+
+  function resetOwnerForm(){
+    editingOwnerId = null;
+    document.getElementById('ownerModalTitle').innerHTML = '<i class="fas fa-user-plus" style="color:var(--teal);"></i> Nouveau propriétaire';
+    document.getElementById('confirmOwnerBtn').innerHTML = '<i class="fas fa-check"></i> Enregistrer';
+    document.getElementById('ownerIdInput').value = '';
+    document.getElementById('ownerNameInput').value = '';
+    document.getElementById('ownerTelInput').value = '';
+    document.getElementById('ownerEmailInput').value = '';
+    document.getElementById('ownerAdresseInput').value = '';
+  }
+
+  function submitOwnerForm(){
+    const nom = document.getElementById('ownerNameInput').value.trim();
+    const telephone = document.getElementById('ownerTelInput').value.trim();
+    const email = document.getElementById('ownerEmailInput').value.trim();
+    const adresse = document.getElementById('ownerAdresseInput').value.trim();
+
+    if(!nom){ alert('Le nom du propriétaire est requis.'); return; }
+
+    if(editingOwnerId){
+      const owner = owners.find(o => o.id === editingOwnerId);
+      if(owner){
+        owner.nom = nom;
+        owner.telephone = telephone;
+        owner.email = email;
+        owner.adresse = adresse;
+      }
+    } else {
+      owners.push({
+        id: generateId(),
+        nom,
+        telephone,
+        email,
+        adresse
+      });
+    }
+    saveOwners();
+    renderOwnersList();
+    populateOwnerSelect();
+    renderCards();
+    document.getElementById('ownerModal').classList.remove('active');
+    resetOwnerForm();
+  }
+
+  /* ===================== FORMULAIRE AJOUT / EDITION BIEN ===================== */
+
+  function resetAddForm(){
+    editingPropId = null;
+    document.getElementById('addModalTitle').innerHTML = '<i class="fas fa-plus-circle" style="color:var(--teal);"></i> Nouveau bien';
+    document.getElementById('confirmAddBtn').innerHTML = '<i class="fas fa-check"></i> Ajouter';
+    document.getElementById('propIdInput').value = '';
+    document.getElementById('typeInput').value = 'Villa';
+    document.getElementById('nomInput').value = '';
+    document.getElementById('lieuInput').value = '';
+    document.getElementById('telInput').value = '';
+    document.getElementById('prixInput').value = '';
+    document.getElementById('capaciteInput').value = '';
+    populateOwnerSelect();
+    pendingImage = '';
+    const drop = document.getElementById('imageDrop');
+    drop.classList.remove('has-image');
+    drop.innerHTML = `<i class="fas fa-camera"></i><span>Cliquez ou déposez une image ici</span><input type="file" id="fileUpload" accept="image/*">`;
+    document.getElementById('fileUpload').addEventListener('change', handleFileSelect);
+  }
+
+  function openEditPropertyModal(prop){
+    closeDetail();
+    editingPropId = prop.id;
+    document.getElementById('addModalTitle').innerHTML = '<i class="fas fa-pen" style="color:var(--teal);"></i> Modifier le bien';
+    document.getElementById('confirmAddBtn').innerHTML = '<i class="fas fa-check"></i> Enregistrer';
+    document.getElementById('propIdInput').value = prop.id;
+    document.getElementById('typeInput').value = prop.type || 'Villa';
+    document.getElementById('nomInput').value = prop.nom || '';
+    populateOwnerSelect();
+    document.getElementById('proprioSelect').value = prop.proprietaireId || '';
+    document.getElementById('lieuInput').value = prop.lieu || '';
+    document.getElementById('telInput').value = prop.telephone || '';
+    document.getElementById('prixInput').value = prop.prix || '';
+    document.getElementById('capaciteInput').value = prop.capacite || '';
+    pendingImage = prop.image || '';
+    const drop = document.getElementById('imageDrop');
+    if(pendingImage){
+      drop.classList.add('has-image');
+      drop.innerHTML = `<img src="${pendingImage}" alt="aperçu"><input type="file" id="fileUpload" accept="image/*">`;
+    } else {
+      drop.classList.remove('has-image');
+      drop.innerHTML = `<i class="fas fa-camera"></i><span>Cliquez ou déposez une image ici</span><input type="file" id="fileUpload" accept="image/*">`;
+    }
+    document.getElementById('fileUpload').addEventListener('change', handleFileSelect);
+    document.getElementById('addModal').classList.add('active');
+  }
+
+  function handleFileSelect(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      pendingImage = ev.target.result;
+      const drop = document.getElementById('imageDrop');
+      drop.classList.add('has-image');
+      drop.innerHTML = `<img src="${pendingImage}" alt="aperçu"><input type="file" id="fileUpload" accept="image/*">`;
+      document.getElementById('fileUpload').addEventListener('change', handleFileSelect);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function submitPropertyForm(){
+    const nom = document.getElementById('nomInput').value.trim();
+    const proprietaireId = document.getElementById('proprioSelect').value;
+    const lieu = document.getElementById('lieuInput').value.trim();
+    const telephone = document.getElementById('telInput').value.trim();
+    const prix = parseFloat(document.getElementById('prixInput').value);
+    const capacite = parseInt(document.getElementById('capaciteInput').value, 10);
+    const type = document.getElementById('typeInput').value;
+
+    if(!nom){ alert('Le nom du bien est requis.'); return; }
+    if(!proprietaireId){ alert('Veuillez sélectionner un propriétaire.'); return; }
+    if(isNaN(prix) || prix < 0){ alert("Merci d'indiquer un prix par nuit valide."); return; }
+    if(isNaN(capacite) || capacite < 1){ alert('Merci d\'indiquer une capacité (nombre de personnes) valide.'); return; }
+
+    if(editingPropId){
+      const prop = properties.find(p => p.id === editingPropId);
+      if(prop){
+        prop.type = type; prop.nom = nom; prop.proprietaireId = proprietaireId;
+        prop.lieu = lieu; prop.telephone = telephone; prop.prix = prix;
+        prop.capacite = capacite; prop.image = pendingImage;
+      }
+    } else {
+      properties.push({
+        id: generateId(), type, nom, proprietaireId, lieu, telephone, prix, capacite,
+        image: pendingImage, blocked: {}
+      });
+    }
+    saveProperties();
+    renderCards();
+    populateResPropSelect();
+    document.getElementById('addModal').classList.remove('active');
+    resetAddForm();
+  }
+
+  /* ===================== RESERVATIONS : TABLEAU ===================== */
+
+  function populateResPropSelect(){
+    const sel = document.getElementById('resPropSelect');
+    const currentVal = sel.value;
+    sel.innerHTML = properties.map(p => {
+      const ownerName = getOwnerName(p.proprietaireId);
+      return `<option value="${p.id}">${escapeHtml(p.nom)} (${p.type}) - ${escapeHtml(ownerName)} - ${p.capacite || '?'} pers. · ${fmtMoney(p.prix)}/nuit</option>`;
+    }).join('');
+    if(currentVal) sel.value = currentVal;
+  }
+
+  function renderReservationsTable(){
+    const search = (document.getElementById('searchResInput').value || '').toLowerCase();
+    const tbody = document.getElementById('resTableBody');
+    const sorted = [...reservations].sort((a,b) => (a.dateDebut||'').localeCompare(b.dateDebut||''));
+    const filtered = sorted.filter(r => {
+      const prop = properties.find(p => p.id === r.propertyId);
+      const haystack = (r.clientNom + ' ' + (prop ? prop.nom : '') + ' ' + (r.notes || '')).toLowerCase();
+      return haystack.includes(search);
+    });
+
+    if(filtered.length === 0){
+      tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state-small"><i class="fas fa-calendar-xmark"></i><p><strong>Aucune réservation</strong></p></div></td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(r => {
+      const prop = properties.find(p => p.id === r.propertyId);
+      const nights = nightsBetween(r.dateDebut, r.dateFin);
+      const notesPreview = r.notes ? (r.notes.length > 30 ? r.notes.substring(0,30) + '...' : r.notes) : '';
+      return `
+        <tr>
+          <td>
+            <div style="font-weight:600;">${escapeHtml(r.clientNom)}</div>
+            <div style="font-size:12px;color:var(--muted);">${escapeHtml(r.clientTelephone || '-')}</div>
+          </td>
+          <td>${escapeHtml(prop ? prop.nom : 'Bien supprimé')}</td>
+          <td>${fmtDateHuman(r.dateDebut)}</td>
+          <td>${fmtDateHuman(r.dateFin)}</td>
+          <td>${nights}</td>
+          <td>${r.nbPersonnes}${r.nbEnfants ? ` (dont ${r.nbEnfants} enf.)` : ''}</td>
+          <td style="font-weight:700;color:var(--navy);">${fmtMoney(r.prixTotal)}</td>
+          <td class="notes-cell" title="${escapeHtml(r.notes || '')}">${escapeHtml(notesPreview || '-')}</td>
+          <td>
+            <div class="row-actions">
+              <button data-edit="${r.id}" title="Modifier"><i class="fas fa-pen"></i></button>
+              <button data-delete="${r.id}" class="danger" title="Annuler"><i class="fas fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    tbody.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.addEventListener('click', () => openEditResModal(btn.dataset.edit));
+    });
+    tbody.querySelectorAll('[data-delete]').forEach(btn => {
+      btn.addEventListener('click', function(){
+        if(!confirm('Annuler cette réservation ?')) return;
+        reservations = reservations.filter(r => r.id !== btn.dataset.delete);
+        saveReservations();
+        renderReservationsTable();
+        renderCards();
+      });
+    });
+  }
+
+  /* ===================== FORMULAIRE RESERVATION ===================== */
+
+  function resetResForm(defaultPropId){
+    editingResId = null;
+    document.getElementById('resModalTitle').innerHTML = '<i class="fas fa-calendar-plus" style="color:var(--teal);"></i> Nouvelle réservation';
+    document.getElementById('confirmResBtn').innerHTML = '<i class="fas fa-check"></i> Enregistrer';
+    document.getElementById('resIdInput').value = '';
+    populateResPropSelect();
+    if(defaultPropId) document.getElementById('resPropSelect').value = defaultPropId;
+    document.getElementById('resClientNom').value = '';
+    document.getElementById('resClientTel').value = '';
+    document.getElementById('resClientEmail').value = '';
+    document.getElementById('resDateDebut').value = '';
+    document.getElementById('resDateFin').value = '';
+    document.getElementById('resNbPersonnes').value = '';
+    document.getElementById('resNbEnfants').value = '';
+    document.getElementById('resPrixTotal').value = '';
+    document.getElementById('resNotes').value = '';
+    document.getElementById('resAvailabilityWarning').style.display = 'none';
+    document.getElementById('resPrixHint').textContent = '';
+  }
+
+  function openAddResModal(defaultPropId){
+    if(properties.length === 0){
+      alert("Ajoutez d'abord au moins un bien avant de créer une réservation.");
+      return;
+    }
+    resetResForm(defaultPropId);
+    document.getElementById('resModal').classList.add('active');
+    updateResPriceEstimate();
+  }
+
+  function openEditResModal(resId){
+    const r = reservations.find(x => x.id === resId);
+    if(!r) return;
+    editingResId = resId;
+    document.getElementById('resModalTitle').innerHTML = '<i class="fas fa-pen" style="color:var(--teal);"></i> Modifier la réservation';
+    document.getElementById('confirmResBtn').innerHTML = '<i class="fas fa-check"></i> Enregistrer';
+    document.getElementById('resIdInput').value = r.id;
+    populateResPropSelect();
+    document.getElementById('resPropSelect').value = r.propertyId;
+    document.getElementById('resClientNom').value = r.clientNom || '';
+    document.getElementById('resClientTel').value = r.clientTelephone || '';
+    document.getElementById('resClientEmail').value = r.clientEmail || '';
+    document.getElementById('resDateDebut').value = r.dateDebut || '';
+    document.getElementById('resDateFin').value = r.dateFin || '';
+    document.getElementById('resNbPersonnes').value = r.nbPersonnes || '';
+    document.getElementById('resNbEnfants').value = r.nbEnfants || '';
+    document.getElementById('resPrixTotal').value = r.prixTotal || '';
+    document.getElementById('resNotes').value = r.notes || '';
+    document.getElementById('resModal').classList.add('active');
+    checkResAvailability();
+  }
+
+  function updateResPriceEstimate(){
+    const propId = document.getElementById('resPropSelect').value;
+    const prop = properties.find(p => p.id === propId);
+    const debut = document.getElementById('resDateDebut').value;
+    const fin = document.getElementById('resDateFin').value;
+    const nights = nightsBetween(debut, fin);
+    const hint = document.getElementById('resPrixHint');
+    if(prop && nights > 0){
+      const estim = prop.prix * nights;
+      hint.textContent = `${nights} nuit(s) × ${fmtMoney(prop.prix)} = ${fmtMoney(estim)} (montant suggéré, modifiable)`;
+      const totalInput = document.getElementById('resPrixTotal');
+      if(!totalInput.dataset.userEdited){
+        totalInput.value = estim.toFixed(2);
+      }
+    } else {
+      hint.textContent = '';
+    }
+    checkResAvailability();
+  }
+
+  function checkResAvailability(){
+    const propId = document.getElementById('resPropSelect').value;
+    const prop = properties.find(p => p.id === propId);
+    const debut = document.getElementById('resDateDebut').value;
+    const fin = document.getElementById('resDateFin').value;
+    const warn = document.getElementById('resAvailabilityWarning');
+    if(!prop || !debut || !fin || nightsBetween(debut,fin) <= 0){
+      warn.style.display = 'none';
+      return;
+    }
+    const ok = isRangeAvailable(prop, debut, fin, editingResId);
+    const nbPersonnes = parseInt(document.getElementById('resNbPersonnes').value, 10);
+    let messages = [];
+    if(!ok) messages.push('⚠ Ce bien est déjà réservé ou bloqué sur une partie de cette période.');
+    if(!isNaN(nbPersonnes) && prop.capacite && nbPersonnes > prop.capacite) messages.push(`⚠ Capacité dépassée (max ${prop.capacite} personnes).`);
+    if(messages.length){
+      warn.style.display = 'block';
+      warn.textContent = messages.join(' ');
+    } else {
+      warn.style.display = 'none';
+    }
+  }
+
+  function submitReservationForm(){
+    const propId = document.getElementById('resPropSelect').value;
+    const prop = properties.find(p => p.id === propId);
+    const clientNom = document.getElementById('resClientNom').value.trim();
+    const clientTelephone = document.getElementById('resClientTel').value.trim();
+    const clientEmail = document.getElementById('resClientEmail').value.trim();
+    const dateDebut = document.getElementById('resDateDebut').value;
+    const dateFin = document.getElementById('resDateFin').value;
+    const nbPersonnes = parseInt(document.getElementById('resNbPersonnes').value, 10);
+    const nbEnfants = parseInt(document.getElementById('resNbEnfants').value, 10) || 0;
+    const prixTotal = parseFloat(document.getElementById('resPrixTotal').value);
+    const notes = document.getElementById('resNotes').value.trim();
+
+    if(!prop){ alert('Bien introuvable.'); return; }
+    if(!clientNom){ alert('Le nom du client est requis.'); return; }
+    if(!dateDebut || !dateFin || nightsBetween(dateDebut,dateFin) <= 0){ alert("Merci d'indiquer des dates d'arrivée et de départ valides (départ après arrivée)."); return; }
+    if(isNaN(nbPersonnes) || nbPersonnes < 1){ alert('Merci d\'indiquer le nombre de personnes.'); return; }
+    if(isNaN(prixTotal) || prixTotal < 0){ alert('Merci d\'indiquer un prix total valide.'); return; }
+
+    if(!isRangeAvailable(prop, dateDebut, dateFin, editingResId)){
+      if(!confirm("Attention : ce bien n'est pas totalement disponible sur cette période (chevauchement avec une autre réservation ou un blocage). Voulez-vous continuer quand même ?")) return;
+    }
+
+    if(editingResId){
+      const r = reservations.find(x => x.id === editingResId);
+      if(r){
+        r.propertyId = propId; r.clientNom = clientNom; r.clientTelephone = clientTelephone;
+        r.clientEmail = clientEmail; r.dateDebut = dateDebut; r.dateFin = dateFin;
+        r.nbPersonnes = nbPersonnes; r.nbEnfants = nbEnfants; r.prixTotal = prixTotal; r.notes = notes;
+      }
+    } else {
+      reservations.push({
+        id: generateId(), propertyId: propId, clientNom, clientTelephone, clientEmail,
+        dateDebut, dateFin, nbPersonnes, nbEnfants, prixTotal, notes, createdAt: new Date().toISOString()
+      });
+    }
+    saveReservations();
+    renderReservationsTable();
+    renderCards();
+    document.getElementById('resModal').classList.remove('active');
+  }
+
+  /* ===================== EXPORT PDF ===================== */
+
+  function exportBiensPdf(){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text('Portefeuille de biens', 14, 18);
+    doc.setFontSize(10);
+    doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')}`, 14, 25);
+
+    const rows = properties.map(p => [
+      p.nom, p.type || '-', getOwnerName(p.proprietaireId), p.lieu || '-', p.telephone || '-',
+      String(p.capacite || '-'), `${fmtMoney(p.prix)} / nuit`, computeStatut(p) === 'disponible' ? 'Disponible' : 'Indisponible'
+    ]);
+
+    doc.autoTable({
+      startY: 32,
+      head: [['Nom','Type','Propriétaire','Lieu','Téléphone','Capacité','Prix','Statut']],
+      body: rows,
+      styles: { fontSize: 8.5 },
+      headStyles: { fillColor: [16,36,58] }
+    });
+
+    doc.save('portefeuille-biens.pdf');
+  }
+
+  function exportResPdf(){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text('Réservations clients', 14, 18);
+    doc.setFontSize(10);
+    doc.text(`Généré le ${new Date().toLocaleDateString('fr-FR')}`, 14, 25);
+
+    const sorted = [...reservations].sort((a,b) => (a.dateDebut||'').localeCompare(b.dateDebut||''));
+    const rows = sorted.map(r => {
+      const prop = properties.find(p => p.id === r.propertyId);
+      const nights = nightsBetween(r.dateDebut, r.dateFin);
+      return [
+        r.clientNom, r.clientTelephone || '-', prop ? prop.nom : '-',
+        fmtDateHuman(r.dateDebut), fmtDateHuman(r.dateFin), String(nights),
+        `${r.nbPersonnes}${r.nbEnfants ? ` (${r.nbEnfants} enf.)` : ''}`,
+        `${fmtMoney(r.prixTotal)}`,
+        r.notes || '-'
+      ];
+    });
+
+    doc.autoTable({
+      startY: 32,
+      head: [['Client','Téléphone','Bien','Du','Au','Nuits','Personnes','Total','Notes']],
+      body: rows,
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [16,36,58] }
+    });
+
+    const totalGeneral = sorted.reduce((sum,r) => sum + Number(r.prixTotal || 0), 0);
+    const finalY = doc.lastAutoTable ? doc.lastAutoTable.finalY + 10 : 40;
+    doc.setFontSize(11);
+    doc.text(`Total général : ${fmtMoney(totalGeneral)}`, 14, finalY);
+
+    doc.save('reservations-clients.pdf');
+  }
+
+  /* ===================== ASSISTANT IA ===================== */
+
+  function addChatMessage(role, html){
+    const wrap = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + role;
+    div.innerHTML = html;
+    wrap.appendChild(div);
+    wrap.scrollTop = wrap.scrollHeight;
+    return div;
+  }
+
+  function showTyping(){
+    const wrap = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'chat-typing';
+    div.id = 'typingIndicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    wrap.appendChild(div);
+    wrap.scrollTop = wrap.scrollHeight;
+  }
+
+  function hideTyping(){
+    const el = document.getElementById('typingIndicator');
+    if(el) el.remove();
+  }
+
+  function initChat(){
+    addChatMessage('bot', `Bonjour 👋 Je suis votre **conseiller immobilier intelligent**. Dites-moi simplement ce que vous recherchez (nombre de personnes, enfants, nuits, budget, période, type de bien) et je trouverai les biens les plus adaptés dans votre portefeuille.`);
+  }
+
+  function parseUserRequest(text) {
+    const lower = text.toLowerCase();
+    const result = {
+      capaciteRequise: null,
+      enfants: 0,
+      nuits: null,
+      dateDebut: null,
+      budgetMax: null,
+      typePrefere: null,
+      preferences: {}
+    };
+
+    const personnesMatch = lower.match(/(\d+)\s*(personne|pers\.?|pax|adulte|invité|voyageur)/i);
+    if (personnesMatch) {
+      result.capaciteRequise = parseInt(personnesMatch[1], 10);
+    }
+
+    const enfantsMatch = lower.match(/(\d+)\s*enfant/i);
+    if (enfantsMatch) {
+      result.enfants = parseInt(enfantsMatch[1], 10);
+      if (!result.capaciteRequise) {
+        const adultesMatch = lower.match(/(\d+)\s*adulte/i);
+        if (adultesMatch) {
+          result.capaciteRequise = parseInt(adultesMatch[1], 10) + result.enfants;
+        } else {
+          result.capaciteRequise = 2 + result.enfants;
+        }
+      }
+    }
+
+    const nuitsMatch = lower.match(/(\d+)\s*nuit/i);
+    if (nuitsMatch) {
+      result.nuits = parseInt(nuitsMatch[1], 10);
+    }
+
+    const budgetMatch = lower.match(/(\d+)\s*(euro|€|euros)/i);
+    if (budgetMatch) {
+      result.budgetMax = parseInt(budgetMatch[1], 10);
+    }
+
+    if (lower.includes('villa')) result.typePrefere = 'Villa';
+    if (lower.includes('appartement') || lower.includes('appart')) result.typePrefere = 'Appartement';
+    if (lower.includes('chalet') || lower.includes('cabane') || lower.includes('montagne')) result.typePrefere = 'Chalet';
+
+    const dateMap = {
+      'aujourd\'hui': 0, 'ajd': 0, 'ce soir': 0,
+      'demain': 1,
+      'après-demain': 2,
+      'week-end prochain': 7,
+      'week end prochain': 7,
+      'week-end': 5,
+      'week end': 5,
+    };
+    for (const [key, daysOffset] of Object.entries(dateMap)) {
+      if (lower.includes(key)) {
+        const d = new Date();
+        d.setDate(d.getDate() + daysOffset);
+        result.dateDebut = d.toISOString().split('T')[0];
+        break;
+      }
+    }
+
+    const dateAbsMatch = lower.match(/(\d{1,2})\s*(er)?\s*(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i);
+    if (dateAbsMatch) {
+      const day = parseInt(dateAbsMatch[1], 10);
+      const monthNames = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      const monthIndex = monthNames.findIndex(m => dateAbsMatch[3].toLowerCase().startsWith(m));
+      if (monthIndex !== -1) {
+        const now = new Date();
+        let year = now.getFullYear();
+        const dateObj = new Date(year, monthIndex, day);
+        if (dateObj < now) {
+          year++;
+          dateObj.setFullYear(year);
+        }
+        result.dateDebut = dateObj.toISOString().split('T')[0];
+      }
+    }
+
+    return result;
+  }
+
+  function findMatchingProperties(parsed) {
+    let candidates = properties.slice();
+
+    if (parsed.typePrefere) {
+      candidates = candidates.filter(p => p.type === parsed.typePrefere);
+    }
+
+    if (parsed.capaciteRequise) {
+      candidates = candidates.filter(p => Number(p.capacite || 0) >= parsed.capaciteRequise);
+    }
+
+    if (parsed.dateDebut && parsed.nuits) {
+      const dateFin = new Date(parsed.dateDebut + 'T00:00:00');
+      dateFin.setDate(dateFin.getDate() + parsed.nuits);
+      const dateFinStr = dateFin.toISOString().split('T')[0];
+      candidates = candidates.filter(p => isRangeAvailable(p, parsed.dateDebut, dateFinStr, null));
+    } else {
+      candidates = candidates.filter(p => computeStatut(p) === 'disponible');
+    }
+
+    if (parsed.budgetMax) {
+      candidates = candidates.filter(p => Number(p.prix || 0) <= parsed.budgetMax / (parsed.nuits || 1));
+    }
+
+    candidates.sort((a, b) => {
+      const capA = Number(a.capacite || 0);
+      const capB = Number(b.capacite || 0);
+      if (parsed.capaciteRequise) {
+        const diffA = capA - parsed.capaciteRequise;
+        const diffB = capB - parsed.capaciteRequise;
+        if (diffA !== diffB) return diffA - diffB;
+      }
+      return Number(a.prix || 0) - Number(b.prix || 0);
+    });
+
+    return candidates.slice(0, 5);
+  }
+
+  function renderSuggestionCards(list, parsed) {
+    if (list.length === 0) return '';
+    let html = '';
+    const nuits = parsed.nuits || 1;
+
+    list.forEach((p, index) => {
+      const total = parsed.nuits ? Number(p.prix) * parsed.nuits : null;
+      const ownerName = getOwnerName(p.proprietaireId);
+      const typeEmoji = p.type === 'Villa' ? '🏠' : p.type === 'Appartement' ? '🏢' : '🏔️';
+
+      html += `
+        <div class="chat-suggestion-card" style="${index === 0 ? 'border-color: var(--teal); background: #f0fdfa;' : ''}">
+          <div class="cs-title">
+            ${index === 0 ? '🏆 ' : ''}${escapeHtml(p.nom)}
+            <span class="capacity-badge"><i class="fas fa-users"></i> ${p.capacite} pers.</span>
+            <span style="font-size:11px;color:var(--muted);">${typeEmoji} ${escapeHtml(p.type)}</span>
+          </div>
+          <div class="cs-meta">
+            <span><i class="fas fa-user"></i> ${escapeHtml(ownerName)}</span>
+            <span><i class="fas fa-location-dot"></i> ${escapeHtml(p.lieu || '-')}</span>
+            <span><i class="fas fa-phone"></i> ${escapeHtml(p.telephone || '-')}</span>
+          </div>
+          <div class="cs-price">
+            ${fmtMoney(p.prix)} / nuit
+            ${total !== null ? `· <strong>Total ${nuits} nuit${nuits > 1 ? 's' : ''} : ${fmtMoney(total)}</strong>` : ''}
+            ${parsed.budgetMax && total <= parsed.budgetMax ? ' ✅ dans le budget' : ''}
+          </div>
+          <div style="font-size:12px; color: var(--muted); margin-top: 4px;">
+            ${computeStatut(p) === 'disponible' ? '✅ Disponible' : '📅 Sur demande'}
+          </div>
+        </div>
+      `;
+    });
+    return html;
+  }
+
+  function generateSmartResponse(parsed, matches) {
+    let response = '';
+    const parts = [];
+    if (parsed.capaciteRequise) {
+      parts.push(`${parsed.capaciteRequise} personne${parsed.capaciteRequise > 1 ? 's' : ''}`);
+      if (parsed.enfants > 0) {
+        parts.push(`dont ${parsed.enfants} enfant${parsed.enfants > 1 ? 's' : ''}`);
+      }
+    }
+    if (parsed.nuits) {
+      parts.push(`pour ${parsed.nuits} nuit${parsed.nuits > 1 ? 's' : ''}`);
+    }
+    if (parsed.dateDebut) {
+      parts.push(`à partir du ${fmtDateHuman(parsed.dateDebut)}`);
+    }
+    if (parsed.budgetMax) {
+      parts.push(`avec un budget max de ${fmtMoney(parsed.budgetMax)}`);
+    }
+    if (parsed.typePrefere) {
+      parts.push(`de type ${parsed.typePrefere}`);
+    }
+
+    const description = parts.length > 0 ? `J'ai compris votre demande : **${parts.join(' ')}**.` : '';
+
+    if (matches.length === 0) {
+      response = `${description}<br><br>😕 Je n'ai trouvé aucun bien correspondant à vos critères. `;
+      if (parsed.typePrefere) {
+        response += `Avez-vous envisagé un autre type de bien ? `;
+      }
+      if (parsed.capaciteRequise) {
+        response += `Essayez de réduire le nombre de personnes ou d'ajouter de nouveaux biens. `;
+      }
+      response += `<br><br>💡 Astuce : ajoutez plus de biens dans l'onglet "Biens".`;
+      return response;
+    }
+
+    const bestMatch = matches[0];
+    const totalPrice = parsed.nuits ? Number(bestMatch.prix) * parsed.nuits : null;
+    let recommendation = `${description}<br><br>🏅 **Meilleure recommandation :** `;
+
+    if (totalPrice !== null && parsed.budgetMax && totalPrice <= parsed.budgetMax) {
+      recommendation += `Le bien **${bestMatch.nom}** (${bestMatch.type}) correspond parfaitement à vos critères et reste dans votre budget. `;
+    } else if (totalPrice !== null && parsed.budgetMax) {
+      recommendation += `Le bien **${bestMatch.nom}** (${bestMatch.type}) est le plus adapté, mais le coût total (${fmtMoney(totalPrice)}) dépasse votre budget. `;
+    } else {
+      recommendation += `Le bien **${bestMatch.nom}** (${bestMatch.type}) semble idéal pour votre séjour. `;
+    }
+
+    if (matches.length > 1) {
+      recommendation += `<br><br>📊 **Alternatives** (${matches.length - 1} autre${matches.length - 1 > 1 ? 's' : ''}) : `;
+    }
+
+    return recommendation;
+  }
+
+  function handleChatSend() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    addChatMessage('user', escapeHtml(text));
+    input.value = '';
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+
+      if (properties.length === 0) {
+        addChatMessage('bot', "ℹ️ Vous n'avez encore ajouté aucun bien. Ajoutez-en dans l'onglet <strong>Biens</strong>.");
+        return;
+      }
+
+      const parsed = parseUserRequest(text);
+      const matches = findMatchingProperties(parsed);
+      let response = generateSmartResponse(parsed, matches);
+      if (matches.length > 0) {
+        response += renderSuggestionCards(matches, parsed);
+      }
+
+      if (matches.length > 0) {
+        const best = matches[0];
+        const total = parsed.nuits ? Number(best.prix) * parsed.nuits : null;
+        response += `<br><br>💬 **Conseil** : `;
+        if (total && parsed.budgetMax && total > parsed.budgetMax) {
+          response += `Négociez un tarif dégressif pour ${parsed.nuits} nuits. `;
+        } else if (parsed.enfants > 0) {
+          response += `Vérifiez les équipements pour enfants (lit bébé, chaise haute). `;
+        }
+        response += `Contactez le propriétaire pour confirmer.`;
+      }
+
+      addChatMessage('bot', response);
+    }, 400);
+  }
+
+  /* ===================== NAVIGATION / VUES ===================== */
+
+  function switchView(view){
+    currentView = view;
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+    document.querySelectorAll('.view-nav').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+    if(view === 'reservations') renderReservationsTable();
+    if(view === 'proprietaires') renderOwnersList();
+  }
+
+  /* ===================== INITIALISATION ===================== */
+
+  document.addEventListener('DOMContentLoaded', function(){
+    loadAll();
+    renderCards();
+    resetAddForm();
+    populateResPropSelect();
+    populateOwnerSelect();
+    renderOwnersList();
+    initChat();
+
+    document.getElementById('openAddModalBtn').addEventListener('click', () => {
+      resetAddForm();
+      document.getElementById('addModal').classList.add('active');
+    });
+    document.getElementById('closeAddModalBtn').addEventListener('click', () => document.getElementById('addModal').classList.remove('active'));
+    document.getElementById('cancelAddBtn').addEventListener('click', () => document.getElementById('addModal').classList.remove('active'));
+    document.getElementById('addModal').addEventListener('click', (e) => { if(e.target.id === 'addModal') document.getElementById('addModal').classList.remove('active'); });
+    document.getElementById('confirmAddBtn').addEventListener('click', submitPropertyForm);
+
+    document.getElementById('closeDetailBtn').addEventListener('click', closeDetail);
+    document.getElementById('detailOverlay').addEventListener('click', (e) => { if(e.target.id === 'detailOverlay') closeDetail(); });
+
+    document.getElementById('refreshBtn').addEventListener('click', renderCards);
+    document.getElementById('searchInput').addEventListener('input', renderCards);
+    document.getElementById('exportBiensPdfBtn').addEventListener('click', exportBiensPdf);
+
+    document.querySelectorAll('.filter-nav').forEach(btn => {
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('.filter-nav').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        renderCards();
+      });
+    });
+
+    document.querySelectorAll('.view-nav').forEach(btn => {
+      btn.addEventListener('click', () => switchView(btn.dataset.view));
+    });
+
+    // Propriétaires
+    document.getElementById('openAddOwnerModalBtn').addEventListener('click', () => {
+      resetOwnerForm();
+      document.getElementById('ownerModal').classList.add('active');
+    });
+    document.getElementById('closeOwnerModalBtn').addEventListener('click', () => document.getElementById('ownerModal').classList.remove('active'));
+    document.getElementById('cancelOwnerBtn').addEventListener('click', () => document.getElementById('ownerModal').classList.remove('active'));
+    document.getElementById('ownerModal').addEventListener('click', (e) => { if(e.target.id === 'ownerModal') document.getElementById('ownerModal').classList.remove('active'); });
+    document.getElementById('confirmOwnerBtn').addEventListener('click', submitOwnerForm);
+    document.getElementById('searchOwnerInput').addEventListener('input', renderOwnersList);
+
+    // Réservations
+    document.getElementById('openAddResModalBtn').addEventListener('click', () => openAddResModal(null));
+    document.getElementById('closeResModalBtn').addEventListener('click', () => document.getElementById('resModal').classList.remove('active'));
+    document.getElementById('cancelResBtn').addEventListener('click', () => document.getElementById('resModal').classList.remove('active'));
+    document.getElementById('resModal').addEventListener('click', (e) => { if(e.target.id === 'resModal') document.getElementById('resModal').classList.remove('active'); });
+    document.getElementById('confirmResBtn').addEventListener('click', submitReservationForm);
+    document.getElementById('resPropSelect').addEventListener('change', updateResPriceEstimate);
+    document.getElementById('resDateDebut').addEventListener('change', updateResPriceEstimate);
+    document.getElementById('resDateFin').addEventListener('change', updateResPriceEstimate);
+    document.getElementById('resNbPersonnes').addEventListener('input', checkResAvailability);
+    document.getElementById('resPrixTotal').addEventListener('input', function(){ this.dataset.userEdited = '1'; });
+    document.getElementById('searchResInput').addEventListener('input', renderReservationsTable);
+    document.getElementById('exportResPdfBtn').addEventListener('click', exportResPdf);
+
+    // Assistant IA
+    document.getElementById('chatSendBtn').addEventListener('click', handleChatSend);
+    document.getElementById('chatInput').addEventListener('keydown', (e) => { if(e.key === 'Enter') handleChatSend(); });
+    document.querySelectorAll('.chat-example-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.getElementById('chatInput').value = chip.dataset.example;
+        handleChatSend();
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

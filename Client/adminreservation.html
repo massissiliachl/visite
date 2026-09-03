@@ -138,6 +138,10 @@
             margin-top: 8px;
         }
         .login-card .login-btn:hover { opacity: 0.9; }
+        .login-card .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
         .login-card .error {
             background: #ffebee;
             color: #c62828;
@@ -1252,7 +1256,7 @@
 
     <script>
         // ============================================================
-        // ADMIN DASHBOARD — VERSION WEB (CORRIGÉE POUR POSTGRESQL)
+        // ADMIN DASHBOARD — VERSION WEB
         // ============================================================
     
         // ---- API CONFIG ----
@@ -1263,6 +1267,7 @@
         const API_USERS_URL = isLocalHost
             ? (location.port === '3000' ? `${window.location.origin}/api/users` : 'http://127.0.0.1:3000/api/users')
             : 'https://visitebejai.onrender.com/api/users';
+        const API_AUTH_URL = API_USERS_URL.replace('/api/users', '/api/auth');
 
         const BOAT_PRICE_BY_MINUTES = {
             30: 8000,
@@ -1291,7 +1296,6 @@
                 .replace(/"/g, '&quot;');
         }
 
-        // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
         function normalizeReservation(raw) {
             if (!raw) return raw;
             const total = parseFloat(raw.totalAPayer ?? raw.totalAPayer) || 0;
@@ -1323,7 +1327,8 @@
         const state = {
             isLoggedIn: false,
             loginError: '',
-            userInfo: { id: 1, nom: 'Admin', prenom: 'Super', email: 'admin@visitbejai.com', telephone: '0555123456', role: 'admin' },
+            loginLoading: false,
+            userInfo: { id: null, nom: '', prenom: '', email: '', telephone: '', role: '' },
             loading: true,
             reservations: [],
             filteredReservations: [],
@@ -1337,8 +1342,8 @@
             showTimePicker: false,
             showDatePickerClient: false,
             totalAPayer: '', versement: '', resteAPayer: '0', note: '',
-            boatNom: '', boatPrenom: '', boatTel: '', boatCircuit: '60', boatSlot: '09h-11h',
-            boatNumber: '1', boatDate: '', showBoatDatePicker: false, boatSelectedTime: '',
+            boatNom: '', boatPrenom: '', boatTel: '', boatCircuit: '120', boatSlot: '09h-11h',
+            boatNumber: '1', boatDate: '', showBoatDatePicker: false,
             boatTotalAPayer: '', boatVersement: '', boatResteAPayer: '0', boatNote: '',
             timeSlots: ['09h-11h', '11h-13h', '13h-15h', '15h-17h', '17h-19h'],
             newSlot: '',
@@ -1436,34 +1441,119 @@
                 ...options.headers,
             };
             const res = await fetch(url, { ...options, headers });
-            const data = await res.json().catch(() => ({}));
+            const raw = await res.text();
+            let data = {};
+            try { data = raw ? JSON.parse(raw) : {}; } catch { data = {}; }
             if (!res.ok) throw new Error(data.message || data.error || `HTTP ${res.status}`);
             return data;
         }
     
         // ---- AUTHENTIFICATION ----
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('login-email').value;
+            
+            // Désactiver le bouton et afficher le chargement
+            const loginBtn = document.querySelector('.login-btn');
+            const errorEl = document.querySelector('.login-error');
+            
+            if (loginBtn) {
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Connexion...';
+            }
+            
+            if (errorEl) {
+                errorEl.style.display = 'none';
+                errorEl.textContent = '';
+            }
+
+            const identifier = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
-    
-            if (email === 'admin' && password === 'visitbejaia2026') {
+
+            // Validation des champs
+            if (!identifier || !password) {
+                state.loginError = 'Veuillez remplir tous les champs';
+                if (errorEl) {
+                    errorEl.textContent = state.loginError;
+                    errorEl.style.display = 'block';
+                }
+                if (loginBtn) {
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Se connecter';
+                }
+                render();
+                return;
+            }
+
+            try {
+                // Envoyer l'identifiant comme email (le backend accepte email ou username)
+                const data = await apiFetch(`${API_AUTH_URL}/login`, {
+                    method: 'POST',
+                    body: JSON.stringify({ email: identifier, password })
+                });
+
+                // Vérifier que l'utilisateur existe
+                if (!data.user) {
+                    throw new Error('Identifiants incorrects');
+                }
+
+                // Vérifier que l'utilisateur a le bon rôle (admin ou employeur)
+                if (data.user.role !== 'admin' && data.user.role !== 'employeur') {
+                    throw new Error('Accès non autorisé. Vous devez être administrateur ou employeur.');
+                }
+
+                // Connexion réussie
                 state.isLoggedIn = true;
                 state.loginError = '';
-                localStorage.setItem('token', 'fake-token');
-                localStorage.setItem('user', JSON.stringify(state.userInfo));
-                init();
-            } else {
-                state.loginError = 'Email ou mot de passe incorrect';
+                state.userInfo = data.user;
+
+                // Stocker le token et les infos utilisateur
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                // Charger les données initiales
+                await init();
+
+                // Réinitialiser le formulaire
+                if (loginBtn) {
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Se connecter';
+                }
+
+            } catch (err) {
+                console.error('Erreur de connexion:', err);
+                state.loginError = err.message || 'Email ou nom d\'utilisateur incorrect';
+                
+                if (errorEl) {
+                    errorEl.textContent = state.loginError;
+                    errorEl.style.display = 'block';
+                }
+                
+                if (loginBtn) {
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Se connecter';
+                }
                 render();
             }
         }
-    
+
         function handleLogout() {
             if (!confirm('Voulez-vous vraiment vous déconnecter ?')) return;
+            
+            const token = localStorage.getItem('token');
+            if (token) {
+                fetch(`${API_AUTH_URL}/logout`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                }).catch(() => {});
+            }
+            
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             state.isLoggedIn = false;
+            state.userInfo = { id: null, nom: '', prenom: '', email: '', telephone: '', role: '' };
+            state.reservations = [];
+            state.filteredReservations = [];
+            state.boatReservations = [];
             render();
         }
     
@@ -1471,7 +1561,7 @@
         async function init() {
             const token = localStorage.getItem('token');
             const userStr = localStorage.getItem('user');
-    
+
             if (token && userStr) {
                 state.isLoggedIn = true;
                 try {
@@ -1479,11 +1569,12 @@
                     await loadInitialData();
                 } catch (e) {
                     console.error('Erreur chargement:', e);
+                    state.isLoggedIn = false;
                 }
             } else {
                 state.isLoggedIn = false;
             }
-    
+
             state.loading = false;
             render();
         }
@@ -1534,15 +1625,24 @@
         async function loadEmployeurs() {
             state.employeursLoading = true;
             try {
-                const data = await apiFetch(`${API_USERS_URL}/employeurs`);
+                let data;
+                try {
+                    data = await apiFetch(`${API_USERS_URL}/employeurs`);
+                } catch {
+                    data = await apiFetch(`${API_AUTH_URL}/employeurs`);
+                }
                 state.employeurs = data;
-                const now = new Date();
-                const onlineStatus = data.map(emp => ({
-                    ...emp,
-                    isOnline: Math.random() > 0.5,
-                    lastActive: new Date(now.getTime() - Math.random() * 7200000),
-                    lastActiveStr: formatLastActive(new Date(now.getTime() - Math.random() * 7200000))
-                }));
+                const onlineStatus = data.map(emp => {
+                    const lastSeen = emp.lastSeen ? new Date(emp.lastSeen) : null;
+                    const isOnlineByLastSeen = lastSeen ? (Date.now() - lastSeen.getTime()) < 5 * 60 * 1000 : false;
+                    const isOnline = Boolean(emp.isOnline) && isOnlineByLastSeen;
+                    return {
+                        ...emp,
+                        isOnline,
+                        disconnectedFor: isOnline ? null : formatLastActive(lastSeen),
+                        lastActiveStr: formatLastActive(lastSeen)
+                    };
+                });
                 state.onlineEmployeurs = onlineStatus;
             } catch (e) {
                 console.error('Erreur chargement employeurs:', e);
@@ -1623,7 +1723,7 @@
             }
         }
     
-        // ---- AJOUT RÉSERVATION CLIENT (CORRIGÉ) ----
+        // ---- AJOUT RÉSERVATION CLIENT ----
         async function addReservation() {
             if (!state.nom || !state.prenom) {
                 alert('Veuillez remplir le nom et prénom');
@@ -1652,7 +1752,6 @@
             const reste = Math.max(0, total - vers);
             const note = state.note.trim() || 'Aucune note';
 
-            // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
             const newRes = {
                 nom: state.nom,
                 prenom: state.prenom,
@@ -1709,26 +1808,21 @@
             render();
         }
     
-        // ---- AJOUT RÉSERVATION BATEAU (CORRIGÉ) ----
-        function checkBoatAvailability(date, startTime, boatNum, durationMinutes) {
-            if (!date) return false;
-            const startTotal = timeToMinutes(startTime);
-            const endTotal = startTotal + durationMinutes;
-            return state.boatReservations.some(r => {
-                if (r.date !== date) return false;
-                if (r.bateau !== `Bateau ${boatNum}`) return false;
-                const rStart = timeToMinutes(r.heure);
-                const rEnd = rStart + (parseInt(r.duree) || 60);
-                return (startTotal < rEnd && endTotal > rStart);
-            });
+        // ---- AJOUT RÉSERVATION BATEAU ----
+        function getBookedBoatsForSlot(date, slot) {
+            return new Set(
+                state.boatReservations
+                    .filter(r => r.date === date && r.slot === slot && r.activite === 'Bateau')
+                    .map(r => String(r.bateau || '').replace('Bateau ', '').trim())
+            );
         }
-    
-        function getBoatStartTimes() {
-            return state.timeSlots.map(slot => {
-                const [start] = slot.split('-');
-                const hour = parseInt(start.replace('h', ''));
-                return `${hour.toString().padStart(2, '0')}:00`;
-            });
+
+        function isSlotFullyBooked(date, slot) {
+            return getBookedBoatsForSlot(date, slot).size >= 2;
+        }
+
+        function isBoatAlreadyBooked(date, slot, boatNum) {
+            return getBookedBoatsForSlot(date, slot).has(String(boatNum));
         }
     
         async function addBoatReservation() {
@@ -1744,7 +1838,7 @@
                 alert('Veuillez sélectionner une date');
                 return;
             }
-            if (!state.boatSelectedTime) {
+            if (!state.boatSlot) {
                 alert('Veuillez sélectionner un créneau');
                 return;
             }
@@ -1762,27 +1856,29 @@
 
             const reste = Math.max(0, total - vers);
             const note = state.boatNote.trim() || 'Aucune note';
-            const durationMinutes = parseInt(state.boatCircuit);
-            const startTime = state.boatSelectedTime;
             const boatNum = state.boatNumber;
+            const selectedSlot = state.boatSlot;
 
-            if (checkBoatAvailability(state.boatDate, startTime, boatNum, durationMinutes)) {
-                alert(`❌ Ce créneau est déjà réservé pour cette date et le bateau ${boatNum} !`);
+            if (isSlotFullyBooked(state.boatDate, selectedSlot)) {
+                alert('❌ Ce créneau est complet (2 bateaux réservés)');
+                return;
+            }
+            if (isBoatAlreadyBooked(state.boatDate, selectedSlot, boatNum)) {
+                alert(`❌ Le bateau ${boatNum} est déjà réservé sur ce créneau`);
                 return;
             }
 
-            // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
             const res = {
                 nom: state.boatNom,
                 prenom: state.boatPrenom,
                 tel: state.boatTel,
                 activite: 'Bateau',
-                heure: startTime,
+                heure: selectedSlot,
                 date: state.boatDate,
                 personnes: 1,
-                slot: state.boatSlot,
+                slot: selectedSlot,
                 bateau: `Bateau ${boatNum}`,
-                duree: durationMinutes + ' min',
+                duree: state.boatCircuit + ' min',
                 totalAPayer: total,
                 versement: vers,
                 resteapayer: reste,
@@ -1801,7 +1897,7 @@
                 localStorage.setItem('reservationsData', JSON.stringify(state.reservations));
 
                 const statusText = getPaymentStatusText(saved.paymentStatus).text;
-                alert(`✅ Réservation confirmée !\nBateau ${boatNum} - ${state.boatDate} à ${startTime}\nDurée: ${durationMinutes} min\nTotal: ${total} DA\nVersé: ${vers} DA\nReste: ${reste} DA\nStatut: ${statusText}`);
+                alert(`✅ Réservation confirmée !\nBateau ${boatNum} - ${selectedSlot}\nTotal: ${total} DA\nVersé: ${vers} DA\nReste: ${reste} DA\nStatut: ${statusText}`);
                 resetBoatForm();
             } catch (err) {
                 console.error('❌ Erreur API bateau:', err);
@@ -1818,7 +1914,7 @@
             state.boatVersement = '';
             state.boatResteAPayer = '0';
             state.boatNote = '';
-            state.boatSelectedTime = '';
+            state.boatCircuit = '120';
             state.modalVisible = false;
             render();
         }
@@ -1882,10 +1978,17 @@
                 return;
             }
             try {
-                await apiFetch(`${API_USERS_URL}/register`, {
-                    method: 'POST',
-                    body: JSON.stringify(emp)
-                });
+                try {
+                    await apiFetch(`${API_USERS_URL}/register`, {
+                        method: 'POST',
+                        body: JSON.stringify({ ...emp, role: 'employeur' })
+                    });
+                } catch {
+                    await apiFetch(`${API_AUTH_URL}/register`, {
+                        method: 'POST',
+                        body: JSON.stringify({ ...emp, role: 'employeur' })
+                    });
+                }
                 alert('✅ Compte employeur créé avec succès');
                 state.showCreateEmployeurModal = false;
                 state.newEmployeur = { nom: '', prenom: '', email: '', password: '', telephone: '', role: 'employeur' };
@@ -1924,7 +2027,7 @@
             }
         }
     
-        // ---- MISE À JOUR STATUT PAIEMENT (CORRIGÉ) ----
+        // ---- MISE À JOUR STATUT PAIEMENT ----
         async function updatePaymentStatus(id, status, amount) {
             const res = state.reservations.find(r => r.id === id);
             if (!res) return;
@@ -1951,7 +2054,6 @@
             render();
 
             try {
-                // ✅ CORRIGÉ : Utiliser les noms de colonnes en minuscules pour PostgreSQL
                 const payload = {
                     nom: normalized.nom,
                     prenom: normalized.prenom,
@@ -1982,7 +2084,7 @@
         }
     
         // ============================================================
-        // RENDU AVEC GESTION D'ÉVÉNEMENTS OPTIMISÉE
+        // RENDU
         // ============================================================
     
         function render() {
@@ -1996,14 +2098,14 @@
                                 <p>Administration</p>
                             </div>
                             <form onsubmit="handleLogin(event)">
-                                <div class="error ${state.loginError ? 'show' : ''}">${state.loginError}</div>
+                                <div class="error login-error ${state.loginError ? 'show' : ''}">${state.loginError}</div>
                                 <div class="form-group">
-                                    <label>Identifiant</label>
-                                    <input type="text" id="login-email" placeholder="admin" value="admin" />
+                                    <label>Email ou nom d'utilisateur</label>
+                                    <input type="text" id="login-email" placeholder="email@exemple.com ou username" value="" required />
                                 </div>
                                 <div class="form-group">
                                     <label>Mot de passe</label>
-                                    <input type="password" id="login-password" placeholder="••••••••" value="visitbejaia2026" />
+                                    <input type="password" id="login-password" placeholder="••••••••" required />
                                 </div>
                                 <button type="submit" class="login-btn">Se connecter</button>
                             </form>
@@ -2075,7 +2177,7 @@
                         </div>
                         <div class="welcome-section">
                             <div class="welcome-greeting">Bonjour,</div>
-                            <div class="welcome-name">${user.prenom} ${user.nom} 👋</div>
+                            <div class="welcome-name">${user.prenom || 'Admin'} ${user.nom || ''} 👋</div>
                             <div class="welcome-date">${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>
                         </div>
                         <div class="header-stats">
@@ -2425,14 +2527,12 @@
         }
     
         function renderBoat() {
-            const startTimes = getBoatStartTimes();
             const boatNum = state.boatNumber;
             const boatDate = state.boatDate;
-            const circuit = parseInt(state.boatCircuit);
-    
-            let slotsHtml = startTimes.map((time, idx) => {
-                const isAvailable = boatDate ? !checkBoatAvailability(boatDate, time, boatNum, circuit) : false;
-                const isSelected = state.boatSelectedTime === time;
+
+            let slotsHtml = state.timeSlots.map((slot, idx) => {
+                const isAvailable = boatDate ? !isSlotFullyBooked(boatDate, slot) : false;
+                const isSelected = state.boatSlot === slot;
                 let cls = 'slot-item';
                 if (!isAvailable && boatDate) cls += ' unavailable';
                 else if (isSelected) cls += ' selected';
@@ -2441,15 +2541,19 @@
     
                 let statusText = '';
                 if (!boatDate) statusText = '<span class="status" style="color:#999;">📅 Choisir date</span>';
-                else if (!isAvailable) statusText = '<span class="status occupied">❌ Occupé</span>';
+                else if (!isAvailable) statusText = '<span class="status occupied">❌ Complet</span>';
                 else if (isSelected) statusText = '<span class="status selected">✅ Sélectionné</span>';
                 else statusText = '<span class="status free">✓ Libre</span>';
-    
-                const onclick = boatDate ? `state.boatSelectedTime='${time}'; render();` : `alert('Veuillez d\\'abord sélectionner une date')`;
+
+                const onclick = boatDate
+                    ? (isAvailable
+                        ? `state.boatSlot='${slot}'; render();`
+                        : `alert('Ce créneau est complet pour les 2 bateaux')`)
+                    : `alert('Veuillez d\\'abord sélectionner une date')`;
     
                 return `
                     <div class="${cls}" onclick="${onclick}" style="${!boatDate ? 'cursor:pointer;border-color:#ccc;background:#f5f5f5;color:#999;' : ''}">
-                        ${time}
+                        ${slot}
                         ${statusText}
                     </div>
                 `;
@@ -2480,28 +2584,19 @@
                     </div>
     
                     <div class="form-group">
-                        <label>Durée</label>
-                        <div class="chip-group">
-                            ${['60','90','120','150','180','210'].map(d => `
-                                <div class="chip ${state.boatCircuit === d ? 'active' : ''}" onclick="state.boatCircuit='${d}'; state.boatSelectedTime=''; suggestBoatTotal(); render();">${parseInt(d)/60}h</div>
-                            `).join('')}
-                        </div>
-                    </div>
-    
-                    <div class="form-group">
                         <label>Créneaux disponibles</label>
                         <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
                             ${slotsHtml}
                         </div>
-                        ${state.boatSelectedTime ? `<div class="selected-time">⏰ Créneau sélectionné: ${state.boatSelectedTime}</div>` : ''}
-                        ${state.boatDate && !state.boatSelectedTime ? `<div class="select-hint">👆 Cliquez sur un créneau libre</div>` : ''}
+                        ${state.boatSlot ? `<div class="selected-time">⏰ Créneau sélectionné: ${state.boatSlot}</div>` : ''}
+                        ${state.boatDate && !state.boatSlot ? `<div class="select-hint">👆 Cliquez sur un créneau libre</div>` : ''}
                     </div>
     
                     <div class="form-group">
                         <label>Bateau</label>
                         <div class="chip-group">
                             ${['1','2'].map(b => `
-                                <div class="chip ${state.boatNumber === b ? 'active' : ''}" onclick="state.boatNumber='${b}'; state.boatSelectedTime=''; render();">Bateau ${b}</div>
+                                <div class="chip ${state.boatNumber === b ? 'active' : ''}" onclick="state.boatNumber='${b}'; render();">Bateau ${b}</div>
                             `).join('')}
                         </div>
                     </div>
@@ -2586,7 +2681,7 @@
                             <h4>${emp.nom} ${emp.prenom} ${emp.isOnline ? '<span class="online-badge">🟢 En ligne</span>' : ''}</h4>
                             <p>📧 ${emp.email}</p>
                             <p>📞 ${emp.telephone || 'Non renseigné'}</p>
-                            <div class="last-active">🕐 ${emp.isOnline ? 'En ligne' : `Dernière activité: ${emp.lastActiveStr || 'Jamais'}`}</div>
+                            <div class="last-active">🕐 ${emp.isOnline ? 'En ligne maintenant' : `Déconnecté: ${emp.disconnectedFor || 'Jamais'}`}</div>
                             <div class="employeur-footer">
                                 <span class="status-tag ${emp.isOnline ? 'active' : 'inactive'}">${emp.isOnline ? 'Actif' : 'Inactif'}</span>
                                 <span style="color:#888;">${emp.role === 'admin' ? 'Administrateur' : 'Employeur'}</span>

@@ -212,8 +212,8 @@ function initFormEvents() {
 🔔 *Action:* Client va effectuer le paiement PayPal. Veuillez confirmer la réservation.`;
 
             const encodedMessage = encodeURIComponent(message);
-            const whatsappNumber = "33619501708";
-            window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            const whatsappNumber = "213557664089";
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank", "noopener");
             closeModal();
             document.getElementById("reservationForm").reset();
             document.getElementById("adults").value = 1;
@@ -247,9 +247,11 @@ function initFormEvents() {
             setLoading(false);
             
             if (result.success) {
+                const waMessage = `✨ *NOUVELLE RÉSERVATION ACTIVITÉ - VISIT BÉJAÏA* ✨\n\n• *Client:* ${nom} ${prenom}\n• *Email:* ${email}\n• *Téléphone:* ${phone}\n\n• *Activité:* ${currentAct.name}\n• *Date souhaitée:* ${date}\n• *Personnes:* ${adults + children}\n\n• *Montant total:* ${total.toLocaleString('fr-DZ')} DA\n• *Acompte 30 %:* ${deposit.toLocaleString('fr-DZ')} DA\n• *Paiement:* ${payment}${transRef ? `\n• *Réf. transaction:* ${transRef}` : ''}\n\n• *Demandes:* ${special || 'Aucune'}\n\n• *Envoyée le:* ${new Date().toLocaleString('fr-FR')}`;
+                window.open(`https://wa.me/213557664089?text=${encodeURIComponent(waMessage)}`, "_blank", "noopener");
                 const message = result.local ? 
                     "✅ Réservation sauvegardée localement" :
-                    "✅ Réservation confirmée !";
+                    "✅ Réservation envoyée ! WhatsApp s'ouvre — appuyez sur Envoyer.";
                 showToast(`${message} - Total: ${total.toLocaleString('fr-DZ')} DA`, "success");
                 
                 setTimeout(() => {
@@ -258,7 +260,7 @@ function initFormEvents() {
                     document.getElementById("adults").value = 1;
                     document.getElementById("children").value = 0;
                     updateTotal();
-                }, 2000);
+                }, 1500);
             } else {
                 showToast("❌ Erreur lors de la réservation", "error");
             }

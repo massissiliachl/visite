@@ -6,7 +6,7 @@ const activitiesCatalog = [
     { id: "cheval", name: "Randonnée à Cheval", basePrice: 2500, category: "terre", icon: "fa-horse", desc: "Entre mer et montagne dans le parc de Gouraya.", hasChild: false },
     { id: "parasailing", name: "Parasailing", basePrice: 10000, category: "mer", icon: "fa-parachute-box", desc: "Envolez-vous au-dessus de la mer.", hasChild: false },
     { id: "bouee", name: "Bouée Tractée", basePrice: 3000, category: "mer", icon: "fa-water", desc: "Adrénaline et fous rires garantis.", hasChild: false },
-    { id: "jetski", name: "Jet Ski", basePrice: 30000, category: "mer", icon: "fa-jet-fighter", desc: "Sensations fortes en liberté (1h).", hasChild: false },
+    { id: "jetski", name: "Jet Ski", basePrice: 15000, category: "mer", icon: "fa-jet-fighter", desc: "Kawasaki 310 Ultra, Yamaha VX 110 ou circuit découverte.", hasChild: false },
     { id: "bateau", name: "Excursion Bateau", basePrice: 20000, category: "mer", icon: "fa-ship", desc: "Découvrez île de Nizla, grotte des pirates.", hasChild: false }
 ];
 

@@ -6,13 +6,21 @@ window.ActivityCards = {
     },
 
     formatPrice(act) {
-        if (act.id === 'bateau') return 'À partir de 16 000 DA';
+        if (act.id === 'bateau' || typeof act.basePrice !== 'number') {
+            const n = parseInt(String(act.basePrice).replace(/[^0-9]/g, ''), 10);
+            return n ? `À partir de ${n.toLocaleString('fr-DZ')} DA` : String(act.basePrice);
+        }
         return `${Number(act.basePrice).toLocaleString('fr-DZ')} DA`;
+    },
+
+    priceValue(act) {
+        if (typeof act.basePrice === 'number') return act.basePrice;
+        return parseInt(String(act.basePrice).replace(/[^0-9]/g, ''), 10) || 0;
     },
 
     buildHTML(act, idx) {
         const category = this.categoryLabels[act.category] || act.category;
-        return `<article class="activity-card glass-card" style="--i:${idx}">
+        return `<article class="activity-card glass-card" data-category="${act.category}" data-id="${act.id}" style="--i:${idx}">
             <div class="card-shine" aria-hidden="true"></div>
             <div class="card-media">
                 <img src="${act.image}" alt="${act.name}" loading="lazy" onerror="this.src='assets/images/all.jpg'">
@@ -23,12 +31,12 @@ window.ActivityCards = {
             <div class="card-glass">
                 <div class="card-glass-inner">
                     <div class="card-top">
-                        <div class="icon-circle"><i class="fas ${act.icon}"></i></div>
+                        <div class="icon-circle"><i class="fas ${act.icon}" aria-hidden="true"></i></div>
                         <h3 class="card-title">${act.name}</h3>
                     </div>
                     <p class="card-desc">${act.desc}</p>
-                    <button type="button" class="btn-book" data-id="${act.id}" data-name="${act.name}" data-price="${act.basePrice}">
-                        <span>Réserver</span><i class="fas fa-arrow-right"></i>
+                    <button type="button" class="btn-book" data-id="${act.id}" data-name="${act.name}" data-price="${this.priceValue(act)}">
+                        <span>Réserver</span><i class="fas fa-arrow-right" aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
@@ -64,8 +72,12 @@ window.ActivityCards = {
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
         const cards = grid.querySelectorAll('.activity-card');
         dotsWrap.innerHTML = '';
+        dotsWrap.style.display = '';
 
-        if (!isMobile || cards.length <= 1) return;
+        if (!isMobile || cards.length <= 1) {
+            dotsWrap.style.display = 'none';
+            return;
+        }
 
         cards.forEach((_, i) => {
             const dot = document.createElement('button');
@@ -111,5 +123,50 @@ window.ActivityCards = {
         this.initTilt();
         this.initScrollDots();
         this.bindBookButtons(onBookClick);
+        this.initReveal();
+        this.initFilterMotion();
+    },
+
+    initReveal() {
+        const cards = document.querySelectorAll('.activity-card.glass-card');
+        if (!cards.length) return;
+
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) {
+            cards.forEach((card) => card.classList.add('is-visible'));
+            return;
+        }
+
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('is-visible');
+                    io.unobserve(entry.target);
+                });
+            }, {
+                threshold: isMobile ? 0.15 : 0.2,
+                rootMargin: isMobile ? '0px 40px 0px 0px' : '0px 0px -40px 0px'
+            });
+
+            cards.forEach((card) => {
+                card.classList.add('reveal-card');
+                io.observe(card);
+            });
+        } else {
+            cards.forEach((card) => card.classList.add('is-visible'));
+        }
+    },
+
+    initFilterMotion() {
+        const filters = document.querySelectorAll('.filter-btn');
+        if (!filters.length) return;
+
+        filters.forEach((btn, i) => {
+            btn.style.setProperty('--fi', i);
+            btn.classList.add('filter-animate');
+        });
     }
 };

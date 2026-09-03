@@ -13,5 +13,6 @@ const baseUrl = (
   RENDER_API
 );
 
+export const API_ROOT_URL = baseUrl;
 export const API_BASE_URL = `${baseUrl}/api/reservations-admin`;
 export const API_USERS_URL = `${baseUrl}/api/users`;

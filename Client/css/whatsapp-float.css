@@ -1,8 +1,8 @@
 /* ===== Bulle WhatsApp flottante — site entier ===== */
 .whatsapp-float-global {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    right: calc(24px + env(safe-area-inset-right, 0px));
     z-index: 9999;
     width: 60px;
     height: 60px;
@@ -70,8 +70,8 @@
 
 @media (max-width: 768px) {
     .whatsapp-float-global {
-        bottom: 18px;
-        right: 16px;
+        bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+        right: calc(16px + env(safe-area-inset-right, 0px));
         width: 54px;
         height: 54px;
         font-size: 1.65rem;
@@ -85,8 +85,8 @@
 /* Ancienne classe — compatibilité */
 .whatsapp-float {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    right: calc(24px + env(safe-area-inset-right, 0px));
     z-index: 9999;
     width: 60px;
     height: 60px;
@@ -109,8 +109,8 @@
 
 @media (max-width: 768px) {
     .whatsapp-float {
-        bottom: 18px;
-        right: 16px;
+        bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+        right: calc(16px + env(safe-area-inset-right, 0px));
         width: 54px;
         height: 54px;
         font-size: 1.65rem;

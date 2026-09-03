@@ -2,918 +2,264 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>VisitBejaia - Explorez Béjaïa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Visit Béjaïa | Destinations</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: #f8f9fa;
-            color: #2c3e3d;
-            line-height: 1.6;
-            overflow-x: hidden;
-            width: 100%;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 700;
-        }
-
-        
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .hamburger span {
-            width: 28px;
-            height: 2px;
-            background: #1a3a6b;
-            transition: 0.3s;
-            display: block;
-        }
-
-        /* ===== HERO ===== */
-        /* ===== HERO with reliable background image (high-res Unsplash) ===== */
-       
-         /* ===== HERO SPECTACULAIRE ===== */
-     
-         .page-hero {
-        height: 100vh;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        overflow: hidden;
-    }
-
-    /* Image de fond avec overlay */
-    .hero-bg-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-        animation: zoomIn 25s ease-out infinite alternate;
-    }
-
-    @keyframes zoomIn {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.15); }
-    }
-
-    /* Overlay dégradé plus riche */
-    .page-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%);
-        z-index: 1;
-    }
-
-    /* Contenu centré */
-    .hero-content {
-        text-align: center;
-        position: relative;
-        z-index: 2;
-        max-width: 800px;
-        padding: 0 20px;
-    }
-
-    .page-hero h1 {
-        font-size: clamp(2.5rem, 8vw, 5.5rem);
-        font-weight: 700;
-        margin-bottom: 1rem;
-        text-shadow: 3px 3px 15px rgba(0,0,0,0.4);
-        animation: fadeInDown 1s ease;
-        letter-spacing: 2px;
-    }
-
-    .page-hero p {
-        font-size: clamp(1rem, 4vw, 1.4rem);
-        opacity: 0.95;
-        margin-bottom: 2rem;
-        text-shadow: 1px 1px 8px rgba(0,0,0,0.3);
-        animation: fadeInUp 1s 0.2s both;
-    }
-
-    /* Bouton CTA ajouté */
-    .hero-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        background: linear-gradient(135deg, #d32f2f, #b71c1c);
-        color: white;
-        text-decoration: none;
-        padding: 14px 32px;
-        border-radius: 50px;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 20px rgba(211, 47, 47, 0.4);
-        animation: fadeInUp 1s 0.4s both;
-        border: none;
-        cursor: pointer;
-    }
-
-    .hero-btn:hover {
-        background: linear-gradient(135deg, #b71c1c, #8e0000);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(211, 47, 47, 0.6);
-        gap: 15px;
-    }
-
-    .hero-btn i {
-        font-size: 1.1rem;
-        transition: transform 0.3s ease;
-    }
-
-    .hero-btn:hover i {
-        transform: translateX(5px);
-    }
-
-    /* Flèche de scroll */
-    .scroll-indicator {
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 2;
-        animation: bounce 2s infinite;
-        cursor: pointer;
-    }
-
-    .scroll-indicator a {
-        color: white;
-        font-size: 1.8rem;
-        opacity: 0.8;
-        transition: opacity 0.3s;
-    }
-
-    .scroll-indicator a:hover {
-        opacity: 1;
-    }
-
-    @keyframes bounce {
-        0%, 100% { transform: translateX(-50%) translateY(0); }
-        50% { transform: translateX(-50%) translateY(10px); }
-    }
-
-    @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-40px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(40px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .hero-btn {
-            padding: 12px 24px;
-            font-size: 0.9rem;
-        }
-        
-        .scroll-indicator {
-            bottom: 20px;
-        }
-        
-        .scroll-indicator a {
-            font-size: 1.4rem;
-        }
-    }        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== BLOCS DESTINATIONS : SOLUTION ROBUSTE ===== */
-        .destinations-section {
-            padding: 4rem 0 2rem;
-            width: 100%;
-        }
-
-        .desti-bloc {
-            display: flex;
-            align-items: stretch;
-            gap: 2rem;
-            margin-bottom: 5rem;
-            width: 100%;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInBlock 0.8s forwards;
-        }
-
-        .desti-bloc:nth-child(1) { animation-delay: 0.2s; }
-        .desti-bloc:nth-child(2) { animation-delay: 0.3s; }
-        .desti-bloc:nth-child(3) { animation-delay: 0.4s; }
-        .desti-bloc:nth-child(4) { animation-delay: 0.5s; }
-        .desti-bloc:nth-child(5) { animation-delay: 0.6s; }
-        .desti-bloc:nth-child(6) { animation-delay: 0.7s; }
-
-        @keyframes fadeInBlock {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .desti-bloc.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .desti-image {
-            flex: 0 0 45%;
-            height: auto;
-            min-height: 350px;
-            border-radius: 2rem;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: 0 25px 40px -18px #1a3a6b;
-            transition: transform 0.5s ease, box-shadow 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .desti-image:hover {
-            transform: scale(1.02) translateY(-5px);
-            box-shadow: 0 35px 50px -15px #0f2e29;
-        }
-
-        .desti-image::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(145deg, transparent 60%, rgba(26, 58, 107,0.2));
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .desti-image:hover::after {
-            opacity: 1;
-        }
-
-        .desti-texte {
-            flex: 0 0 45%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .desti-texte h2 {
-            font-size: 2.5rem;
-            color: #1a3a6b;
-            margin-bottom: 0.5rem;
-            line-height: 1.2;
-        }
-
-        .desti-localisation {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            color: #d32f2f;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .desti-description {
-            font-size: 1rem;
-            color: #3f5a55;
-            line-height: 1.7;
-            background: rgba(255, 250, 240, 0.7);
-            padding: 1.5rem;
-            border-radius: 1.5rem;
-            border-left: 5px solid #d32f2f;
-            box-shadow: 0 10px 25px -12px #a67c5b;
-            backdrop-filter: blur(2px);
-            transition: transform 0.3s;
-        }
-
-        .desti-description:hover {
-            transform: translateX(8px);
-            background: #fffaf2;
-        }
-
-        .desti-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-top: 1.5rem;
-        }
-
-        .desti-details span {
-            background: white;
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.03);
-            border: 1px solid #e2d6cc;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .desti-details span:hover {
-            background: #1a3a6b;
-            color: white;
-            border-color: #1a3a6b;
-            transform: translateY(-3px);
-        }
-
-        .desti-details span:hover i {
-            color: white;
-        }
-
-        .desti-details i {
-            color: #d32f2f;
-            transition: color 0.3s;
-        }
-
-        /* ===== SECTION PARTENARIAT ===== */
-       .partnership {
-    background: linear-gradient(135deg, #f8f9fa, #eef3f2);
-    padding: 5rem 0;
-    margin-top: 3rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-
-    /* animation entrée */
-    opacity: 0;
-    transform: translateY(40px);
-    animation: fadeUpSection 1s ease forwards;
-}
-
-/* animation apparition section */
-@keyframes fadeUpSection {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* décor animé */
-.partnership::before {
-    content: "";
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: rgba(26, 58, 107, 0.08);
-    border-radius: 50%;
-    top: -100px;
-    left: -100px;
-    filter: blur(30px);
-    animation: float1 6s ease-in-out infinite;
-}
-
-.partnership::after {
-    content: "";
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    background: rgba(211, 47, 47, 0.06);
-    border-radius: 50%;
-    bottom: -80px;
-    right: -80px;
-    filter: blur(25px);
-    animation: float2 7s ease-in-out infinite;
-}
-
-/* mouvements doux */
-@keyframes float1 {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(20px); }
-}
-
-@keyframes float2 {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-}
-
-.partnership .container {
-    position: relative;
-    z-index: 2;
-    max-width: 900px;
-}
-
-.partnership h3 {
-    font-size: 1.2rem;
-    color: #1a3a6b;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-
-    animation: fadeIn 1s ease 0.2s both;
-}
-
-.partnership h4 {
-    font-size: 2.5rem;
-    color: #2c3e3d;
-    margin-bottom: 2rem;
-    line-height: 1.2;
-
-    animation: fadeIn 1s ease 0.4s both;
-}
-
-/* animation fade simple */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.partnership p {
-    font-size: 1.1rem;
-    color: #4a5a58;
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
-    background: rgba(255,255,255,0.7);
-    padding: 1.5rem 2rem;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    backdrop-filter: blur(5px);
-    transition: transform 0.3s ease;
-
-    animation: fadeIn 1s ease 0.6s both;
-}
-
-.partnership p:hover {
-    transform: translateY(-5px);
-}
-
-/* PARTENAIRES */
-.partners-logos {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-
-    animation: fadeIn 1s ease 0.8s both;
-}
-
-.partners-logos span {
-    background: white;
-    padding: 0.7rem 1.5rem;
-    border-radius: 50px;
-    font-size: 0.95rem;
-    color: #1a3a6b;
-    border: 1px solid rgba(26,58,107,0.2);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    cursor: default;
-}
-
-.partners-logos span:hover {
-    background: #1a3a6b;
-    color: white;
-    transform: translateY(-3px) scale(1.05);
-}
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 768px) {
-    .partnership {
-        padding: 3.5rem 1rem;
-    }
-
-    .partnership h4 {
-        font-size: 1.8rem;
-    }
-
-    .partnership p {
-        font-size: 1rem;
-        padding: 1.2rem;
-    }
-
-    .partners-logos {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .partners-logos span {
-        width: 85%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .partnership h4 {
-        font-size: 1.5rem;
-    }
-
-    .partnership p {
-        font-size: 0.9rem;
-        padding: 1rem;
-    }
-
-    .partners-logos span {
-        width: 100%;
-        font-size: 0.85rem;
-    }
-}
-        /* ===== FOOTER ===== */
-        .footer {
-            background: #1e3a35;
-            color: #e5ddd2;
-            padding: 4rem 0 1rem;
-            width: 100%;
-        }
-
-        .footer-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 30px;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 3rem;
-        }
-
-        .footer-logo h3 {
-            font-size: 2.2rem;
-            color: #f3e7db;
-        }
-
-        .footer-links h4 {
-            color: #dacbbc;
-            margin-bottom: 1.2rem;
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.7rem;
-        }
-
-        .footer-links a {
-            color: #bfb7ab;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #e2ccb8;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-icons a {
-            background: #31554e;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #bfb7ab;
-            transition: 0.3s;
-        }
-
-        .social-icons a:hover {
-            background: #d32f2f;
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid #406156;
-            color: #9faa9e;
-        }
-
-        /* ===== RESPONSIVE AMÉLIORÉ ===== */
-        @media (max-width: 1100px) {
-            .desti-texte h2 {
-                font-size: 2.2rem;
-            }
-            
-            .desti-description {
-                padding: 1.2rem;
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .nav-menu {
-                display: none;
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: rgba(255,252,248,0.98);
-                backdrop-filter: blur(10px);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1.2rem;
-                border-bottom: 1px solid #efe4d8;
-                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-                z-index: 999;
-            }
-
-            .nav-menu.active {
-                display: flex;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-menu a {
-                white-space: normal;
-                font-size: 1.1rem;
-            }
-        }
-        @media (max-width: 900px) {
-            .desti-bloc, .desti-bloc.reverse {
-                gap: 1.5rem;
-            }
-            
-            .desti-image {
-                flex: 0 0 42%;
-                min-height: 300px;
-            }
-            
-            .desti-texte {
-                flex: 0 0 50%;
-            }
-            
-            .desti-texte h2 {
-                font-size: 2rem;
-            }
-            
-            .desti-details span {
-                padding: 0.4rem 1rem;
-                font-size: 0.85rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .desti-bloc, .desti-bloc.reverse {
-                gap: 1rem;
-            }
-            
-            .desti-image {
-                flex: 0 0 40%;
-                min-height: 280px;
-                max-height: 300px;
-            }
-            
-            .desti-texte {
-                flex: 0 0 55%;
-            }
-            
-            .desti-texte h2 {
-                font-size: 1.8rem;
-                margin-bottom: 0.3rem;
-            }
-            
-            .desti-localisation {
-                font-size: 1rem;
-                margin-bottom: 1rem;
-            }
-            
-            .desti-description {
-                padding: 1rem;
-                font-size: 0.9rem;
-                line-height: 1.5;
-            }
-            
-            .desti-details {
-                margin-top: 1rem;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .partnership p {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .desti-bloc, .desti-bloc.reverse {
-                flex-direction: row !important; /* FORCER LIGNE */
-                align-items: stretch;
-                gap: 0.8rem;
-            }
-            
-            .desti-image {
-                flex: 0 0 38%;
-                min-height: 220px;
-                max-height: 250px;
-                border-radius: 1.2rem;
-            }
-            
-            .desti-texte {
-                flex: 0 0 58%;
-                padding: 0;
-            }
-            
-            .desti-texte h2 {
-                font-size: 1.5rem;
-                line-height: 1.2;
-                margin-bottom: 0.2rem;
-            }
-            
-            .desti-localisation {
-                font-size: 0.9rem;
-                margin-bottom: 0.8rem;
-            }
-            
-            .desti-description {
-                padding: 0.8rem;
-                font-size: 0.85rem;
-                border-left-width: 3px;
-            }
-            
-            .desti-details {
-                gap: 0.4rem;
-                margin-top: 0.8rem;
-            }
-            
-            .desti-details span {
-                padding: 0.3rem 0.8rem;
-                font-size: 0.8rem;
-                white-space: nowrap;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .desti-bloc, .desti-bloc.reverse {
-                gap: 0.6rem;
-            }
-            
-            .desti-image {
-                flex: 0 0 35%;
-                min-height: 180px;
-                max-height: 200px;
-            }
-            
-            .desti-texte {
-                flex: 0 0 60%;
-            }
-            
-            .desti-texte h2 {
-                font-size: 1.3rem;
-            }
-            
-            .desti-localisation {
-                font-size: 0.8rem;
-                margin-bottom: 0.5rem;
-            }
-            
-            .desti-description {
-                padding: 0.6rem;
-                font-size: 0.8rem;
-                line-height: 1.4;
-            }
-            
-            .desti-details span {
-                padding: 0.2rem 0.6rem;
-                font-size: 0.7rem;
-                gap: 0.3rem;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .desti-image {
-                flex: 0 0 33%;
-                min-height: 150px;
-                max-height: 180px;
-            }
-            
-            .desti-texte {
-                flex: 0 0 62%;
-            }
-            
-            .desti-texte h2 {
-                font-size: 1.2rem;
-            }
-            
-            .desti-description {
-                padding: 0.5rem;
-                font-size: 0.75rem;
-            }
-            
-            .desti-details span {
-                padding: 0.2rem 0.5rem;
-                font-size: 0.65rem;
-            }
-        }
-
-//hero 
-
-
-
-
-        //localisation google maps
-        .map-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: #e53935; /* rouge */
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  font-weight: 600;
-  transition: 0.3s ease;
-  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
-}
-
-.map-btn:hover {
-  background: #c62828; /* rouge foncé */
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(198, 40, 40, 0.4);
-}
-
-.map-btn i {
-  font-size: 16px;
-}
-    </style>
-    <!-- Améliorations de design modernes -->
-    <link rel="stylesheet" href="css/design-improvements.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/destination-guide.css">
+    <link rel="stylesheet" href="css/whatsapp-float.css">
 </head>
-<body>
+<body class="guide-page">
 
-  <!-- Navigation -->
     <div id="navbar-placeholder"></div>
-    <!-- Hero -->
- <!-- HTML Hero Section -->
+
 <section class="page-hero">
-    <img src="https://dia-algerie.com/wp-content/uploads/2021/03/cap-carbon.jpg" alt="Béjaïa" class="hero-bg-image">
-
-    <div class="hero-content">
-        <h1>Explorez Béjaïa</h1>
-        <p>Des lieux d'exception entre mer et montagne</p>
-
-        <a href="#destinations" class="hero-btn">
-            Découvrir
-            <i class="fas fa-arrow-down"></i>
-        </a>
+    <div class="hero-media">
+        <img src="https://dia-algerie.com/wp-content/uploads/2021/03/cap-carbon.jpg" alt="Béjaïa au coucher du soleil" class="hero-bg-image">
     </div>
 
-    <div class="scroll-indicator">
-        <a href="#destinations">
-            <i class="fas fa-chevron-down"></i>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <i class="fas fa-compass"></i>
+            Guide destinations
+        </div>
+
+        <h1>Explorez <em>Béjaïa</em></h1>
+        <p class="hero-lead">Un itinéraire vivant entre falaises, villages kabyles et trésors de la baie.</p>
+
+        <div class="hero-features">
+            <article>
+                <div class="feat-ico"><i class="fas fa-mountain"></i></div>
+                <strong>Paysages</strong>
+                <span>à couper le souffle</span>
+            </article>
+            <article>
+                <div class="feat-ico"><i class="fas fa-dharmachakra"></i></div>
+                <strong>Culture</strong>
+                <span>et traditions</span>
+            </article>
+            <article>
+                <div class="feat-ico"><i class="fas fa-water"></i></div>
+                <strong>Activités</strong>
+                <span>pour tous</span>
+            </article>
+        </div>
+
+        <a href="#guide-sheet" class="hero-btn">
+            Ouvrir le guide
+            <i class="fas fa-arrow-right"></i>
         </a>
     </div>
 </section>
-    <!-- Blocs destinations : image et texte toujours côte à côte -->
-    <section id="destinations" class="destinations-section container">
+
+<main id="guide-sheet" class="guide-sheet">
+    <div class="container">
+        <section class="discover-block" aria-label="Catégories">
+            <h2><span class="discover-star" aria-hidden="true">✦</span> Que voulez-vous découvrir ?</h2>
+            <div class="discover-grid">
+                <a class="discover-card" href="#port-tala-ilef">
+                    <span class="ico"><i class="fas fa-ship"></i></span>
+                    <span>Port Tala Ilef — Mer</span>
+                </a>
+                <a class="discover-card" href="#ferme-djerba">
+                    <span class="ico"><i class="fas fa-horse"></i></span>
+                    <span>Ferme Djerba — Quad & Cheval</span>
+                </a>
+                <a class="discover-card" href="#destinations">
+                    <span class="ico"><i class="fas fa-location-dot"></i></span>
+                    <span>Lieux incontournables</span>
+                </a>
+                <a class="discover-card" href="activites.html">
+                    <span class="ico"><i class="fas fa-camera"></i></span>
+                    <span>Expériences uniques</span>
+                </a>
+                <a class="discover-card" href="hebergement.html">
+                    <span class="ico"><i class="fas fa-bed"></i></span>
+                    <span>Hébergements de charme</span>
+                </a>
+                <a class="discover-card" href="index.html#contact">
+                    <span class="ico"><i class="fas fa-utensils"></i></span>
+                    <span>Restaurants locaux</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="highlights-block" aria-label="À ne pas manquer">
+            <h2>À ne pas manquer</h2>
+            <div class="highlights-track">
+                <a class="highlight-card" href="#port-tala-ilef">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Harbor_of_Tala_Yilef%2C_Bejaia%2C_Algeria.jpg" alt="Port Tala Ilef">
+                    <span class="highlight-icon"><i class="fas fa-anchor"></i></span>
+                    <strong>Port Tala Ilef</strong>
+                </a>
+                <a class="highlight-card" href="#ferme-djerba">
+                    <img src="assets/images/quad.jpeg" alt="Ferme Djerba" onerror="this.src='assets/images/dj.jpeg'">
+                    <span class="highlight-icon"><i class="fas fa-tractor"></i></span>
+                    <strong>Ferme Djerba</strong>
+                </a>
+                <a class="highlight-card" href="#chapter-01">
+                    <img src="assets/images/capsigli.jpeg" alt="Cap Sigli">
+                    <span class="highlight-icon"><i class="fas fa-mountain"></i></span>
+                    <strong>Cap Sigli</strong>
+                </a>
+                <a class="highlight-card" href="#chapter-07">
+                    <img src="https://www.bejaia-guidedepoche.com/images/CouvertureLieu/145/223062-pic-des-singes-bejaia.jpg" alt="Pic des Singes">
+                    <span class="highlight-icon"><i class="fas fa-binoculars"></i></span>
+                    <strong>Pic des Singes</strong>
+                </a>
+                <a class="highlight-card" href="#chapter-03">
+                    <img src="https://www.bejaia-guidedepoche.com/images/CouvertureLieu/158/_thumb2/123-050.jpg" alt="Musée Bordj Moussa">
+                    <span class="highlight-icon"><i class="fas fa-landmark"></i></span>
+                    <strong>Bordj Moussa</strong>
+                </a>
+                <a class="highlight-card" href="#chapter-02">
+                    <img src="assets/images/dj.jpeg" alt="Village Djebla">
+                    <span class="highlight-icon"><i class="fas fa-house"></i></span>
+                    <strong>Village Djebla</strong>
+                </a>
+                <a class="highlight-card" href="#chapter-06">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoAhJN8KSysPrEXUOmBAO36AmCs0n4SXPS2g&s" alt="Les Aiguades">
+                    <span class="highlight-icon"><i class="fas fa-water"></i></span>
+                    <strong>Les Aiguades</strong>
+                </a>
+            </div>
+        </section>
+
+        <h2 class="section-label" id="destinations">Le guide des lieux</h2>
+        <div class="destinations-section">
+
+<!-- FERME DJERBA -->
+<div class="desti-bloc" id="ferme-djerba">
+
+    <div class="desti-image"
+      style="background-image: url('assets/images/quad.jpeg');">
+    </div>
+
+    <div class="desti-text">
+      <h2 class="title">
+        <i class="fas fa-location-dot"></i>
+        Ferme Djerba
+      </h2>
+
+      <p>
+        La ferme Djerba est un lieu d’immersion nature à Béjaïa, idéal pour vivre
+        la campagne kabyle entre collines, chemins forestiers et grands espaces.
+      </p>
+
+      <p>
+        <strong>À savoir :</strong> c’est le point de départ des randonnées en quad
+        et à cheval, encadrées pour découvrir les paysages entre mer et montagne.
+      </p>
+
+      <p>
+        Que vous soyez débutant ou déjà à l’aise, l’expérience se vit dans un cadre
+        authentique, parfait pour une sortie en famille, entre amis ou en couple.
+      </p>
+
+      <div class="ferme-offers">
+        <p class="ferme-offers-title">Activités proposées</p>
+        <div class="ferme-offers-grid">
+          <a class="ferme-offer" href="activites.html?book=quad">
+            <img class="ferme-offer-img" src="assets/images/quad.jpeg" alt="Randonnée Quad" loading="lazy">
+            <span class="ferme-offer-body">
+              <strong>Randonnée Quad</strong>
+              <em>Dès 3 000 DA · Boulimat</em>
+            </span>
+            <span class="ferme-offer-cta">Réserver</span>
+          </a>
+          <a class="ferme-offer" href="activites.html?book=cheval">
+            <img class="ferme-offer-img" src="https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA" alt="Randonnée à cheval" loading="lazy" onerror="this.src='assets/images/dj.jpeg'">
+            <span class="ferme-offer-body">
+              <strong>Randonnée à cheval</strong>
+              <em>2 500 DA · ~30 min</em>
+            </span>
+            <span class="ferme-offer-cta">Réserver</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- PORT TALA ILEF -->
+<div class="desti-bloc reverse" id="port-tala-ilef">
+
+    <div class="desti-image"
+      style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9e/Harbor_of_Tala_Yilef%2C_Bejaia%2C_Algeria.jpg');">
+    </div>
+
+    <div class="desti-text">
+      <h2 class="title">
+        <i class="fas fa-location-dot"></i>
+        Port Tala Ilef
+      </h2>
+
+      <p>
+        Le port Tala Ilef est un point de départ privilégié pour les activités
+        nautiques à Béjaïa : eaux turquoise, accès facile et vue sur la baie.
+      </p>
+
+      <p>
+        <strong>Localisation :</strong> sur le littoral de Béjaïa, le port accueille
+        les sorties en mer vers l’île de Nizla, les grottes et le Cap Carbon.
+      </p>
+
+      <p>
+        C’est l’endroit idéal pour embarquer en bateau, essayer le jet ski
+        ou explorer la côte en kayak, encadré par des professionnels.
+      </p>
+
+      <a
+        href="https://www.google.com/maps/dir/?api=1&destination=Port+Tala+Ilef+Bejaia+Algeria"
+        target="_blank"
+        class="map-link"
+        rel="noopener noreferrer"
+      >
+        <i class="fas fa-location-dot"></i>
+        Voir l’itinéraire
+      </a>
+
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps?q=Port%20Tala%20Ilef%20Bejaia%20Algeria&output=embed"
+          loading="lazy"
+          title="Carte Port Tala Ilef">
+        </iframe>
+      </div>
+
+      <div class="ferme-offers">
+        <p class="ferme-offers-title">Activités proposées</p>
+        <div class="ferme-offers-grid">
+          <a class="ferme-offer" href="activites.html?book=bateau">
+            <img class="ferme-offer-img" src="assets/images/i.jpeg" alt="Excursion Bateau" loading="lazy">
+            <span class="ferme-offer-body">
+              <strong>Excursion Bateau</strong>
+              <em>Dès 20 000 DA · Circuits mer</em>
+            </span>
+            <span class="ferme-offer-cta">Réserver</span>
+          </a>
+          <a class="ferme-offer" href="activites.html?book=jetski">
+            <img class="ferme-offer-img" src="assets/images/jetski.jpeg" alt="Jet Ski" loading="lazy">
+            <span class="ferme-offer-body">
+              <strong>Jet Ski</strong>
+              <em>Dès 15 000 DA · Formules</em>
+            </span>
+            <span class="ferme-offer-cta">Réserver</span>
+          </a>
+          <a class="ferme-offer" href="activites.html?book=Kayak">
+            <img class="ferme-offer-img" src="https://www.muchbetteradventures.com/magazine/content/images/2020/01/28152819/GettyImages-1176774484.jpg" alt="Kayak" loading="lazy" onerror="this.src='assets/images/i.jpeg'">
+            <span class="ferme-offer-body">
+              <strong>Kayak</strong>
+              <em>2 000 DA · 2h30–3h</em>
+            </span>
+            <span class="ferme-offer-cta">Réserver</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <!-- CAP SIGLI -->
 <div class="desti-bloc reverse">
 
@@ -1021,7 +367,6 @@
   
     </div>
   </div>
-</div>
 <!-- MUSÉE BORDJ MOUSSA -->
 <div class="desti-bloc reverse">
 
@@ -1305,7 +650,7 @@ habitat naturel.
     </p>
 <!-- ?? lien Google Maps SANS bouton carr� -->
 <a 
-  href="https://www.google.com/maps/dir/?api=1&destination=Les+Aiguades+B�ja�a+Algeria" 
+  href="https://www.google.com/maps/dir/?api=1&destination=Pic+des+Singes+Bejaia+Algeria" 
   target="_blank"
   class="map-link"
 >
@@ -1316,28 +661,24 @@ habitat naturel.
 <!-- MAP -->
 <div class="map-container">
   <iframe
-    src="https://www.google.com/maps?q=Les%20Aiguades%20B�ja�a%20Algeria&output=embed"
+    src="https://www.google.com/maps?q=Pic%20des%20Singes%20Bejaia%20Algeria"
     loading="lazy">
   </iframe>
 </div></div>
 
 </div>
 
+
+        </div>
+    </div>
+</main>
+
 <section class="partnership">
     <div class="container">
         <h3>Notre mission</h3>
-        <h4>Valoriser le patrimoine de Béjaïa</h4>
-
+        <h4>Raconter Béjaïa, clairement.</h4>
         <p>
-            VisitBejaia est un guide touristique en ligne dédié à la découverte de la richesse culturelle, historique et naturelle de Béjaïa. Notre objectif est de mettre en valeur les sites emblématiques de la région et de faciliter l’accès à l’information pour les visiteurs.
-        </p>
-        
-        <p>
-            Nous nous appuyons sur des sources fiables ainsi que sur des collaborations avec des acteurs locaux afin de proposer un contenu authentique, utile et accessible à tous.
-        </p>
-        
-        <p>
-            Que vous soyez touriste ou habitant, notre guide vous accompagne pour explorer Béjaïa et profiter pleinement de ses paysages, de son histoire et de ses trésors cachés.
+            Visit Béjaïa est un guide local pour découvrir le patrimoine naturel et culturel de la région — avec des infos utiles, des itinéraires et des lieux authentiques.
         </p>
     </div>
 </section>
@@ -1346,41 +687,7 @@ habitat naturel.
     
     <script src="js/navbar.js"></script>
     <script src="js/include-footer.js"></script>
-
-    <!-- Script menu mobile -->
-    <script>
-        const hamburger = document.getElementById('hamburgerBtn');
-        const navMenu = document.getElementById('navMenu');
-
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const spans = hamburger.querySelectorAll('span');
-            if (navMenu.classList.contains('active')) {
-                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
-                spans[1].style.opacity = '0';
-                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
-            } else {
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            }
-        });
-
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                const spans = hamburger.querySelectorAll('span');
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
-            });
-        });
-    </script>
+    <script src="js/destination-guide.js"></script>
+    <script src="js/whatsapp-float.js"></script>
 </body>
 </html>
-
-
-
-
-
-

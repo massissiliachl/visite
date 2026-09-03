@@ -25,6 +25,7 @@ function isValidWhatsAppPhone(phone) {
 }
 
 const BUSINESS_WHATSAPP_DISPLAY = "+213 660 43 48 72";
+const ADMIN_WHATSAPP_NUMBER = "213660434872"; // numéro qui reçoit les demandes
 
 const emailTransporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -117,6 +118,81 @@ async function sendReservationEmail(reservation, status) {
   return { sent: true, messageId: info.messageId };
 }
 
+function generateAdminDemandWhatsAppLink(reservation) {
+  const propertyName = reservation.Property?.title || reservation.propertyId || "Hébergement";
+  const arrivee = formatDateFr(reservation.date_arrivee);
+  const depart = formatDateFr(reservation.date_depart);
+  const clientName = `${reservation.nom || ""} ${reservation.prenom || ""}`.trim() || "Client";
+  const nb = reservation.nb_personnes || 1;
+
+  const message = `📩 Nouvelle demande de réservation Visite Bejaia
+
+Client : ${clientName}
+Téléphone : ${reservation.telephone || "—"}
+Email : ${reservation.email || "—"}
+Hébergement : ${propertyName}
+Du : ${arrivee}
+Jusqu'au : ${depart}
+Personnes : ${nb}
+Prix : ${reservation.prix_total || 0} DZD`;
+
+  return `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+async function sendAdminNewReservationEmail(reservation, whatsappLink) {
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.EMAIL_USER;
+  if (!adminEmail || !process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    return { sent: false, reason: "admin_email_manquant" };
+  }
+
+  const propertyName = reservation.Property?.title || reservation.propertyId || "Hébergement";
+  const arrivee = formatDateFr(reservation.date_arrivee);
+  const depart = formatDateFr(reservation.date_depart);
+  const clientName = `${reservation.nom || ""} ${reservation.prenom || ""}`.trim();
+  const hasWhatsApp = !!whatsappLink;
+
+  const text = `Nouvelle demande de réservation hébergement
+
+Client : ${clientName}
+Téléphone : ${reservation.telephone || "—"}
+Email : ${reservation.email || "—"}
+Hébergement : ${propertyName}
+Arrivée : ${arrivee}
+Départ : ${depart}
+Personnes : ${reservation.nb_personnes || 1}
+Prix total : ${reservation.prix_total || 0} DZD
+WhatsApp client : ${hasWhatsApp ? "Oui" : "Non — préférer WhatsApp si possible"}
+
+${whatsappLink ? `Lien WhatsApp client : ${whatsappLink}` : "Pas de numéro WhatsApp valide — contacter par email."}`;
+
+  const info = await emailTransporter.sendMail({
+    from: `"Visit Béjaïa" <${process.env.EMAIL_USER}>`,
+    to: adminEmail,
+    subject: `Nouvelle réservation — ${propertyName} — ${clientName}`,
+    text,
+    html: `
+      <div style="font-family:Arial,sans-serif;line-height:1.6;color:#333;max-width:600px;margin:0 auto;">
+        <div style="background:#1a3a6b;color:white;padding:20px;border-radius:10px 10px 0 0;">
+          <h2 style="margin:0;">Nouvelle demande de réservation</h2>
+        </div>
+        <div style="background:#f5f5f5;padding:20px;border-radius:0 0 10px 10px;">
+          <p><strong>Client :</strong> ${clientName}</p>
+          <p><strong>Téléphone :</strong> ${reservation.telephone || "—"}</p>
+          <p><strong>Email :</strong> ${reservation.email || "—"}</p>
+          <p><strong>Hébergement :</strong> ${propertyName}</p>
+          <p><strong>Dates :</strong> ${arrivee} → ${depart}</p>
+          <p><strong>Personnes :</strong> ${reservation.nb_personnes || 1}</p>
+          <p><strong>Prix :</strong> ${reservation.prix_total || 0} DZD</p>
+          <p><strong>WhatsApp :</strong> ${hasWhatsApp ? "✅ Numéro valide" : "⚠️ Pas de WhatsApp — contacter par email"}</p>
+          ${whatsappLink ? `<p><a href="${whatsappLink}" style="display:inline-block;background:#25d366;color:white;padding:12px 20px;border-radius:8px;text-decoration:none;">Ouvrir WhatsApp client</a></p>` : ""}
+        </div>
+      </div>
+    `
+  });
+
+  return { sent: true, messageId: info.messageId };
+}
+
 /* =========================
    CREATE RESERVATION - CORRIGÉ
 ========================= */
@@ -153,10 +229,11 @@ exports.createReservation = async (req, res) => {
       priceType: typeof property.price
     });
 
-    // Récupérer le prix de la propriété
-    const price = Number(property.price);
-    
-    if (isNaN(price) || price <= 0) {
+    // Récupérer le prix de la propriété (devis = 0 temporairement)
+    const isDevis = !!req.body.isDevis || Number(property.price) <= 0;
+    let price = Number(property.price);
+    if (isNaN(price) || price < 0) price = 0;
+    if (!isDevis && price <= 0) {
       console.error("❌ Prix invalide:", property.price);
       return res.status(400).json({
         success: false,
@@ -197,18 +274,55 @@ exports.createReservation = async (req, res) => {
       date_arrivee,
       date_depart,
       nb_personnes,
-      prix_total  // ✅ Maintenant correctement calculé
+      prix_total
     });
+
+    const fullReservation = await PropertyReservation.findByPk(reservation.id, {
+      include: [{ model: Property }]
+    });
+
+    const whatsappLink = generateWhatsAppLink(telephone, "en_attente", fullReservation);
+    const adminWhatsAppLink = generateAdminDemandWhatsAppLink(fullReservation);
+    const hasWhatsApp = !!whatsappLink;
+
+    let clientEmailSent = false;
+    if (!hasWhatsApp) {
+      try {
+        const emailResult = await sendReservationEmail(fullReservation, "en_attente");
+        clientEmailSent = !!emailResult.sent;
+      } catch (e) {
+        console.error("❌ Email client:", e.message);
+      }
+    }
+
+    let adminEmailSent = false;
+    try {
+      const adminResult = await sendAdminNewReservationEmail(fullReservation, whatsappLink);
+      adminEmailSent = !!adminResult.sent;
+    } catch (adminErr) {
+      console.error("❌ Erreur notification admin:", adminErr);
+    }
 
     console.log("✅ Réservation créée:", {
       id: reservation.id,
-      prix_total: reservation.prix_total
+      prix_total: reservation.prix_total,
+      hasWhatsApp,
+      clientEmailSent,
+      adminEmailSent,
+      adminWhatsApp: ADMIN_WHATSAPP_NUMBER
     });
 
     return res.status(201).json({
       success: true,
-      data: reservation,
-      message: "Réservation créée avec succès"
+      data: fullReservation,
+      whatsappLink,
+      adminWhatsAppLink,
+      hasWhatsApp,
+      clientEmailSent,
+      adminEmailSent,
+      message: hasWhatsApp
+        ? "Réservation créée avec succès"
+        : "Réservation créée — nous vous contacterons par email (WhatsApp de préférence)"
     });
 
   } catch (error) {
@@ -280,7 +394,7 @@ exports.updateStatus = async (req, res) => {
 
     const oldStatus = reservation.status;
     const newStatus = req.body.status;
-    await reservation.update({ status: newStatus });
+    const skipNotify = !!req.body.skipNotify;
 
     const whatsappLink = generateWhatsAppLink(
       reservation.telephone,
@@ -291,8 +405,8 @@ exports.updateStatus = async (req, res) => {
     let emailSent = false;
     let emailError = null;
 
-    // Si le numéro WhatsApp est invalide/absent → envoi par email
-    if (!whatsappLink) {
+    // Envoi email seulement si pas de WhatsApp et pas déjà notifié côté admin
+    if (!skipNotify && !whatsappLink) {
       try {
         const emailResult = await sendReservationEmail(reservation, newStatus);
         emailSent = !!emailResult.sent;
@@ -304,13 +418,16 @@ exports.updateStatus = async (req, res) => {
       }
     }
 
+    // Statut mis à jour après notification (ou si skipNotify = déjà notifié côté client)
+    await reservation.update({ status: newStatus });
+
     console.log(`📱 Statut mis à jour: ${oldStatus} → ${newStatus}`);
     console.log(`💰 Prix total: ${reservation.prix_total} DZD`);
 
     return res.json({
       success: true,
       message: "Statut mis à jour",
-      whatsappLink,
+      whatsappLink: skipNotify ? null : whatsappLink,
       emailSent,
       emailError,
       data: reservation

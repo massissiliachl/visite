@@ -41,6 +41,16 @@ const User = sequelize.define('User', {
   isActive: {
     type: DataTypes.BOOLEAN,
     defaultValue: true
+  },
+
+  isOnline: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+
+  lastSeen: {
+    type: DataTypes.DATE,
+    allowNull: true
   }
 }, {
   tableName: 'users'

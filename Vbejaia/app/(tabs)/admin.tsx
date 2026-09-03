@@ -28,7 +28,7 @@ import {
   mergeSavedReservation,
   normalizeReservation,
 } from '../../utils/reservationHelpers';
-import { API_BASE_URL, API_USERS_URL } from '../../config/api';
+import { API_BASE_URL, API_ROOT_URL, API_USERS_URL } from '../../config/api';
 
 const { width, height } = Dimensions.get('window');
 
@@ -80,12 +80,11 @@ export default function AdminDashboard() {
   const [boatNom, setBoatNom] = useState('');
   const [boatPrenom, setBoatPrenom] = useState('');
   const [boatTel, setBoatTel] = useState('');
-  const [boatCircuit, setBoatCircuit] = useState('60');
+  const [boatCircuit, setBoatCircuit] = useState('120');
   const [boatSlot, setBoatSlot] = useState('09h-11h');
   const [boatNumber, setBoatNumber] = useState('1');
   const [boatDate, setBoatDate] = useState('');
   const [showBoatDatePicker, setShowBoatDatePicker] = useState(false);
-  const [boatSelectedTime, setBoatSelectedTime] = useState('');
   
   // États paiement bateau
   const [boatTotalAPayer, setBoatTotalAPayer] = useState('');
@@ -138,35 +137,37 @@ export default function AdminDashboard() {
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
   const slideAnim = React.useRef(new Animated.Value(50)).current;
 
-  // Formater le temps depuis la dernière activité
+  // Formater le temps depuis la dernière activité / déconnexion
   const formatLastActive = (date) => {
     if (!date) return 'Jamais';
     const now = new Date();
-    const diff = now - new Date(date);
+    const diff = Math.max(0, now.getTime() - new Date(date).getTime());
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
-    
+
     if (minutes < 1) return 'À l\'instant';
     if (minutes < 60) return `Il y a ${minutes} min`;
     if (hours < 24) return `Il y a ${hours} h`;
     return `Il y a ${days} j`;
   };
 
+  const mapEmployeurPresence = (emp) => {
+    const lastSeen = emp?.lastSeen ? new Date(emp.lastSeen) : null;
+    const isOnlineByLastSeen = lastSeen ? (Date.now() - lastSeen.getTime()) < 5 * 60 * 1000 : false;
+    const isOnline = Boolean(emp?.isOnline) && isOnlineByLastSeen;
+
+    return {
+      ...emp,
+      isOnline,
+      lastActiveStr: formatLastActive(lastSeen),
+      disconnectedFor: isOnline ? null : formatLastActive(lastSeen),
+    };
+  };
+
   // Mettre à jour le statut en ligne des employeurs
   const updateOnlineStatus = () => {
-    const now = new Date();
-    const updatedStatus = employeurs.map(emp => {
-      const lastActiveTime = emp.lastActive ? new Date(emp.lastActive) : new Date(now.getTime() - Math.random() * 3600000);
-      const isOnline = (now - lastActiveTime) < 5 * 60 * 1000;
-      
-      return {
-        ...emp,
-        isOnline,
-        lastActiveStr: formatLastActive(lastActiveTime)
-      };
-    });
-    
+    const updatedStatus = employeurs.map(mapEmployeurPresence);
     setOnlineEmployeurs(updatedStatus);
   };
 
@@ -221,6 +222,19 @@ export default function AdminDashboard() {
         text: 'Déconnecter',
         style: 'destructive',
         onPress: async () => {
+          const token = await AsyncStorage.getItem('token');
+          if (token) {
+            try {
+              await fetch(`${API_USERS_URL}/logout`, {
+                method: 'POST',
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              });
+            } catch (e) {
+              console.log('Logout backend ignoré:', e);
+            }
+          }
           await AsyncStorage.removeItem('token');
           await AsyncStorage.removeItem('user');
           router.replace('/auth/login');
@@ -262,12 +276,10 @@ export default function AdminDashboard() {
   };
 
   const loadInitialData = async () => {
-    await Promise.all([
-      loadSlots(),
-      loadReservations(),
-      loadEmployeurs()
-    ]);
+    await loadSlots();
     animateEntrance();
+    loadReservations();
+    loadEmployeurs();
   };
 
   const animateEntrance = () => {
@@ -357,23 +369,26 @@ export default function AdminDashboard() {
     setEmployeursLoading(true);
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch(`${API_USERS_URL}/employeurs`, {
+      let response = await fetch(`${API_USERS_URL}/employeurs`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+
+      // Compatibilité: certains déploiements exposent encore /api/auth.
+      if (!response.ok && response.status === 404) {
+        response = await fetch(`${API_ROOT_URL}/api/auth/employeurs`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      }
+
       if (response.ok) {
         const data = await response.json();
-        setEmployeurs(data);
-        
-        const now = new Date();
-        const onlineStatus = data.map(emp => ({
-          ...emp,
-          isOnline: Math.random() > 0.5,
-          lastActive: new Date(now.getTime() - Math.random() * 7200000),
-          lastActiveStr: formatLastActive(new Date(now.getTime() - Math.random() * 7200000))
-        }));
-        setOnlineEmployeurs(onlineStatus);
+        const normalized = data.map(mapEmployeurPresence);
+        setEmployeurs(normalized);
+        setOnlineEmployeurs(normalized);
       }
     } catch (error) {
       console.error('Erreur chargement employeurs:', error);
@@ -395,14 +410,32 @@ export default function AdminDashboard() {
 
     try {
       const token = await AsyncStorage.getItem('token');
-      const response = await fetch(`${API_USERS_URL}/register`, {
+      let response = await fetch(`${API_USERS_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(newEmployeur)
+        body: JSON.stringify({
+          ...newEmployeur,
+          role: 'employeur'
+        })
       });
+
+      // Compatibilité: fallback sur /api/auth/register si /api/users/register n'existe pas encore.
+      if (!response.ok && response.status === 404) {
+        response = await fetch(`${API_ROOT_URL}/api/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            ...newEmployeur,
+            role: 'employeur'
+          })
+        });
+      }
 
       if (response.ok) {
         Alert.alert('Succès', 'Compte employeur créé avec succès');
@@ -417,8 +450,17 @@ export default function AdminDashboard() {
         });
         loadEmployeurs();
       } else {
-        const error = await response.json();
-        Alert.alert('Erreur', error.message || 'Impossible de créer le compte');
+        const raw = await response.text();
+        let message = 'Impossible de créer le compte';
+        try {
+          const parsed = JSON.parse(raw);
+          message = parsed?.message || message;
+        } catch {
+          if (raw && raw.trim().startsWith('<')) {
+            message = "Le serveur a renvoyé une page HTML (route invalide ou backend non à jour).";
+          }
+        }
+        Alert.alert('Erreur', message);
       }
     } catch (error) {
       console.error('Erreur création employeur:', error);
@@ -496,47 +538,21 @@ export default function AdminDashboard() {
     setBoatResteAPayer(reste.toString());
   };
 
-  // Récupérer les heures de début des créneaux
-  const getBoatStartTimes = () => {
-    const startTimes = [];
-    timeSlots.forEach(slot => {
-      const [start, end] = slot.split('-');
-      const startHour = parseInt(start.replace('h', ''));
-      startTimes.push(`${startHour.toString().padStart(2, '0')}:00`);
-    });
-    return startTimes;
+  const getBookedBoatsForSlot = (date, slot) => {
+    const boats = new Set(
+      boatReservations
+        .filter((r) => r.date === date && r.slot === slot && r.activite === 'Bateau')
+        .map((r) => String(r.bateau || '').replace('Bateau ', '').trim())
+    );
+    return boats;
   };
 
-  // Vérifier la disponibilité d'un créneau bateau
-  const checkBoatAvailability = (date, startTime, boatNum, durationMinutes) => {
-    if (!date) return false;
-    
-    const startTotal = timeToMinutes(startTime);
-    const endTotal = startTotal + durationMinutes;
-
-    return boatReservations.some(r => {
-      if (r.date !== date) return false;
-      if (r.bateau !== `Bateau ${boatNum}`) return false;
-      
-      const rStartTotal = timeToMinutes(r.heure);
-      const rDuration = parseInt(r.duree) || 60;
-      const rEndTotal = rStartTotal + rDuration;
-      
-      return (startTotal < rEndTotal && endTotal > rStartTotal);
-    });
+  const isBoatAlreadyBooked = (date, slot, selectedBoat) => {
+    return getBookedBoatsForSlot(date, slot).has(selectedBoat);
   };
 
-  const timeToMinutes = (timeStr) => {
-    if (!timeStr) return 0;
-    const parts = timeStr.split(':');
-    if (parts.length === 2) {
-      return parseInt(parts[0]) * 60 + parseInt(parts[1]);
-    }
-    const match = timeStr.match(/(\d+)h(\d+)/);
-    if (match) {
-      return parseInt(match[1]) * 60 + parseInt(match[2]);
-    }
-    return 0;
+  const isSlotFullyBooked = (date, slot) => {
+    return getBookedBoatsForSlot(date, slot).size >= 2;
   };
 
   const getReservationsByDate = (date) => {
@@ -607,6 +623,7 @@ export default function AdminDashboard() {
       return;
     }
 
+    const reste = Math.max(0, total - vers);
     const newReservation = {
       nom,
       prenom,
@@ -617,8 +634,13 @@ export default function AdminDashboard() {
       personnes: parseInt(personnes) || 1,
       totalAPayer: total,
       versement: vers,
-      resteAPayer: Math.max(0, total - vers),
+      resteAPayer: reste,
+      resteapayer: reste,
       note: note.trim() || 'Aucune note',
+      slot: null,
+      subslot: null,
+      bateau: null,
+      duree: null,
     };
 
     try {
@@ -670,8 +692,8 @@ export default function AdminDashboard() {
       Alert.alert('Erreur', 'Veuillez sélectionner une date');
       return;
     }
-    if (!boatSelectedTime) {
-      Alert.alert('Erreur', 'Veuillez sélectionner un créneau horaire en cliquant dessus');
+    if (!boatSlot) {
+      Alert.alert('Erreur', 'Veuillez sélectionner un créneau horaire');
       return;
     }
     const total = parseFloat(boatTotalAPayer) || 0;
@@ -685,28 +707,32 @@ export default function AdminDashboard() {
       return;
     }
 
-    const durationMinutes = parseInt(boatCircuit);
-    const startTime = boatSelectedTime;
-
-    if (checkBoatAvailability(boatDate, startTime, boatNumber, durationMinutes)) {
-      Alert.alert('Erreur', `Ce créneau est déjà réservé pour cette date et le bateau ${boatNumber} !`);
+    if (isSlotFullyBooked(boatDate, boatSlot)) {
+      Alert.alert('Erreur', 'Ce créneau est déjà complet (2 bateaux réservés)');
       return;
     }
 
+    if (isBoatAlreadyBooked(boatDate, boatSlot, boatNumber)) {
+      Alert.alert('Erreur', `Le bateau ${boatNumber} est déjà réservé sur ce créneau`);
+      return;
+    }
+
+    const reste = Math.max(0, total - vers);
     const reservationDB = {
       nom: boatNom,
       prenom: boatPrenom,
       tel: boatTel,
       activite: 'Bateau',
-      heure: startTime,
+      heure: boatSlot,
       date: boatDate,
       personnes: 1,
       slot: boatSlot,
       bateau: `Bateau ${boatNumber}`,
-      duree: durationMinutes + ' min',
+      duree: boatCircuit + ' min',
       totalAPayer: total,
       versement: vers,
-      resteAPayer: Math.max(0, total - vers),
+      resteAPayer: reste,
+      resteapayer: reste,
       note: boatNote.trim() || 'Aucune note',
     };
 
@@ -728,7 +754,7 @@ export default function AdminDashboard() {
         setFilteredReservations(updatedReservations);
         setBoatReservations(updatedReservations.filter(r => r.activite === 'Bateau'));
         saveReservationsToLocal(updatedReservations);
-        Alert.alert('Succès', `Réservation confirmée !\nBateau ${boatNumber} - ${boatDate} à ${startTime}\nDurée: ${durationMinutes} min\nTotal: ${total} DA - Versé: ${vers} DA - Reste: ${Math.max(0, total - vers)} DA`);
+        Alert.alert('Succès', `Réservation confirmée !\nBateau ${boatNumber} - ${boatSlot}\nTotal: ${total} DA - Versé: ${vers} DA - Reste: ${Math.max(0, total - vers)} DA`);
         resetBoatForm();
       } else {
         throw new Error('Erreur serveur');
@@ -825,8 +851,8 @@ export default function AdminDashboard() {
 
   const resetBoatForm = () => {
     setBoatNom(''); setBoatPrenom(''); setBoatTel(''); setBoatDate('');
+    setBoatCircuit('120');
     setBoatTotalAPayer(''); setBoatVersement(''); setBoatResteAPayer('0'); setBoatNote('');
-    setBoatSelectedTime('');
     setModalVisible(false);
   };
 
@@ -1164,8 +1190,6 @@ export default function AdminDashboard() {
   };
 
   const renderBoatTab = () => {
-    const startTimes = getBoatStartTimes();
-    
     return (
       <Animated.View style={{ opacity: fadeAnim, transform: [{ translateY: slideAnim }] }}>
         <View style={styles.boatFormCard}>
@@ -1191,38 +1215,17 @@ export default function AdminDashboard() {
                   if (selectedDate) {
                     const dateStr = selectedDate.toISOString().split('T')[0];
                     setBoatDate(dateStr);
-                    setBoatSelectedTime('');
                   }
                 }}
               />
             )}
-            
-            <View style={styles.pickerContainer}>
-              <Text style={styles.pickerLabel}>Durée:</Text>
-              <View style={styles.pickerButtons}>
-                {['60', '90', '120', '150', '180', '210'].map(d => (
-                  <TouchableOpacity key={d} style={[styles.pickerOption, boatCircuit === d && styles.pickerOptionSelected]} onPress={() => {
-                    setBoatCircuit(d);
-                    const price = BOAT_PRICE_BY_MINUTES[d];
-                    if (price) {
-                      setBoatTotalAPayer(String(price));
-                      const vers = parseFloat(boatVersement) || 0;
-                      setBoatResteAPayer(String(Math.max(0, price - vers)));
-                    }
-                    setBoatSelectedTime('');
-                  }}>
-                    <Text style={[styles.pickerOptionText, boatCircuit === d && styles.pickerOptionTextSelected]}>{parseInt(d) / 60}h</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </View>
 
             <View style={styles.pickerContainer}>
               <Text style={styles.pickerLabel}>Choisissez un créneau:</Text>
               <View style={styles.boatSlotsContainer}>
-                {startTimes.map((time, idx) => {
-                  const isAvailable = boatDate ? !checkBoatAvailability(boatDate, time, boatNumber, parseInt(boatCircuit)) : false;
-                  const isSelected = boatSelectedTime === time;
+                {timeSlots.map((slot, idx) => {
+                  const isAvailable = boatDate ? !isSlotFullyBooked(boatDate, slot) : false;
+                  const isSelected = boatSlot === slot;
                   
                   return (
                     <TouchableOpacity 
@@ -1239,9 +1242,9 @@ export default function AdminDashboard() {
                           return;
                         }
                         if (isAvailable) {
-                          setBoatSelectedTime(time);
+                          setBoatSlot(slot);
                         } else {
-                          Alert.alert('Indisponible', 'Ce créneau est déjà réservé');
+                          Alert.alert('Indisponible', 'Ce créneau est complet');
                         }
                       }}
                     >
@@ -1250,7 +1253,7 @@ export default function AdminDashboard() {
                         isAvailable ? styles.boatSlotTextAvailable : styles.boatSlotTextUnavailable,
                         isSelected && styles.boatSlotTextSelected
                       ]}>
-                        {time}
+                        {slot}
                       </Text>
                       {!isAvailable && boatDate && (
                         <View style={styles.boatSlotBarre}>
@@ -1276,10 +1279,10 @@ export default function AdminDashboard() {
                   );
                 })}
               </View>
-              {boatSelectedTime && (
-                <Text style={styles.selectedTimeText}>⏰ Créneau sélectionné: {boatSelectedTime}</Text>
+              {boatSlot && (
+                <Text style={styles.selectedTimeText}>⏰ Créneau sélectionné: {boatSlot}</Text>
               )}
-              {boatDate && !boatSelectedTime && (
+              {boatDate && !boatSlot && (
                 <Text style={styles.selectHintText}>👆 Cliquez sur un créneau libre</Text>
               )}
             </View>
@@ -1290,7 +1293,6 @@ export default function AdminDashboard() {
                 {['1', '2'].map(b => (
                   <TouchableOpacity key={b} style={[styles.pickerOption, boatNumber === b && styles.pickerOptionSelected]} onPress={() => {
                     setBoatNumber(b);
-                    setBoatSelectedTime('');
                   }}>
                     <Text style={[styles.pickerOptionText, boatNumber === b && styles.pickerOptionTextSelected]}>Bateau {b}</Text>
                   </TouchableOpacity>
@@ -1519,7 +1521,7 @@ export default function AdminDashboard() {
                     <Text style={styles.employeurEmail}>{emp.email}</Text>
                     <Text style={styles.employeurPhone}>📞 {emp.telephone || 'Non renseigné'}</Text>
                     <Text style={styles.employeurLastActive}>
-                      🕐 {emp.isOnline ? 'En ligne' : `Dernière activité: ${emp.lastActiveStr || 'Jamais'}`}
+                      🕐 {emp.isOnline ? 'En ligne maintenant' : `Déconnecté: ${emp.disconnectedFor || 'Jamais'}`}
                     </Text>
                   </View>
                   <TouchableOpacity onPress={() => deleteEmployeur(emp.id)} style={styles.employeurDelete}>

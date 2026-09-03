@@ -2,6 +2,20 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const users = require("../models/users");
 
+const ONLINE_WINDOW_MS = 5 * 60 * 1000;
+
+const sanitizeUser = (user) => ({
+  id: user.id,
+  nom: user.nom,
+  prenom: user.prenom,
+  email: user.email,
+  telephone: user.telephone,
+  role: user.role,
+  isActive: user.isActive,
+  isOnline: !!user.isOnline,
+  lastSeen: user.lastSeen
+});
+
 // REGISTER - Version corrigée
 exports.register = async (req, res) => {
   try {
@@ -27,19 +41,13 @@ exports.register = async (req, res) => {
       password: hashedPassword,
       telephone: telephone || null,
       role: role || 'employeur',
-      isActive: true
+      isActive: true,
+      isOnline: false,
+      lastSeen: null
     });
 
     // Ne pas renvoyer le mot de passe
-    res.status(201).json({
-      id: user.id,
-      nom: user.nom,
-      prenom: user.prenom,
-      email: user.email,
-      telephone: user.telephone,
-      role: user.role,
-      isActive: user.isActive
-    });
+    res.status(201).json(sanitizeUser(user));
 
   } catch (err) {
     console.error("Erreur register:", err);
@@ -75,17 +83,13 @@ exports.login = async (req, res) => {
       { expiresIn: "7d" }
     );
 
+    user.isOnline = true;
+    user.lastSeen = new Date();
+    await user.save();
+
     res.json({
       token,
-      user: {
-        id: user.id,
-        nom: user.nom,
-        prenom: user.prenom,
-        email: user.email,
-        telephone: user.telephone,
-        role: user.role,
-        isActive: user.isActive
-      }
+      user: sanitizeUser(user)
     });
 
   } catch (err) {
@@ -132,11 +136,22 @@ exports.createTestUser = async (req, res) => {
 // Récupérer tous les employeurs
 exports.getEmployeurs = async (req, res) => {
   try {
+    const now = Date.now();
     const employeurs = await users.findAll({
       where: { role: 'employeur' },
       attributes: { exclude: ['password'] }
     });
-    res.json(employeurs);
+
+    const normalized = employeurs.map((emp) => {
+      const lastSeenDate = emp.lastSeen ? new Date(emp.lastSeen) : null;
+      const isOnlineByTime = lastSeenDate ? (now - lastSeenDate.getTime()) <= ONLINE_WINDOW_MS : false;
+      return {
+        ...emp.toJSON(),
+        isOnline: !!emp.isOnline && isOnlineByTime
+      };
+    });
+
+    res.json(normalized);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -215,6 +230,66 @@ exports.deleteUser = async (req, res) => {
     
     await user.destroy();
     res.json({ message: "Utilisateur supprimé avec succès" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Mise à jour du profil utilisateur
+exports.updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nom, prenom, telephone, email } = req.body;
+    const requester = req.user;
+    const targetId = Number(id);
+
+    if (!requester || (requester.role !== 'admin' && requester.id !== targetId)) {
+      return res.status(403).json({ message: "Accès refusé" });
+    }
+
+    const user = await users.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    if (email && email !== user.email) {
+      const existing = await users.findOne({ where: { email } });
+      if (existing && existing.id !== user.id) {
+        return res.status(400).json({ message: "Cet email est déjà utilisé" });
+      }
+    }
+
+    user.nom = nom ?? user.nom;
+    user.prenom = prenom ?? user.prenom;
+    user.telephone = telephone ?? user.telephone;
+    user.email = email ?? user.email;
+    user.lastSeen = new Date();
+    await user.save();
+
+    res.json(sanitizeUser(user));
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Déconnexion : marque hors ligne + met à jour lastSeen
+exports.logout = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ message: "Token invalide" });
+    }
+
+    const user = await users.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    user.isOnline = false;
+    user.lastSeen = new Date();
+    await user.save();
+
+    res.json({ message: "Déconnexion enregistrée" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

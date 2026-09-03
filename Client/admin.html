@@ -168,6 +168,38 @@
         .btn-whatsapp { color: #25d366; }
         .btn-whatsapp:hover { background: #dcfce7; }
 
+        .admin-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            background: #fff;
+            border-left: 5px solid #25d366;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            max-width: 380px;
+            animation: toastIn 0.35s ease;
+        }
+        .admin-toast h4 { margin: 0 0 0.4rem; color: #166534; font-size: 1rem; }
+        .admin-toast p { margin: 0.2rem 0; font-size: 0.9rem; color: #334155; }
+        .admin-toast .toast-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; }
+        .admin-toast button {
+            border: none; border-radius: 8px; padding: 0.45rem 0.8rem;
+            cursor: pointer; font-weight: 600; font-size: 0.85rem;
+        }
+        .admin-toast .btn-go { background: #f97316; color: #fff; }
+        .admin-toast .btn-wa { background: #25d366; color: #fff; }
+        .admin-toast .btn-close-toast { background: #e2e8f0; color: #334155; }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: none; } }
+        .nav-item .badge-pending {
+            background: #ef4444; color: white; border-radius: 999px;
+            font-size: 0.7rem; padding: 0.1rem 0.45rem; margin-left: 0.4rem;
+            font-weight: 700;
+        }
+        tr.row-new-request { background: #ecfdf5 !important; animation: pulseRow 1.5s ease 3; }
+        @keyframes pulseRow { 0%,100% { background: #ecfdf5; } 50% { background: #bbf7d0; } }
+
         .btn-primary {
             background: #f97316;
             color: white;
@@ -1037,9 +1069,13 @@
             : 'https://visitebejai.onrender.com/api';
         const PROPERTY_API = `${API_BASE}/property-reservations`;
         const BUSINESS_WHATSAPP_DISPLAY = '+213 660 43 48 72';
+        const ADMIN_WHATSAPP_NUMBER = '213660434872';
         
         let reservationsData = [];
         let propertyReservations = [];
+        let knownPropertyReservationIds = new Set();
+        let propertyReservationsInitialized = false;
+        let propertyReservationsPollId = null;
         let propertiesList = [];
         let blockedDatesByActivity = {};
         let currentImageFiles = [];
@@ -1245,6 +1281,7 @@
             fetchPropertyReservations();
             loadPropertiesFromDB();
             loadPropertiesForBlocking();
+            startPropertyReservationsPolling();
             
             // Initialiser le calendrier
             setTimeout(() => {
@@ -1276,6 +1313,7 @@
                 fetchPropertyReservations();
                 loadPropertiesFromDB();
                 loadPropertiesForBlocking();
+                startPropertyReservationsPolling();
                 setTimeout(() => {
                     const propertyId = document.getElementById('propertyBlockSelect')?.value;
                     if (propertyId) {
@@ -1459,21 +1497,120 @@
             document.getElementById('detailModal').classList.add('active');
         }
 
+        function startPropertyReservationsPolling() {
+            if (propertyReservationsPollId) clearInterval(propertyReservationsPollId);
+            // Polling global pour recevoir les demandes même hors page hébergement
+            propertyReservationsPollId = setInterval(() => {
+                fetchPropertyReservations(0, true);
+            }, 20000);
+        }
+
+        function buildAdminInboxWhatsAppPreview(res) {
+            const clientName = `${res.nom || ''} ${res.prenom || ''}`.trim() || 'Client';
+            const propertyName = res.Property?.title || 'Hébergement';
+            const arrivee = res.date_arrivee ? new Date(res.date_arrivee).toLocaleDateString('fr-FR') : '—';
+            const depart = res.date_depart ? new Date(res.date_depart).toLocaleDateString('fr-FR') : '—';
+            const message = `📩 Nouvelle demande de réservation Visite Bejaia\n\nClient : ${clientName}\nTéléphone : ${res.telephone || '—'}\nEmail : ${res.email || '—'}\nHébergement : ${propertyName}\nDu : ${arrivee}\nJusqu'au : ${depart}\nPersonnes : ${res.nb_personnes || 1}\nPrix : ${(res.prix_total || 0).toLocaleString('fr-DZ')} DZD`;
+            return `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        }
+
+        function showAdminDemandToast(res) {
+            document.querySelectorAll('.admin-toast').forEach(el => el.remove());
+            const clientName = `${res.nom || ''} ${res.prenom || ''}`.trim() || 'Client';
+            const propertyName = res.Property?.title || 'Hébergement';
+            const toast = document.createElement('div');
+            toast.className = 'admin-toast';
+            toast.innerHTML = `
+                <h4>📩 Nouvelle demande reçue</h4>
+                <p><strong>${clientName}</strong></p>
+                <p>🏠 ${propertyName}</p>
+                <p>📞 ${res.telephone || '—'} · 📧 ${res.email || '—'}</p>
+                <p style="font-size:0.8rem;color:#64748b;">Aussi sur WhatsApp ${BUSINESS_WHATSAPP_DISPLAY}</p>
+                <div class="toast-actions">
+                    <button class="btn-go" type="button">Voir dashboard</button>
+                    <button class="btn-wa" type="button">WhatsApp</button>
+                    <button class="btn-close-toast" type="button">OK</button>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            toast.querySelector('.btn-go').onclick = () => {
+                document.querySelector('.nav-item[data-page="reservations-hebergement"]')?.click();
+                toast.remove();
+            };
+            toast.querySelector('.btn-wa').onclick = () => {
+                openWhatsAppLink(buildAdminInboxWhatsAppPreview(res));
+            };
+            toast.querySelector('.btn-close-toast').onclick = () => toast.remove();
+            setTimeout(() => toast.remove(), 20000);
+        }
+
+        function updateHebergementNavBadge() {
+            const pending = propertyReservations.filter(r => r.status === 'en_attente').length;
+            const navItem = document.querySelector('.nav-item[data-page="reservations-hebergement"]');
+            if (!navItem) return;
+            let badge = navItem.querySelector('.badge-pending');
+            if (pending > 0) {
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'badge-pending';
+                    navItem.appendChild(badge);
+                }
+                badge.textContent = String(pending);
+            } else if (badge) {
+                badge.remove();
+            }
+        }
+
+        async function notifyAdminForNewPropertyReservations(newReservations) {
+            for (const res of newReservations) {
+                showAdminDemandToast(res);
+                // Son discret optionnel via beep browser
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const o = ctx.createOscillator();
+                    const g = ctx.createGain();
+                    o.connect(g); g.connect(ctx.destination);
+                    o.frequency.value = 880; g.gain.value = 0.05;
+                    o.start(); setTimeout(() => { o.stop(); ctx.close(); }, 180);
+                } catch (_) {}
+            }
+            // Aller automatiquement sur la page réservations hébergement
+            document.querySelector('.nav-item[data-page="reservations-hebergement"]')?.click();
+        }
+
         // ===== GESTION RÉSERVATIONS HÉBERGEMENTS =====
-        async function fetchPropertyReservations(retry = 0) {
+        async function fetchPropertyReservations(retry = 0, silent = false) {
             const tbody = document.getElementById('propertyReservationsBody');
-            tbody.innerHTML = '<tr><td colspan="9"><i class="fas fa-spinner fa-spin"><\/i> Chargement...<\/td></tr>';
+            if (!silent && tbody) {
+                tbody.innerHTML = '<tr><td colspan="9"><i class="fas fa-spinner fa-spin"><\/i> Chargement...<\/td></tr>';
+            }
             try {
                 const response = await fetch(`${PROPERTY_API}/`);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const result = await response.json();
-                propertyReservations = result.data || [];
+                const freshList = result.data || [];
+
+                const newPending = freshList.filter(r =>
+                    r.status === 'en_attente' &&
+                    propertyReservationsInitialized &&
+                    !knownPropertyReservationIds.has(r.id)
+                );
+
+                propertyReservations = freshList;
+                knownPropertyReservationIds = new Set(freshList.map(r => r.id));
+                propertyReservationsInitialized = true;
+
                 renderPropertyStats();
-                renderPropertyReservations();
+                renderPropertyReservations(newPending.map(r => r.id));
+                updateHebergementNavBadge();
+
+                if (newPending.length > 0) {
+                    await notifyAdminForNewPropertyReservations(newPending);
+                }
             } catch (error) {
                 console.error("Erreur:", error);
-                if (retry < 3) setTimeout(() => fetchPropertyReservations(retry + 1), 2000);
-                else tbody.innerHTML = '<tr><td colspan="9">❌ Impossible de charger les réservations<\/td></tr>';
+                if (retry < 3) setTimeout(() => fetchPropertyReservations(retry + 1, silent), 2000);
+                else if (!silent && tbody) tbody.innerHTML = '<tr><td colspan="9">❌ Impossible de charger les réservations<\/td></tr>';
             }
         }
 
@@ -1488,7 +1625,7 @@
             document.getElementById('propertyRefusedCount').innerText = refused;
         }
 
-        function renderPropertyReservations() {
+        function renderPropertyReservations(highlightIds = []) {
             const searchTerm = document.getElementById('propertySearchInput')?.value.toLowerCase() || '';
             const statusFilter = document.getElementById('propertyStatusFilter')?.value || 'all';
             let filtered = [...propertyReservations];
@@ -1511,10 +1648,11 @@
                 const fullName = `${res.nom || ''} ${res.prenom || ''}`.trim() || '—';
                 const nights = calculateNights(res.date_arrivee, res.date_depart);
                 const propertyName = res.Property?.title || res.propertyId || '—';
+                const isNew = highlightIds.includes(res.id);
                 return `
-                    <tr>
-                        <td>#${res.id}<\/td>
-                        <td>${fullName}<br><small>📧 ${res.email || '—'}<\/small><\/td>
+                    <tr class="${isNew ? 'row-new-request' : ''}">
+                        <td>#${res.id}${isNew ? ' <span style="color:#16a34a;font-weight:700;">NEW</span>' : ''}<\/td>
+                        <td>${fullName}<br><small>📧 ${res.email || '—'}<\/small><br><small>📞 ${res.telephone || '—'}<\/small><\/td>
                         <td>🏠 ${propertyName}<\/td>
                         <td>📅 ${res.date_arrivee ? new Date(res.date_arrivee).toLocaleDateString('fr-FR') : '—'}<br>→ ${res.date_depart ? new Date(res.date_depart).toLocaleDateString('fr-FR') : '—'}<\/td>
                         <td>${nights}<\/td>
@@ -1556,12 +1694,56 @@
         }
 
         async function updatePropertyStatus(id, newStatus) {
-            if (!confirm(`Confirmer la ${newStatus === 'acceptee' ? 'validation' : 'réfutation'} ?`)) return;
+            const reservation = propertyReservations.find(r => r.id === id);
+            if (!reservation) return;
+
+            const statusLabel = newStatus === 'acceptee' ? 'acceptée' : 'refusée';
+            const actionLabel = newStatus === 'acceptee' ? 'validation' : 'réfutation';
+            if (!confirm(`Confirmer la ${actionLabel} ?\n\nLe statut passera à « ${statusLabel} » uniquement après l'envoi du message.`)) return;
+
             try {
+                // 1) Envoyer le message d'abord
+                const whatsappLink = buildPropertyWhatsAppLink(reservation, newStatus);
+                let messageSent = false;
+                let channel = '';
+
+                if (whatsappLink) {
+                    openWhatsAppLink(whatsappLink);
+                    const confirmed = confirm(
+                        '📱 WhatsApp est ouvert avec le message.\n\n' +
+                        'Appuie sur Envoyer dans WhatsApp, puis clique OK ici.\n\n' +
+                        'OK = message envoyé → statut « ' + statusLabel + ' »\n' +
+                        'Annuler = ne pas changer le statut'
+                    );
+                    if (!confirmed) {
+                        alert('Statut inchangé (toujours en attente).');
+                        return;
+                    }
+                    messageSent = true;
+                    channel = 'WhatsApp';
+                } else if (reservation.email) {
+                    const emailResult = await sendReservationEmailFallback(reservation, newStatus);
+                    if (!emailResult.ok) {
+                        alert('❌ Impossible d\'envoyer l\'email. Statut non modifié (reste en attente).');
+                        return;
+                    }
+                    messageSent = true;
+                    channel = 'email (' + reservation.email + ')';
+                } else {
+                    alert('❌ Pas de numéro WhatsApp ni d\'email. Statut non modifié.');
+                    return;
+                }
+
+                if (!messageSent) {
+                    alert('Statut non modifié.');
+                    return;
+                }
+
+                // 2) Seulement après envoi du message → statut acceptée / refusée
                 const response = await fetch(`${PROPERTY_API}/${id}/status`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: newStatus })
+                    body: JSON.stringify({ status: newStatus, skipNotify: true })
                 });
                 if (!response.ok) throw new Error('Erreur');
                 const result = await response.json();
@@ -1572,34 +1754,9 @@
                 }
                 renderPropertyStats();
                 renderPropertyReservations();
-
-                const reservation = propertyReservations.find(r => r.id === id);
-                const whatsappLink = result.whatsappLink
-                    || buildPropertyWhatsAppLink(reservation, newStatus);
-                const statusLabel = newStatus === 'acceptee' ? 'acceptée' : 'refusée';
-
-                if (whatsappLink) {
-                    openWhatsAppLink(whatsappLink);
-                    alert(`✅ Réservation ${statusLabel}.\n\n📱 WhatsApp s'ouvre avec le message pré-rempli — appuyez sur Envoyer.`);
-                    return;
-                }
-
-                // Fallback email (backend ou client)
-                let emailOk = !!result.emailSent;
-                if (!emailOk && reservation?.email) {
-                    const emailResult = await sendReservationEmailFallback(reservation, newStatus);
-                    emailOk = emailResult.ok;
-                }
-
-                if (emailOk) {
-                    alert(`✅ Réservation ${statusLabel}.\n\n📧 Numéro WhatsApp indisponible — message envoyé par email à ${reservation.email}.`);
-                } else if (reservation?.email) {
-                    alert(`✅ Réservation ${statusLabel}.\n\n⚠️ WhatsApp indisponible et échec d'envoi email vers ${reservation.email}.`);
-                } else {
-                    alert(`✅ Réservation ${statusLabel}.\n\n⚠️ Pas de numéro WhatsApp ni d'email pour contacter le client.`);
-                }
+                alert(`✅ Message envoyé via ${channel}.\n\nStatut mis à jour : ${statusLabel}.`);
             } catch (err) {
-                alert("❌ Erreur lors de la modification.");
+                alert('❌ Erreur : le message a peut-être été envoyé, mais le statut n\'a pas pu être mis à jour.');
             }
         }
 

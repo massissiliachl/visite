@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,25 +18,40 @@
         }
 
         :root {
-            --primary: #0f2b3d;
-            --primary-dark: #0a1f2c;
-            --accent: #e07a5f;
-            --accent-light: #f4a261;
-            --accent-glow: #e76f51;
-            --light: #fdfaf6;
-            --dark: #1e2c2f;
-            --gray: #6b7b7c;
-            --glass-bg: rgba(253, 250, 246, 0.92);
-            --shadow-sm: 0 10px 30px -12px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
-            --shadow-lg: 0 30px 50px -15px rgba(0, 0, 0, 0.2);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+            --bg-dark: #111416;
+            --bg-dark-2: #171b1d;
+            --ink: #20242a;
+            --beige: #e5e0db;
+            --beige-soft: #f6f2ec;
+            --ivory: #faf7f2;
+            --accent: #b8724d;
+            --accent-light: #d8a97f;
+            --accent-glow: #c98a5d;
+            --gray: #75797a;
+
+            --primary: var(--ink);
+            --primary-dark: var(--bg-dark);
+            --light: var(--ivory);
+            --dark: var(--ink);
+            --glass-bg: rgba(17, 20, 22, 0.82);
+
+            --shadow-sm: 0 10px 30px -12px rgba(17, 20, 22, 0.12);
+            --shadow-md: 0 20px 40px -14px rgba(17, 20, 22, 0.18);
+            --shadow-lg: 0 30px 60px -18px rgba(17, 20, 22, 0.28);
             --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--light);
-            color: var(--dark);
+            font-family: var(--font-sans);
+            background: var(--ivory);
+            color: var(--ink);
             line-height: 1.5;
             overflow-x: hidden;
         }
@@ -48,9 +63,9 @@
         }
 
         h1, h2, h3, h4, .logo-text {
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-serif);
             font-weight: 700;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.01em;
         }
 
         /* Animations */
@@ -76,20 +91,22 @@
 
         .section-tag {
             display: inline-block;
-            font-size: 0.85rem;
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: var(--accent);
             font-weight: 600;
             margin-bottom: 1rem;
-            background: rgba(224, 122, 95, 0.1);
+            background: rgba(184, 114, 77, 0.1);
             padding: 0.4rem 1.2rem;
             border-radius: 50px;
         }
 
         .section-title {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            color: var(--primary);
+            font-size: clamp(1.9rem, 4vw, 3rem);
+            font-weight: 500;
+            color: var(--ink);
             margin-bottom: 1rem;
             position: relative;
             display: inline-block;
@@ -101,17 +118,26 @@
             bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 70px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            width: 60px;
+            height: 2px;
+            background: var(--accent);
             border-radius: 4px;
         }
 
-        /* Glassmorphism Navbar */
+        .section-sub {
+            max-width: 560px;
+            margin: 1.4rem auto 0;
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        /* Glassmorphism Navbar (aligned with hero mood) */
         .navbar {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(224, 122, 95, 0.2);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(229, 224, 219, 0.12);
             position: sticky;
             top: 0;
             z-index: 2000;
@@ -120,8 +146,8 @@
         }
 
         .navbar.scrolled {
-            background: rgba(253, 250, 246, 0.98);
-            box-shadow: var(--shadow-sm);
+            background: rgba(17, 20, 22, 0.97);
+            box-shadow: var(--shadow-md);
         }
 
         .navbar .container {
@@ -138,19 +164,13 @@
         }
 
         .logo-icon {
-            font-size: 2rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+            color: var(--accent-light);
         }
 
         .logo-text {
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 1.6rem;
+            color: var(--beige);
             transition: transform 0.3s ease;
         }
 
@@ -167,9 +187,9 @@
 
         .nav-menu a {
             text-decoration: none;
-            color: var(--primary);
+            color: var(--beige);
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             transition: var(--transition);
             position: relative;
         }
@@ -181,7 +201,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            background: var(--accent-light);
             transition: width 0.3s ease;
         }
 
@@ -192,7 +212,7 @@
 
         .nav-menu a:hover,
         .nav-menu a.active {
-            color: var(--accent);
+            color: var(--accent-light);
         }
 
         .hamburger {
@@ -208,344 +228,441 @@
         .hamburger span {
             width: 28px;
             height: 2px;
-            background: var(--primary);
+            background: var(--beige);
             transition: 0.3s;
         }
 
-        /* Hero Section */
+        /* ============================= */
+        /* HERO — responsive rebuild     */
+        /* ============================= */
+
         .hero {
             position: relative;
-            min-height: 85vh;
+            width: 100%;
+            min-height: 100vh;
+            padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(15, 43, 61, 0.7), rgba(10, 31, 44, 0.8)), url('assets/images/chalet/chalet3.jpeg') center/cover no-repeat;
-            background-blend-mode: overlay;
-            border-radius: 0 0 4rem 4rem;
-            overflow: hidden;
+            align-items: flex-end;
+            background: linear-gradient(to bottom, rgba(17, 20, 22, 0.15), rgba(17, 20, 22, 0.88)),
+                        url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1600') center/cover no-repeat;
         }
 
-        .hero-overlay {
+        .hero-huge-bg {
             position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
-            border-radius: 0 0 4rem 4rem;
+            top: 10%;
+            left: 2%;
+            width: 96%;
+            font-size: clamp(3.5rem, 19vw, 15rem);
+            font-weight: 800;
+            line-height: 0.8;
+            letter-spacing: -0.03em;
+            color: rgba(229, 224, 219, 0.05);
+            font-family: var(--font-sans);
+            pointer-events: none;
+            z-index: 1;
+            user-select: none;
+        }
+
+        .hero-main-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: clamp(1.5rem, 4vw, 3rem);
+            flex-wrap: wrap;
         }
 
         .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            padding: 2rem;
-            animation: fadeUp 1s ease;
+            width: 44%;
+            min-width: 300px;
+            flex: 1 1 340px;
         }
 
         .hero-badge {
-            display: inline-block;
-            background: rgba(224, 122, 95, 0.9);
-            backdrop-filter: blur(4px);
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: white;
-            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            color: var(--beige);
+            opacity: 0.8;
+            text-transform: uppercase;
+            margin-bottom: clamp(1rem, 2vw, 1.6rem);
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 8vw, 5.5rem);
-            color: white;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-bottom: 1rem;
-            line-height: 1.2;
+            font-family: var(--font-serif);
+            font-size: clamp(2.1rem, 4.4vw, 4rem);
+            font-weight: 500;
+            line-height: 1.18;
+            color: var(--beige);
+            margin-bottom: clamp(1rem, 2vw, 1.6rem);
         }
 
         .hero-description {
-            font-size: 1.2rem;
-            color: rgba(255,250,235,0.9);
-            max-width: 650px;
-            margin: 0 auto 2rem;
+            font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+            line-height: 1.65;
+            color: #bcbbba;
+            font-weight: 300;
+            margin-bottom: clamp(1.5rem, 3vw, 2.4rem);
+            max-width: 46ch;
         }
 
         .hero-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--accent);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
+            display: inline-block;
+            color: var(--beige);
             text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
+            font-size: clamp(0.85rem, 1vw, 1rem);
+            font-weight: 500;
+            border-bottom: 1px solid rgba(229, 224, 219, 0.4);
+            padding-bottom: 0.35rem;
+            transition: border-color 0.3s, color 0.3s;
         }
 
         .hero-cta:hover {
-            background: var(--accent-glow);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px -10px var(--accent);
+            border-color: var(--accent-light);
+            color: var(--accent-light);
         }
 
-        /* Search & Filters */
         .search-section {
-            margin-top: -2rem;
-            position: relative;
-            z-index: 10;
+            width: 32%;
+            min-width: 300px;
+            flex: 1 1 320px;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
         }
 
         .filter-card {
-            background: white;
-            border-radius: 80px;
-            padding: 0.8rem 1.5rem;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            transition: var(--transition);
-            border: 1px solid rgba(224, 122, 95, 0.2);
-        }
-
-        .filter-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
+            background-color: rgba(229, 224, 219, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: clamp(1.2rem, 2.4vw, 1.8rem);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
         }
 
         .filter-buttons {
             display: flex;
-            gap: 0.5rem;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 1.1rem;
+            margin-bottom: 1.3rem;
         }
 
         .filter-btn {
-            padding: 0.7rem 1.8rem;
-            border-radius: 50px;
-            background: #f5f0ea;
+            background: none;
             border: none;
-            font-weight: 600;
-            color: var(--primary);
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: #555;
             cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.4rem;
+            transition: color 0.3s;
+            white-space: nowrap;
         }
 
         .filter-btn i {
-            transition: transform 0.2s;
+            font-size: 0.78rem;
         }
 
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .filter-btn:hover i {
-            transform: scale(1.1);
+        .filter-btn:hover,
+        .filter-btn.active {
+            color: var(--ink);
+            font-weight: 600;
         }
 
         .search-sort {
             display: flex;
+            flex-direction: column;
             gap: 1rem;
-            align-items: center;
         }
 
         .search-box {
             position: relative;
+            width: 100%;
         }
 
         .search-box i {
             position: absolute;
-            left: 16px;
+            left: 0;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--accent);
+            color: #222;
+            font-size: 0.9rem;
         }
 
         .search-box input {
-            padding: 0.8rem 1rem 0.8rem 2.8rem;
-            border-radius: 50px;
-            border: 1px solid #e8e0d8;
-            width: 250px;
-            font-family: inherit;
-            background: white;
-            transition: var(--transition);
+            width: 100%;
+            background: none;
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            padding: 0.6rem 0.6rem 0.6rem 1.7rem;
+            font-family: var(--font-sans);
+            font-size: 0.98rem;
+            color: #111;
+            outline: none;
         }
 
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--accent);
-            width: 280px;
-            box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.1);
+        .search-box input::placeholder {
+            color: #666;
         }
 
         .sort-select {
-            padding: 0.8rem 2rem 0.8rem 1rem;
-            border-radius: 50px;
-            border: 1px solid #e8e0d8;
-            background: white;
-            font-family: inherit;
-            font-weight: 500;
+            width: 100%;
+            background: none;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            padding: 0.6rem 1rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: #111;
+            outline: none;
             cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .sort-select:hover {
-            border-color: var(--accent);
+            border-radius: 2px;
         }
 
         .results-count {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: var(--gray);
-            text-align: center;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #bcbbba;
+            align-self: flex-end;
             font-weight: 500;
         }
 
-        /* Cards Grid */
+        /* Cards Grid — inspiration Airbnb, ton hero */
         .hebergement-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            padding: 3rem 0 4rem;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 2.2rem 1.8rem;
+            padding: 1rem 0 4rem;
         }
 
         .hebergement-card {
-            background: white;
-            border-radius: 2rem;
-            overflow: hidden;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
+            background: transparent;
+            border-radius: 0;
             cursor: pointer;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.6s ease forwards;
+            transform: translateY(24px);
+            animation: fadeUp 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
             position: relative;
         }
 
-        .hebergement-card:hover {
-            transform: translateY(-12px);
+        .card-media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 1.4rem;
+            overflow: hidden;
+            background: var(--beige);
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.4s ease;
+        }
+
+        .hebergement-card:hover .card-media {
             box-shadow: var(--shadow-lg);
+        }
+
+        .card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        .hebergement-card:hover .card-media img {
+            transform: scale(1.08);
+        }
+
+        /* voile doux au survol, comme un rideau qui se lève */
+        .card-media::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(17,20,22,0.28), rgba(17,20,22,0) 45%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .hebergement-card:hover .card-media::after {
+            opacity: 1;
         }
 
         .card-badge {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--accent);
-            color: white;
-            padding: 0.4rem 1rem;
+            top: 12px;
+            left: 12px;
+            background: rgba(250, 247, 242, 0.94);
+            color: var(--ink);
+            padding: 0.4rem 0.9rem;
             border-radius: 30px;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
             z-index: 3;
-            backdrop-filter: blur(4px);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: var(--shadow-sm);
         }
 
-        .card-badge.popular {
-            background: var(--primary);
+        .card-badge i {
+            color: var(--accent);
+            font-size: 0.7rem;
         }
 
-        .card-image {
-    height: 280px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.6s ease;
-}
-
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.6s ease;
-}
-        .hebergement-card:hover .card-image {
-            transform: scale(1.05);
+        .card-fav {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(17, 20, 22, 0.28);
+            backdrop-filter: blur(3px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 4;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
 
-        .card-ambiance {
+        .card-fav:hover {
+            background: rgba(17, 20, 22, 0.5);
+        }
+
+        .card-fav i {
+            font-size: 0.95rem;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+        }
+
+        .card-fav.liked i {
+            color: var(--accent);
+            transform: scale(1.15);
+        }
+
+        .card-fav.pop i {
+            animation: heartPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            35% { transform: scale(1.45); }
+            100% { transform: scale(1.15); }
+        }
+
+        .card-dots {
             position: absolute;
             bottom: 12px;
-            left: 12px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
-            gap: 8px;
-            z-index: 3;
+            gap: 5px;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        .ambiance-tag {
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            padding: 0.3rem 0.9rem;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            color: white;
-            font-weight: 500;
+        .hebergement-card:hover .card-dots {
+            opacity: 1;
+        }
+
+        .card-dots span {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.55);
+            transition: var(--transition);
+        }
+
+        .card-dots span.active {
+            background: #fff;
+            transform: scale(1.3);
         }
 
         .card-content {
-            padding: 1.5rem;
+            padding: 0.9rem 0.1rem 0;
+        }
+
+        .card-row-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 0.6rem;
         }
 
         .card-content h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.3rem;
-            color: var(--primary);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ink);
             transition: color 0.2s;
+            line-height: 1.3;
         }
 
         .hebergement-card:hover .card-content h3 {
             color: var(--accent);
         }
 
-        .card-location {
+        .card-rating {
             display: flex;
             align-items: center;
-            gap: 6px;
-            color: var(--accent);
+            gap: 4px;
             font-size: 0.85rem;
-            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .card-rating i {
+            color: var(--accent);
+            font-size: 0.78rem;
+        }
+
+        .card-location {
+            color: var(--gray);
+            font-size: 0.86rem;
+            margin-top: 2px;
+        }
+
+        .card-meta-sub {
+            color: var(--gray);
+            font-size: 0.86rem;
+            margin-top: 2px;
         }
 
         .card-price {
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: var(--primary);
+            margin-top: 0.5rem;
+            font-size: 0.92rem;
+            color: var(--ink);
+        }
+
+        .card-price strong {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .card-price .price-note {
+            color: var(--gray);
+            font-weight: 400;
         }
 
         .price-devis {
-            background: #f0e6d8;
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
             color: var(--accent);
-            display: inline-block;
-        }
-
-        .btn-details {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
             font-weight: 600;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .btn-details:hover {
-            background: var(--accent);
-            transform: translateY(-2px);
         }
 
         /* Modals */
@@ -557,7 +674,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 30, 25, 0.9);
+            background: rgba(10, 12, 13, 0.9);
             backdrop-filter: blur(12px);
             z-index: 3000;
             align-items: center;
@@ -574,8 +691,8 @@
 
         .modal-content,
         .booking-content {
-            background: white;
-            border-radius: 2rem;
+            background: var(--beige-soft);
+            border-radius: 1.5rem;
             max-width: 1000px;
             width: 100%;
             max-height: 90vh;
@@ -583,6 +700,11 @@
             position: relative;
             box-shadow: var(--shadow-lg);
             animation: fadeScale 0.4s ease;
+        }
+
+        .modal-content {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
         }
 
         .modal-close,
@@ -608,17 +730,39 @@
             transform: rotate(90deg);
         }
 
+        .modal-right-column {
+            padding: 1.75rem;
+        }
+
+        .modal-right-column h2 {
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            color: var(--ink);
+            margin-bottom: 0.4rem;
+        }
+
+        .modal-location {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        #modalDescription {
+            color: var(--gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
         .modal-gallery {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 0.8rem;
+            gap: 0.7rem;
             padding: 1rem;
-            background: #faf5f0;
+            background: var(--beige);
         }
 
         .modal-gallery-item {
-            height: 90px;
-            border-radius: 1rem;
+            height: 80px;
+            border-radius: 0.8rem;
             overflow: hidden;
             cursor: pointer;
             border: 2px solid transparent;
@@ -638,7 +782,7 @@
 
         .modal-main-media {
             width: 100%;
-            height: 350px;
+            height: 320px;
             overflow: hidden;
         }
 
@@ -658,20 +802,25 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 0.8rem;
             margin: 1.5rem 0;
-            background: #faf5f0;
+            background: var(--beige);
             padding: 1rem;
-            border-radius: 1.2rem;
+            border-radius: 1rem;
         }
 
         .modal-feature-item {
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .modal-feature-item i {
+            color: var(--accent);
         }
 
         .modal-booking-btn {
             width: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--ink);
             color: white;
             border: none;
             padding: 1rem;
@@ -683,9 +832,15 @@
         }
 
         .modal-booking-btn:hover {
-            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+            background: var(--accent);
             transform: translateY(-2px);
             box-shadow: 0 10px 20px -5px var(--accent);
+        }
+
+        .similar-section h4 {
+            font-size: 1.05rem;
+            color: var(--ink);
+            margin-top: 1.5rem;
         }
 
         .similar-grid {
@@ -698,7 +853,7 @@
         .similar-item {
             flex: 1;
             min-width: 100px;
-            background: #faf5f0;
+            background: var(--beige);
             border-radius: 1rem;
             overflow: hidden;
             cursor: pointer;
@@ -719,6 +874,11 @@
             border-radius: 0.8rem;
         }
 
+        .similar-item p {
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+        }
+
         /* Loader */
         .loader-overlay {
             position: fixed;
@@ -726,7 +886,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
+            background: rgba(17, 20, 22, 0.75);
             backdrop-filter: blur(4px);
             z-index: 4000;
             display: flex;
@@ -755,10 +915,10 @@
 
         /* Footer */
         .footer {
-            background: var(--primary-dark);
-            color: #e1d9cf;
+            background: var(--bg-dark);
+            color: var(--beige);
             padding: 4rem 2rem 2rem;
-            border-radius: 3rem 3rem 0 0;
+            border-radius: 2.5rem 2.5rem 0 0;
             margin-top: 3rem;
         }
 
@@ -771,14 +931,16 @@
         }
 
         .footer-col h4 {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             margin-bottom: 1rem;
             color: white;
+            font-weight: 500;
         }
 
         .footer-col p {
-            color: #b8c5c2;
+            color: #a9a29a;
             line-height: 1.6;
+            font-size: 0.92rem;
         }
 
         .social-icons {
@@ -788,7 +950,7 @@
         }
 
         .social-icons a {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             width: 38px;
             height: 38px;
             border-radius: 50%;
@@ -809,7 +971,7 @@
             .nav-menu {
                 display: none;
                 flex-direction: column;
-                background: white;
+                background: var(--bg-dark);
                 position: absolute;
                 top: 80px;
                 left: 0;
@@ -825,9 +987,17 @@
             .hamburger {
                 display: flex;
             }
+            .hero-main-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .hero-content,
+            .search-section {
+                width: 100%;
+                max-width: none;
+            }
             .filter-card {
                 flex-direction: column;
-                border-radius: 2rem;
                 align-items: stretch;
             }
             .search-sort {
@@ -842,6 +1012,24 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
             }
+            .modal-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll;
+                min-height: auto;
+                padding-top: clamp(2rem, 8vw, 3rem);
+                padding-bottom: clamp(2rem, 8vw, 3rem);
+            }
+            .hero-huge-bg {
+                display: none;
+            }
+            .results-count {
+                align-self: flex-start;
+            }
         }
 
         @media (max-width: 650px) {
@@ -852,7 +1040,7 @@
                 grid-template-columns: repeat(3, 1fr);
             }
             .modal-main-media {
-                height: 250px;
+                height: 220px;
             }
             .hebergement-grid {
                 grid-template-columns: 1fr;
@@ -864,52 +1052,140 @@
             .social-icons {
                 justify-content: center;
             }
-        }
-        @media (max-width: 768px) {
-            .hero {
-                background-attachment: scroll;
-                min-height: 70vh;
+            .planning-grid {
+                grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+            }
+            .planning-day {
+                font-size: 0.6rem;
+                padding: 4px 2px;
             }
         }
+
+        /* ===== PLANNING DISPONIBILITÉ (lié backend) ===== */
+        .planning-section {
+            margin: 1.5rem 0;
+            padding: 1.2rem;
+            background: var(--beige, #f8f4f0);
+            border-radius: 1.2rem;
+            border: 1px solid #e8e0d8;
+        }
+        .planning-section h4 {
+            font-family: var(--font-serif, Georgia, serif);
+            color: var(--ink, #1a1a1a);
+            margin: 0 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.05rem;
+        }
+        .planning-section h4 i { color: var(--accent, #c45c26); }
+        .planning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 4px;
+            margin-top: 0.5rem;
+        }
+        .planning-day {
+            padding: 6px 4px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            background: #e8e8e8;
+            color: #999;
+            position: relative;
+        }
+        .planning-day.available { background: #d4edda; color: #155724; }
+        .planning-day.blocked { background: #f8d7da; color: #721c24; text-decoration: line-through; }
+        .planning-day.blocked::after {
+            content: '✕';
+            position: absolute;
+            top: -4px;
+            right: -2px;
+            font-size: 8px;
+            color: #dc3545;
+        }
+        .planning-day.today { border: 2px solid var(--accent, #c45c26); font-weight: 700; }
+        .planning-day.weekend { background: #fff3cd; color: #856404; }
+        .planning-legend {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
+        }
+        .planning-legend-item { display: flex; align-items: center; gap: 6px; }
+        .planning-legend-item .color-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .color-box.available-color { background: #d4edda; border: 1px solid #b7d4b7; }
+        .color-box.blocked-color { background: #f8d7da; border: 1px solid #f5c6cb; }
+        .color-box.weekend-color { background: #fff3cd; border: 1px solid #ffeaa7; }
+        .no-blocked-dates { color: #64748b; font-style: italic; padding: 0.5rem 0; font-size: 0.9rem; }
+        .blocked-date-warning {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 0.8rem;
+            border-radius: 0.8rem;
+            margin-bottom: 1rem;
+            display: none;
+            border-left: 4px solid #dc3545;
+            font-size: 0.9rem;
+        }
+        .blocked-date-warning.show { display: block; }
     </style>
 </head>
 <body>
 <div id="navbar-placeholder"></div>
 
 <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <span class="hero-badge"><i class="fas fa-star"></i> DESTINATION D'EXCEPTION</span>
-        <h1 class="hero-title">Sejours inoubliables Bejaia</h1>
-        <p class="hero-description">Villas de prestige, appartements avec vue mer et refuges authentiques pour des vacances mediterraniennes d'exception.</p>
-        <a href="#hebergements" class="hero-cta" id="scrollToHebergements">Decouvrir <i class="fas fa-arrow-down"></i></a>
+    <!-- Grand mot d'ambiance en arrière-plan -->
+    <div class="hero-huge-bg">BEJAIA</div>
+
+    <div class="hero-main-wrapper">
+        <!-- CÔTÉ GAUCHE : Bloc texte -->
+        <div class="hero-content">
+            <span class="hero-badge"><i class="fas fa-star"></i> DESTINATION D'EXCEPTION</span>
+            <h1 class="hero-title">Séjours inoubliables<br>Bejaia</h1>
+            <p class="hero-description">Villas de prestige, appartements avec vue mer et refuges authentiques pour des vacances méditerranéennes d'exception.</p>
+            <a href="#hebergements" class="hero-cta" id="scrollToHebergements">Découvrir ↗</a>
+        </div>
+
+        <!-- CÔTÉ DROIT : Le panneau de recherche -->
+        <div class="search-section" id="hebergements">
+            <div class="filter-card">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all"><i class="fas fa-home"></i> Tous</button>
+                    <button class="filter-btn" data-filter="villa"><i class="fas fa-tree"></i> Villas</button>
+                    <button class="filter-btn" data-filter="appartement"><i class="fas fa-building"></i> Apparts</button>
+                    <button class="filter-btn" data-filter="chalet"><i class="fas fa-tree"></i> Chalets</button>
+                </div>
+                <div class="search-sort">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Rechercher un lieu...">
+                    </div>
+                    <select id="sortSelect" class="sort-select">
+                        <option value="default">Trier par</option>
+                        <option value="price-asc">Prix croissant</option>
+                        <option value="price-desc">Prix décroissant</option>
+                    </select>
+                </div>
+            </div>
+            <div class="results-count" id="resultsCount">03 Hébergements trouvés</div>
+        </div>
     </div>
 </section>
 
-<div class="container search-section" id="hebergements">
-    <div class="filter-card">
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all"><i class="fas fa-home"></i> Tous</button>
-            <button class="filter-btn" data-filter="villa"><i class="fas fa-tree"></i> Villas</button>
-            <button class="filter-btn" data-filter="appartement"><i class="fas fa-building"></i> Appartements</button>
-            <button class="filter-btn" data-filter="chalet"><i class="fas fa-tree"></i> Chalets</button>
-        </div>
-        <div class="search-sort">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Rechercher un lieu...">
-            </div>
-            <select id="sortSelect" class="sort-select">
-                <option value="default">Trier par</option>
-                <option value="price-asc">Prix croissant</option>
-                <option value="price-desc">Prix decroissant</option>
-            </select>
-        </div>
-    </div>
-    <div class="results-count" id="resultsCount">Chargement...</div>
-</div>
-
 <div class="container">
+    <div class="section-header fade-up">
+        <span class="section-tag">Notre sélection</span>
+        <h2 class="section-title">Nos hébergements</h2>
+        <p class="section-sub">Villas, appartements et chalets choisis pour leur caractère et leur emplacement, du littoral aux hauteurs de Béjaïa.</p>
+    </div>
     <div class="hebergement-grid" id="hebergementGrid"></div>
 </div>
 
@@ -921,18 +1197,43 @@
 <!-- Modal Hébergement -->
 <div class="modal-hebergement" id="hebergementModal">
     <div class="modal-content">
+        <!-- Bouton Fermer minimaliste -->
         <button class="modal-close"><i class="fas fa-times"></i></button>
-        <div class="modal-gallery" id="modalGallery"></div>
-        <div class="modal-main-media" id="modalMainMedia"></div>
-        <div style="padding: 1.5rem 2rem;">
-            <h2 id="modalTitle" style="font-family: 'Playfair Display', serif;"></h2>
-            <div class="modal-location" id="modalLocation" style="color: var(--accent); margin-bottom: 0.5rem;"></div>
-            <p id="modalDescription" style="margin: 1rem 0;"></p>
+        
+        <!-- CÔTÉ GAUCHE : Zone Visuels / Médias -->
+        <div class="modal-left-column">
+            <div class="modal-main-media" id="modalMainMedia"></div>
+            <div class="modal-gallery" id="modalGallery"></div>
+        </div>
+        
+        <!-- CÔTÉ DROIT : Zone Textes & Actions -->
+        <div class="modal-right-column">
+            <h2 id="modalTitle"></h2>
+            <div class="modal-location" id="modalLocation"></div>
+            
+            <p id="modalDescription"></p>
             <div class="modal-features" id="modalFeatures"></div>
-            <div class="modal-price" id="modalPrice" style="font-size: 1.5rem; font-weight: 800; color: var(--primary);"></div>
-            <button class="modal-booking-btn" id="modalBookingBtn">Demander un devis <i class="fas fa-arrow-right"></i></button>
-            <div style="margin-top: 1.5rem;">
-                <h4 style="margin-bottom: 0.5rem;">Hébergements similaires</h4>
+
+            <div class="planning-section" id="planningSection">
+                <h4><i class="fas fa-calendar-alt"></i> Planning de disponibilité</h4>
+                <div id="planningContainer">
+                    <div class="no-blocked-dates">Chargement du planning...</div>
+                </div>
+                <div class="planning-legend">
+                    <span class="planning-legend-item"><span class="color-box available-color"></span> Disponible</span>
+                    <span class="planning-legend-item"><span class="color-box blocked-color"></span> Indisponible</span>
+                    <span class="planning-legend-item"><span class="color-box weekend-color"></span> Week-end</span>
+                </div>
+            </div>
+            
+            <div class="modal-price-booking-zone">
+                <div class="modal-price" id="modalPrice"></div>
+                <button class="modal-booking-btn" id="modalBookingBtn">Demander un devis <i class="fas fa-arrow-right"></i></button>
+            </div>
+            
+            <!-- Hébergements similaires intégrés de façon compacte -->
+            <div class="similar-section">
+                <h4>Hébergements similaires</h4>
                 <div class="similar-grid" id="similarProperties"></div>
             </div>
         </div>
@@ -943,22 +1244,26 @@
 <div class="booking-modal" id="bookingModal">
     <div class="booking-content" style="max-width: 550px; padding: 2rem;">
         <button class="booking-close"><i class="fas fa-times"></i></button>
-        <h2 id="bookingTitle" style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem;">Demande de devis</h2>
+        <h2 id="bookingTitle" style="font-family: var(--font-serif); margin-bottom: 1.5rem; color: var(--ink);">Demande de devis</h2>
+        <div class="blocked-date-warning" id="blockedDateWarning">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="blockedDateMessage">⚠️ Attention : Certaines dates sélectionnées sont indisponibles.</span>
+        </div>
         <form id="bookingForm">
             <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                <div style="flex: 1;">
-                    <label>Date d'arrivée <span style="color: red;">*</span></label>
+                <div style="flex: 1; min-width: 140px;">
+                    <label>Date d'arrivée <span style="color: var(--accent);">*</span></label>
                     <input type="date" id="checkIn" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
                 </div>
-                <div style="flex: 1;">
-                    <label>Date de départ <span style="color: red;">*</span></label>
+                <div style="flex: 1; min-width: 140px;">
+                    <label>Date de départ <span style="color: var(--accent);">*</span></label>
                     <input type="date" id="checkOut" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
                 </div>
             </div>
             
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                <div style="flex: 1;">
-                    <label>Adultes <span style="color: red;">*</span></label>
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 120px;">
+                    <label>Adultes <span style="color: var(--accent);">*</span></label>
                     <select id="adults" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
                         <option value="1">1</option>
                         <option value="2" selected>2</option>
@@ -968,7 +1273,7 @@
                         <option value="6">6</option>
                     </select>
                 </div>
-                <div style="flex: 1;">
+                <div style="flex: 1; min-width: 120px;">
                     <label>Enfants</label>
                     <select id="children" style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
                         <option value="0">0</option>
@@ -980,23 +1285,29 @@
             </div>
             
             <div style="margin-bottom: 1rem;">
-                <label>Nom complet <span style="color: red;">*</span></label>
+                <label>Nom complet <span style="color: var(--accent);">*</span></label>
                 <input type="text" id="fullName" placeholder="Votre nom et prénom" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
             </div>
             
             <div style="margin-bottom: 1rem;">
-                <label>Téléphone <span style="color: red;">*</span></label>
-                <input type="tel" id="telephone" placeholder="Votre numéro de téléphone" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+                <label>Téléphone WhatsApp <span style="color: var(--accent);">*</span></label>
+                <input type="tel" id="telephone" placeholder="Ex: 0660 43 48 72" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
+                <small id="whatsappHint" style="display:block; margin-top:0.4rem; color:#16a34a; font-size:0.85rem;">
+                    <i class="fab fa-whatsapp"></i> Nous préférons WhatsApp pour vous recontacter rapidement.
+                </small>
+                <small id="whatsappWarning" style="display:none; margin-top:0.4rem; color:#d97706; font-size:0.85rem;">
+                    ⚠️ Numéro WhatsApp non détecté — votre demande sera quand même envoyée, mais nous vous contacterons par email.
+                </small>
             </div>
             
             <div style="margin-bottom: 1rem;">
-                <label>Email <span style="color: red;">*</span></label>
+                <label>Email <span style="color: var(--accent);">*</span></label>
                 <input type="email" id="email" placeholder="email@exemple.com" required style="width: 100%; padding: 0.7rem; border-radius: 12px; border: 1px solid #ddd;">
             </div>
             
-            <div id="totalPrice" style="font-size: 1rem; font-weight: 600; color: var(--accent); margin-bottom: 1rem; text-align: center; background: #f0f0f0; padding: 0.8rem; border-radius: 12px;"></div>
+            <div id="totalPrice" style="font-size: 1rem; font-weight: 600; color: var(--accent); margin-bottom: 1rem; text-align: center; background: var(--beige); padding: 0.8rem; border-radius: 12px;"></div>
             
-            <button type="submit" style="width: 100%; background: var(--accent); padding: 1rem; border-radius: 60px; border: none; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition);">
+            <button type="submit" style="width: 100%; background: var(--ink); padding: 1rem; border-radius: 60px; border: none; color: white; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition);">
                 <i class="fas fa-paper-plane"></i> Envoyer la demande
             </button>
         </form>
@@ -1168,7 +1479,123 @@
         { "icon": "fa-parking", "text": "Parking" }
     ],
     "images": ["assets/images/appa/ca1.jpeg", "assets/images/appa/ca2.jpeg", "assets/images/appa/ca3.jpeg", "assets/images/appa/ca4.jpeg", "assets/images/appa/ca5.jpeg", "assets/images/appa/ca6.jpeg", "assets/images/appa/ca7.jpeg"]
+},
+{
+  "id": "9",
+  "title": "Villa authentique - Pied dans l'eau",
+  "location": "Tazeboujt, Saket, Béjaïa",
+  "description": "Villa authentique en bord de mer avec piscine, vue panoramique sur le Cap Carbon, idéale pour les familles et les groupes jusqu'à 12 personnes.",
+  "longDescription": "Découvrez cette magnifique villa authentique située à Tazeboujt (Saket), en bord de mer et offrant une vue exceptionnelle sur le Cap Carbon. La villa peut accueillir jusqu'à 12 personnes et dispose de 5 pièces à vivre, d'une piscine privée de 4 × 7 m, de 2 salles de bain, d'une climatisation au rez-de-chaussée ainsi que d'un parking privé. Son emplacement pied dans l'eau en fait un lieu idéal pour des vacances en famille ou entre amis, dans un cadre calme et naturel.",
+  "priceHaute": "À partir de 40 000 DA",
+  "priceBasse": "À partir de 25 000 DA",
+  "isDevis": true,
+  "type": "villa",
+  "capacity": 12,
+  "rating": 4.8,
+  "popular": true,
+  "ambiance": [
+    "Pied dans l'eau",
+    "Vue sur le Cap Carbon",
+    "Familial",
+    "Calme",
+    "Piscine privée"
+  ],
+  "features": [
+    {
+      "icon": "fa-bed",
+      "text": "5 pièces à vivre"
+    },
+    {
+      "icon": "fa-users",
+      "text": "Jusqu'à 12 personnes"
+    },
+    {
+      "icon": "fa-water-ladder",
+      "text": "Piscine privée 4 × 7 m"
+    },
+   
+    {
+      "icon": "fa-snowflake",
+      "text": "Climatisation au rez-de-chaussée"
+    },
+    {
+      "icon": "fa-car",
+      "text": "Parking privé"
+    },
+    {
+      "icon": "fa-water",
+      "text": "Pied dans l'eau"
+    },
+    {
+      "icon": "fa-mountain-sun",
+      "text": "Vue sur le Cap Carbon"
+    }
+  ],
+  "images": [
+    "assets/images/heber/vil1.jpeg",
+    "assets/images/heber/vil2.jpeg",
+    "assets/images/heber/vil3.jpeg",
+    "assets/images/heber/vil4.jpeg",
+    "assets/images/heber/vil5.jpeg",
+    "assets/images/heber/vil6.jpeg",
+    "assets/images/heber/vil7.jpeg"
+  ]
+},
+{
+    id: "10",
+    title: "Appartement F3",
+    location: "Béjaïa",
+    description: "Bel appartement moderne, confortable et entièrement équipé.",
+    longDescription: "Magnifique appartement F3 entièrement équipé avec climatisation et une superbe vue. Idéal pour des vacances en famille ou entre amis, dans un cadre calme, agréable et proche des commodités.",
+
+    priceHaute: 20000,
+    priceBasse: 20000,
+    isDevis: true,
+
+    type: "appartement",
+    capacity: 6,
+    rating: 4.8,
+    popular: true,
+
+    ambiance: ["Mer", "Vue", "Moderne"],
+
+    features: [
+        { icon: "fa-bed", text: "1 chambre + salon" },
+        { icon: "fa-users", text: "Jusqu'à 6 personnes" },
+        { icon: "fa-wind", text: "Climatisation" }
+    ],
+
+    images: [
+        "assets/images/appa/c1.jpeg",
+        "assets/images/appa/c2.jpeg",
+        "assets/images/appa/c3.jpeg",
+        "assets/images/appa/c4.jpeg",
+        "assets/images/appa/c5.jpeg",
+        "assets/images/appa/c6.jpeg",
+        "assets/images/appa/c7.jpeg"
+    ]
+},
+{ 
+    id: "11", 
+    title: "Appartemnt f2 ,  saket piedsdans leau ", 
+    location: " Béjaïa", 
+    description: "Bel appartement moderne et tout équipé", 
+    longDescription: "Magnifique logement tout équipé avec climatisation et une superbe vue. Idéal pour des vacances en famille ou entre amis dans un cadre calme et agréable. ",    priceHaute: 17000,
+    priceBasse: 15000,
+    isDevis: true,
+    type: "appartement", 
+    capacity: 6, 
+    rating: 4.8, 
+    popular: true, 
+    ambiance: ["Mer", "Vue", "Moderne"],
+    features: [
+        { icon: "fa-bed", text: "1 chambres +Salon" },
+        
+        { icon: "fa-wind", text: "Clim" }
+    ], 
+    images: ["assets/images/appa/c1.jpeg", "assets/images/appa/c2.jpeg", "assets/images/appa/c3.jpeg", "assets/images/appa/4.jpeg",  "assets/images/appa/c5.jpeg","assets/images/appa/c6.jpeg","assets/images/appa/c7.jpeg"]
 }
+
 
 // NOUVEAU APPARTEMENT 2
 
@@ -1176,6 +1603,127 @@
 
     let currentProperty = null;
     let currentImages = [];
+    let blockedDatesCache = {};
+
+    const API_BASE = (["localhost", "127.0.0.1"].includes(window.location.hostname) || window.location.protocol === "file:")
+        ? "http://localhost:3000/api"
+        : "https://visitebejai.onrender.com/api";
+
+    async function fetchBlockedDates(propertyId) {
+        try {
+            const url = `${API_BASE}/availability/property/${propertyId}`;
+            const response = await fetch(url);
+            if (!response.ok) {
+                blockedDatesCache[propertyId] = [];
+                return [];
+            }
+            const data = await response.json();
+            let dates = [];
+            if (Array.isArray(data)) {
+                if (data.length > 0 && data[0].date) dates = data.map(item => item.date);
+                else if (data.length > 0 && data[0].blocked_date) dates = data.map(item => item.blocked_date);
+                else if (data.length > 0 && typeof data[0] === 'string') dates = data;
+                else dates = data;
+            } else if (data && typeof data === 'object') {
+                if (Array.isArray(data.dates)) dates = data.dates;
+                else if (Array.isArray(data.data)) {
+                    dates = data.data.length > 0 && data.data[0].date
+                        ? data.data.map(item => item.date)
+                        : data.data;
+                }
+            }
+            dates = dates.filter(d => d && typeof d === 'string' && d.length >= 10)
+                .map(d => d.substring(0, 10));
+            blockedDatesCache[propertyId] = dates;
+            return dates;
+        } catch (error) {
+            console.error('Erreur fetchBlockedDates:', error);
+            blockedDatesCache[propertyId] = [];
+            return [];
+        }
+    }
+
+    function renderPlanning(propertyId) {
+        const container = document.getElementById('planningContainer');
+        if (!container) return;
+        const blockedDates = blockedDatesCache[propertyId] || [];
+
+        if (blockedDates.length === 0) {
+            container.innerHTML = `<div class="no-blocked-dates">✅ Aucune date bloquée — toutes les dates sont disponibles</div>`;
+            return;
+        }
+
+        const blockedSet = new Set(blockedDates);
+        const today = new Date();
+        const startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        const endDate = new Date(today.getFullYear(), today.getMonth() + 3, 0);
+
+        let html = '<div class="planning-grid">';
+        let current = new Date(startDate);
+        while (current <= endDate) {
+            const dateStr = current.toISOString().split('T')[0];
+            const day = current.getDate();
+            const isWeekend = current.getDay() === 0 || current.getDay() === 6;
+            const isToday = dateStr === today.toISOString().split('T')[0];
+            const isBlocked = blockedSet.has(dateStr);
+            let classes = 'planning-day';
+            if (isBlocked) classes += ' blocked';
+            else if (isWeekend) classes += ' weekend';
+            else classes += ' available';
+            if (isToday) classes += ' today';
+            html += `<div class="${classes}" title="${dateStr}${isBlocked ? ' - Indisponible' : ' - Disponible'}">${day}</div>`;
+            current.setDate(current.getDate() + 1);
+        }
+        html += '</div>';
+        html += `<div style="margin-top:0.8rem;font-size:0.85rem;color:#64748b;">
+            <i class="fas fa-info-circle"></i> ${blockedDates.length} jour(s) indisponible(s) sur la période affichée
+        </div>`;
+        container.innerHTML = html;
+    }
+
+    async function loadAndDisplayPlanning(propertyId) {
+        const container = document.getElementById('planningContainer');
+        if (container) {
+            container.innerHTML = '<div class="no-blocked-dates"><i class="fas fa-spinner fa-spin"></i> Chargement du planning...</div>';
+        }
+        await fetchBlockedDates(propertyId);
+        renderPlanning(propertyId);
+    }
+
+    function checkPeriodHasBlockedDates(startDate, endDate, propertyId) {
+        const blockedDates = blockedDatesCache[propertyId] || [];
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        let current = new Date(start);
+        const blockedFound = [];
+        while (current <= end) {
+            const dateStr = current.toISOString().split('T')[0];
+            if (blockedDates.includes(dateStr)) blockedFound.push(dateStr);
+            current.setDate(current.getDate() + 1);
+        }
+        return blockedFound;
+    }
+
+    function updateBlockedDateWarning(propertyId) {
+        const checkIn = document.getElementById('checkIn');
+        const checkOut = document.getElementById('checkOut');
+        const warningDiv = document.getElementById('blockedDateWarning');
+        const messageSpan = document.getElementById('blockedDateMessage');
+        if (!warningDiv || !messageSpan) return;
+        if (!checkIn?.value || !checkOut?.value) {
+            warningDiv.classList.remove('show');
+            return;
+        }
+        const blockedFound = checkPeriodHasBlockedDates(checkIn.value, checkOut.value, propertyId);
+        if (blockedFound.length > 0) {
+            warningDiv.classList.add('show');
+            messageSpan.textContent = `⚠️ Attention : dates indisponibles : ${blockedFound.map(d => new Date(d).toLocaleDateString('fr-FR')).join(', ')}. Choisissez d'autres dates.`;
+        } else {
+            warningDiv.classList.remove('show');
+        }
+    }
+
+    const likedProperties = new Set();
 
     function displayProperties(list) {
         const grid = document.getElementById('hebergementGrid');
@@ -1184,41 +1732,65 @@
         list.forEach((p, idx) => {
             const card = document.createElement('div');
             card.className = 'hebergement-card';
-            card.style.animationDelay = `${idx * 0.05}s`;
-            const badge = p.popular ? '<div class="card-badge popular"><i class="fas fa-star"></i> Populaire</div>' : '<div class="card-badge">❤️ Coup de coeur</div>';
-            const ambianceTags = p.ambiance?.map(a => `<span class="ambiance-tag">${a}</span>`).join('') || '';
-            
+            card.style.animationDelay = `${idx * 0.06}s`;
+            card.dataset.id = p.id;
+
+            const badge = p.popular ? `<div class="card-badge"><i class="fas fa-star"></i> Coup de cœur</div>` : '';
+            const isLiked = likedProperties.has(p.id);
+            const dots = p.images.slice(0, 5).map((_, i) => `<span class="${i === 0 ? 'active' : ''}"></span>`).join('');
+            const metaLine = [p.type ? p.type.charAt(0).toUpperCase() + p.type.slice(1) : null, ...(p.ambiance || [])].filter(Boolean).slice(0, 3).join(' · ');
+
             let priceDisplay;
             if (p.isDevis) {
-                priceDisplay = '<span class="price-devis"><i class="fas fa-file-signature"></i> Devis sur demande</span>';
+                priceDisplay = `<span class="price-devis"><i class="fas fa-file-signature"></i> Devis sur demande</span>`;
             } else if (p.priceHaute && p.priceBasse) {
-                priceDisplay = `<div style="display:flex; flex-direction:column; gap:2px;"><span class="card-price" style="font-size:1.1rem;">${p.priceHaute.toLocaleString('fr-DZ')} DA <span style="font-size:0.7rem;">/nuit (haute saison)</span></span><span style="font-size:0.8rem; color:var(--gray);">${p.priceBasse.toLocaleString('fr-DZ')} DA (hors saison)</span></div>`;
+                priceDisplay = `<strong>${Number(p.priceHaute).toLocaleString('fr-DZ')} DA</strong> <span class="price-note">/ nuit</span>`;
             } else {
-                priceDisplay = `<span class="card-price">${p.price.toLocaleString('fr-DZ')} DA<span style="font-size:0.8rem;">/nuit</span></span>`;
+                priceDisplay = `<strong>${p.price.toLocaleString('fr-DZ')} DA</strong> <span class="price-note">/ nuit</span>`;
             }
-            
+
             card.innerHTML = `
-    ${badge}
-    <div class="card-image" style="position: relative; overflow: hidden;">
-        <img src="${p.images[0]}" alt="${p.title}" style="width: 100%; height: 280px; object-fit: cover; display: block;">
-        <div class="card-ambiance" style="position: absolute; bottom: 12px; left: 12px; z-index: 3; display: flex; gap: 8px;">${ambianceTags}</div>
+    <div class="card-media">
+        ${badge}
+        <button class="card-fav${isLiked ? ' liked' : ''}" data-id="${p.id}" aria-label="Ajouter aux favoris"><i class="fa-heart ${isLiked ? 'fas' : 'far'}"></i></button>
+        <img src="${p.images[0]}" alt="${p.title}" loading="lazy">
+        <div class="card-dots">${dots}</div>
     </div>
     <div class="card-content">
-        <h3>${p.title}</h3>
-        <div class="card-location"><i class="fas fa-map-marker-alt"></i> ${p.location}</div>
-        <p style="color: var(--gray); margin-bottom: 1rem;">${p.description}</p>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            ${priceDisplay}
-            <button class="btn-details" data-id="${p.id}">Détails</button>
+        <div class="card-row-top">
+            <h3>${p.title}</h3>
+            <span class="card-rating"><i class="fas fa-star"></i> ${p.rating ? p.rating.toFixed(1) : '—'}</span>
         </div>
+        <div class="card-location">${p.location}</div>
+        ${metaLine ? `<div class="card-meta-sub">${metaLine}</div>` : ''}
+        <div class="card-price">${priceDisplay}</div>
     </div>
 `; grid.appendChild(card);
         });
-        
-        document.querySelectorAll('.btn-details').forEach(btn => {
+
+        document.querySelectorAll('.hebergement-card').forEach(card => {
+            card.addEventListener('click', () => openPropertyModal(card.dataset.id));
+        });
+
+        document.querySelectorAll('.card-fav').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                openPropertyModal(btn.getAttribute('data-id'));
+                const id = btn.getAttribute('data-id');
+                const icon = btn.querySelector('i');
+                if (likedProperties.has(id)) {
+                    likedProperties.delete(id);
+                    btn.classList.remove('liked');
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                } else {
+                    likedProperties.add(id);
+                    btn.classList.add('liked');
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                }
+                btn.classList.remove('pop');
+                void btn.offsetWidth;
+                btn.classList.add('pop');
             });
         });
         
@@ -1252,16 +1824,16 @@
         document.getElementById('modalDescription').innerText = prop.longDescription;
         
         if (prop.isDevis) {
-            document.getElementById('modalPrice').innerHTML = '<span style="background:#f0e6d8; padding:0.3rem 1rem; border-radius:30px;"><i class="fas fa-file-signature"></i> Devis sur demande</span>';
+            document.getElementById('modalPrice').innerHTML = '<span style="background:var(--beige); padding:0.3rem 1rem; border-radius:30px;"><i class="fas fa-file-signature"></i> Devis sur demande</span>';
         } else if (prop.priceHaute && prop.priceBasse) {
             document.getElementById('modalPrice').innerHTML = `
-                <div style="background:#f0e6d8; padding:0.8rem 1.2rem; border-radius:30px; display:inline-block;">
+                <div style="background:var(--beige); padding:0.8rem 1.2rem; border-radius:30px; display:inline-block;">
                     <div><strong style="font-size:1.8rem;">${prop.priceHaute.toLocaleString('fr-DZ')} DA</strong> <span style="font-size:0.8rem;">/nuit (haute saison)</span></div>
                     <div style="font-size:0.9rem; margin-top:5px;">${prop.priceBasse.toLocaleString('fr-DZ')} DA/nuit (hors saison)</div>
                 </div>
             `;
         } else {
-            document.getElementById('modalPrice').innerHTML = `<span style="background:#f0e6d8; padding:0.3rem 1rem; border-radius:30px;">${prop.price.toLocaleString('fr-DZ')} DA <span style="font-size:0.8rem;">/nuit</span></span>`;
+            document.getElementById('modalPrice').innerHTML = `<span style="background:var(--beige); padding:0.3rem 1rem; border-radius:30px;">${prop.price.toLocaleString('fr-DZ')} DA <span style="font-size:0.8rem;">/nuit</span></span>`;
         }
         
         const featContainer = document.getElementById('modalFeatures');
@@ -1304,6 +1876,7 @@
         
         document.getElementById('hebergementModal').classList.add('active');
         document.body.style.overflow = 'hidden';
+        loadAndDisplayPlanning(prop.id);
     }
 
     function setMainMedia(index) {
@@ -1386,11 +1959,68 @@
                         document.getElementById('totalPrice').innerHTML = '📄 <strong>Devis sur demande</strong> - Réponse sous 24h';
                     }
                     document.getElementById('bookingModal').classList.add('active');
+                    setTimeout(() => updateBlockedDateWarning(currentProperty.id), 100);
                 }
             });
         }
+
+        const checkInInput = document.getElementById('checkIn');
+        const checkOutInput = document.getElementById('checkOut');
+        if (checkInInput && checkOutInput) {
+            const onDateChange = () => {
+                if (currentProperty) updateBlockedDateWarning(currentProperty.id);
+            };
+            checkInInput.addEventListener('change', onDateChange);
+            checkOutInput.addEventListener('change', onDateChange);
+        }
         
-        // Formulaire avec timeout court (3 secondes max)
+        function formatPhoneForWhatsApp(phone) {
+            if (!phone) return null;
+            let cleaned = String(phone).replace(/[\s.\-()]/g, '');
+            if (cleaned.startsWith('0')) return '213' + cleaned.substring(1);
+            if (cleaned.startsWith('+')) return cleaned.replace('+', '');
+            return cleaned;
+        }
+
+        function isValidWhatsAppPhone(phone) {
+            const formatted = formatPhoneForWhatsApp(phone);
+            if (!formatted) return false;
+            return /^[1-9]\d{7,14}$/.test(formatted);
+        }
+
+        const ADMIN_WHATSAPP_NUMBER = '213660434872';
+
+        function buildAdminDemandWhatsAppLink(data) {
+            const propertyName = data.propertyTitle || currentProperty?.title || 'Hébergement';
+            const arrivee = data.date_arrivee
+                ? new Date(data.date_arrivee).toLocaleDateString('fr-FR')
+                : '—';
+            const depart = data.date_depart
+                ? new Date(data.date_depart).toLocaleDateString('fr-FR')
+                : '—';
+            const message = `📩 Nouvelle demande de réservation Visite Bejaia\n\nClient : ${data.nom}\nTéléphone : ${data.telephone}\nEmail : ${data.email}\nHébergement : ${propertyName}\nDu : ${arrivee}\nJusqu'au : ${depart}\nPersonnes : ${data.nb_personnes || 1}`;
+            return `https://wa.me/${ADMIN_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        }
+
+        function updateWhatsAppHint() {
+            const tel = document.getElementById('telephone')?.value || '';
+            const hint = document.getElementById('whatsappHint');
+            const warning = document.getElementById('whatsappWarning');
+            if (!hint || !warning) return;
+            if (tel && !isValidWhatsAppPhone(tel)) {
+                hint.style.display = 'none';
+                warning.style.display = 'block';
+            } else {
+                hint.style.display = 'block';
+                warning.style.display = 'none';
+            }
+        }
+
+        const telephoneInput = document.getElementById('telephone');
+        telephoneInput?.addEventListener('input', updateWhatsAppHint);
+        telephoneInput?.addEventListener('blur', updateWhatsAppHint);
+
+        // Formulaire avec timeout court (5 secondes max)
         const bookingForm = document.getElementById('bookingForm');
         if (bookingForm) {
             bookingForm.addEventListener('submit', async (e) => {
@@ -1408,6 +2038,15 @@
                     alert("Veuillez remplir tous les champs obligatoires (*)");
                     return;
                 }
+
+                if (currentProperty) {
+                    const blockedFound = checkPeriodHasBlockedDates(date_arrivee, date_depart, currentProperty.id);
+                    if (blockedFound.length > 0) {
+                        updateBlockedDateWarning(currentProperty.id);
+                        alert("⚠️ Certaines dates sélectionnées sont indisponibles. Veuillez choisir d'autres dates.");
+                        return;
+                    }
+                }
                 
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
@@ -1418,6 +2057,16 @@
                 if (telephone.length < 8) {
                     alert("Veuillez entrer un numéro de téléphone valide");
                     return;
+                }
+
+                const hasWhatsApp = isValidWhatsAppPhone(telephone);
+                if (!hasWhatsApp) {
+                    const continueWithout = confirm(
+                        "⚠️ Nous préférons un numéro WhatsApp pour vous recontacter plus vite.\n\n" +
+                        "Sans WhatsApp valide, nous vous contacterons par email.\n\n" +
+                        "Voulez-vous quand même envoyer votre demande ?"
+                    );
+                    if (!continueWithout) return;
                 }
                 
                 const data = {
@@ -1442,7 +2091,7 @@
                 const timeoutId = setTimeout(() => controller.abort(), 5000);
                 
                 try {
-                    const res = await fetch("https://visitebejai.onrender.com/api/property-reservations", {
+                    const res = await fetch(`${API_BASE}/property-reservations`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(data),
@@ -1455,8 +2104,19 @@
                         throw new Error("Erreur serveur");
                     }
                     
-                    await res.json();
-                    alert("✅ Votre demande a été envoyée avec succès ! Notre équipe vous contactera très prochainement.");
+                    const result = await res.json();
+
+                    // Envoyer la demande aussi sur WhatsApp admin (+213 660 43 48 72)
+                    const adminWa = result.adminWhatsAppLink || buildAdminDemandWhatsAppLink(data);
+                    if (adminWa) {
+                        window.open(adminWa, '_blank');
+                    }
+
+                    if (result.hasWhatsApp) {
+                        alert("✅ Votre demande a été envoyée !\n\n📱 WhatsApp s'ouvre vers Visite Bejaia (+213 660 43 48 72) — appuyez sur Envoyer.\n\nLa demande est aussi visible sur notre tableau de bord.");
+                    } else {
+                        alert("✅ Votre demande a été envoyée !\n\n📧 Nous préférons WhatsApp, mais nous vous contacterons par email au " + email + ".\n\n📱 WhatsApp s'ouvre vers Visite Bejaia — appuyez sur Envoyer si possible.");
+                    }
                     closeModals();
                     bookingForm.reset();
                     initBookingDates();

@@ -16,6 +16,10 @@ const {
   ensureReservationAdminColumns
 } = require("./utils/ensureReservationAdminColumns");
 
+const {
+  ensureUserColumns
+} = require("./utils/ensureUserColumns");
+
 
 // ROUTES
 const adminRoutes = require("./routes/adminRoutes");
@@ -271,6 +275,11 @@ app.use(
 authRoutes
 );
 
+app.use(
+"/api/users",
+authRoutes
+);
+
 
 
 console.log("✅ ROUTE ADMIN CHARGÉE");
@@ -375,10 +384,12 @@ console.log(
 // PAS DE sequelize.sync()
 
 
-await ensurePropertyColumns(sequelize);
+//await ensurePropertyColumns(sequelize);
 
 
-await ensureReservationAdminColumns(sequelize);
+//await ensureReservationAdminColumns(sequelize);
+
+//await ensureUserColumns(sequelize);
 
 
 
