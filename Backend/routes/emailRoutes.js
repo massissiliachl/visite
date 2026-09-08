@@ -1,29 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const nodemailer = require("nodemailer");
+const { createMailTransporter } = require("../utils/mailer");
 
-// Configuration du transporteur email
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
-  }
-});
+const transporter = createMailTransporter();
 
-// Vérifier la connexion au démarrage
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("❌ Erreur de connexion email:", error);
-  } else {
-    console.log("✅ Serveur email prêt à envoyer des messages");
-  }
-});
+// Vérification non bloquante au démarrage
+if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  setImmediate(() => {
+    transporter.verify((error) => {
+      if (error) {
+        console.error("❌ Erreur de connexion email:", error.code || error.message);
+        console.error("   → Les réservations fonctionnent quand même ; seul l'email peut échouer.");
+      } else {
+        console.log("✅ Serveur email prêt à envoyer des messages");
+      }
+    });
+  });
+} else {
+  console.warn("⚠️ EMAIL_USER / EMAIL_PASS manquants — emails désactivés");
+}
 
 // Endpoint pour envoyer des emails
 router.post("/send-email", async (req, res) => {

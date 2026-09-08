@@ -1,6 +1,6 @@
 // controllers/propertyReservationController.js
 const { PropertyReservation, Property } = require("../models");
-const nodemailer = require("nodemailer");
+const { createMailTransporter } = require("../utils/mailer");
 
 /* =========================
    PHONE FORMAT
@@ -27,16 +27,7 @@ function isValidWhatsAppPhone(phone) {
 const BUSINESS_WHATSAPP_DISPLAY = "+213 660 43 48 72";
 const ADMIN_WHATSAPP_NUMBER = "213660434872"; // numéro qui reçoit les demandes
 
-const emailTransporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: { rejectUnauthorized: false }
-});
+const emailTransporter = createMailTransporter();
 
 /* =========================
    MESSAGE CLIENT
@@ -286,33 +277,10 @@ exports.createReservation = async (req, res) => {
     const hasWhatsApp = !!whatsappLink;
 
     let clientEmailSent = false;
-    if (!hasWhatsApp) {
-      try {
-        const emailResult = await sendReservationEmail(fullReservation, "en_attente");
-        clientEmailSent = !!emailResult.sent;
-      } catch (e) {
-        console.error("❌ Email client:", e.message);
-      }
-    }
-
     let adminEmailSent = false;
-    try {
-      const adminResult = await sendAdminNewReservationEmail(fullReservation, whatsappLink);
-      adminEmailSent = !!adminResult.sent;
-    } catch (adminErr) {
-      console.error("❌ Erreur notification admin:", adminErr);
-    }
 
-    console.log("✅ Réservation créée:", {
-      id: reservation.id,
-      prix_total: reservation.prix_total,
-      hasWhatsApp,
-      clientEmailSent,
-      adminEmailSent,
-      adminWhatsApp: ADMIN_WHATSAPP_NUMBER
-    });
-
-    return res.status(201).json({
+    // Répondre immédiatement (les emails SMTP ne doivent pas bloquer l'utilisateur)
+    res.status(201).json({
       success: true,
       data: fullReservation,
       whatsappLink,
@@ -324,6 +292,31 @@ exports.createReservation = async (req, res) => {
         ? "Réservation créée avec succès"
         : "Réservation créée — nous vous contacterons par email (WhatsApp de préférence)"
     });
+
+    setImmediate(async () => {
+      if (!hasWhatsApp) {
+        try {
+          const emailResult = await sendReservationEmail(fullReservation, "en_attente");
+          clientEmailSent = !!emailResult.sent;
+        } catch (e) {
+          console.error("Email client:", e.message);
+        }
+      }
+      try {
+        const adminResult = await sendAdminNewReservationEmail(fullReservation, whatsappLink);
+        adminEmailSent = !!adminResult.sent;
+      } catch (adminErr) {
+        console.error("Erreur notification admin:", adminErr);
+      }
+      console.log("Reservation notifications async:", {
+        id: reservation.id,
+        hasWhatsApp,
+        clientEmailSent,
+        adminEmailSent
+      });
+    });
+
+    return;
 
   } catch (error) {
     console.error("❌ Erreur createReservation:", error);

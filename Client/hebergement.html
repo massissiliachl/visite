@@ -2020,7 +2020,7 @@
         telephoneInput?.addEventListener('input', updateWhatsAppHint);
         telephoneInput?.addEventListener('blur', updateWhatsAppHint);
 
-        // Formulaire avec timeout court (5 secondes max)
+        // Formulaire — timeout large (emails éventuels côté serveur)
         const bookingForm = document.getElementById('bookingForm');
         if (bookingForm) {
             bookingForm.addEventListener('submit', async (e) => {
@@ -2086,9 +2086,8 @@
                 
                 showLoader();
                 
-                // Timeout de 5 secondes max
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                const timeoutId = setTimeout(() => controller.abort(), 25000);
                 
                 try {
                     const res = await fetch(`${API_BASE}/property-reservations`, {
@@ -2124,7 +2123,7 @@
                 } catch (err) {
                     console.error("Erreur:", err);
                     if (err.name === 'AbortError') {
-                        alert("⏰ Le serveur met trop de temps à répondre. Veuillez réessayer dans quelques instants ou nous contacter directement au +213 771 836 210.");
+                        alert("⏰ La connexion est lente. Si vous avez déjà envoyé la demande, vérifiez votre email ou contactez-nous au +213 771 836 210 — ne renvoyez pas tout de suite pour éviter un doublon.");
                     } else {
                         alert("❌ Une erreur est survenue. Veuillez réessayer ou nous contacter directement par téléphone.");
                     }
