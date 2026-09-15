@@ -99,7 +99,7 @@ const ACTIVITIES = [
     id: '1',
     name: 'Visite guidee',
     duration: '4 heures',
-    price: '6000 DA',
+    price: '7000 DA',
     image: 'https://www.bejaia-guidedepoche.com/images/CouvertureLieu/145/223062-pic-des-singes-bejaia.jpg',
     rating: 4.9,
     reviews: '234 avis',
