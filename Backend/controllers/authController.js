@@ -1,6 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
 const users = require("../models/users");
+const Property = require("../models/Property");
+const ReservationAdmin = require("../models/ReservationAdmin");
 
 const ONLINE_WINDOW_MS = 5 * 60 * 1000;
 
@@ -27,12 +30,21 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: "Cet email est déjà utilisé" });
     }
 
-    // Vérifier que le mot de passe est présent
-    if (!password) {
-      return res.status(400).json({ message: "Le mot de passe est requis" });
+    if (!nom || !prenom || !email) {
+      return res.status(400).json({ message: "Nom, prénom et email sont obligatoires" });
+    }
+
+    if (!password || String(password).length < 6) {
+      return res.status(400).json({ message: "Le mot de passe doit contenir au moins 6 caractères" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const requestedRole = role || "employeur";
+    const safeRole =
+      requestedRole === "admin" || requestedRole === "proprietaire"
+        ? "employeur"
+        : requestedRole;
 
     const user = await users.create({
       nom,
@@ -40,7 +52,7 @@ exports.register = async (req, res) => {
       email,
       password: hashedPassword,
       telephone: telephone || null,
-      role: role || 'employeur',
+      role: safeRole,
       isActive: true,
       isOnline: false,
       lastSeen: null
@@ -139,15 +151,34 @@ exports.getEmployeurs = async (req, res) => {
     const now = Date.now();
     const employeurs = await users.findAll({
       where: { role: 'employeur' },
-      attributes: { exclude: ['password'] }
+      attributes: { exclude: ['password'] },
+      order: [['createdAt', 'DESC']]
     });
+
+    const ids = employeurs.map((e) => e.id).filter(Boolean);
+    const counts = {};
+    const lasts = {};
+    if (ids.length) {
+      const rows = await ReservationAdmin.findAll({
+        where: { createdById: { [Op.in]: ids } },
+        attributes: ['createdById', 'createdAt', 'createdByName'],
+        order: [['createdAt', 'DESC']]
+      });
+      for (const row of rows) {
+        const id = row.createdById;
+        counts[id] = (counts[id] || 0) + 1;
+        if (!lasts[id]) lasts[id] = row.createdAt;
+      }
+    }
 
     const normalized = employeurs.map((emp) => {
       const lastSeenDate = emp.lastSeen ? new Date(emp.lastSeen) : null;
       const isOnlineByTime = lastSeenDate ? (now - lastSeenDate.getTime()) <= ONLINE_WINDOW_MS : false;
       return {
         ...emp.toJSON(),
-        isOnline: !!emp.isOnline && isOnlineByTime
+        isOnline: !!emp.isOnline && isOnlineByTime,
+        reservationsCount: counts[emp.id] || 0,
+        lastReservationAt: lasts[emp.id] || null
       };
     });
 
@@ -228,6 +259,11 @@ exports.deleteUser = async (req, res) => {
       return res.status(404).json({ message: "Utilisateur non trouvé" });
     }
     
+    await Property.update(
+      { ownerId: null },
+      { where: { ownerId: id } }
+    ).catch(() => {});
+
     await user.destroy();
     res.json({ message: "Utilisateur supprimé avec succès" });
   } catch (err) {

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Visit Bejaia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/activity-cards.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/activities.css">
+    <link rel="stylesheet" href="css/proprietaires.css">
+    <link rel="stylesheet" href="css/reservations.css">
+    <link rel="stylesheet" href="css/blocking.css">
+    <link rel="stylesheet" href="css/employeurs.css">
+    <link rel="stylesheet" href="css/guichet.css">
+    <link rel="stylesheet" href="css/stats.css">
+</head>
+<body class="admin-body">
+    <div class="admin-overlay" id="adminOverlay"></div>
+
+    <div class="admin-shell" id="adminShell">
+        <aside class="admin-sidebar" id="adminSidebar" aria-label="Navigation admin">
+            <div class="admin-sidebar__brand">
+                <div class="admin-sidebar__logo" aria-hidden="true">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <div class="admin-sidebar__titles">
+                    <h1>Visit Bejaia</h1>
+                    <p>Administration</p>
+                </div>
+            </div>
+
+            <nav class="admin-sidebar__nav" aria-label="Menu principal">
+                <div class="admin-nav__section">Général</div>
+                <button type="button" class="admin-nav__link is-active" data-admin-page="dashboard">
+                    <i class="fas fa-gauge-high"></i><span>Tableau de bord</span>
+                </button>
+
+                <div class="admin-nav__section">Réservations</div>
+                <button type="button" class="admin-nav__link" data-admin-page="reservations">
+                    <i class="fas fa-calendar-check"></i><span>Activités</span>
+                    <em class="admin-nav__badge" id="badgeResaAct" hidden></em>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="reservations-hebergement">
+                    <i class="fas fa-house"></i><span>Hébergements</span>
+                    <em class="admin-nav__badge" id="badgeResaHeb" hidden></em>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="guichet">
+                    <i class="fas fa-user-check"></i><span>Attributions</span>
+                </button>
+
+                <div class="admin-nav__section">Gestion</div>
+                <button type="button" class="admin-nav__link" data-admin-page="activites">
+                    <i class="fas fa-layer-group"></i><span>Activités du site</span>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="proprietaires">
+                    <i class="fas fa-key"></i><span>Propriétaires</span>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="properties">
+                    <i class="fas fa-building"></i><span>Hébergements</span>
+                    <em class="admin-nav__badge" id="badgePropsPending" hidden></em>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="bloquer">
+                    <i class="fas fa-ban"></i><span>Bloquer une date</span>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="bloquer-hebergement">
+                    <i class="fas fa-calendar-xmark"></i><span>Bloquer hébergement</span>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="stats">
+                    <i class="fas fa-chart-line"></i><span>Statistiques</span>
+                </button>
+                <button type="button" class="admin-nav__link" data-admin-page="employeurs">
+                    <i class="fas fa-users"></i><span>Employeurs</span>
+                </button>
+
+                <div class="admin-nav__section">Système</div>
+                <button type="button" class="admin-nav__link" data-admin-page="settings">
+                    <i class="fas fa-gear"></i><span>Paramètres</span>
+                </button>
+            </nav>
+
+            <div class="admin-sidebar__footer">
+                <button type="button" class="admin-sidebar__logout" id="adminLogoutBtn">
+                    <i class="fas fa-right-from-bracket"></i><span>Déconnexion</span>
+                </button>
+            </div>
+        </aside>
+
+        <div class="admin-main">
+            <header class="admin-header">
+                <div class="admin-header__left">
+                    <button type="button" class="admin-header__menu" id="adminMenuBtn" aria-label="Ouvrir le menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="admin-header__titles">
+                        <h2 id="adminPageTitle">Tableau de bord</h2>
+                        <p id="adminPageSubtitle">Vue d'ensemble de Visit Bejaia</p>
+                    </div>
+                </div>
+
+                <div class="admin-header__right">
+                    <button type="button" class="admin-header__btn" id="adminCollapseBtn" aria-label="Réduire la sidebar" title="Réduire / ouvrir">
+                        <i class="fas fa-columns"></i>
+                    </button>
+                    <div class="notif" id="adminNotif">
+                        <button type="button" class="admin-header__btn admin-header__btn--notify" id="adminNotifBtn" aria-label="Notifications" aria-expanded="false" aria-controls="adminNotifPanel">
+                            <i class="fas fa-bell"></i>
+                            <span class="notif__count" id="adminNotifCount" hidden>0</span>
+                        </button>
+                        <div class="notif__panel" id="adminNotifPanel" role="dialog" aria-label="Notifications" hidden>
+                            <div class="notif__head">
+                                <strong>Notifications</strong>
+                                <button type="button" class="notif__read" id="adminNotifRead">Tout marquer comme lu</button>
+                            </div>
+                            <div class="notif__list" id="adminNotifList"></div>
+                            <div class="notif__foot">
+                                <a href="#reservations" data-notif-go="reservations">Activités</a>
+                                <a href="#reservations-hebergement" data-notif-go="reservations-hebergement">Hébergements</a>
+                                <a href="#guichet" data-notif-go="guichet">Attributions</a>
+                                <a href="#properties" data-notif-go="properties">Biens à valider</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-header__user">
+                        <div class="admin-header__avatar">VB</div>
+                        <div class="admin-header__user-meta">
+                            <strong>Admin</strong>
+                            <span>admin@visitbejaia.com</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="admin-content" id="adminContentHost">
+                <!-- Dashboard -->
+                <section class="admin-content__panel" data-admin-panel="dashboard">
+                    <div class="admin-welcome">
+                        <div class="admin-welcome__body">
+                            <div class="admin-welcome__eyebrow" id="dashDate">
+                                <i class="fas fa-sun"></i> Aujourd’hui
+                            </div>
+                            <h3 id="dashGreeting">Bonjour, Admin</h3>
+                            <p id="dashSummary">Chargement de l’activité de Visit Bejaia…</p>
+                            <div class="admin-welcome__actions">
+                                <button type="button" class="admin-welcome__btn admin-welcome__btn--light" data-admin-page="activites">
+                                    <i class="fas fa-plus"></i> Nouvelle activité
+                                </button>
+                                <button type="button" class="admin-welcome__btn" data-admin-page="proprietaires">
+                                    <i class="fas fa-user-plus"></i> Propriétaire
+                                </button>
+                                <a class="admin-welcome__btn" href="../index.html" target="_blank" rel="noopener">
+                                    <i class="fas fa-arrow-up-right-from-square"></i> Voir le site
+                                </a>
+                            </div>
+                        </div>
+                        <div class="admin-welcome__ring" aria-hidden="true">
+                            <svg viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="50" class="ring-bg"/>
+                                <circle cx="60" cy="60" r="50" class="ring-fg" id="dashRing"/>
+                            </svg>
+                            <div class="admin-welcome__ring-label">
+                                <strong id="dashRingValue">—</strong>
+                                <span>acceptées</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-stats">
+                        <article class="admin-stat admin-stat--coral">
+                            <div class="admin-stat__top">
+                                <div class="admin-stat__icon admin-stat__icon--coral"><i class="fas fa-hourglass-half"></i></div>
+                                <span class="admin-stat__chip" id="statPendingChip">—</span>
+                            </div>
+                            <div class="admin-stat__label">En attente</div>
+                            <div class="admin-stat__value" id="statPending">—</div>
+                            <div class="admin-stat__hint">Réservations à traiter</div>
+                        </article>
+                        <article class="admin-stat admin-stat--sun">
+                            <div class="admin-stat__top">
+                                <div class="admin-stat__icon admin-stat__icon--sun"><i class="fas fa-coins"></i></div>
+                                <span class="admin-stat__chip" id="statRevenueChip">—</span>
+                            </div>
+                            <div class="admin-stat__label">Chiffre d’affaires</div>
+                            <div class="admin-stat__value" id="statRevenue">—</div>
+                            <div class="admin-stat__hint">Réservations acceptées (DA)</div>
+                        </article>
+                        <article class="admin-stat admin-stat--sea">
+                            <div class="admin-stat__top">
+                                <div class="admin-stat__icon admin-stat__icon--sea"><i class="fas fa-house"></i></div>
+                                <span class="admin-stat__chip" id="statPropsChip">—</span>
+                            </div>
+                            <div class="admin-stat__label">Hébergements</div>
+                            <div class="admin-stat__value" id="statProps">—</div>
+                            <div class="admin-stat__hint" id="statPropsHint">Biens sur le site</div>
+                        </article>
+                        <article class="admin-stat admin-stat--teal">
+                            <div class="admin-stat__top">
+                                <div class="admin-stat__icon admin-stat__icon--teal"><i class="fas fa-layer-group"></i></div>
+                                <span class="admin-stat__chip" id="statActsChip">—</span>
+                            </div>
+                            <div class="admin-stat__label">Activités</div>
+                            <div class="admin-stat__value" id="statActs">—</div>
+                            <div class="admin-stat__hint" id="statActsHint">Publiées sur le site</div>
+                        </article>
+                    </div>
+
+                    <div class="admin-grid">
+                        <div class="admin-surface">
+                            <div class="admin-surface__head">
+                                <h4>Réservations</h4>
+                                <div class="dash-legend">
+                                    <span><i class="dot dot--sea"></i> Activités</span>
+                                    <span><i class="dot dot--coral"></i> Hébergements</span>
+                                </div>
+                            </div>
+                            <div class="dash-chart" id="dashChart">
+                                <div class="admin-empty"><i class="fas fa-chart-column"></i><strong>Chargement…</strong></div>
+                            </div>
+                        </div>
+                        <div class="admin-surface">
+                            <div class="admin-surface__head">
+                                <h4>Statuts</h4>
+                                <span>Toutes réservations</span>
+                            </div>
+                            <div class="dash-status" id="dashStatus"></div>
+                            <div class="dash-shortcuts">
+                                <button type="button" data-admin-page="reservations"><i class="fas fa-calendar-check"></i><span>Réservations</span></button>
+                                <button type="button" data-admin-page="guichet"><i class="fas fa-user-check"></i><span>Attributions</span></button>
+                                <button type="button" data-admin-page="employeurs"><i class="fas fa-users"></i><span>Employeurs</span></button>
+                                <button type="button" data-admin-page="properties"><i class="fas fa-building-circle-check"></i><span>Valider biens</span></button>
+                                <button type="button" data-admin-page="bloquer"><i class="fas fa-ban"></i><span>Bloquer date</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-grid">
+                        <div class="admin-surface dash-recent">
+                            <div class="admin-surface__head">
+                                <h4>Dernières réservations</h4>
+                                <span id="dashRecentCount">—</span>
+                            </div>
+                            <div id="dashRecent">
+                                <div class="admin-empty"><i class="fas fa-inbox"></i><strong>Chargement…</strong></div>
+                            </div>
+                        </div>
+                        <div class="admin-surface">
+                            <div class="admin-surface__head">
+                                <h4>Attributions guichet</h4>
+                                <span>Qui a pris</span>
+                            </div>
+                            <div id="dashGuichet">
+                                <div class="admin-empty"><i class="fas fa-user-check"></i><strong>Chargement…</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="activites" hidden>
+                    <div class="act-toolbar">
+                        <div class="act-toolbar__left">
+                            <div class="act-search">
+                                <i class="fas fa-search" style="color:var(--muted)"></i>
+                                <input type="search" id="actSearch" placeholder="Rechercher…">
+                            </div>
+                            <select class="act-select" id="actFilter" aria-label="Filtrer">
+                                <option value="all">Toutes</option>
+                                <option value="published">Publiées</option>
+                                <option value="draft">Brouillons</option>
+                                <option value="mer">Mer</option>
+                                <option value="terre">Terre</option>
+                                <option value="culture">Culture</option>
+                            </select>
+                        </div>
+                        <button type="button" class="act-btn act-btn--primary" id="actBtnNew">
+                            <i class="fas fa-plus"></i> Nouvelle activité
+                        </button>
+                    </div>
+                    <p class="act-status" id="actStatus"></p>
+
+                    <div class="act-layout">
+                        <div class="act-list" id="actList"></div>
+
+                        <aside class="act-editor">
+                            <div class="act-editor__head">
+                                <h3 id="actEditorTitle">Nouvelle activité</h3>
+                                <span>Aperçu = carte site</span>
+                            </div>
+
+                            <form class="act-form" id="actForm" autocomplete="off">
+                                <div class="act-form__row">
+                                    <label>Slug (id)
+                                        <input name="slug" required placeholder="ex: kayak">
+                                    </label>
+                                    <label>Nom
+                                        <input name="name" required placeholder="ex: Kayak">
+                                    </label>
+                                </div>
+                                <div class="act-form__row">
+                                    <label>Prix (nombre ou texte)
+                                        <input name="basePrice" required placeholder="7000 ou à partir de 15000">
+                                    </label>
+                                    <label>Catégorie
+                                        <select name="category">
+                                            <option value="mer">Mer</option>
+                                            <option value="terre">Terre</option>
+                                            <option value="culture">Culture</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="act-form__row">
+                                    <label>Icône Font Awesome
+                                        <input name="icon" placeholder="fa-water">
+                                    </label>
+                                    <label>Ordre d'affichage
+                                        <input name="sortOrder" type="number" value="0">
+                                    </label>
+                                </div>
+                                <label>Image (URL ou chemin assets/…)
+                                    <input name="image" placeholder="assets/images/…">
+                                </label>
+                                <label>Description
+                                    <textarea name="desc" required></textarea>
+                                </label>
+                                <label>Notes (une par ligne)
+                                    <textarea name="activityNote" placeholder="Note 1&#10;Note 2"></textarea>
+                                </label>
+                                <label>Options (label|prix, une par ligne)
+                                    <textarea name="options" placeholder="30 min|3000&#10;45 min|4000"></textarea>
+                                </label>
+                                <div class="act-form__row">
+                                    <label class="act-form__check">
+                                        <input type="checkbox" name="hasChild"> Tarif enfant
+                                    </label>
+                                    <label>Prix enfant
+                                        <input name="childPrice" type="number" value="0">
+                                    </label>
+                                </div>
+                                <label class="act-form__check">
+                                    <input type="checkbox" name="published"> Publiée sur le site
+                                </label>
+
+                                <div class="act-form__actions">
+                                    <button type="button" class="act-btn act-btn--primary" id="actBtnSave">
+                                        <i class="fas fa-save"></i> Enregistrer
+                                    </button>
+                                    <button type="button" class="act-btn act-btn--primary" id="actBtnPublish">
+                                        <i class="fas fa-globe"></i> Enregistrer & publier
+                                    </button>
+                                    <button type="button" class="act-btn act-btn--ghost" id="actBtnReset">
+                                        Réinitialiser
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="act-preview-wrap">
+                                <h4>Aperçu carte site</h4>
+                                <div class="act-preview" id="actPreview"></div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="reservations" hidden>
+                    <div class="resa-module" data-resa-kind="act"></div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="reservations-hebergement" hidden>
+                    <div class="resa-module" data-resa-kind="heb"></div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="properties" hidden>
+                    <div class="resa-toolbar">
+                        <div class="resa-tabs" id="propModTabs" role="tablist">
+                            <button type="button" data-f="all" class="is-active">Tous <em>0</em></button>
+                            <button type="button" data-f="pending">À valider <em>0</em></button>
+                            <button type="button" data-f="approved">Validés <em>0</em></button>
+                            <button type="button" data-f="rejected">Refusés <em>0</em></button>
+                        </div>
+                        <div class="resa-toolbar__right">
+                            <label class="resa-search"><i class="fas fa-search"></i><input type="search" id="propModSearch" placeholder="Titre, lieu, propriétaire…"></label>
+                            <button type="button" class="resa-refresh" id="propModRefresh" title="Actualiser"><i class="fas fa-rotate"></i></button>
+                        </div>
+                    </div>
+                    <div class="prop-types" id="propModTypes">
+                        <button type="button" data-t="all" class="is-active">Tous types</button>
+                        <button type="button" data-t="appartement"><i class="fas fa-building"></i> Appartements</button>
+                        <button type="button" data-t="villa"><i class="fas fa-house-chimney"></i> Villas</button>
+                        <button type="button" data-t="chalet"><i class="fas fa-tree"></i> Chalets</button>
+                        <button type="button" data-t="other"><i class="fas fa-hotel"></i> Autres</button>
+                    </div>
+                    <p class="resa-status" id="propModStatus" aria-live="polite"></p>
+                    <div class="prop-grid" id="propModList"></div>
+
+                    <section class="admin-surface" style="margin-top:1.15rem">
+                        <div class="admin-surface__head">
+                            <h4>Demandes reçues par propriétaire</h4>
+                            <span>Vue d’ensemble</span>
+                        </div>
+                        <div id="propModOwnersResa">
+                            <div class="admin-empty">
+                                <i class="fas fa-inbox"></i>
+                                <strong>Chargement…</strong>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="bloquer" hidden>
+                    <div class="block-module" data-block-kind="activity"></div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="bloquer-hebergement" hidden>
+                    <div class="block-module" data-block-kind="property"></div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="stats" hidden>
+                    <div id="statsRoot">
+                        <div class="admin-empty"><i class="fas fa-chart-line"></i><strong>Chargement…</strong></div>
+                    </div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="proprietaires" hidden>
+                    <div class="act-toolbar">
+                        <div class="act-toolbar__left">
+                            <div class="act-search">
+                                <i class="fas fa-search" style="color:var(--muted)"></i>
+                                <input type="search" id="ownSearch" placeholder="Nom, email…">
+                            </div>
+                            <button type="button" class="act-btn act-btn--ghost" id="ownBtnSync" title="Importer appartements, villas et chalets du site">
+                                <i class="fas fa-rotate"></i> Sync biens du site
+                            </button>
+                        </div>
+                        <button type="button" class="act-btn act-btn--primary" id="ownBtnNew">
+                            <i class="fas fa-user-plus"></i> Nouveau propriétaire
+                        </button>
+                    </div>
+                    <p class="act-status" id="ownStatus"></p>
+                    <a class="own-link-portal" href="proprietaire.html" target="_blank" rel="noopener">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                        Ouvrir l’espace propriétaire (login)
+                    </a>
+
+                    <div class="act-layout" style="margin-top:1rem">
+                        <div class="own-main">
+                            <div class="act-list" id="ownList"></div>
+
+                            <section class="admin-surface own-resa-panel" id="ownResaPanel" hidden>
+                                <div class="admin-surface__head">
+                                    <h4 id="ownResaTitle">Demandes de réservation</h4>
+                                    <span id="ownResaCount">—</span>
+                                </div>
+                                <div class="resa-tabs own-resa-tabs">
+                                    <button type="button" class="is-resa-filter is-active" data-status="all">Toutes <em data-c="all">0</em></button>
+                                    <button type="button" class="is-resa-filter" data-status="en_attente">En attente <em data-c="en_attente">0</em></button>
+                                    <button type="button" class="is-resa-filter" data-status="acceptee">Acceptées <em data-c="acceptee">0</em></button>
+                                    <button type="button" class="is-resa-filter" data-status="refusee">Refusées <em data-c="refusee">0</em></button>
+                                </div>
+                                <div id="ownResaList">
+                                    <div class="admin-empty">
+                                        <i class="fas fa-inbox"></i>
+                                        <strong>Sélectionnez un propriétaire</strong>
+                                        <p>Ses demandes de réservation s’afficheront ici.</p>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <aside class="act-editor">
+                            <div class="act-editor__head">
+                                <h3 id="ownEditorTitle">Nouveau propriétaire</h3>
+                                <span>Compte + biens</span>
+                            </div>
+                            <form class="act-form" id="ownForm" autocomplete="off">
+                                <div class="act-form__row">
+                                    <label>Prénom
+                                        <input name="prenom" required>
+                                    </label>
+                                    <label>Nom
+                                        <input name="nom" required>
+                                    </label>
+                                </div>
+                                <label>Email
+                                    <input name="email" type="email" required>
+                                </label>
+                                <label>Téléphone
+                                    <input name="telephone" type="tel">
+                                </label>
+                                <label>Mot de passe
+                                    <input name="password" type="text" required>
+                                </label>
+                                <label>Hébergements du site (appartements, villas, chalets)
+                                    <div class="own-props-filter">
+                                        <button type="button" class="act-btn act-btn--ghost act-btn--sm is-prop-filter active" data-type="all">Tous</button>
+                                        <button type="button" class="act-btn act-btn--ghost act-btn--sm is-prop-filter" data-type="appartement">Appartements</button>
+                                        <button type="button" class="act-btn act-btn--ghost act-btn--sm is-prop-filter" data-type="villa">Villas</button>
+                                        <button type="button" class="act-btn act-btn--ghost act-btn--sm is-prop-filter" data-type="chalet">Chalets</button>
+                                    </div>
+                                    <div class="own-props-box" id="ownPropsBox"></div>
+                                </label>
+                                <div class="act-form__actions">
+                                    <button type="button" class="act-btn act-btn--primary" id="ownBtnSave">
+                                        <i class="fas fa-save"></i> Enregistrer
+                                    </button>
+                                </div>
+                            </form>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="guichet" hidden>
+                    <div class="gui-intro">
+                        <h3><i class="fas fa-user-check"></i> Qui a pris chaque réservation</h3>
+                        <p>Suivez les prises de l’espace réservations : filtrez par employeur, réattribuez ou supprimez.</p>
+                    </div>
+                    <div class="gui-stats" id="guiStats"></div>
+                    <div class="resa-toolbar">
+                        <div class="resa-tabs" id="guiStaffTabs" role="tablist">
+                            <button type="button" data-staff="all" class="is-active">Tous <em>0</em></button>
+                            <button type="button" data-staff="none">Sans attribution <em>0</em></button>
+                        </div>
+                        <div class="resa-toolbar__right">
+                            <input type="date" class="gui-date" id="guiDate" title="Filtrer par date">
+                            <label class="resa-search"><i class="fas fa-search"></i><input type="search" id="guiSearch" placeholder="Client, activité, employeur…"></label>
+                            <a class="resa-btn" href="../adminreservation.html" target="_blank" rel="noopener" title="Ouvrir l’espace réservations">
+                                <i class="fas fa-arrow-up-right-from-square"></i>
+                            </a>
+                            <button type="button" class="resa-refresh" id="guiRefresh" title="Actualiser"><i class="fas fa-rotate"></i></button>
+                        </div>
+                    </div>
+                    <p class="own-hint"><i class="fas fa-user-tie"></i> Quand un employeur crée une réservation, son nom est enregistré automatiquement. Vous pouvez le changer ici.</p>
+                    <p class="resa-status" id="guiStatus" aria-live="polite"></p>
+                    <div class="gui-list" id="guiList"></div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="employeurs" hidden>
+                    <div class="emp-layout">
+                        <div class="emp-main">
+                            <div class="act-toolbar">
+                                <div class="act-toolbar__left">
+                                    <div class="act-search">
+                                        <i class="fas fa-search" style="color:var(--muted)"></i>
+                                        <input type="search" id="empSearch" placeholder="Rechercher un employeur…">
+                                    </div>
+                                </div>
+                                <div class="act-toolbar__right">
+                                    <a class="resa-btn" href="../adminreservation.html" target="_blank" rel="noopener">
+                                        <i class="fas fa-arrow-up-right-from-square"></i> Page réservations
+                                    </a>
+                                    <button type="button" class="resa-refresh" id="empRefresh" title="Actualiser"><i class="fas fa-rotate"></i></button>
+                                </div>
+                            </div>
+                            <p class="own-hint"><i class="fas fa-key"></i> Créez un email + mot de passe pour chaque employeur. Ils se connectent sur la page réservations ; chaque réservation enregistre qui l’a prise et quand.</p>
+                            <div class="act-list" id="empList"></div>
+                        </div>
+                        <aside class="act-editor admin-surface">
+                            <div class="act-editor__head">
+                                <h3 id="empEditorTitle">Nouvel employeur</h3>
+                                <button type="button" class="resa-btn" id="empBtnNew"><i class="fas fa-plus"></i> Nouveau</button>
+                            </div>
+                            <form id="empForm" class="act-form" autocomplete="off">
+                                <label class="blk-field">
+                                    <span>Prénom</span>
+                                    <input type="text" name="prenom" required placeholder="Karim">
+                                </label>
+                                <label class="blk-field">
+                                    <span>Nom</span>
+                                    <input type="text" name="nom" required placeholder="Benali">
+                                </label>
+                                <label class="blk-field">
+                                    <span>Email (identifiant de connexion)</span>
+                                    <input type="email" name="email" required placeholder="karim@visitbejaia.com">
+                                </label>
+                                <label class="blk-field">
+                                    <span>Téléphone</span>
+                                    <input type="tel" name="telephone" placeholder="05XX XX XX XX">
+                                </label>
+                                <label class="blk-field" id="empPasswordField">
+                                    <span>Mot de passe</span>
+                                    <div class="emp-pass-row">
+                                        <input type="text" name="password" minlength="6" placeholder="min. 6 caractères" autocomplete="new-password">
+                                        <button type="button" class="resa-btn" id="empGenPass" title="Générer"><i class="fas fa-wand-magic-sparkles"></i></button>
+                                    </div>
+                                </label>
+                                <label class="blk-field" id="empResetField" hidden>
+                                    <span>Nouveau mot de passe</span>
+                                    <div class="emp-pass-row">
+                                        <input type="text" name="newPassword" minlength="6" placeholder="Laisser vide pour ne pas changer" autocomplete="new-password">
+                                        <button type="button" class="resa-btn" id="empGenReset" title="Générer"><i class="fas fa-wand-magic-sparkles"></i></button>
+                                    </div>
+                                </label>
+                                <p class="act-status" id="empStatus"></p>
+                                <div class="act-form__actions">
+                                    <button type="submit" class="blk-submit" id="empBtnSave"><i class="fas fa-floppy-disk"></i><span>Créer le compte</span></button>
+                                </div>
+                            </form>
+                            <div class="emp-creds" id="empCreds" hidden>
+                                <strong><i class="fas fa-copy"></i> Identifiants à transmettre</strong>
+                                <p>Page : <code>adminreservation.html</code></p>
+                                <p>Email : <code id="empCredEmail">—</code></p>
+                                <p>Mot de passe : <code id="empCredPass">—</code></p>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+
+                <section class="admin-content__panel" data-admin-panel="settings" hidden>
+                    <div class="admin-placeholder">
+                        <div class="admin-placeholder__icon"><i class="fas fa-gear"></i></div>
+                        <h3>Paramètres</h3>
+                        <p>Module à brancher — configuration admin.</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="../js/activity-cards.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/admin-auth.js"></script>
+    <script src="js/activities.js"></script>
+    <script src="js/proprietaires.js"></script>
+    <script src="js/properties-moderation.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/reservations.js"></script>
+    <script src="js/blocking.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/employeurs.js"></script>
+    <script src="js/guichet.js"></script>
+    <script src="js/stats.js"></script>
+</body>
+</html>

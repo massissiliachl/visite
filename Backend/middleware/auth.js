@@ -1,25 +1,30 @@
 const jwt = require("jsonwebtoken");
 
+const HARDCODED_ADMIN_EMAIL = "admin@visitbejaia.com";
+
 const auth = (req, res, next) => {
     const authHeader = req.headers.authorization;
-    
-    console.log("🔐 Auth header reçu:", authHeader ? "Oui" : "Non");
-    
+
     if (!authHeader) {
         return res.status(401).json({ error: "Token manquant" });
     }
-    
-    // Extrait le token (supporte "Bearer xxx" ou "xxx")
+
     let token = authHeader;
     if (authHeader.startsWith("Bearer ")) {
         token = authHeader.substring(7);
     }
-    
-    console.log("🔑 Token extrait:", token ? token.substring(0, 20) + "..." : "Non");
-    
+
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log("✅ Token valide pour:", decoded.email);
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_SECRET || "SECRET_KEY"
+        );
+
+        // JWT issu par /api/admin/login (email only) → rôle admin
+        if (!decoded.role && decoded.email === HARDCODED_ADMIN_EMAIL) {
+            decoded.role = "admin";
+        }
+
         req.user = decoded;
         req.admin = decoded;
         next();

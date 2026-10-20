@@ -20,6 +20,16 @@ async function ensureReservationAdminColumns(sequelize) {
     `
     ALTER TABLE public."ReservationAdmins"
     ADD COLUMN IF NOT EXISTS note TEXT;
+    `,
+
+    `
+    ALTER TABLE public."ReservationAdmins"
+    ADD COLUMN IF NOT EXISTS created_by_id INTEGER;
+    `,
+
+    `
+    ALTER TABLE public."ReservationAdmins"
+    ADD COLUMN IF NOT EXISTS created_by_name VARCHAR(255);
     `
 
   ];

@@ -1,5 +1,7 @@
 // controllers/propertyReservationController.js
+const { Op } = require("sequelize");
 const { PropertyReservation, Property } = require("../models");
+const Blocked = require("../models/Blocked");
 const { createMailTransporter } = require("../utils/mailer");
 
 /* =========================
@@ -200,6 +202,13 @@ exports.createReservation = async (req, res) => {
       telephone
     } = req.body;
 
+    if (propertyId == null || propertyId === "" || !date_arrivee || !date_depart || !nom || !telephone) {
+      return res.status(400).json({
+        success: false,
+        message: "Champs obligatoires manquants (hébergement, dates, nom, téléphone)"
+      });
+    }
+
     console.log("🔍 Recherche propriété avec ID:", propertyId);
 
     // RECHERCHE CORRIGÉE - propertyId est une string
@@ -243,6 +252,22 @@ exports.createReservation = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Minimum 3 nuits de réservation"
+      });
+    }
+
+    const blockedInStay = await Blocked.findAll({
+      where: {
+        item_type: "property",
+        item_id: String(property.id),
+        date: { [Op.gte]: date_arrivee, [Op.lt]: date_depart }
+      },
+      order: [["date", "ASC"]],
+      attributes: ["date"]
+    });
+    if (blockedInStay.length) {
+      return res.status(400).json({
+        success: false,
+        message: `Hébergement indisponible le ${blockedInStay.map((b) => b.date).join(", ")}. Veuillez choisir d'autres dates.`
       });
     }
 

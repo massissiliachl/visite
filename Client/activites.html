@@ -622,6 +622,7 @@
     <div id="loading" class="loading-overlay"><div class="spinner"></div></div>
 
     <script src="js/activity-cards.js"></script>
+    <script src="js/activities-loader.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/whatsapp-float.js"></script>
     <script src="js/page-motion.js"></script>
@@ -677,7 +678,8 @@
             if (window.ActivityCards) ActivityCards.initFilterMotion();
         })();
 
-        const activitiesCatalog = [
+        let activitiesCatalog = [
+            { id: "bateau", activityNote: ["Alcool interdit sur le bateau", "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", "Offre découverte : 1h30/2h - Circuit classique", "Offre évasion : 3h/3h30 - Circuit classique + grottes de Gouraya + Tamelaht + snorkelling + brunch", "Offre détente : 4h30/5h - Circuit complet + bouée tractée"], name: "Excursion Bateau", basePrice: "à partir de 15000", category: "mer", icon: "fa-ship", image: "assets/images/i.jpeg", desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", hasChild: false },
             { id: "visite", activityNote: ["Le prix englobe que la visite guidée et non le transport.", "Prix dégressif à partir de la deuxième personne."], name: "Visite Guidée", basePrice: 7000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Partez à la découverte de Bejaia historique et nature à faire les plus beaux spots de bejaia.", hasChild: false },
             { id: "quad", activityNote: ["Baskets et lunettes recommandées", "Casque quad fourni", "1 adulte sur 1 quad et conduite à partir de 16 ans"], name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", image: "assets/images/quad.jpeg", desc: "Randonnée quad sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle.", hasChild: false, childPrice: 0 },
             { id: "parapente", activityNote: ["Moniteur diplômé et reconnu.", "les vols se font en total sécurité."], name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", desc: "Envoyez-vous en l'air avec un baptême en parapente.", hasChild: false },
@@ -699,8 +701,7 @@
   desc: "Découvrez l'île de Nizla et ses paysages à couper le souffle en kayak avec un guide confirmé. Une aventure de 2h30 à 3h00 sur une eau turquoise, idéale pour explorer les plus beaux coins de la côte de Béjaïa.",
   hasChild: false
 },           { id: "bouee", activityNote: ["Réservation confirmée avec paiement à l'avance.", "Gilet fourni et obligatoire."], name: "Bouée Tractée", basePrice: 4000, category: "mer", icon: "fa-water", image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", desc: "Activité pleine de sensations et d'adrénaline.", hasChild: false },
-            { id: "jetski", activityNote: ["Gilet de sauvetage fourni, briefing sécurité et encadrement moniteur inclus.", "Carburant inclus.", "Pièce d'identité obligatoire en garantie.", "Activité interdite à toute personne alcoolisée."], name: "Jet Ski", basePrice: 12000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jetski.jpeg", desc: "Yamaha VX 1100 ou circuit découverte Île & Grotte avec baignade.", hasChild: false },
-            { id: "bateau", activityNote: ["Alcool interdit sur le bateau", "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", "Offre découverte : 1h30/2h - Circuit classique", "Offre évasion : 3h/3h30 - Circuit classique + grottes de Gouraya + Tamelaht + snorkelling + brunch", "Offre détente : 4h30/5h - Circuit complet + bouée tractée"], name: "Excursion Bateau", basePrice: "à partir de 15000", category: "mer", icon: "fa-ship", image: "assets/images/i.jpeg", desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", hasChild: false }
+            { id: "jetski", activityNote: ["Gilet de sauvetage fourni, briefing sécurité et encadrement moniteur inclus.", "Carburant inclus.", "Pièce d'identité obligatoire en garantie.", "Activité interdite à toute personne alcoolisée."], name: "Jet Ski", basePrice: 12000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jetski.jpeg", desc: "Yamaha VX 1100 ou circuit découverte Île & Grotte avec baignade.", hasChild: false }
             ];
 
         let currentAct = { id: '', name: '', pricePerAdult: 0, hasChild: false, childPrice: 0 };
@@ -1249,29 +1250,56 @@
         const fermeBanner = document.getElementById("fermeFocusBanner");
         const fermeClear = document.getElementById("fermeFocusClear");
 
-        if (focus === "ferme") {
-            if (fermeBanner) {
-                fermeBanner.hidden = false;
-                fermeBanner.querySelector("strong").textContent = "Ferme Djerba";
-                fermeBanner.querySelector("p").textContent = "Activités proposées sur place : randonnée quad et randonnée à cheval.";
+        let bookOpened = false;
+        function applyInitialView(opts = {}) {
+            const openBook = opts.openBook !== false;
+            if (focus === "ferme") {
+                if (fermeBanner) {
+                    fermeBanner.hidden = false;
+                    fermeBanner.querySelector("strong").textContent = "Ferme Djerba";
+                    fermeBanner.querySelector("p").textContent = "Activités proposées sur place : randonnée quad et randonnée à cheval.";
+                }
+                document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+                renderCards("ferme", true);
+                const sheet = document.getElementById("filterSection") || document.querySelector(".activities-sheet");
+                if (sheet) setTimeout(() => sheet.scrollIntoView({ behavior: "smooth", block: "start" }), 200);
+            } else if (focus === "port") {
+                if (fermeBanner) {
+                    fermeBanner.hidden = false;
+                    fermeBanner.querySelector("strong").textContent = "Port Tala Ilef";
+                    fermeBanner.querySelector("p").textContent = "Activités proposées : bateau, jet ski et kayak.";
+                }
+                document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
+                renderCards("port", true);
+                const sheet = document.getElementById("filterSection") || document.querySelector(".activities-sheet");
+                if (sheet) setTimeout(() => sheet.scrollIntoView({ behavior: "smooth", block: "start" }), 200);
+            } else {
+                renderCards("all", true);
             }
-            document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
-            renderCards("ferme", true);
-            const sheet = document.getElementById("filterSection") || document.querySelector(".activities-sheet");
-            if (sheet) setTimeout(() => sheet.scrollIntoView({ behavior: "smooth", block: "start" }), 200);
-        } else if (focus === "port") {
-            if (fermeBanner) {
-                fermeBanner.hidden = false;
-                fermeBanner.querySelector("strong").textContent = "Port Tala Ilef";
-                fermeBanner.querySelector("p").textContent = "Activités proposées : bateau, jet ski et kayak.";
+
+            if (openBook && book && !bookOpened) {
+                const act = activitiesCatalog.find((a) => a.id === book);
+                if (act) {
+                    bookOpened = true;
+                    setTimeout(() => {
+                        const price = typeof act.basePrice === "number"
+                            ? act.basePrice
+                            : parseInt(String(act.basePrice).replace(/[^0-9]/g, ""), 10) || 0;
+                        openModal(act.id, act.name, price, !!act.hasChild, Number(act.childPrice) || 0);
+                    }, 450);
+                }
             }
-            document.querySelectorAll(".filter-btn").forEach((b) => b.classList.remove("active"));
-            renderCards("port", true);
-            const sheet = document.getElementById("filterSection") || document.querySelector(".activities-sheet");
-            if (sheet) setTimeout(() => sheet.scrollIntoView({ behavior: "smooth", block: "start" }), 200);
-        } else {
-            renderCards("all", true);
         }
+
+        applyInitialView();
+
+        (async function bootActivitiesFromApi() {
+            const fallback = activitiesCatalog.slice();
+            const next = await window.loadPublishedActivities(fallback, API_BASE);
+            if (!next || !next.length) return;
+            activitiesCatalog = next;
+            applyInitialView({ openBook: !bookOpened });
+        })();
 
         if (fermeClear) {
             fermeClear.addEventListener("click", () => {
@@ -1285,16 +1313,6 @@
                 url.searchParams.delete("book");
                 window.history.replaceState({}, "", url.pathname + url.search + url.hash);
             });
-        }
-
-        if (book === "quad" || book === "cheval" || book === "bateau" || book === "jetski" || book === "Kayak") {
-            const act = activitiesCatalog.find((a) => a.id === book);
-            if (act) {
-                setTimeout(() => {
-                    const hasChild = book === "quad";
-                    openModal(act.id, act.name, typeof act.basePrice === "number" ? act.basePrice : parseInt(String(act.basePrice).replace(/[^0-9]/g, ""), 10) || 0, hasChild, hasChild ? 1000 : 0);
-                }, 450);
-            }
         }
     </script>
 </body>

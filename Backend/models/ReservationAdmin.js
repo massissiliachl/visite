@@ -73,6 +73,18 @@ const ReservationAdmin = sequelize.define("ReservationAdmin", {
     type: DataTypes.TEXT,
     field: "note",
     allowNull: true
+  },
+
+  createdById: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    field: "created_by_id"
+  },
+
+  createdByName: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: "created_by_name"
   }
 }, {
   tableName: "ReservationAdmins",

@@ -67,6 +67,17 @@ const Property = sequelize.define("Property", {
     allowNull: false,
   },
 
+  ownerId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+
+  approvalStatus: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "approved",
+  },
+
   ambiance: {
     type: DataTypes.TEXT,
     defaultValue: '[]',

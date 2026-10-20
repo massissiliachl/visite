@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const blockedController = require('../controllers/blockedController');
 
+router.get('/', blockedController.listBlocked);
+router.delete('/:id', blockedController.deleteBlocked);
+
 // Routes pour les activités
 router.get('/activity/:nom_item', blockedController.getBlockedDates);
 router.post('/block', blockedController.blockDate);

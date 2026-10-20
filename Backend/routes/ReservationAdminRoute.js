@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 
 const {
     createReservationAdmin,
@@ -9,25 +10,20 @@ const {
     deleteReservationAdmin
 } = require("../controllers/ReservationAdminController");
 
+const staffOnly = (req, res, next) => {
+    const role = req.user?.role;
+    if (role !== "admin" && role !== "employeur") {
+        return res.status(403).json({ message: "Accès réservé aux employeurs et administrateurs" });
+    }
+    next();
+};
 
-// POST
+router.use(auth, staffOnly);
+
 router.post("/", createReservationAdmin);
-
-
-// GET ALL
 router.get("/", getReservationsAdmin);
-
-
-// GET ONE
 router.get("/:id", getReservationAdminById);
-
-
-// UPDATE
 router.put("/:id", updateReservationAdmin);
-
-
-// DELETE
 router.delete("/:id", deleteReservationAdmin);
-
 
 module.exports = router;

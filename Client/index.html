@@ -23,7 +23,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- ================= OPEN GRAPH (Facebook / WhatsApp) ================= -->
     <meta property="og:title" content="Visiter Béjaïa - Éclat Méditerranéen">
@@ -3031,6 +3031,7 @@ body {
             .about-container { flex-direction: column; }
         }
     </style>
+    <link rel="stylesheet" href="css/home-modern.css">
 </head>
 
 <body>
@@ -3041,13 +3042,25 @@ body {
     <!-- Hero Section -->
     <section id="accueil" class="hero">
         <div class="particles" id="particles"></div>
+        <div class="hero-blob hero-blob--a" aria-hidden="true"></div>
+        <div class="hero-blob hero-blob--b" aria-hidden="true"></div>
         <div class="hero-content">
-            <h1 class="hero-title">Découvrez Béjaïa autrement</h1>
+            <span class="hero-badge"><span class="hero-badge-dot" aria-hidden="true"></span>La perle de la Méditerranée</span>
+            <h1 class="hero-title">Découvrez Béjaïa <span class="hero-title-accent">autrement</span></h1>
             <p class="hero-description">
                 Entre mer et montagne, vivez des expériences uniques au cœur de la perle de la Kabylie.
             </p>
-            <a href="#activites" class="hero-cta">Explorer nos expériences <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            <div class="hero-actions">
+                <a href="#activites" class="hero-cta hero-cta--primary">Explorer nos expériences <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                <a href="hebergement.html" class="hero-cta hero-cta--ghost"><i class="fas fa-bed" aria-hidden="true"></i> Hébergements</a>
+            </div>
+            <ul class="hero-stats" aria-label="Chiffres clés">
+                <li><strong>5000+</strong><span>Visiteurs</span></li>
+                <li><strong>4.8<i class="fas fa-star" aria-hidden="true"></i></strong><span>Note moyenne</span></li>
+                <li><strong>15+</strong><span>Activités</span></li>
+            </ul>
         </div>
+        <a href="#activites" class="hero-scroll" aria-label="Défiler vers les activités"><span></span></a>
 
         <div class="hero-search-wrap">
             <form class="hero-search" id="heroSearchForm" autocomplete="off">
@@ -3107,6 +3120,27 @@ body {
             </form>
         </div>
     </section>
+
+    <div class="hm-marquee" aria-hidden="true">
+        <div class="hm-marquee-track">
+            <span><i class="fas fa-water"></i> Jet ski</span>
+            <span><i class="fas fa-ship"></i> Excursion en bateau</span>
+            <span><i class="fas fa-motorcycle"></i> Randonnée quad</span>
+            <span><i class="fas fa-parachute-box"></i> Parapente</span>
+            <span><i class="fas fa-landmark"></i> Visite guidée</span>
+            <span><i class="fas fa-mountain-sun"></i> Gouraya</span>
+            <span><i class="fas fa-sun"></i> Cap Carbon</span>
+            <span><i class="fas fa-umbrella-beach"></i> Plages</span>
+            <span><i class="fas fa-water"></i> Jet ski</span>
+            <span><i class="fas fa-ship"></i> Excursion en bateau</span>
+            <span><i class="fas fa-motorcycle"></i> Randonnée quad</span>
+            <span><i class="fas fa-parachute-box"></i> Parapente</span>
+            <span><i class="fas fa-landmark"></i> Visite guidée</span>
+            <span><i class="fas fa-mountain-sun"></i> Gouraya</span>
+            <span><i class="fas fa-sun"></i> Cap Carbon</span>
+            <span><i class="fas fa-umbrella-beach"></i> Plages</span>
+        </div>
+    </div>
 
     <!-- Activités -->
     <div class="container" id="activites">
@@ -3349,6 +3383,35 @@ body {
     </div>
 </section>
 
+    <!-- Étapes -->
+    <section class="hm-steps" id="comment-ca-marche">
+        <div class="container">
+            <span class="section-eyebrow">Simple &amp; rapide</span>
+            <h2 class="section-title">Réservez en 3 étapes</h2>
+            <p class="section-subtitle">De l'idée à l'aventure, en quelques clics seulement.</p>
+            <div class="hm-steps-grid">
+                <article class="hm-step">
+                    <span class="hm-step-num">01</span>
+                    <div class="hm-step-icon"><i class="fas fa-compass" aria-hidden="true"></i></div>
+                    <h3>Choisissez votre expérience</h3>
+                    <p>Mer, terre ou culture : parcourez nos activités et trouvez celle qui vous ressemble.</p>
+                </article>
+                <article class="hm-step">
+                    <span class="hm-step-num">02</span>
+                    <div class="hm-step-icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+                    <h3>Réservez en ligne</h3>
+                    <p>Indiquez la date et le nombre de participants, nous confirmons rapidement.</p>
+                </article>
+                <article class="hm-step">
+                    <span class="hm-step-num">03</span>
+                    <div class="hm-step-icon"><i class="fas fa-umbrella-beach" aria-hidden="true"></i></div>
+                    <h3>Profitez de Béjaïa</h3>
+                    <p>Nos guides vous accueillent : il ne vous reste qu'à vivre l'aventure.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- MODALE POUR INCONTOURNABLES -->
     <div class="must-modal" id="mustModal">
         <div class="must-modal-content">
@@ -3406,7 +3469,7 @@ body {
     </section>
 
     <!-- Nos Atouts -->
-   <section class="why-choose-us">
+   <section class="why-choose-us" id="atouts">
         <div class="main-wrapper">
             
             <!-- COLONNE GAUCHE -->
@@ -3467,7 +3530,7 @@ body {
                     </div>
                 </div>
 
-                <a href="#" class="btn-primary">
+                <a href="#activites" class="btn-primary">
                     Découvrir nos activités <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -3520,7 +3583,9 @@ body {
     <!-- Instagram Feed -->
     <section class="instagram-section">
         <div class="container">
-            <h2 class="section-title">Instagram Feed</h2>
+            <span class="section-eyebrow"><i class="fab fa-instagram" aria-hidden="true"></i> @visitbejaia</span>
+            <h2 class="section-title">Instants partagés</h2>
+            <p class="section-subtitle">Les plus beaux moments de nos voyageurs à Béjaïa</p>
             <div class="instagram-grid">
                 <div class="instagram-item" style="background-image: url('https://le-batut.com/wp-content/uploads/2022/04/dscn7664_6298089310_o-scaled.jpg')"></div>
                 <div class="instagram-item" style="background-image: url('assets/images/quad.jpeg')"></div>
@@ -3535,22 +3600,37 @@ body {
     </section>
 
    
+    <!-- Appel à l'action -->
+    <section class="hm-cta">
+        <div class="hm-cta-inner">
+            <span class="section-eyebrow">Votre prochaine aventure</span>
+            <h2>Prêt à vivre Béjaïa&nbsp;?</h2>
+            <p>Mer turquoise, montagnes et culture millénaire : réservez dès maintenant votre expérience.</p>
+            <div class="hm-cta-actions">
+                <a href="#activites" class="hero-cta hero-cta--primary">Réserver une activité <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                <a href="https://wa.me/213557664089" target="_blank" rel="noopener" class="hero-cta hero-cta--ghost"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Une question ? Une réservation ? Contactez-nous</h2>
+            <span class="section-eyebrow">Contact</span>
+            <h2 class="section-title">Une question ? Une réservation ?</h2>
+            <p class="section-subtitle">Notre équipe vous répond rapidement, 7j/7.</p>
             <div class="contact-content">
                 <div class="contact-info">
                     <div class="info-item">
-                        <div class="info-icon">📍</div>
+                        <div class="info-icon"><i class="fas fa-location-dot" aria-hidden="true"></i></div>
                         <div><h4>Adresse</h4><p>Russel, Béjaïa, en face du Stade de l'Unité Maghrébine</p></div>
                     </div>
                     <div class="info-item">
-                        <div class="info-icon">📞</div>
+                        <div class="info-icon"><i class="fas fa-phone" aria-hidden="true"></i></div>
                         <div><h4>Téléphone</h4><p>00213 557 664 089</p></div>
                     </div>
                     <div class="info-item">
-                        <div class="info-icon">✉️</div>
+                        <div class="info-icon"><i class="fas fa-envelope" aria-hidden="true"></i></div>
                         <div><h4>Email</h4><p>visit.bougie@gmail.com</p></div>
                     </div>
                 </div>
@@ -3596,6 +3676,7 @@ body {
     <script src="js/navbar.js"></script>
     <script src="js/whatsapp-float.js"></script>
     <script src="js/activity-cards.js"></script>
+    <script src="js/activities-loader.js"></script>
     <script src="js/page-motion.js"></script>
     <script src="js/include-footer.js"></script>
 
@@ -4000,15 +4081,15 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("=== PAGE INDEX - ACTIVITÉS ===");
 
     // Catalogue des activités
-    const activitiesCatalog = [
+    let activitiesCatalog = [
+        { id: "bateau", activityNote: ["Alcool interdit sur le bateau", "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", "Offre découverte : 1h30/2h - Circuit classique", "Offre évasion : 3h/3h30 - Circuit classique + grottes de Gouraya + Tamelaht + snorkelling + brunch", "Offre détente : 4h30/5h - Circuit complet + bouée tractée"], name: "Excursion Bateau", basePrice: "à partir de 15000", category: "mer", icon: "fa-ship", image: "assets/images/i.jpeg", desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", hasChild: false },
         { id: "visite", activityNote: ["Le prix inclut uniquement la visite guidée et non le transport.", "Prix dégressif à partir de la deuxième personne."], name: "Visite guidée", basePrice: 7000, category: "culture", icon: "fa-landmark", image: "assets/images/casbah.jpg", desc: "Partez à la découverte de Bejaïa entre histoire et nature. Visitez les plus beaux spots de Béjaïa, de Gouraya à la cascade, en passant par la Casbah. Profitez d'un tour guidé avec un guide passionné, amoureux de la ville et connaisseur de tous ses recoins et de ses histoires.", hasChild: false },
         { id: "quad", activityNote: ["Baskets et lunettes recommandées", "Casque quad fourni", "1 adulte par quad, conduite à partir de 16 ans", "Le guide se réserve le droit de vous reprendre le quad si vous ne respectez pas ces consignes, sans remboursement."], name: "Randonnée Quad", basePrice: 3000, category: "terre", icon: "fa-motorcycle", image: "assets/images/quad.jpeg", desc: "Randonnée en quad (pas de course) sur les hauteurs de Boulimat, à la découverte de paysages à couper le souffle. À partir de 13h30, sans réservation : premier arrivé, premier sorti.", hasChild: true, childPrice: 1000, options: [{label: "30 min", price: 3000}, {label: "45 min (Réservation & paiement exigés)", price: 4000}] },
         { id: "parapente", activityNote: ["Moniteur diplômé et reconnu.", "Les vols se déroulent en toute sécurité.", "Équipement de sécurité fourni.", "Les vols peuvent être annulés à la dernière minute si les conditions changent.", "Les vols peuvent être annulés si vous n'écoutez pas le moniteur."], name: "Parapente", basePrice: 6000, category: "terre", icon: "fa-parachute-box", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB-wtfDF7acuk59DcDOMvBq2Lisou1gxmJwrQo0efOYigw73dBKKa3QpMrqztfMfGzQS-e7yp22Q9COzOQrBfhjtVhPgCZ3BL2AKhgrw&s=10", desc: "Envoyez-vous en l'air avec un baptême en parapente sur le plus beau spot de vol en Algérie, avec un atterrissage sur la plage.", hasChild: false, options: [{label: "avec vidéo GoPro 4K", price: 6000}, {label: "avec vidéo GoPro 5,3K", price: 7000}, {label: "avec vidéo Insta 360", price: 8000}] },
         { id: "cheval", activityNote: ["Les randonnées se font sur une colline et un chemin forestier surplombant la mer, et non sur une plage.", "Les randonnées se déroulent le matin ou en fin d'après-midi par respect pour la santé de l'animal.", "Pique-nique interdit au sein de la ferme.", "1 personne par cheval."], name: "Randonnée à cheval", basePrice: 2500, category: "terre", icon: "fa-horse", image: "https://lh3.googleusercontent.com/proxy/t-jDVqxSyaxJLVPlW9C7MrfPFxt-eP54t0mdW6Gap4LhZoWe1oAnRp8cLnoeS_5_-lo3NzBExrXuKcBjtri2upJGYaUH8UBw4ojBsh7rGlpEUlKL79CIAWuRQp0k9ZyYhrTzczszzBo9KACEqEWtYX2Vg5bUTILI8ETVnNPWUwHi_5-hIA", desc: "Entre le bleu de la Méditerranée et le vert du parc national de Gouraya, laissez-vous contempler les beaux paysages de la Kabylie à cheval pour une randonnée inoubliable d'environ 30 min.", hasChild: false },
         { id: "Kayak", activityNote: ["🦺 Gilet de sauvetage fourni.", "📱 Pochette étanche fournie.", "🧑‍✈️ Guide confirmé inclus.", "🎉 Ambiance conviviale garantie.", "⏱️ Durée de l'activité : 2h30 à 3h00."], name: "Kayak", basePrice: 2000, category: "mer", icon: "fa-water", image: "https://www.muchbetteradventures.com/magazine/content/images/2020/01/28152819/GettyImages-1176774484.jpg", desc: "Découvrez l'île de Nizla et ses paysages à couper le souffle en kayak avec un guide confirmé. Une aventure de 2h30 à 3h00 sur une eau turquoise, idéale pour explorer les plus beaux coins de la côte de Béjaïa.", hasChild: false },
         { id: "bouee", activityNote: ["Réservation confirmée avec paiement à l'avance.", "Gilet fourni et obligatoire."], name: "Bouée tractée", basePrice: 4000, category: "mer", icon: "fa-water", image: "https://typaradise.com/wp-content/uploads/2023/11/Typaradise-1024x511.jpg", desc: "Pour un moment plein de souvenirs et de fous rires, offrez-vous une activité riche en sensations et en adrénaline en famille ou entre amis.", hasChild: false },
-        { id: "jetski", activityNote: ["Gilet de sauvetage fourni, briefing sécurité et encadrement moniteur inclus.", "Carburant inclus.", "Pièce d'identité obligatoire en garantie.", "Activité interdite à toute personne alcoolisée."], name: "Jet Ski", basePrice: 12000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jetski.jpeg", desc: "Yamaha VX 1100 ou circuit découverte Île & Grotte avec baignade.", hasChild: false, options: [{label: "Yamaha VX 1100 — 30 min", price: 12000}, {label: "Yamaha VX 1100 — 60 min", price: 20000}, {label: "Circuit Découverte", price: 25000}] },
-        { id: "bateau", activityNote: ["Alcool interdit sur le bateau", "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", "Offre découverte : 1h30/2h - Circuit classique", "Offre évasion : 3h/3h30 - Circuit classique + grottes de Gouraya + Tamelaht + snorkelling + brunch", "Offre détente : 4h30/5h - Circuit complet + bouée tractée"], name: "Excursion Bateau", basePrice: "à partir de 15000", category: "mer", icon: "fa-ship", image: "assets/images/i.jpeg", desc: "Circuit classique : île de Nizla, grotte de la patte d'éléphant, grotte des pirates, pointe Sainte-Anne, cap Carbon avec un arrêt de 15/20 min pour nager.", hasChild: false }
+        { id: "jetski", activityNote: ["Gilet de sauvetage fourni, briefing sécurité et encadrement moniteur inclus.", "Carburant inclus.", "Pièce d'identité obligatoire en garantie.", "Activité interdite à toute personne alcoolisée."], name: "Jet Ski", basePrice: 12000, category: "mer", icon: "fa-jet-fighter", image: "assets/images/jetski.jpeg", desc: "Yamaha VX 1100 ou circuit découverte Île & Grotte avec baignade.", hasChild: false, options: [{label: "Yamaha VX 1100 — 30 min", price: 12000}, {label: "Yamaha VX 1100 — 60 min", price: 20000}, {label: "Circuit Découverte", price: 25000}] }
     ];
 
     let currentAct = { id: '', name: '', pricePerAdult: 0, hasChild: false, childPrice: 0 };
@@ -4025,9 +4106,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 const id = btn.dataset.id;
                 const name = btn.dataset.name;
                 let price = parseInt(String(btn.dataset.price).replace(/[^0-9]/g, ''), 10) || 0;
-                let hasChild = false;
-                let childPrice = 0;
-                if (id === 'quad') { hasChild = true; childPrice = 1000; }
+                const act = activitiesCatalog.find(a => a.id === id);
+                const hasChild = !!act?.hasChild;
+                const childPrice = Number(act?.childPrice) || 0;
                 openModal(id, name, price, hasChild, childPrice);
             });
             return;
@@ -4401,6 +4482,31 @@ document.addEventListener("DOMContentLoaded", () => {
     updatePaymentProofVisibility();
     renderCards("all");
     setupProofManagement();
+
+    (async function bootActivitiesFromApi() {
+        const fallback = activitiesCatalog.slice();
+        const next = await window.loadPublishedActivities(fallback, API_BASE);
+        if (!next || !next.length) return;
+        activitiesCatalog = next;
+        const activeFilter = document.querySelector(".filter-btn.active")?.dataset?.filter || "all";
+        renderCards(activeFilter);
+        const activityEl = document.getElementById("searchActivity");
+        if (activityEl) {
+            activityEl.querySelectorAll('optgroup[label="Activités"]').forEach((g) => g.remove());
+            [...activityEl.options].forEach((o) => {
+                if (String(o.value).startsWith("act:")) o.remove();
+            });
+            const group = document.createElement("optgroup");
+            group.label = "Activités";
+            activitiesCatalog.forEach((act) => {
+                const opt = document.createElement("option");
+                opt.value = "act:" + act.id;
+                opt.textContent = act.name;
+                group.appendChild(opt);
+            });
+            activityEl.appendChild(group);
+        }
+    })();
 
     /* ===== BARRE DE RECHERCHE HERO ===== */
     (function initHeroSearch() {

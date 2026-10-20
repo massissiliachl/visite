@@ -4,1251 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Visit Béjaïa - Administration</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <style>
-        /* ===== RESET ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        body {
-            background: #f4f7fb;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-        }
-        #root {
-            width: 100%;
-            max-width: 1400px;
-            min-height: 100vh;
-            background: #f4f7fb;
-        }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/adminreservation.css">
 
-        /* ===== SCROLLBAR ===== */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 8px; }
-        ::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 8px; }
-        ::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
-
-        /* ===== LOADING ===== */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .loading-spinner {
-            border: 4px solid #e0e0e0;
-            border-top: 4px solid #FF6B35;
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text {
-            margin-top: 16px;
-            font-size: 16px;
-            color: #FF6B35;
-            font-weight: 500;
-        }
-
-        /* ===== LOGIN ===== */
-        .login-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0a2540, #1a3a5c, #2a4a6c);
-            padding: 20px;
-        }
-        .login-card {
-            background: white;
-            border-radius: 28px;
-            padding: 40px 32px;
-            max-width: 400px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .login-card .logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .login-card .logo .icon {
-            font-size: 48px;
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 12px;
-        }
-        .login-card .logo h1 {
-            font-size: 24px;
-            font-weight: 800;
-            color: #0a2540;
-        }
-        .login-card .logo p {
-            color: #666;
-            font-size: 14px;
-        }
-        .login-card .form-group {
-            margin-bottom: 16px;
-        }
-        .login-card .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 13px;
-            color: #444;
-            margin-bottom: 6px;
-        }
-        .login-card .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 14px;
-            font-size: 15px;
-            transition: border 0.2s;
-            background: #f8f9fa;
-        }
-        .login-card .form-group input:focus {
-            outline: none;
-            border-color: #0077b6;
-            background: white;
-        }
-        .login-card .login-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #0077b6, #005f8c);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            margin-top: 8px;
-        }
-        .login-card .login-btn:hover { opacity: 0.9; }
-        .login-card .login-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        .login-card .error {
-            background: #ffebee;
-            color: #c62828;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 13px;
-            margin-bottom: 12px;
-            display: none;
-        }
-        .login-card .error.show { display: block; }
-
-        /* ===== APP CONTAINER ===== */
-        .app-container {
-            background: #f4f7fb;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            background: linear-gradient(135deg, #0a2540 0%, #1a3a5c 50%, #2a4a6c 100%);
-            padding: 20px 20px 16px;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            box-shadow: 0 6px 24px rgba(0,0,0,0.12);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-        .logo-text {
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-        }
-        .logo-subtext {
-            font-size: 10px;
-            color: rgba(255,255,255,0.7);
-            margin-top: 1px;
-        }
-        .header-icons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .icon-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.12);
-            border: none;
-            color: white;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-        }
-        .icon-btn:hover { background: rgba(255,255,255,0.22); }
-        .notif-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: #FF6B6B;
-            border-radius: 50%;
-            min-width: 18px;
-            height: 18px;
-            font-size: 9px;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 4px;
-        }
-        .profile-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 15px;
-            color: white;
-            cursor: pointer;
-        }
-        .welcome-section {
-            margin-top: 14px;
-        }
-        .welcome-greeting {
-            font-size: 13px;
-            color: rgba(255,255,255,0.65);
-        }
-        .welcome-name {
-            font-size: 22px;
-            font-weight: 700;
-            color: white;
-            margin: 2px 0 4px;
-        }
-        .welcome-date {
-            font-size: 12px;
-            color: rgba(255,255,255,0.5);
-        }
-        .header-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 14px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-        }
-        .header-stat {
-            text-align: center;
-        }
-        .header-stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-        }
-        .header-stat-label {
-            font-size: 10px;
-            color: rgba(255,255,255,0.6);
-            margin-top: 2px;
-        }
-        .header-stat-divider {
-            width: 1px;
-            background: rgba(255,255,255,0.15);
-        }
-
-        /* ===== MAIN LAYOUT ===== */
-        .main-layout {
-            display: flex;
-            min-height: calc(100vh - 200px);
-        }
-
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            width: 200px;
-            background: white;
-            padding: 20px 10px 20px;
-            border-right: 1px solid #edf2f7;
-            flex-shrink: 0;
-            height: calc(100vh - 180px);
-            position: sticky;
-            top: 180px;
-            overflow-y: auto;
-        }
-        .sidebar-label {
-            font-size: 10px;
-            font-weight: 600;
-            color: #9aa0a6;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            padding: 0 12px;
-            margin-bottom: 12px;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #4a5568;
-            font-weight: 500;
-            font-size: 13px;
-            margin-bottom: 2px;
-            transition: all 0.15s;
-        }
-        .nav-item:hover { background: #f0f4f8; }
-        .nav-item.active {
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            color: white;
-            box-shadow: 0 4px 12px rgba(255,107,53,0.3);
-        }
-        .nav-item i { width: 20px; font-size: 14px; text-align: center; }
-        .nav-item.active i { color: white; }
-
-        /* ===== CONTENT ===== */
-        .content {
-            flex: 1;
-            padding: 16px 16px 80px;
-            min-height: 600px;
-        }
-        .tab-content {
-            animation: fadeUp 0.4s ease;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== CARDS ===== */
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 16px 18px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-            margin-bottom: 16px;
-            border: 1px solid #f0f0f0;
-        }
-        .card-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #0a2540;
-        }
-
-        /* ===== TODAY ===== */
-        .today-header {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-            margin-bottom: 16px;
-            text-align: center;
-        }
-        .today-header h2 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #0a2540;
-        }
-        .today-header .date {
-            font-size: 13px;
-            color: #6b7a8f;
-            margin-top: 4px;
-        }
-        .today-header .count {
-            font-size: 13px;
-            color: #0077b6;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-        .date-picker-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8f9fa;
-            padding: 8px 14px;
-            border-radius: 10px;
-            border: 1px solid #e0e0e0;
-            cursor: pointer;
-            margin-top: 8px;
-            font-size: 13px;
-            color: #333;
-        }
-        .date-picker-btn:hover { background: #f0f0f0; }
-
-        /* ===== BOAT TODAY ===== */
-        .boat-today-section {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        }
-        .boat-today-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #2e7d32;
-            padding: 14px 16px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e8e8e8;
-        }
-        .boat-today-row {
-            padding: 10px 16px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .boat-today-row:last-child { border-bottom: none; }
-        .boat-today-slot {
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
-            color: white;
-            font-weight: 700;
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-        .boat-today-boats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .boat-today-cell {
-            background: #f8fbf8;
-            padding: 10px 12px;
-            border-radius: 10px;
-        }
-        .boat-today-cell h4 {
-            font-size: 12px;
-            color: #2e7d32;
-            margin-bottom: 6px;
-        }
-        .boat-today-reservation {
-            background: #e8f5e9;
-            padding: 8px 10px;
-            border-radius: 8px;
-            margin-bottom: 6px;
-            border-left: 3px solid #4caf50;
-            cursor: pointer;
-        }
-        .boat-today-reservation:hover { background: #d4edda; }
-        .boat-today-reservation p {
-            font-size: 11px;
-            color: #333;
-            margin: 1px 0;
-        }
-        .boat-today-reservation .label { font-weight: 600; }
-
-        /* ===== TABLE ===== */
-        .table-container {
-            overflow-x: auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        }
-        .table-container table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            min-width: 700px;
-        }
-        .table-container th {
-            background: #0a2540;
-            color: white;
-            font-weight: 600;
-            padding: 10px 8px;
-            text-align: left;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-        }
-        .table-container td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #f0f0f0;
-            vertical-align: middle;
-        }
-        .table-container tr:hover td { background: #fafbfc; }
-        .table-container tr:last-child td { border-bottom: none; }
-
-        .activity-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 16px;
-            color: white;
-            font-size: 10px;
-            font-weight: 600;
-        }
-        .payment-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 8px;
-            border-radius: 16px;
-            color: white;
-            font-size: 10px;
-            font-weight: 600;
-        }
-        .payment-badge i { font-size: 10px; }
-
-        .note-input {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            font-family: inherit;
-            font-size: 13px;
-            resize: vertical;
-            min-height: 60px;
-        }
-        .reste-positive { color: #c62828; font-weight: 700; }
-        .reste-zero { color: #4caf50; font-weight: 700; }
-
-        .empty-state {
-            text-align: center;
-            padding: 32px 16px;
-        }
-        .empty-state .emoji { font-size: 40px; margin-bottom: 8px; }
-        .empty-state h3 { color: #666; font-weight: 500; font-size: 15px; }
-        .empty-state p { color: #999; font-size: 13px; margin-top: 4px; }
-
-        /* ===== RESERVATION CARD ===== */
-        .reservation-card {
-            background: white;
-            border-radius: 14px;
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            border: 1px solid #f0f0f0;
-            cursor: pointer;
-        }
-        .reservation-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
-        .reservation-card .header-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        .reservation-card .header-row .id {
-            font-weight: 700;
-            color: #0077b6;
-            font-size: 13px;
-        }
-        .reservation-card .header-row .delete-btn {
-            color: #dc3545;
-            background: none;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-        .reservation-card .header-row .delete-btn:hover { background: #fee8e8; }
-        .reservation-card .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 4px 12px;
-            font-size: 12px;
-            color: #333;
-        }
-        .reservation-card .info-grid .item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .reservation-card .info-grid .item i { color: #888; width: 16px; font-size: 12px; }
-
-        /* ===== BOAT FORM ===== */
-        .boat-form {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        }
-        .boat-form .form-title {
-            font-size: 17px;
-            font-weight: 700;
-            color: #0a2540;
-            margin-bottom: 16px;
-        }
-        .form-group {
-            margin-bottom: 12px;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 12px;
-            color: #444;
-            margin-bottom: 4px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 13px;
-            background: #f8f9fa;
-        }
-        .form-group input:focus {
-            outline: none;
-            border-color: #0077b6;
-            background: white;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .chip-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .chip {
-            padding: 6px 14px;
-            border-radius: 16px;
-            border: 1px solid #0077b6;
-            background: white;
-            color: #0077b6;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .chip:hover { background: #e3f2fd; }
-        .chip.active {
-            background: #0077b6;
-            color: white;
-            border-color: #0077b6;
-        }
-        .slot-item {
-            padding: 8px 12px;
-            border-radius: 10px;
-            border: 2px solid #e0e0e0;
-            cursor: pointer;
-            text-align: center;
-            min-width: 70px;
-            font-weight: 500;
-            font-size: 12px;
-        }
-        .slot-item.available { border-color: #4caf50; background: #e8f5e9; color: #2e7d32; }
-        .slot-item.unavailable { border-color: #f44336; background: #ffebee; color: #c62828; opacity: 0.6; cursor: not-allowed; }
-        .slot-item.selected { border-color: #0077b6; background: #e3f2fd; color: #0077b6; }
-        .slot-item .status { font-size: 9px; display: block; margin-top: 2px; }
-        .slot-item .status.free { color: #4caf50; }
-        .slot-item .status.occupied { color: #f44336; }
-        .slot-item .status.selected { color: #0077b6; }
-
-        .selected-time {
-            margin-top: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #0077b6;
-            text-align: center;
-        }
-        .select-hint {
-            margin-top: 6px;
-            font-size: 11px;
-            color: #666;
-            text-align: center;
-            font-style: italic;
-        }
-
-        /* ===== PAYMENT ===== */
-        .payment-section {
-            background: #f0f7ff;
-            padding: 14px 16px;
-            border-radius: 12px;
-            border: 2px solid #0077b6;
-            margin: 12px 0;
-        }
-        .payment-section h4 {
-            color: #0077b6;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        .payment-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .payment-row .full { grid-column: 1 / -1; }
-        .payment-field label {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            color: #0077b6;
-            margin-bottom: 3px;
-        }
-        .payment-field input {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #0077b6;
-            border-radius: 8px;
-            background: white;
-            font-size: 13px;
-        }
-        .payment-field input:focus { outline: none; border-color: #005f8c; }
-        .payment-field .reste-input {
-            background: #fff3e0;
-            border-color: #f44336;
-            font-weight: 700;
-            color: #c62828;
-        }
-        .payment-field .reste-label { color: #c62828; }
-
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #0077b6, #005f8c);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 8px;
-        }
-        .btn-submit:hover { opacity: 0.9; }
-
-        /* ===== ADMIN ===== */
-        .admin-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-        .admin-row input {
-            flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 13px;
-            background: #f8f9fa;
-            min-width: 120px;
-        }
-        .admin-row input:focus { outline: none; border-color: #f97316; background: white; }
-        .btn-add {
-            background: #f97316;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-        .btn-add:hover { background: #e86a0a; }
-
-        .slot-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-        .slot-tag {
-            padding: 4px 12px;
-            border-radius: 16px;
-            background: #e3f2fd;
-            color: #0a2540;
-            font-size: 12px;
-            cursor: pointer;
-            border: none;
-        }
-        .slot-tag:hover { background: #bbdefb; }
-        .slot-tag.delete-mode { background: #f44336; color: white; }
-        .slot-tag.delete-mode:hover { background: #d32f2f; }
-
-        .admin-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .admin-actions button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .admin-actions button:hover { opacity: 0.85; }
-        .btn-delete-mode { background: #dc3545; color: white; }
-        .btn-reset { background: #ff9800; color: white; }
-
-        /* ===== EMPLOYEURS ===== */
-        .online-stats {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        .online-stat {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .online-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .online-dot.green { background: #4caf50; box-shadow: 0 0 8px rgba(76,175,80,0.4); }
-        .online-dot.gray { background: #9e9e9e; }
-        .online-stat .number { font-size: 20px; font-weight: 700; color: #0a2540; }
-        .online-stat .label { font-size: 12px; color: #666; }
-
-        .filter-online {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .filter-online button {
-            padding: 6px 16px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 500;
-            cursor: pointer;
-            background: #f0f0f0;
-            color: #666;
-            font-size: 12px;
-        }
-        .filter-online button.active {
-            background: #0077b6;
-            color: white;
-        }
-
-        .btn-create-employeur {
-            background: linear-gradient(135deg, #4caf50, #45a049);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 16px;
-            font-size: 13px;
-        }
-        .btn-create-employeur:hover { opacity: 0.9; }
-
-        .employeur-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-bottom: 10px;
-            border: 1px solid #e8e8e8;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .employeur-card .left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .employeur-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: #0077b6;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-            position: relative;
-        }
-        .employeur-avatar .status-dot {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-        .employeur-avatar .status-dot.online { background: #4caf50; }
-        .employeur-avatar .status-dot.offline { background: #9e9e9e; }
-
-        .employeur-info h4 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #0a2540;
-        }
-        .employeur-info h4 .online-badge {
-            font-size: 9px;
-            font-weight: 400;
-            color: #4caf50;
-            margin-left: 6px;
-        }
-        .employeur-info p {
-            font-size: 11px;
-            color: #666;
-            margin: 1px 0;
-        }
-        .employeur-info .last-active {
-            font-size: 10px;
-            color: #999;
-        }
-        .employeur-delete {
-            background: none;
-            border: none;
-            color: #dc3545;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-        .employeur-delete:hover { background: #fee8e8; }
-        .employeur-footer {
-            display: flex;
-            gap: 10px;
-            font-size: 11px;
-            color: #666;
-            margin-top: 4px;
-        }
-        .employeur-footer .status-tag {
-            padding: 2px 10px;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            font-size: 10px;
-        }
-        .status-tag.active { background: #4caf50; }
-        .status-tag.inactive { background: #9e9e9e; }
-
-        /* ===== MODALS ===== */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            z-index: 1000;
-            animation: fadeIn 0.2s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .modal {
-            background: white;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            max-width: 600px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            animation: slideUp 0.3s ease;
-        }
-        @keyframes slideUp {
-            from { transform: translateY(40px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .modal-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(135deg, #0a2540, #1a3a5c);
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-        }
-        .modal-header h2 {
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        .modal-header .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 22px;
-            cursor: pointer;
-            padding: 4px 8px;
-        }
-        .modal-body {
-            padding: 20px;
-        }
-        .modal-body .form-group { margin-bottom: 12px; }
-
-        /* ===== DETAIL MODAL ===== */
-        .detail-section {
-            margin-bottom: 16px;
-            background: #f8f9fa;
-            padding: 14px;
-            border-radius: 12px;
-        }
-        .detail-section h4 {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0a2540;
-            margin-bottom: 8px;
-        }
-        .detail-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 3px 0;
-            font-size: 13px;
-        }
-        .detail-row i { color: #0077b6; width: 18px; font-size: 14px; }
-        .detail-row .label { color: #666; min-width: 90px; }
-        .detail-row .value { font-weight: 500; color: #333; }
-
-        .payment-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-        }
-        .payment-actions button {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            min-width: 70px;
-            font-size: 11px;
-        }
-        .payment-actions button:hover { opacity: 0.85; }
-        .btn-non-paye { background: #f44336; }
-        .btn-verse { background: #ff9800; }
-        .btn-paye { background: #4caf50; }
-        .btn-delete-detail {
-            width: 100%;
-            padding: 12px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 8px;
-            font-size: 13px;
-        }
-        .btn-delete-detail:hover { opacity: 0.85; }
-
-        /* ===== PROFILE MODAL ===== */
-        .profile-modal .profile-header {
-            background: linear-gradient(135deg, #0a2540, #1a3a5c);
-            padding: 28px;
-            text-align: center;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-        }
-        .profile-modal .profile-avatar {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            margin: 0 auto 10px;
-        }
-        .profile-modal .profile-name {
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        .profile-modal .profile-email {
-            color: rgba(255,255,255,0.7);
-            font-size: 13px;
-            margin-top: 4px;
-        }
-        .profile-modal .profile-phone {
-            color: rgba(255,255,255,0.6);
-            font-size: 12px;
-            margin-top: 4px;
-        }
-        .profile-menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            font-size: 14px;
-            color: #333;
-            background: none;
-            border: none;
-            width: 100%;
-            text-align: left;
-        }
-        .profile-menu-item:hover { background: #f8f9fa; }
-        .profile-menu-item.logout { color: #dc3545; }
-        .profile-menu-item i { width: 20px; }
-
-        /* ===== NOTIF MODAL ===== */
-        .notif-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .notif-item .icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #f0f4f8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0077b6;
-            font-size: 16px;
-        }
-        .notif-item .content { flex: 1; }
-        .notif-item .content h4 { font-size: 13px; font-weight: 500; color: #333; }
-        .notif-item .content p { font-size: 11px; color: #999; margin-top: 2px; }
-
-        /* ===== FAB ===== */
-        .fab {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            color: white;
-            border: none;
-            font-size: 26px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255,107,53,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-        }
-        .fab:hover { transform: scale(1.05); }
-
-        /* ===== BOTTOM NAV (mobile) ===== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            background: white;
-            padding: 6px 0;
-            padding-bottom: env(safe-area-inset-bottom, 8px);
-            border-top: 1px solid #f0f0f0;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
-            z-index: 40;
-            display: none;
-        }
-        .bottom-nav .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            padding: 4px 0;
-            font-size: 10px;
-            color: #666;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        .bottom-nav .nav-item i { font-size: 18px; }
-        .bottom-nav .nav-item.active { color: #FF6B6B; font-weight: 600; }
-        .bottom-nav .nav-item .nav-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .bottom-nav .nav-item.active .nav-icon {
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            color: white;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (min-width: 769px) {
-            .bottom-nav { display: none !important; }
-            .sidebar { display: block !important; }
-            .content { padding: 20px 28px 100px; }
-        }
-        @media (max-width: 768px) {
-            .sidebar { display: none !important; }
-            .bottom-nav { display: flex !important; }
-            .content { padding: 12px 12px 80px; }
-            .header { padding: 14px 16px 12px; }
-            .logo-text { font-size: 16px; }
-            .welcome-name { font-size: 18px; }
-            .header-stat-value { font-size: 18px; }
-            .boat-today-boats { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-            .payment-row { grid-template-columns: 1fr; }
-            .reservation-card .info-grid { grid-template-columns: 1fr; }
-            .table-container table { font-size: 10px; min-width: 500px; }
-            .table-container th, .table-container td { padding: 6px 4px; }
-            .modal { max-width: 100%; border-radius: 0; border-top-left-radius: 24px; border-top-right-radius: 24px; }
-            .modal-overlay { align-items: flex-end; }
-        }
-        @media (max-width: 400px) {
-            .header-stats { flex-wrap: wrap; gap: 4px; }
-            .header-stat { flex: 1; min-width: 50px; }
-            .header-stat-value { font-size: 16px; }
-            .slot-item { min-width: 60px; font-size: 11px; padding: 6px 10px; }
-            .chip { font-size: 11px; padding: 4px 10px; }
-        }
-    </style>
 </head>
 <body>
 
@@ -1310,8 +71,23 @@
                 versement,
                 resteapayer: reste,
                 note,
+                createdById: raw.createdById || raw.created_by_id || null,
+                createdByName: raw.createdByName || raw.created_by_name || null,
                 paymentStatus: derivePaymentStatus(total, versement, reste)
             };
+        }
+
+        function formatTakenAt(d) {
+            if (!d) return '';
+            const x = new Date(d);
+            if (isNaN(x)) return '';
+            return x.toLocaleString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        function takenByLine(r) {
+            if (!r || !r.createdByName) return '';
+            const when = formatTakenAt(r.createdAt);
+            return `<p class="reservation-card__taken"><i class="fas fa-user-tie"></i>Prise par <strong>${escapeHtml(r.createdByName)}</strong>${when ? ` · ${escapeHtml(when)}` : ''}</p>`;
         }
 
         function suggestBoatTotal() {
@@ -1364,7 +140,9 @@
             editProfile: { nom: '', prenom: '', telephone: '', email: '' },
             todaySelectedDate: new Date().toISOString().split('T')[0],
             showDatePickerToday: false,
-            updatingFromInput: false
+            updatingFromInput: false,
+            attributionStaff: 'all',
+            attributionQ: ''
         };
     
         let rootEl = document.getElementById('root');
@@ -1485,28 +263,38 @@
             }
 
             try {
-                // Envoyer l'identifiant comme email (le backend accepte email ou username)
-                const data = await apiFetch(`${API_AUTH_URL}/login`, {
-                    method: 'POST',
-                    body: JSON.stringify({ email: identifier, password })
-                });
+                let data;
+                try {
+                    data = await apiFetch(`${API_AUTH_URL}/login`, {
+                        method: 'POST',
+                        body: JSON.stringify({ email: identifier, password })
+                    });
+                } catch (authErr) {
+                    const adminRes = await fetch(`${API_BASE_URL.replace('/api/reservations-admin', '')}/api/admin/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: identifier, password })
+                    });
+                    const adminData = await adminRes.json().catch(() => ({}));
+                    if (!adminRes.ok || !adminData.token) throw authErr;
+                    data = {
+                        token: adminData.token,
+                        user: { id: null, nom: 'Admin', prenom: '', email: identifier, role: 'admin', telephone: '' }
+                    };
+                }
 
-                // Vérifier que l'utilisateur existe
                 if (!data.user) {
                     throw new Error('Identifiants incorrects');
                 }
 
-                // Vérifier que l'utilisateur a le bon rôle (admin ou employeur)
                 if (data.user.role !== 'admin' && data.user.role !== 'employeur') {
                     throw new Error('Accès non autorisé. Vous devez être administrateur ou employeur.');
                 }
 
-                // Connexion réussie
                 state.isLoggedIn = true;
                 state.loginError = '';
                 state.userInfo = data.user;
 
-                // Stocker le token et les infos utilisateur
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
 
@@ -2027,6 +815,49 @@
             }
         }
     
+        async function reassignReservation(id, selectEl) {
+            const res = state.reservations.find(r => r.id === id);
+            if (!res || !selectEl) return;
+            const opt = selectEl.selectedOptions[0];
+            const createdById = selectEl.value ? parseInt(selectEl.value, 10) || null : null;
+            const createdByName = createdById
+                ? (opt?.dataset.name || opt?.textContent || null)
+                : null;
+            try {
+                const updated = await apiFetch(`${API_BASE_URL}/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({
+                        nom: res.nom,
+                        prenom: res.prenom,
+                        tel: res.tel,
+                        activite: res.activite,
+                        heure: res.heure,
+                        date: res.date,
+                        personnes: res.personnes,
+                        slot: res.slot || null,
+                        subslot: res.subslot || null,
+                        bateau: res.bateau || null,
+                        duree: res.duree || null,
+                        totalAPayer: res.totalAPayer,
+                        versement: res.versement,
+                        resteapayer: res.resteapayer,
+                        note: res.note,
+                        createdById,
+                        createdByName
+                    })
+                });
+                const normalized = normalizeReservation(updated);
+                state.reservations = state.reservations.map(r => r.id === id ? normalized : r);
+                state.filteredReservations = state.reservations;
+                state.boatReservations = state.reservations.filter(r => r.activite === 'Bateau');
+                state.selectedReservation = normalized;
+                render();
+            } catch (e) {
+                alert('Erreur lors de la réattribution');
+                selectEl.value = res.createdById || '';
+            }
+        }
+
         // ---- MISE À JOUR STATUT PAIEMENT ----
         async function updatePaymentStatus(id, status, amount) {
             const res = state.reservations.find(r => r.id === id);
@@ -2091,23 +922,24 @@
             if (!state.isLoggedIn) {
                 rootEl.innerHTML = `
                     <div class="login-container">
+                        <div class="login-atmosphere" aria-hidden="true"></div>
                         <div class="login-card">
                             <div class="logo">
-                                <div class="icon">🌊</div>
+                                <div class="icon"><i class="fas fa-umbrella-beach"></i></div>
                                 <h1>Visit Béjaïa</h1>
-                                <p>Administration</p>
+                                <p>Espace réservations</p>
                             </div>
                             <form onsubmit="handleLogin(event)">
                                 <div class="error login-error ${state.loginError ? 'show' : ''}">${state.loginError}</div>
                                 <div class="form-group">
                                     <label>Email ou nom d'utilisateur</label>
-                                    <input type="text" id="login-email" placeholder="email@exemple.com ou username" value="" required />
+                                    <input type="text" id="login-email" placeholder="email@exemple.com" value="" required autocomplete="username" />
                                 </div>
                                 <div class="form-group">
                                     <label>Mot de passe</label>
-                                    <input type="password" id="login-password" placeholder="••••••••" required />
+                                    <input type="password" id="login-password" placeholder="••••••••" required autocomplete="current-password" />
                                 </div>
-                                <button type="submit" class="login-btn">Se connecter</button>
+                                <button type="submit" class="login-btn"><span>Se connecter</span><i class="fas fa-arrow-right"></i></button>
                             </form>
                         </div>
                     </div>
@@ -2129,11 +961,15 @@
             const todayRes = state.reservations.filter(r => r.date === getTodayStr());
             const notificationCount = todayRes.length;
     
-            const tabs = ['today', 'reservations', 'boat', 'admin', 'employeurs'];
+            const isAdminUser = state.userInfo?.role === 'admin';
+            const tabs = isAdminUser
+                ? ['today', 'reservations', 'boat', 'attributions', 'admin', 'employeurs']
+                : ['today', 'reservations', 'boat'];
             const tabLabels = {
                 today: 'Aujourd\'hui',
                 reservations: 'Réservations',
                 boat: 'Bateau',
+                attributions: 'Attributions',
                 admin: 'Admin',
                 employeurs: 'Employeurs'
             };
@@ -2141,6 +977,7 @@
                 today: 'fa-calendar-day',
                 reservations: 'fa-list',
                 boat: 'fa-ship',
+                attributions: 'fa-user-check',
                 admin: 'fa-gear',
                 employeurs: 'fa-users'
             };
@@ -2150,72 +987,68 @@
                 case 'today': contentHtml = renderToday(); break;
                 case 'reservations': contentHtml = renderReservations(); break;
                 case 'boat': contentHtml = renderBoat(); break;
+                case 'attributions': contentHtml = renderAttributions(); break;
                 case 'admin': contentHtml = renderAdmin(); break;
                 case 'employeurs': contentHtml = renderEmployeurs(); break;
             }
     
+            const dateLabel = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
             const html = `
                 <div class="app-container">
-                    <div class="header">
-                        <div class="header-top">
-                            <div class="logo-container">
-                                <div class="logo-icon">🌊</div>
-                                <div>
-                                    <div class="logo-text">Visit Béjaïa</div>
-                                    <div class="logo-subtext">Administration</div>
-                                </div>
+                    <aside class="sidebar">
+                        <div class="sidebar-brand">
+                            <div class="logo-icon"><i class="fas fa-umbrella-beach"></i></div>
+                            <div>
+                                <div class="logo-text">Visit Béjaïa</div>
+                                <div class="logo-subtext">Réservations</div>
                             </div>
-                            <div class="header-icons">
-                                <button class="icon-btn" onclick="state.notifModalVisible=true; render();">
+                        </div>
+                        <div class="sidebar-label">Menu</div>
+                        <nav class="sidebar-nav">
+                            ${tabs.map(t => `
+                                <button type="button" class="nav-item ${state.activeTab === t ? 'active' : ''}" onclick="state.activeTab='${t}'; render();">
+                                    <i class="fas ${tabIcons[t]}"></i>
+                                    <span>${tabLabels[t]}</span>
+                                </button>
+                            `).join('')}
+                        </nav>
+                        <div class="sidebar-foot">
+                            <button type="button" class="sidebar-user" onclick="state.profileModalVisible=true; render();">
+                                <span class="profile-icon">${user.prenom ? user.prenom[0] : 'A'}${user.nom ? user.nom[0] : 'D'}</span>
+                                <span class="sidebar-user__meta">
+                                    <strong>${user.prenom || 'Admin'} ${user.nom || ''}</strong>
+                                    <em>${user.role === 'employeur' ? 'Employeur' : 'Admin'}</em>
+                                </span>
+                            </button>
+                        </div>
+                    </aside>
+
+                    <div class="app-main">
+                        <header class="topbar">
+                            <div class="topbar__titles">
+                                <h1>${tabLabels[state.activeTab] || 'Réservations'}</h1>
+                                <p>${dateLabel}</p>
+                            </div>
+                            <div class="topbar__stats">
+                                <div class="stat-pill"><strong>${todayRes.length}</strong><span>Aujourd'hui</span></div>
+                                <div class="stat-pill"><strong>${state.reservations.length}</strong><span>Total</span></div>
+                                <div class="stat-pill"><strong>${state.boatReservations.length}</strong><span>Bateaux</span></div>
+                            </div>
+                            <div class="topbar__actions">
+                                <button type="button" class="icon-btn" onclick="state.notifModalVisible=true; render();" aria-label="Notifications">
                                     <i class="fas fa-bell"></i>
                                     ${notificationCount > 0 ? `<span class="notif-badge">${notificationCount}</span>` : ''}
                                 </button>
-                                <div class="profile-icon" onclick="state.profileModalVisible=true; render();">
-                                    ${user.prenom ? user.prenom[0] : 'A'}${user.nom ? user.nom[0] : 'D'}
-                                </div>
+                                <button type="button" class="topbar-cta" onclick="state.modalVisible=true; render();">
+                                    <i class="fas fa-plus"></i><span>Nouvelle</span>
+                                </button>
                             </div>
-                        </div>
-                        <div class="welcome-section">
-                            <div class="welcome-greeting">Bonjour,</div>
-                            <div class="welcome-name">${user.prenom || 'Admin'} ${user.nom || ''} 👋</div>
-                            <div class="welcome-date">${new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>
-                        </div>
-                        <div class="header-stats">
-                            <div class="header-stat">
-                                <div class="header-stat-value">${todayRes.length}</div>
-                                <div class="header-stat-label">Aujourd'hui</div>
-                            </div>
-                            <div class="header-stat-divider"></div>
-                            <div class="header-stat">
-                                <div class="header-stat-value">${state.reservations.length}</div>
-                                <div class="header-stat-label">Total</div>
-                            </div>
-                            <div class="header-stat-divider"></div>
-                            <div class="header-stat">
-                                <div class="header-stat-value">${state.boatReservations.length}</div>
-                                <div class="header-stat-label">Bateaux</div>
-                            </div>
-                        </div>
+                        </header>
+                        <main class="content">
+                            <div class="tab-content">${contentHtml}</div>
+                        </main>
                     </div>
-    
-                    <div class="main-layout">
-                        <div class="sidebar">
-                            <div class="sidebar-label">Navigation</div>
-                            ${tabs.map(t => `
-                                <div class="nav-item ${state.activeTab === t ? 'active' : ''}" onclick="state.activeTab='${t}'; render();">
-                                    <i class="fas ${tabIcons[t]}"></i>
-                                    ${tabLabels[t]}
-                                </div>
-                            `).join('')}
-                        </div>
-    
-                        <div class="content">
-                            <div class="tab-content">
-                                ${contentHtml}
-                            </div>
-                        </div>
-                    </div>
-    
+
                     <div class="bottom-nav">
                         ${tabs.map(t => `
                             <button class="nav-item ${state.activeTab === t ? 'active' : ''}" onclick="state.activeTab='${t}'; render();">
@@ -2226,11 +1059,11 @@
                             </button>
                         `).join('')}
                     </div>
-    
-                    <button class="fab" onclick="state.modalVisible=true; render();">
+
+                    <button class="fab" onclick="state.modalVisible=true; render();" aria-label="Nouvelle réservation">
                         <i class="fas fa-plus"></i>
                     </button>
-    
+
                     ${state.modalVisible ? renderAddReservationModal() : ''}
                     ${state.profileModalVisible ? renderProfileModal() : ''}
                     ${state.notifModalVisible ? renderNotifModal() : ''}
@@ -2257,6 +1090,16 @@
                     });
                     state.filteredReservations = filtered;
                     updateReservationsList();
+                });
+            }
+
+            const attrSearch = document.getElementById('attr-search');
+            if (attrSearch) {
+                attrSearch.addEventListener('input', function () {
+                    state.attributionQ = this.value;
+                    // re-render would lose focus — soft update via debounce-free partial is harder here
+                    clearTimeout(attrSearch._t);
+                    attrSearch._t = setTimeout(() => render(), 280);
                 });
             }
     
@@ -2328,6 +1171,39 @@
             updatePaymentStatusPreview(totalB, versB, 'status-bateau');
         }
     
+        function renderReservationCard(r, i, payment) {
+            payment = payment || getPaymentStatusText(r.paymentStatus || 'non_paye');
+            return `
+                <article class="reservation-card" onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
+                    <div class="reservation-card__top">
+                        <div class="reservation-card__who">
+                            <span class="reservation-card__avatar">${escapeHtml(((r.prenom || '?')[0] + (r.nom || '?')[0]).toUpperCase())}</span>
+                            <div>
+                                <strong>${escapeHtml((r.nom || '') + ' ' + (r.prenom || ''))}</strong>
+                                <em>#${r.id || i + 1} · ${escapeHtml(r.activite || '')}</em>
+                            </div>
+                        </div>
+                        <div class="reservation-card__badges">
+                            <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span>
+                            <button type="button" class="delete-btn" onclick="event.stopPropagation(); deleteReservation(${r.id});" aria-label="Supprimer"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <div class="reservation-card__facts">
+                        <span><i class="fas fa-calendar"></i>${escapeHtml(r.date || '—')}</span>
+                        <span><i class="fas fa-clock"></i>${escapeHtml(r.heure || '—')}</span>
+                        <span><i class="fas fa-users"></i>${r.personnes || 1} pers.</span>
+                        <span><i class="fas fa-phone"></i>${escapeHtml(r.tel || '—')}</span>
+                    </div>
+                    <div class="reservation-card__money">
+                        <div><small>Total</small><strong>${r.totalAPayer || 0} DA</strong></div>
+                        <div><small>Versé</small><strong>${r.versement || 0} DA</strong></div>
+                        <div><small>Reste</small><strong class="${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</strong></div>
+                    </div>
+                    ${takenByLine(r)}
+                    ${r.note && r.note !== 'Aucune note' ? `<p class="reservation-card__note"><i class="fas fa-sticky-note"></i>${escapeHtml(r.note)}</p>` : ''}
+                </article>`;
+        }
+
         // ---- METTRE À JOUR UNIQUEMENT LA LISTE DES RÉSERVATIONS ----
         function updateReservationsList() {
             const container = document.getElementById('reservations-list');
@@ -2336,32 +1212,11 @@
             const list = state.filteredReservations.length > 0 ? state.filteredReservations : state.reservations;
             let cards = list.map((r, i) => {
                 const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
-                return `
-                    <div class="reservation-card" onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
-                        <div class="header-row">
-                            <span class="id">#${r.id || i+1}</span>
-                            <button class="delete-btn" onclick="event.stopPropagation(); deleteReservation(${r.id});"><i class="fas fa-trash"></i></button>
-                        </div>
-                        <div class="info-grid">
-                            <div class="item"><i class="fas fa-user"></i> ${r.nom} ${r.prenom}</div>
-                            <div class="item"><i class="fas fa-phone"></i> ${r.tel || 'Non renseigné'}</div>
-                            <div class="item"><i class="fas fa-users"></i> ${r.personnes} personne(s)</div>
-                            <div class="item"><i class="fas fa-clock"></i> ${r.heure}</div>
-                            <div class="item"><i class="fas fa-calendar"></i> ${r.date}</div>
-                            <div class="item"><i class="fas fa-tag"></i> <span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 8px;border-radius:10px;font-size:10px;">${r.activite}</span></div>
-                            <div class="item"><i class="fas fa-money-bill"></i> Total: ${r.totalAPayer || 0} DA</div>
-                            <div class="item"><i class="fas fa-credit-card"></i> Versé: ${r.versement || 0} DA</div>
-                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</span></div>
-                            <div class="item"><i class="fas fa-check-circle"></i> <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></div>
-                            ${r.note && r.note !== 'Aucune note' ? `<div class="item" style="grid-column:1/-1;"><i class="fas fa-sticky-note"></i> ${escapeHtml(r.note)}</div>` : ''}
-                        </div>
-                    </div>
-                `;
+                return renderReservationCard(r, i, payment);
             }).join('');
 
             container.innerHTML = cards || `
                 <div class="empty-state">
-                    <div class="emoji">📭</div>
                     <h3>Aucune réservation trouvée</h3>
                 </div>
             `;
@@ -2385,20 +1240,16 @@
                         const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
                         return `
                         <div class="boat-today-reservation" onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
-                            <p><span class="label">⏰</span> ${r.heure}</p>
-                            <p><span class="label">👤</span> ${r.nom} ${r.prenom}</p>
-                            <p><span class="label">📞</span> ${r.tel}</p>
-                            <p><span class="label">💰</span> Total: ${r.totalAPayer || 0} DA</p>
-                            <p><span class="label">💳</span> Versé: ${r.versement || 0} DA</p>
-                            <p><span class="label">📊</span> Reste: ${r.resteapayer || 0} DA</p>
-                            <p><span class="label">✅</span> <span class="payment-badge" style="background:${payment.color};font-size:10px;padding:2px 8px;"><i class="fas ${payment.icon}"></i> ${payment.text}</span></p>
-                            ${r.note && r.note !== 'Aucune note' ? `<p><span class="label">📝</span> ${escapeHtml(r.note)}</p>` : ''}
+                            <p><strong>${escapeHtml(r.nom)} ${escapeHtml(r.prenom)}</strong> · ${escapeHtml(r.heure || '')}</p>
+                            <p>${escapeHtml(r.tel || '—')} · ${r.totalAPayer || 0} DA</p>
+                            <p>Reste ${r.resteapayer || 0} DA · <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></p>
+                            ${r.note && r.note !== 'Aucune note' ? `<p class="boat-note">${escapeHtml(r.note)}</p>` : ''}
                         </div>
                     `;}).join('');
                     boatsHtml += `
                         <div class="boat-today-cell">
                             <h4>Bateau ${boatNum}</h4>
-                            ${resHtml || '<p style="color:#999;font-size:11px;">Aucune réservation</p>'}
+                            ${resHtml || '<p class="boat-empty">Aucune réservation</p>'}
                         </div>
                     `;
                 });
@@ -2430,8 +1281,8 @@
     
             return `
                 <div class="today-header">
-                    <h2>📅 Réservations</h2>
-                    <input type="date" class="date-picker-native" data-action="today" value="${date}" style="padding:6px 12px; border-radius:10px; border:1px solid #ddd; margin-top:8px; font-size:13px; width:auto; display:inline-block;" />
+                    <h2>Planning du jour</h2>
+                    <input type="date" class="date-picker-native today-date-input" data-action="today" value="${date}" />
                     <div class="date">${formatDateFR(date)}</div>
                     <div class="count">${reservations.length} réservation(s)</div>
                 </div>
@@ -2440,7 +1291,7 @@
     
                 ${boatRows ? `
                     <div class="boat-today-section">
-                        <div class="boat-today-title">🚤 Réservations Bateau</div>
+                        <div class="boat-today-title"><i class="fas fa-ship"></i> Réservations bateau</div>
                         ${boatRows}
                     </div>
                 ` : ''}
@@ -2472,52 +1323,26 @@
     
         function renderReservations() {
             const list = state.filteredReservations.length > 0 ? state.filteredReservations : state.reservations;
-            let cards = list.map((r, i) => {
-                const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
-                return `
-                    <div class="reservation-card" onclick="state.selectedReservation=${JSON.stringify(r).replace(/"/g, '&quot;')}; state.detailModalVisible=true; render();">
-                        <div class="header-row">
-                            <span class="id">#${r.id || i+1}</span>
-                            <button class="delete-btn" onclick="event.stopPropagation(); deleteReservation(${r.id});"><i class="fas fa-trash"></i></button>
-                        </div>
-                        <div class="info-grid">
-                            <div class="item"><i class="fas fa-user"></i> ${r.nom} ${r.prenom}</div>
-                            <div class="item"><i class="fas fa-phone"></i> ${r.tel || 'Non renseigné'}</div>
-                            <div class="item"><i class="fas fa-users"></i> ${r.personnes} personne(s)</div>
-                            <div class="item"><i class="fas fa-clock"></i> ${r.heure}</div>
-                            <div class="item"><i class="fas fa-calendar"></i> ${r.date}</div>
-                            <div class="item"><i class="fas fa-tag"></i> <span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 8px;border-radius:10px;font-size:10px;">${r.activite}</span></div>
-                            <div class="item"><i class="fas fa-money-bill"></i> Total: ${r.totalAPayer || 0} DA</div>
-                            <div class="item"><i class="fas fa-credit-card"></i> Versé: ${r.versement || 0} DA</div>
-                            <div class="item"><i class="fas fa-arrow-down"></i> Reste: <span class="${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</span></div>
-                            <div class="item"><i class="fas fa-check-circle"></i> <span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></div>
-                            ${r.note && r.note !== 'Aucune note' ? `<div class="item" style="grid-column:1/-1;"><i class="fas fa-sticky-note"></i> ${escapeHtml(r.note)}</div>` : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            let cards = list.map((r, i) => renderReservationCard(r, i)).join('');
 
             return `
-                <div class="card">
-                    <div class="card-title">🔍 Recherche avancée</div>
-                    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-                        <input type="date" class="date-picker-native" data-action="search" value="${state.searchDate}" style="padding:8px 12px; border-radius:10px; border:1px solid #ddd; flex:1; min-width:140px; font-size:13px;" />
-                        <input type="text" id="search-name-input" placeholder="Nom ou prénom..." value="${state.searchName}" style="padding:8px 12px; border-radius:10px; border:1px solid #ddd; flex:2; min-width:140px; font-size:13px;" />
-                        <button onclick="searchReservations();" style="padding:8px 16px; background:#FF6B6B; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:13px;">🔍 Rechercher</button>
-                        <button onclick="clearSearch();" style="padding:8px 16px; background:#6c757d; color:white; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:13px;">🗑️ Effacer</button>
+                <div class="card search-card">
+                    <div class="card-title">Recherche</div>
+                    <div class="search-bar">
+                        <input type="date" class="date-picker-native" data-action="search" value="${state.searchDate}" />
+                        <input type="text" id="search-name-input" placeholder="Nom ou prénom…" value="${escapeHtml(state.searchName)}" />
+                        <button type="button" class="btn-search" onclick="searchReservations();"><i class="fas fa-search"></i>Rechercher</button>
+                        <button type="button" class="btn-clear" onclick="clearSearch();">Effacer</button>
                     </div>
-                    <div style="padding:8px 12px; background:#e3f2fd; border-radius:8px; font-size:13px; color:#0a2540;">
-                        📊 ${list.length} réservation(s)
-                    </div>
+                    <p class="search-count">${list.length} réservation(s)</p>
                 </div>
     
-                <div style="margin-top:8px;">
-                    <h3 style="font-size:16px; font-weight:700; color:#0a2540; margin-bottom:12px;">📋 Liste des réservations</h3>
+                <div class="resa-list-wrap">
+                    <h3 class="section-title">Liste des réservations</h3>
                     ${state.reservationsLoading ? '<div style="text-align:center;padding:32px;"><div class="loading-spinner" style="margin:0 auto;"></div></div>' : ''}
                     <div id="reservations-list">
                         ${cards || `
                             <div class="empty-state">
-                                <div class="emoji">📭</div>
                                 <h3>Aucune réservation trouvée</h3>
                             </div>
                         `}
@@ -2540,10 +1365,10 @@
                 else cls += '';
     
                 let statusText = '';
-                if (!boatDate) statusText = '<span class="status" style="color:#999;">📅 Choisir date</span>';
-                else if (!isAvailable) statusText = '<span class="status occupied">❌ Complet</span>';
-                else if (isSelected) statusText = '<span class="status selected">✅ Sélectionné</span>';
-                else statusText = '<span class="status free">✓ Libre</span>';
+                if (!boatDate) statusText = '<span class="status">Choisir date</span>';
+                else if (!isAvailable) statusText = '<span class="status occupied">Complet</span>';
+                else if (isSelected) statusText = '<span class="status selected">Sélectionné</span>';
+                else statusText = '<span class="status free">Libre</span>';
 
                 const onclick = boatDate
                     ? (isAvailable
@@ -2551,8 +1376,9 @@
                         : `alert('Ce créneau est complet pour les 2 bateaux')`)
                     : `alert('Veuillez d\\'abord sélectionner une date')`;
     
+                if (!boatDate) cls += ' pending-date';
                 return `
-                    <div class="${cls}" onclick="${onclick}" style="${!boatDate ? 'cursor:pointer;border-color:#ccc;background:#f5f5f5;color:#999;' : ''}">
+                    <div class="${cls}" onclick="${onclick}">
                         ${slot}
                         ${statusText}
                     </div>
@@ -2561,7 +1387,7 @@
     
             return `
                 <div class="boat-form">
-                    <div class="form-title">🚤 Nouvelle réservation bateau</div>
+                    <div class="form-title">Nouvelle réservation bateau</div>
     
                     <div class="form-row">
                         <div class="form-group">
@@ -2580,16 +1406,16 @@
     
                     <div class="form-group">
                         <label>Date</label>
-                        <input type="date" class="date-picker-native" data-action="boat" value="${state.boatDate}" style="width:100%;padding:8px 12px; border-radius:10px; border:1px solid #ddd;" />
+                        <input type="date" class="date-picker-native" data-action="boat" value="${state.boatDate}" />
                     </div>
     
                     <div class="form-group">
                         <label>Créneaux disponibles</label>
-                        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:4px;">
+                        <div class="slot-grid">
                             ${slotsHtml}
                         </div>
-                        ${state.boatSlot ? `<div class="selected-time">⏰ Créneau sélectionné: ${state.boatSlot}</div>` : ''}
-                        ${state.boatDate && !state.boatSlot ? `<div class="select-hint">👆 Cliquez sur un créneau libre</div>` : ''}
+                        ${state.boatSlot ? `<div class="selected-time">Créneau sélectionné : ${state.boatSlot}</div>` : ''}
+                        ${state.boatDate && !state.boatSlot ? `<div class="select-hint">Cliquez sur un créneau libre</div>` : ''}
                     </div>
     
                     <div class="form-group">
@@ -2602,7 +1428,7 @@
                     </div>
     
                     <div class="payment-section">
-                        <h4>💰 Paiement</h4>
+                        <h4>Paiement</h4>
                         <div class="payment-row">
                             <div class="payment-field">
                                 <label>Total à payer (DA)</label>
@@ -2613,51 +1439,134 @@
                                 <input type="number" class="boat-input" data-field="boatVersement" placeholder="0" value="${state.boatVersement}" />
                             </div>
                         </div>
-                        <div class="payment-row" style="margin-top:6px;">
+                        <div class="payment-row payment-row--reste">
                             <div class="payment-field full">
                                 <label class="reste-label">Reste à payer (DA)</label>
                                 <input type="text" id="reste-bateau" class="reste-input" value="${state.boatResteAPayer}" disabled />
                             </div>
                         </div>
-                        <div style="margin-top:8px;">
-                            <label style="font-size:12px;color:#666;">Statut paiement</label>
-                            <div id="status-bateau" style="margin-top:4px;"></div>
+                        <div class="payment-status-block">
+                            <label>Statut paiement</label>
+                            <div id="status-bateau"></div>
                         </div>
-                        <div class="form-group" style="margin-top:8px;">
-                            <label>📝 Note / Remarque</label>
-                            <textarea class="boat-input note-input" data-field="boatNote" rows="2" placeholder="Ex: Client VIP, allergies, demande spéciale...">${escapeHtml(state.boatNote)}</textarea>
+                        <div class="form-group form-group--note">
+                            <label>Note / Remarque</label>
+                            <textarea class="boat-input note-input" data-field="boatNote" rows="2" placeholder="Ex: Client VIP, allergies, demande spéciale…">${escapeHtml(state.boatNote)}</textarea>
                         </div>
                     </div>
     
-                    <button class="btn-submit" onclick="addBoatReservation();">🚤 Réserver</button>
+                    <button class="btn-submit" onclick="addBoatReservation();"><i class="fas fa-ship"></i> Réserver</button>
                 </div>
             `;
         }
     
+        function attributionStaffKey(r) {
+            if (r.createdById) return String(r.createdById);
+            if (r.createdByName) return `name:${r.createdByName}`;
+            return 'none';
+        }
+
+        function renderAttributions() {
+            const rows = state.reservations;
+            const counts = { all: rows.length, none: 0 };
+            const labels = { none: 'Sans attribution' };
+            rows.forEach((r) => {
+                const k = attributionStaffKey(r);
+                if (k === 'none') counts.none++;
+                else {
+                    counts[k] = (counts[k] || 0) + 1;
+                    labels[k] = r.createdByName || `Staff #${k}`;
+                }
+            });
+            state.employeurs.forEach((e) => {
+                const id = String(e.id);
+                if (!labels[id]) labels[id] = `${e.prenom || ''} ${e.nom || ''}`.trim() || e.email;
+                if (counts[id] == null) counts[id] = 0;
+            });
+
+            const attributed = rows.filter((r) => r.createdByName || r.createdById).length;
+            const staffActive = Object.keys(counts).filter((k) => k !== 'all' && k !== 'none' && counts[k] > 0).length;
+
+            const staffTabs = [
+                { id: 'all', label: 'Tous', n: counts.all },
+                { id: 'none', label: 'Sans attribution', n: counts.none },
+                ...Object.keys(counts)
+                    .filter((k) => k !== 'all' && k !== 'none' && counts[k] > 0)
+                    .sort((a, b) => counts[b] - counts[a] || (labels[a] || '').localeCompare(labels[b] || '', 'fr'))
+                    .map((id) => ({ id, label: labels[id], n: counts[id] }))
+            ];
+
+            const q = (state.attributionQ || '').toLowerCase().trim();
+            const filtered = rows.filter((r) => {
+                if (state.attributionStaff === 'none') {
+                    if (r.createdById || r.createdByName) return false;
+                } else if (state.attributionStaff !== 'all' && attributionStaffKey(r) !== state.attributionStaff) {
+                    return false;
+                }
+                if (!q) return true;
+                return [r.nom, r.prenom, r.tel, r.activite, r.createdByName, r.id, r.date]
+                    .join(' ')
+                    .toLowerCase()
+                    .includes(q);
+            }).sort((a, b) => `${b.date || ''} ${b.heure || ''}`.localeCompare(`${a.date || ''} ${a.heure || ''}`));
+
+            return `
+                <div class="attr-intro card">
+                    <div class="card-title">Qui a pris chaque réservation</div>
+                    <p>Chaque prise sur cette page enregistre l’employeur. Filtrez par personne ou réattribuez depuis le détail.</p>
+                </div>
+                <div class="attr-stats">
+                    <div class="stat-pill"><strong>${rows.length}</strong><span>Total</span></div>
+                    <div class="stat-pill"><strong>${attributed}</strong><span>Attribuées</span></div>
+                    <div class="stat-pill"><strong>${counts.none}</strong><span>Sans nom</span></div>
+                    <div class="stat-pill"><strong>${staffActive}</strong><span>Employeurs</span></div>
+                </div>
+                <div class="attr-tabs">
+                    ${staffTabs.map((t) => `
+                        <button type="button" class="${state.attributionStaff === t.id ? 'is-active' : ''}"
+                            onclick="state.attributionStaff='${String(t.id).replace(/'/g, "\\'")}'; render();">
+                            ${escapeHtml(t.label)} <em>${t.n}</em>
+                        </button>
+                    `).join('')}
+                </div>
+                <div class="card search-card">
+                    <div class="search-bar">
+                        <input type="search" id="attr-search" placeholder="Client, activité, employeur…" value="${escapeHtml(state.attributionQ)}" />
+                    </div>
+                    <p class="search-count">${filtered.length} réservation(s)</p>
+                </div>
+                <div class="resa-list-wrap">
+                    ${filtered.map((r, i) => renderReservationCard(r, i)).join('') || `
+                        <div class="empty-state"><h3>Aucune réservation pour ce filtre</h3></div>
+                    `}
+                </div>
+            `;
+        }
+
         function renderAdmin() {
             return `
                 <div class="card">
-                    <div class="card-title">⚙️ Administration des créneaux</div>
+                    <div class="card-title">Administration des créneaux</div>
     
                     <div class="admin-row">
                         <input type="text" placeholder="Ex: 19h-21h" value="${state.newSlot}" oninput="state.newSlot=this.value; render();" />
-                        <button class="btn-add" onclick="addTimeSlot();">➕ Ajouter</button>
+                        <button class="btn-add" onclick="addTimeSlot();">Ajouter</button>
                     </div>
     
-                    <div style="margin-bottom:12px;">
-                        <div style="font-weight:600; margin-bottom:8px; color:#444; font-size:13px;">📋 Créneaux existants (${state.timeSlots.length}):</div>
+                    <div class="admin-slots-block">
+                        <div class="admin-slots-label">Créneaux existants (${state.timeSlots.length})</div>
                         <div class="slot-tags">
                             ${state.timeSlots.map(slot => `
-                                <span class="slot-tag ${state.deleteMode ? 'delete-mode' : ''}" onclick="deleteSlot('${slot}');" title="${state.deleteMode ? 'Cliquer pour supprimer' : 'Cliquer pour modifier'}">
-                                    ${slot} ${state.deleteMode ? '🗑️' : '✏️'}
+                                <span class="slot-tag ${state.deleteMode ? 'delete-mode' : ''}" onclick="deleteSlot('${slot}');" title="${state.deleteMode ? 'Cliquer pour supprimer' : 'Créneau'}">
+                                    ${slot}${state.deleteMode ? ' <i class="fas fa-times"></i>' : ''}
                                 </span>
                             `).join('')}
                         </div>
                     </div>
     
                     <div class="admin-actions">
-                        <button class="btn-delete-mode" onclick="state.deleteMode=!state.deleteMode; render();">${state.deleteMode ? '❌ Annuler' : '🗑️ Supprimer'}</button>
-                        <button class="btn-reset" onclick="if(confirm('Réinitialiser tous les créneaux par défaut ?')){ const def=['09h-11h','11h-13h','13h-15h','15h-17h','17h-19h']; saveSlots(def); state.boatSlot=def[0]; render(); }">🔄 Réinitialiser</button>
+                        <button class="btn-delete-mode" onclick="state.deleteMode=!state.deleteMode; render();">${state.deleteMode ? 'Annuler' : 'Mode suppression'}</button>
+                        <button class="btn-reset" onclick="if(confirm('Réinitialiser tous les créneaux par défaut ?')){ const def=['09h-11h','11h-13h','13h-15h','15h-17h','17h-19h']; saveSlots(def); state.boatSlot=def[0]; render(); }">Réinitialiser</button>
                     </div>
                 </div>
             `;
@@ -2678,13 +1587,13 @@
                             <span class="status-dot ${emp.isOnline ? 'online' : 'offline'}"></span>
                         </div>
                         <div class="employeur-info">
-                            <h4>${emp.nom} ${emp.prenom} ${emp.isOnline ? '<span class="online-badge">🟢 En ligne</span>' : ''}</h4>
-                            <p>📧 ${emp.email}</p>
-                            <p>📞 ${emp.telephone || 'Non renseigné'}</p>
-                            <div class="last-active">🕐 ${emp.isOnline ? 'En ligne maintenant' : `Déconnecté: ${emp.disconnectedFor || 'Jamais'}`}</div>
+                            <h4>${escapeHtml(emp.nom)} ${escapeHtml(emp.prenom)} ${emp.isOnline ? '<span class="online-badge">En ligne</span>' : ''}</h4>
+                            <p><i class="fas fa-envelope"></i> ${escapeHtml(emp.email)}</p>
+                            <p><i class="fas fa-phone"></i> ${escapeHtml(emp.telephone || 'Non renseigné')}</p>
+                            <div class="last-active">${emp.isOnline ? 'En ligne maintenant' : `Déconnecté : ${escapeHtml(emp.disconnectedFor || 'Jamais')}`}</div>
                             <div class="employeur-footer">
                                 <span class="status-tag ${emp.isOnline ? 'active' : 'inactive'}">${emp.isOnline ? 'Actif' : 'Inactif'}</span>
-                                <span style="color:#888;">${emp.role === 'admin' ? 'Administrateur' : 'Employeur'}</span>
+                                <span class="role-tag">${emp.role === 'admin' ? 'Administrateur' : 'Employeur'}</span>
                             </div>
                         </div>
                     </div>
@@ -2694,7 +1603,7 @@
     
             return `
                 <div class="card">
-                    <div class="card-title">👥 Gestion des employeurs</div>
+                    <div class="card-title">Gestion des employeurs</div>
     
                     <div class="online-stats">
                         <div class="online-stat">
@@ -2715,17 +1624,16 @@
     
                     <div class="filter-online">
                         <button class="${!state.showOnlineOnly ? 'active' : ''}" onclick="state.showOnlineOnly=false; render();">Tous</button>
-                        <button class="${state.showOnlineOnly ? 'active' : ''}" onclick="state.showOnlineOnly=true; render();">🟢 En ligne uniquement</button>
+                        <button class="${state.showOnlineOnly ? 'active' : ''}" onclick="state.showOnlineOnly=true; render();">En ligne uniquement</button>
                     </div>
     
                     <button class="btn-create-employeur" onclick="state.showCreateEmployeurModal=true; render();">
                         <i class="fas fa-user-plus"></i> Nouvel employeur
                     </button>
     
-                    ${state.employeursLoading ? '<div style="text-align:center;padding:16px;"><div class="loading-spinner" style="margin:0 auto;"></div></div>' : ''}
+                    ${state.employeursLoading ? '<div class="loading-inline"><div class="loading-spinner"></div></div>' : ''}
                     ${employeurCards || `
                         <div class="empty-state">
-                            <div class="emoji">👥</div>
                             <h3>${state.showOnlineOnly ? 'Aucun employeur en ligne' : 'Aucun employeur'}</h3>
                         </div>
                     `}
@@ -2739,8 +1647,8 @@
             return `
                 <div class="modal-overlay" onclick="if(event.target===this){state.modalVisible=false; render();}">
                     <div class="modal">
-                        <div class="modal-header" style="background:linear-gradient(135deg,#FF6B6B,#FF8E53);">
-                            <h2>➕ Nouvelle réservation</h2>
+                        <div class="modal-header modal-header--accent">
+                            <h2>Nouvelle réservation</h2>
                             <button class="close-btn" onclick="state.modalVisible=false; render();"><i class="fas fa-times"></i></button>
                         </div>
                         <div class="modal-body">
@@ -2772,16 +1680,16 @@
     
                             <div class="form-group">
                                 <label>Heure</label>
-                                <input type="time" class="time-picker-native" data-action="client" value="${state.heure}" style="width:100%;padding:8px 12px; border-radius:10px; border:1px solid #ddd;" />
+                                <input type="time" class="time-picker-native" data-action="client" value="${state.heure}" />
                             </div>
     
                             <div class="form-group">
                                 <label>Date</label>
-                                <input type="date" class="date-picker-native" data-action="client" value="${state.date}" style="width:100%;padding:8px 12px; border-radius:10px; border:1px solid #ddd;" />
+                                <input type="date" class="date-picker-native" data-action="client" value="${state.date}" />
                             </div>
     
-                            <div class="payment-section" style="margin:10px 0;">
-                                <h4>💰 Paiement</h4>
+                            <div class="payment-section">
+                                <h4>Paiement</h4>
                                 <div class="payment-row">
                                     <div class="payment-field">
                                         <label>Total à payer (DA)</label>
@@ -2792,23 +1700,23 @@
                                         <input type="number" class="client-input" data-field="versement" placeholder="0" value="${state.versement}" />
                                     </div>
                                 </div>
-                                <div class="payment-row" style="margin-top:6px;">
+                                <div class="payment-row payment-row--reste">
                                     <div class="payment-field full">
                                         <label class="reste-label">Reste à payer (DA)</label>
                                         <input type="text" id="reste-client" class="reste-input" value="${state.resteAPayer}" disabled />
                                     </div>
                                 </div>
-                                <div style="margin-top:8px;">
-                                    <label style="font-size:12px;color:#666;">Statut paiement</label>
-                                    <div id="status-client" style="margin-top:4px;"></div>
+                                <div class="payment-status-block">
+                                    <label>Statut paiement</label>
+                                    <div id="status-client"></div>
                                 </div>
-                                <div class="form-group" style="margin-top:8px;">
-                                    <label>📝 Note / Remarque</label>
-                                    <textarea class="client-input note-input" data-field="note" rows="2" placeholder="Ex: Allergies, préférences, infos complémentaires...">${escapeHtml(state.note)}</textarea>
+                                <div class="form-group form-group--note">
+                                    <label>Note / Remarque</label>
+                                    <textarea class="client-input note-input" data-field="note" rows="2" placeholder="Ex: Allergies, préférences, infos complémentaires…">${escapeHtml(state.note)}</textarea>
                                 </div>
                             </div>
     
-                            <button class="btn-submit" onclick="addReservation();">✅ Ajouter la réservation</button>
+                            <button class="btn-submit" onclick="addReservation();">Ajouter la réservation</button>
                         </div>
                     </div>
                 </div>
@@ -2819,22 +1727,16 @@
             const u = state.userInfo;
             return `
                 <div class="modal-overlay" onclick="if(event.target===this){state.profileModalVisible=false; render();}">
-                    <div class="modal profile-modal" style="max-width:450px;">
+                    <div class="modal profile-modal modal--sm">
                         <div class="profile-header">
                             <div class="profile-avatar">${u.prenom?.[0] || ''}${u.nom?.[0] || ''}</div>
                             <div class="profile-name">${u.prenom} ${u.nom}</div>
                             <div class="profile-email">${u.email}</div>
-                            <div class="profile-phone">📞 ${u.telephone || 'Non renseigné'}</div>
+                            <div class="profile-phone">${u.telephone || 'Non renseigné'}</div>
                         </div>
-                        <div style="padding:8px 0;">
+                        <div class="profile-menu">
                             <button class="profile-menu-item" onclick="state.profileModalVisible=false; state.editProfile={nom:'${u.nom}',prenom:'${u.prenom}',telephone:'${u.telephone||''}',email:'${u.email}'}; state.editProfileModalVisible=true; render();">
                                 <i class="fas fa-user"></i> Modifier mon profil
-                            </button>
-                            <button class="profile-menu-item">
-                                <i class="fas fa-chart-bar"></i> Statistiques
-                            </button>
-                            <button class="profile-menu-item">
-                                <i class="fas fa-cog"></i> Paramètres
                             </button>
                             <button class="profile-menu-item logout" onclick="handleLogout();">
                                 <i class="fas fa-sign-out-alt"></i> Déconnexion
@@ -2849,8 +1751,8 @@
             return `
                 <div class="modal-overlay" onclick="if(event.target===this){state.editProfileModalVisible=false; render();}">
                     <div class="modal">
-                        <div class="modal-header" style="background:linear-gradient(135deg,#0a2540,#1a3a5c);">
-                            <h2>✏️ Modifier mon profil</h2>
+                        <div class="modal-header">
+                            <h2>Modifier mon profil</h2>
                             <button class="close-btn" onclick="state.editProfileModalVisible=false; render();"><i class="fas fa-times"></i></button>
                         </div>
                         <div class="modal-body">
@@ -2870,7 +1772,7 @@
                                 <label>Téléphone</label>
                                 <input type="tel" value="${state.editProfile.telephone}" oninput="state.editProfile.telephone=this.value; render();" />
                             </div>
-                            <button class="btn-submit" style="background:linear-gradient(135deg,#4caf50,#45a049);" onclick="updateUserProfile();">💾 Sauvegarder</button>
+                            <button class="btn-submit" onclick="updateUserProfile();">Sauvegarder</button>
                         </div>
                     </div>
                 </div>
@@ -2881,18 +1783,18 @@
             const onlineCount = state.onlineEmployeurs.filter(e => e.isOnline).length;
             return `
                 <div class="modal-overlay" onclick="if(event.target===this){state.notifModalVisible=false; render();}">
-                    <div class="modal" style="max-width:450px;">
-                        <div class="modal-header" style="background:white; border-bottom:1px solid #f0f0f0;">
-                            <h2 style="color:#0a2540;">🔔 Notifications</h2>
-                            <button class="close-btn" style="color:#333;" onclick="state.notifModalVisible=false; render();"><i class="fas fa-times"></i></button>
+                    <div class="modal modal--sm">
+                        <div class="modal-header modal-header--light">
+                            <h2>Notifications</h2>
+                            <button class="close-btn" onclick="state.notifModalVisible=false; render();"><i class="fas fa-times"></i></button>
                         </div>
-                        <div style="padding:4px 0;">
+                        <div class="notif-list">
                             ${[
-                                { icon: 'fa-calendar-day', text: `📅 ${state.reservations.filter(r => r.date === getTodayStr()).length} réservation(s) aujourd'hui`, sub: new Date().toLocaleDateString('fr-FR') },
-                                { icon: 'fa-ship', text: `🚤 ${state.boatReservations.length} réservation(s) bateau au total`, sub: 'Statistiques' },
-                                { icon: 'fa-users', text: `👥 ${state.reservations.length} réservation(s) totale(s)`, sub: 'Toutes activités confondues' },
-                                { icon: 'fa-users', text: `👥 ${state.employeurs.length} employeur(s) enregistré(s)`, sub: 'Comptes actifs' },
-                                { icon: 'fa-cloud', text: `🟢 ${onlineCount} employeur(s) en ligne`, sub: 'Actuellement actifs' }
+                                { icon: 'fa-calendar-day', text: `${state.reservations.filter(r => r.date === getTodayStr()).length} réservation(s) aujourd'hui`, sub: new Date().toLocaleDateString('fr-FR') },
+                                { icon: 'fa-ship', text: `${state.boatReservations.length} réservation(s) bateau`, sub: 'Statistiques' },
+                                { icon: 'fa-list', text: `${state.reservations.length} réservation(s) au total`, sub: 'Toutes activités' },
+                                { icon: 'fa-users', text: `${state.employeurs.length} employeur(s)`, sub: 'Comptes enregistrés' },
+                                { icon: 'fa-circle', text: `${onlineCount} employeur(s) en ligne`, sub: 'Actuellement actifs' }
                             ].map(item => `
                                 <div class="notif-item">
                                     <div class="icon"><i class="fas ${item.icon}"></i></div>
@@ -2914,44 +1816,62 @@
             const payment = getPaymentStatusText(r.paymentStatus || 'non_paye');
             return `
                 <div class="modal-overlay" onclick="if(event.target===this){state.detailModalVisible=false; render();}">
-                    <div class="modal" style="max-width:550px;">
-                        <div class="modal-header" style="background:linear-gradient(135deg,#0a2540,#1a3a5c);">
+                    <div class="modal modal--md">
+                        <div class="modal-header">
                             <h2>Détails de la réservation</h2>
                             <button class="close-btn" onclick="state.detailModalVisible=false; render();"><i class="fas fa-times"></i></button>
                         </div>
                         <div class="modal-body">
                             <div class="detail-section">
-                                <h4>👤 Informations client</h4>
-                                <div class="detail-row"><i class="fas fa-user"></i><span class="label">Nom complet:</span><span class="value">${r.nom} ${r.prenom}</span></div>
-                                <div class="detail-row"><i class="fas fa-phone"></i><span class="label">Téléphone:</span><span class="value">${r.tel || 'Non renseigné'}</span></div>
+                                <h4>Client</h4>
+                                <div class="detail-row"><i class="fas fa-user"></i><span class="label">Nom complet</span><span class="value">${escapeHtml(r.nom)} ${escapeHtml(r.prenom)}</span></div>
+                                <div class="detail-row"><i class="fas fa-phone"></i><span class="label">Téléphone</span><span class="value">${escapeHtml(r.tel || 'Non renseigné')}</span></div>
                             </div>
     
                             <div class="detail-section">
-                                <h4>📅 Informations réservation</h4>
-                                <div class="detail-row"><i class="fas fa-calendar"></i><span class="label">Date:</span><span class="value">${r.date}</span></div>
-                                <div class="detail-row"><i class="fas fa-clock"></i><span class="label">Heure:</span><span class="value">${r.heure || '--:--'}</span></div>
-                                <div class="detail-row"><i class="fas fa-users"></i><span class="label">Personnes:</span><span class="value">${r.personnes}</span></div>
-                                <div class="detail-row"><i class="fas fa-tag"></i><span class="label">Activité:</span><span class="value"><span class="activity-badge" style="background:${getActivityColor(r.activite)};padding:2px 10px;border-radius:10px;font-size:11px;">${r.activite}</span></span></div>
-                                ${r.bateau ? `<div class="detail-row"><i class="fas fa-ship"></i><span class="label">Bateau:</span><span class="value">${r.bateau}</span></div>` : ''}
-                                ${r.duree ? `<div class="detail-row"><i class="fas fa-hourglass"></i><span class="label">Durée:</span><span class="value">${r.duree}</span></div>` : ''}
+                                <h4>Réservation</h4>
+                                <div class="detail-row"><i class="fas fa-calendar"></i><span class="label">Date</span><span class="value">${escapeHtml(r.date)}</span></div>
+                                <div class="detail-row"><i class="fas fa-clock"></i><span class="label">Heure</span><span class="value">${escapeHtml(r.heure || '--:--')}</span></div>
+                                <div class="detail-row"><i class="fas fa-users"></i><span class="label">Personnes</span><span class="value">${r.personnes}</span></div>
+                                <div class="detail-row"><i class="fas fa-tag"></i><span class="label">Activité</span><span class="value"><span class="activity-badge" style="background:${getActivityColor(r.activite)}">${escapeHtml(r.activite)}</span></span></div>
+                                ${r.bateau ? `<div class="detail-row"><i class="fas fa-ship"></i><span class="label">Bateau</span><span class="value">${escapeHtml(r.bateau)}</span></div>` : ''}
+                                ${r.duree ? `<div class="detail-row"><i class="fas fa-hourglass"></i><span class="label">Durée</span><span class="value">${escapeHtml(r.duree)}</span></div>` : ''}
                             </div>
     
                             <div class="detail-section">
-                                <h4>💰 Paiement</h4>
-                                <div class="detail-row"><i class="fas fa-money-bill"></i><span class="label">Total à payer:</span><span class="value">${r.totalAPayer || 0} DA</span></div>
-                                <div class="detail-row"><i class="fas fa-credit-card"></i><span class="label">Versement:</span><span class="value">${r.versement || 0} DA</span></div>
-                                <div class="detail-row"><i class="fas fa-arrow-down"></i><span class="label">Reste à payer:</span><span class="value ${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</span></div>
-                                <div class="detail-row"><i class="fas fa-check-circle"></i><span class="label">Statut:</span><span class="value"><span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></span></div>
+                                <h4>Paiement</h4>
+                                <div class="detail-row"><i class="fas fa-money-bill"></i><span class="label">Total</span><span class="value">${r.totalAPayer || 0} DA</span></div>
+                                <div class="detail-row"><i class="fas fa-credit-card"></i><span class="label">Versement</span><span class="value">${r.versement || 0} DA</span></div>
+                                <div class="detail-row"><i class="fas fa-arrow-down"></i><span class="label">Reste</span><span class="value ${(r.resteapayer || 0) > 0 ? 'reste-positive' : 'reste-zero'}">${r.resteapayer || 0} DA</span></div>
+                                <div class="detail-row"><i class="fas fa-check-circle"></i><span class="label">Statut</span><span class="value"><span class="payment-badge" style="background:${payment.color}"><i class="fas ${payment.icon}"></i> ${payment.text}</span></span></div>
 
                                 <div class="payment-actions">
-                                    <button class="btn-non-paye" onclick="updatePaymentStatus(${r.id},'non_paye',0); state.detailModalVisible=false; render();">❌ Non payé</button>
-                                    <button class="btn-verse" onclick="const amt=prompt('Montant de l\\'acompte (DA):'); if(amt!==null && !isNaN(amt)){updatePaymentStatus(${r.id},'verse',parseInt(amt)); state.detailModalVisible=false; render();}">💰 Acompte</button>
-                                    <button class="btn-paye" onclick="updatePaymentStatus(${r.id},'paye',0); state.detailModalVisible=false; render();">✅ Payé</button>
+                                    <button class="btn-non-paye" onclick="updatePaymentStatus(${r.id},'non_paye',0); state.detailModalVisible=false; render();">Non payé</button>
+                                    <button class="btn-verse" onclick="const amt=prompt('Montant de l\\'acompte (DA):'); if(amt!==null && !isNaN(amt)){updatePaymentStatus(${r.id},'verse',parseInt(amt)); state.detailModalVisible=false; render();}">Acompte</button>
+                                    <button class="btn-paye" onclick="updatePaymentStatus(${r.id},'paye',0); state.detailModalVisible=false; render();">Payé</button>
                                 </div>
                             </div>
 
                             <div class="detail-section">
-                                <h4>📝 Note</h4>
+                                <h4>Prise en charge</h4>
+                                <div class="detail-row"><i class="fas fa-user-tie"></i><span class="label">Prise par</span><span class="value">${r.createdByName ? escapeHtml(r.createdByName) : 'Non renseigné'}</span></div>
+                                <div class="detail-row"><i class="fas fa-clock"></i><span class="label">Quand</span><span class="value">${formatTakenAt(r.createdAt) || '—'}</span></div>
+                                ${state.userInfo?.role === 'admin' ? `
+                                <div class="form-group form-group--note">
+                                    <label>Réattribuer</label>
+                                    <select class="attr-assign" onchange="reassignReservation(${r.id}, this)">
+                                        <option value="">— Non attribué —</option>
+                                        ${state.employeurs.map(e => {
+                                            const label = `${e.prenom || ''} ${e.nom || ''}`.trim() || e.email;
+                                            const sel = String(e.id) === String(r.createdById) ? ' selected' : '';
+                                            return `<option value="${e.id}" data-name="${escapeHtml(label)}"${sel}>${escapeHtml(label)}</option>`;
+                                        }).join('')}
+                                    </select>
+                                </div>` : ''}
+                            </div>
+
+                            <div class="detail-section">
+                                <h4>Note</h4>
                                 <div class="detail-row"><i class="fas fa-sticky-note"></i><span class="label">Remarque:</span><span class="value">${escapeHtml(r.note || 'Aucune note')}</span></div>
                             </div>
     
@@ -2969,8 +1889,8 @@
             return `
                 <div class="modal-overlay" onclick="if(event.target===this){state.showCreateEmployeurModal=false; render();}">
                     <div class="modal">
-                        <div class="modal-header" style="background:linear-gradient(135deg,#4caf50,#45a049);">
-                            <h2>👥 Nouvel employeur</h2>
+                        <div class="modal-header modal-header--success">
+                            <h2>Nouvel employeur</h2>
                             <button class="close-btn" onclick="state.showCreateEmployeurModal=false; render();"><i class="fas fa-times"></i></button>
                         </div>
                         <div class="modal-body">
@@ -3001,7 +1921,7 @@
                                     <div class="chip ${emp.role === 'admin' ? 'active' : ''}" onclick="state.newEmployeur.role='admin'; render();">Admin</div>
                                 </div>
                             </div>
-                            <button class="btn-submit" style="background:linear-gradient(135deg,#4caf50,#45a049);" onclick="createEmployeur();">✅ Créer le compte</button>
+                            <button class="btn-submit btn-submit--success" onclick="createEmployeur();">Créer le compte</button>
                         </div>
                     </div>
                 </div>

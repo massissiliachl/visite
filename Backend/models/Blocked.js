@@ -21,7 +21,7 @@ const Blocked = sequelize.define('Blocked', {
     defaultValue: 'activity'
   },
   item_id: { 
-    type: DataTypes.INTEGER, 
+    type: DataTypes.STRING, 
     allowNull: true
   }
 }, {

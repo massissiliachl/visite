@@ -1,0 +1,634 @@
+/* ===== Réservations admin ===== */
+.resa-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.resa-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.3rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    box-shadow: var(--shadow-soft);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.resa-tabs button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.95rem;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.84rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+}
+
+.resa-tabs button em {
+    font-style: normal;
+    font-size: 0.7rem;
+    font-weight: 700;
+    min-width: 22px;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+    background: var(--mist);
+    color: var(--ink);
+}
+
+.resa-tabs button:hover { color: var(--ink); }
+
+.resa-tabs button.is-active {
+    background: var(--sea-ink);
+    color: #fff;
+}
+
+.resa-tabs button.is-active em {
+    background: var(--grad);
+    color: #fff;
+}
+
+.resa-toolbar__right {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 240px;
+}
+
+.resa-search {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex: 1;
+    max-width: 340px;
+    padding: 0 0.95rem;
+    height: 44px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--muted);
+}
+
+.resa-search:focus-within {
+    border-color: rgba(226, 69, 60, 0.4);
+    box-shadow: 0 0 0 4px rgba(226, 69, 60, 0.08);
+}
+
+.resa-search input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    font-size: 0.88rem;
+    color: var(--ink);
+}
+
+.resa-refresh {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--muted);
+    flex-shrink: 0;
+    transition: color 0.2s, transform 0.3s var(--ease);
+}
+
+.resa-refresh:hover { color: var(--coral); transform: rotate(90deg); }
+
+.resa-module.is-loading .resa-refresh i { animation: resaSpin 0.9s linear infinite; }
+
+@keyframes resaSpin { to { transform: rotate(360deg); } }
+
+.resa-status {
+    min-height: 1.3rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: #0f7a69;
+    margin-bottom: 0.4rem;
+}
+
+.resa-status.is-error { color: var(--coral); }
+
+/* ----- Liste ----- */
+.resa-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 0.9rem;
+}
+
+.resa-list > .admin-empty { grid-column: 1 / -1; }
+
+.resa-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.1rem 1.15rem 1rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), opacity 0.2s;
+    animation: resaIn 0.4s var(--ease) both;
+}
+
+.resa-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--line-strong);
+}
+
+.resa-card.is-pending::before { background: var(--grad); }
+.resa-card.is-ok::before { background: linear-gradient(180deg, #1fb59c, #0f7a69); }
+.resa-card.is-ko::before { background: #cbd5e1; }
+
+.resa-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+.resa-card.is-busy { opacity: 0.55; pointer-events: none; }
+
+@keyframes resaIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+}
+
+.resa-card--skeleton {
+    min-height: 260px;
+    background: linear-gradient(100deg, #fff 30%, var(--mist) 50%, #fff 70%) 0 0 / 300% 100%;
+    animation: resaShimmer 1.3s linear infinite;
+}
+
+@keyframes resaShimmer { to { background-position: -150% 0; } }
+
+.resa-card__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.resa-card__head .dash-pill {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.resa-card__client {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+}
+
+.resa-card__client strong {
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.resa-card__client span { font-size: 0.74rem; color: var(--muted); }
+
+.resa-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-style: normal;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(145deg, #2f6ab8, #0b1f3a);
+}
+
+.resa-module[data-resa-kind="heb"] .resa-avatar { background: var(--grad); }
+
+.resa-card__item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 0.8rem;
+    border-radius: 12px;
+    background: var(--foam);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.resa-card__item i { color: var(--coral); }
+
+.resa-card__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem 0.9rem;
+}
+
+.resa-card__facts dt {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.resa-card__facts dd {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: none;
+}
+
+.resa-card__facts dd small {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+}
+
+.resa-card__facts div:first-child { grid-column: span 2; }
+
+.resa-amount { color: var(--coral) !important; font-weight: 800 !important; }
+
+.resa-card__note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    padding: 0.6rem 0.75rem;
+    border-left: 3px solid var(--sun);
+    background: #fffaf2;
+    border-radius: 0 10px 10px 0;
+    white-space: pre-wrap;
+}
+
+.resa-card__note i { margin-right: 0.4rem; color: var(--sun); font-size: 0.7rem; }
+
+.resa-card__contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.resa-card__contact a,
+.resa-card__contact button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    max-width: 100%;
+    padding: 0.38rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #fff;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.resa-card__contact a:hover,
+.resa-card__contact button:hover { border-color: var(--coral); color: var(--coral); }
+
+.resa-card__contact i { color: var(--muted); }
+.resa-card__contact .is-wa i { color: #25d366; }
+.resa-card__contact button i { color: var(--sun); }
+
+.resa-card__actions {
+    display: flex;
+    gap: 0.45rem;
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--line);
+}
+
+.resa-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.68rem 0.8rem;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--foam);
+    color: var(--ink);
+    font-size: 0.84rem;
+    font-weight: 700;
+    transition: transform 0.2s var(--ease), filter 0.2s, background 0.2s;
+}
+
+.resa-btn:hover { transform: translateY(-1px); }
+
+.resa-btn--ok {
+    border: none;
+    color: #fff;
+    background: linear-gradient(135deg, #1fb59c, #0f7a69);
+    box-shadow: 0 10px 20px -12px rgba(15, 122, 105, 0.9);
+}
+
+.resa-btn--ko {
+    color: var(--coral);
+    background: #fff3f2;
+    border-color: rgba(226, 69, 60, 0.2);
+}
+
+.resa-btn--icon {
+    flex: 0 0 44px;
+    color: var(--muted);
+    background: #fff;
+}
+
+.resa-btn--icon:hover { color: var(--coral); border-color: rgba(226, 69, 60, 0.3); }
+
+/* ----- Hébergements ----- */
+.prop-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.35rem 0 0.25rem;
+}
+
+.prop-types button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.prop-types button:hover { color: var(--ink); border-color: var(--line-strong); }
+
+.prop-types button.is-active {
+    color: var(--coral);
+    border-color: rgba(226, 69, 60, 0.35);
+    background: #fff5f3;
+}
+
+[data-admin-panel="properties"].is-loading .resa-refresh i { animation: resaSpin 0.9s linear infinite; }
+
+.prop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.9rem;
+}
+
+.prop-grid > .admin-empty { grid-column: 1 / -1; }
+
+.prop-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), opacity 0.2s;
+    animation: resaIn 0.4s var(--ease) both;
+}
+
+.prop-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.prop-card.is-busy { opacity: 0.55; pointer-events: none; }
+.prop-card.is-ko { opacity: 0.8; }
+.prop-card.resa-card--skeleton { min-height: 380px; }
+
+.prop-card__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, #17386a, #0b1f3a);
+    overflow: hidden;
+}
+
+.prop-card__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 31, 58, 0.35) 0%, transparent 35%, transparent 70%, rgba(11, 31, 58, 0.35) 100%);
+    pointer-events: none;
+}
+
+.prop-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+}
+
+.prop-card:hover .prop-card__media img { transform: scale(1.05); }
+
+.prop-card__type,
+.prop-card__count {
+    position: absolute;
+    z-index: 1;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(11, 31, 58, 0.55);
+    backdrop-filter: blur(8px);
+    text-transform: capitalize;
+}
+
+.prop-card__type { top: 0.7rem; left: 0.7rem; }
+.prop-card__count { bottom: 0.7rem; right: 0.7rem; }
+
+.prop-card__media .dash-pill {
+    position: absolute;
+    z-index: 1;
+    top: 0.7rem;
+    right: 0.7rem;
+    box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.4);
+}
+
+.prop-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1rem 1.1rem 0.9rem;
+    flex: 1;
+}
+
+.prop-card__body h4 {
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--ink);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.prop-card__loc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: -0.35rem;
+}
+
+.prop-card__loc i { color: var(--coral); margin-right: 0.35rem; }
+
+.prop-card__features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.prop-card__features span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 8px;
+    background: var(--foam);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.prop-card__features i { color: var(--sea-mid); font-size: 0.7rem; }
+
+.prop-card__meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 12px;
+    background: var(--foam);
+}
+
+.prop-card__meta small,
+.prop-card__owner small {
+    display: block;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.prop-card__meta strong { font-size: 0.92rem; font-weight: 800; color: var(--ink); }
+.prop-card__meta div:first-child strong { color: var(--coral); }
+
+.prop-card__pending {
+    display: inline-block;
+    margin-left: 0.25rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #c2410c;
+    background: #fff3e6;
+    vertical-align: middle;
+}
+
+.prop-card__owner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: auto;
+}
+
+.prop-card__owner .resa-avatar { width: 36px; height: 36px; border-radius: 11px; font-size: 0.72rem; background: var(--grad); }
+.prop-card__owner > div { flex: 1; min-width: 0; }
+.prop-card__owner strong { font-size: 0.86rem; font-weight: 700; }
+
+.prop-card__link {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--muted);
+    transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease);
+}
+
+.prop-card__link:hover { color: var(--coral); border-color: var(--coral); transform: translateX(2px); }
+
+.prop-card .resa-card__actions { padding: 0.8rem 1.1rem 1rem; margin: 0; }
+
+/* ----- Visionneuse preuve ----- */
+.resa-proof {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: none;
+    place-items: center;
+    padding: 1.5rem;
+    background: rgba(11, 31, 58, 0.7);
+    backdrop-filter: blur(6px);
+}
+
+.resa-proof.is-open { display: grid; }
+
+.resa-proof__inner {
+    position: relative;
+    max-width: min(900px, 100%);
+    max-height: 90vh;
+    padding: 0.6rem;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: var(--shadow-lift);
+}
+
+.resa-proof__media img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(90vh - 1.2rem);
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+.resa-proof__media iframe {
+    width: min(820px, 85vw);
+    height: 80vh;
+    border: 0;
+    border-radius: 12px;
+}
+
+.resa-proof__close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: var(--grad);
+    color: #fff;
+    box-shadow: var(--shadow-soft);
+}
+
+@media (max-width: 640px) {
+    .resa-toolbar__right { min-width: 0; width: 100%; }
+    .resa-search { max-width: none; }
+    .resa-list { grid-template-columns: 1fr; }
+    .resa-card__facts { grid-template-columns: 1fr 1fr; }
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace propriétaire | Visit Bejaia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/activities.css">
+    <link rel="stylesheet" href="css/proprietaires.css">
+    <style>
+        .owner-login {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 1.5rem;
+            background:
+                radial-gradient(900px 500px at 90% 0%, rgba(232, 160, 58, 0.16), transparent 55%),
+                radial-gradient(700px 400px at 0% 100%, rgba(26, 82, 120, 0.14), transparent 50%),
+                linear-gradient(165deg, #f7fafc, #e8f1f7);
+        }
+        .owner-login__card {
+            width: min(420px, 100%);
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(255,255,255,0.95);
+            border-radius: 22px;
+            padding: 1.75rem;
+            box-shadow: 0 18px 40px -22px rgba(11, 39, 64, 0.4);
+        }
+        .owner-login__card h1 {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            margin-bottom: 0.35rem;
+        }
+        .owner-login__card > p {
+            color: var(--muted);
+            margin-bottom: 1.25rem;
+            font-size: 0.92rem;
+        }
+        .owner-app { display: none; }
+        .owner-app.is-on { display: block; }
+        .owner-login.is-off { display: none; }
+        .owner-cal {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 0.45rem;
+            margin-top: 0.75rem;
+        }
+        .owner-day {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 0.55rem 0.45rem;
+            text-align: center;
+            background: #fff;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .owner-day.is-blocked {
+            background: #fee2e2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+        .owner-day.is-selected {
+            outline: 2px solid var(--coral);
+        }
+        .owner-props-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .owner-prop-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.95);
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .owner-prop-card:hover { transform: translateY(-2px); }
+        .owner-prop-card.is-active {
+            border-color: rgba(214, 69, 61, 0.45);
+            box-shadow: var(--shadow-lift);
+        }
+        .owner-prop-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+        }
+        .owner-prop-card p { color: var(--muted); font-size: 0.82rem; }
+        .owner-toolbar-dates {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            align-items: end;
+            margin-bottom: 0.75rem;
+        }
+        .owner-toolbar-dates label {
+            display: grid;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+        .owner-toolbar-dates input {
+            border: 1px solid var(--line-strong);
+            border-radius: 10px;
+            padding: 0.55rem 0.7rem;
+            font: inherit;
+        }
+        .owner-image-previews {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.35rem 0 0.75rem;
+        }
+        .owner-image-previews img {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+        }
+        .owner-prop-card.is-disabled {
+            opacity: 0.72;
+        }
+    </style>
+</head>
+<body class="admin-body">
+    <!-- LOGIN -->
+    <div class="owner-login" id="ownerLogin">
+        <div class="owner-login__card">
+            <div class="admin-welcome__eyebrow" style="color:var(--sea-mid);margin-bottom:0.75rem">
+                <i class="fas fa-key"></i> Espace propriétaire
+            </div>
+            <h1>Visit Bejaia</h1>
+            <p>Connectez-vous pour gérer la disponibilité de vos appartements.</p>
+            <form class="act-form" id="ownerLoginForm">
+                <label>Email
+                    <input type="email" name="email" required autocomplete="username">
+                </label>
+                <label>Mot de passe
+                    <input type="password" name="password" required autocomplete="current-password">
+                </label>
+                <button type="submit" class="act-btn act-btn--primary" style="width:100%;justify-content:center">
+                    <i class="fas fa-right-to-bracket"></i> Se connecter
+                </button>
+                <p class="act-status" id="ownerLoginError"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- APP -->
+    <div class="owner-app" id="ownerApp">
+        <div class="admin-shell" style="display:block">
+            <div class="admin-main" style="margin-left:0">
+                <header class="admin-header" style="margin:0.85rem 1rem 0">
+                    <div class="admin-header__left">
+                        <div class="admin-header__titles">
+                            <h2>Mes hébergements</h2>
+                            <p id="ownerHello">Gérez vos disponibilités</p>
+                        </div>
+                    </div>
+                    <div class="admin-header__right">
+                        <button type="button" class="act-btn act-btn--ghost act-btn--sm" id="ownerLogout">
+                            <i class="fas fa-right-from-bracket"></i> Déconnexion
+                        </button>
+                    </div>
+                </header>
+
+                <main class="admin-content">
+                    <p class="act-status" id="ownerStatus"></p>
+
+                    <div class="act-toolbar" style="margin-bottom:1rem">
+                        <button type="button" class="act-btn act-btn--primary" id="ownerBtnAdd">
+                            <i class="fas fa-plus"></i> Ajouter un hébergement
+                        </button>
+                    </div>
+
+                    <section class="admin-surface" id="ownerAddPanel" hidden style="margin-bottom:1rem">
+                        <div class="admin-surface__head">
+                            <h4>Proposer un hébergement</h4>
+                            <span>Validation admin requise</span>
+                        </div>
+                        <form class="act-form" id="ownerAddForm">
+                            <div class="act-form__row">
+                                <label>Titre
+                                    <input name="title" required placeholder="Appartement F2 centre-ville">
+                                </label>
+                                <label>Type
+                                    <select name="type">
+                                        <option value="appartement">Appartement</option>
+                                        <option value="villa">Villa</option>
+                                        <option value="chalet">Chalet</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <label>Localisation
+                                <input name="location" required placeholder="Béjaïa">
+                            </label>
+                            <label>Description
+                                <textarea name="description" required></textarea>
+                            </label>
+                            <div class="act-form__row">
+                                <label>Prix / nuit (DA)
+                                    <input name="price" type="number" min="0" placeholder="15000">
+                                </label>
+                                <label>Capacité
+                                    <input name="capacity" type="number" min="1" placeholder="4">
+                                </label>
+                            </div>
+                            <label>Images
+                                <input type="file" id="ownerImageFiles" name="imageFiles" accept="image/*" multiple>
+                                <small style="display:block;margin-top:0.35rem;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">
+                                    Choisissez une ou plusieurs photos (JPG, PNG…). Max 5 Mo chacune.
+                                </small>
+                            </label>
+                            <div class="owner-image-previews" id="ownerImagePreviews"></div>
+                            <label>Ou coller des URLs (optionnel, une par ligne)
+                                <textarea name="images" placeholder="https://… ou assets/images/…"></textarea>
+                            </label>
+                            <div class="act-form__actions">
+                                <button type="submit" class="act-btn act-btn--primary">
+                                    <i class="fas fa-paper-plane"></i> Envoyer pour validation
+                                </button>
+                                <button type="button" class="act-btn act-btn--ghost" id="ownerAddCancel">Annuler</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <div class="owner-props-grid" id="ownerProps"></div>
+
+                    <section class="admin-surface" id="ownerCalendarPanel" hidden>
+                        <div class="admin-surface__head">
+                            <h4 id="ownerSelectedTitle">Disponibilités</h4>
+                            <span>Cliquez une date bloquée pour la débloquer</span>
+                        </div>
+
+                        <div class="owner-toolbar-dates">
+                            <label>Du
+                                <input type="date" id="ownerDateFrom">
+                            </label>
+                            <label>Au
+                                <input type="date" id="ownerDateTo">
+                            </label>
+                            <label>Motif
+                                <input type="text" id="ownerReason" placeholder="Indisponible" style="min-width:160px">
+                            </label>
+                            <button type="button" class="act-btn act-btn--primary" id="ownerBlockBtn">
+                                <i class="fas fa-ban"></i> Bloquer
+                            </button>
+                        </div>
+
+                        <div class="owner-cal" id="ownerBlockedList"></div>
+                    </section>
+
+                    <section class="admin-surface" style="margin-top:1rem">
+                        <div class="admin-surface__head">
+                            <h4>Réservations</h4>
+                            <span>Vos appartements</span>
+                        </div>
+                        <div id="ownerReservations">
+                            <div class="admin-empty">
+                                <i class="fas fa-inbox"></i>
+                                <strong>Chargement…</strong>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/proprietaire-portal.js"></script>
+</body>
+</html>

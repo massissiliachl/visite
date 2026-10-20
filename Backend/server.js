@@ -20,6 +20,14 @@ const {
   ensureUserColumns
 } = require("./utils/ensureUserColumns");
 
+const {
+  ensureActivitiesTable
+} = require("./utils/ensureActivitiesTable");
+
+const {
+  ensureOwnerSchema
+} = require("./utils/ensureOwnerSchema");
+
 
 // ROUTES
 const adminRoutes = require("./routes/adminRoutes");
@@ -29,6 +37,8 @@ const propertyReservationRoutes = require("./routes/propertyReservationRoutes");
 const authRoutes = require("./routes/authRoutes");
 const emailRoutes = require("./routes/emailRoutes");
 const ReservationAdminRoute = require("./routes/ReservationAdminRoute");
+const activityRoutes = require("./routes/activityRoutes");
+const ownerRoutes = require("./routes/ownerRoutes");
 
 
 const app = express();
@@ -96,12 +106,9 @@ multer.diskStorage({
 
 
  filename:(req,file,cb)=>{
-
-  cb(
-   null,
-   Date.now()+"-"+file.originalname
-  );
-
+  const safe = String(file.originalname || "image")
+    .replace(/[^a-zA-Z0-9._-]/g, "_");
+  cb(null, Date.now() + "-" + safe);
  }
 
 });
@@ -115,6 +122,13 @@ multer({
 
  limits:{
   fileSize:5*1024*1024
+ },
+
+ fileFilter:(req,file,cb)=>{
+  if (!file.mimetype || !file.mimetype.startsWith("image/")) {
+   return cb(new Error("Seules les images sont acceptées"));
+  }
+  cb(null, true);
  }
 
 });
@@ -161,13 +175,16 @@ const jwt=require("jsonwebtoken");
 const decoded =
 jwt.verify(
  token,
- process.env.JWT_SECRET
+ process.env.JWT_SECRET || "SECRET_KEY"
 );
 
 
 
-if(decoded.email !==
-"admin@visitbejaia.com"){
+if(
+ decoded.email !== "admin@visitbejaia.com" &&
+ decoded.role !== "admin" &&
+ decoded.role !== "proprietaire"
+){
 
 return res.status(403).json({
  error:"Interdit"
@@ -178,6 +195,7 @@ return res.status(403).json({
 
 
 req.admin=decoded;
+req.user=decoded;
 
 
 next();
@@ -236,6 +254,27 @@ url:
 });
 
 
+app.post(
+"/api/upload/multiple",
+auth,
+upload.array("images", 12),
+(req,res)=>{
+
+if(!req.files || !req.files.length){
+return res.status(400).json({
+ error:"images manquantes"
+});
+}
+
+res.json({
+urls: req.files.map(
+ (f) => `assets/images/properties/${f.filename}`
+)
+});
+
+});
+
+
 
 
 
@@ -267,6 +306,18 @@ propertyReservationRoutes
 app.use(
 "/api/admin",
 adminRoutes
+);
+
+
+app.use(
+"/api/activities",
+activityRoutes
+);
+
+
+app.use(
+"/api/owner",
+ownerRoutes
 );
 
 
@@ -387,9 +438,16 @@ console.log(
 //await ensurePropertyColumns(sequelize);
 
 
-//await ensureReservationAdminColumns(sequelize);
+await ensureReservationAdminColumns(sequelize);
 
 //await ensureUserColumns(sequelize);
+
+await ensureActivitiesTable(sequelize);
+
+await ensureOwnerSchema(sequelize);
+
+const { seedSiteProperties } = require("./utils/seedSiteProperties");
+await seedSiteProperties();
 
 
 

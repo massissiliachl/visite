@@ -1,5 +1,6 @@
 // controllers/ReservationAdminController.js
 const { ReservationAdmin } = require("../models");
+const users = require("../models/users");
 
 // ============================================================
 // FONCTIONS UTILITAIRES DE NORMALISATION
@@ -104,9 +105,36 @@ function formatReservation(row) {
         resteAPayer: resteFinal,
         note: getStringValue(data, 'note', 'note') || "Aucune note",
         paymentStatus: paymentStatus,
+        createdById: data.createdById || data.created_by_id || null,
+        createdByName: getStringValue(data, 'createdByName', 'created_by_name') || null,
         createdAt: data.createdAt || data.created_at || null,
         updatedAt: data.updatedAt || data.updated_at || null
     };
+}
+
+async function resolveActor(req) {
+    const u = req.user || req.admin || {};
+    if (u.id) {
+        try {
+            const row = await users.findByPk(u.id);
+            if (row) {
+                return {
+                    id: row.id,
+                    name: `${row.prenom || ""} ${row.nom || ""}`.trim() || row.email,
+                    role: row.role
+                };
+            }
+        } catch (_) {}
+        return {
+            id: u.id,
+            name: u.email || `Utilisateur #${u.id}`,
+            role: u.role || "employeur"
+        };
+    }
+    if (u.email === "admin@visitbejaia.com" || u.role === "admin") {
+        return { id: null, name: "Admin", role: "admin" };
+    }
+    return null;
 }
 
 /**
@@ -141,6 +169,20 @@ function buildPayload(body) {
         resteAPayer: resteFinal,
         note: getStringValue(body, 'note', 'note') || "Aucune note"
     };
+
+    // Attribution employeur (création / réaffectation admin)
+    const hasById = Object.prototype.hasOwnProperty.call(body, 'createdById')
+        || Object.prototype.hasOwnProperty.call(body, 'created_by_id');
+    const hasByName = Object.prototype.hasOwnProperty.call(body, 'createdByName')
+        || Object.prototype.hasOwnProperty.call(body, 'created_by_name');
+    if (hasById) {
+        const byId = body.createdById ?? body.created_by_id;
+        payload.createdById = byId === null || byId === '' ? null : (parseInt(byId, 10) || null);
+    }
+    if (hasByName) {
+        const byName = getStringValue(body, 'createdByName', 'created_by_name');
+        payload.createdByName = byName || null;
+    }
     
     // Ajout des champs optionnels s'ils existent
     if (body.id || body.ID) {
@@ -228,6 +270,12 @@ exports.createReservationAdmin = async (req, res) => {
         }
 
         console.log('✅ [CREATE] Payload validé, création en cours...');
+
+        const actor = await resolveActor(req);
+        if (actor) {
+            payload.createdById = actor.id;
+            payload.createdByName = actor.name;
+        }
         
         const reservation = await ReservationAdmin.create(payload);
         

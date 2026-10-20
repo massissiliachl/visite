@@ -34,7 +34,8 @@ const normalizePropertyPayload = (payload = {}) => ({
     rating: pickFirstDefined(payload.rating, payload.note),
     popular: pickFirstDefined(payload.popular, payload.isPopular, payload.top),
     ambiance: pickFirstDefined(payload.ambiance, payload.ambiances),
-    features: pickFirstDefined(payload.features, payload.equipements, payload.amenities)
+    features: pickFirstDefined(payload.features, payload.equipements, payload.amenities),
+    ownerId: pickFirstDefined(payload.ownerId, payload.owner_id, payload.proprietaireId)
 });
 
 const parseNumber = (value) => {
@@ -105,7 +106,8 @@ const createProperty = async (req, res) => {
             rating,
             popular,
             ambiance,
-            features
+            features,
+            ownerId
         } = payload;
         
         // Validation
@@ -133,7 +135,10 @@ const createProperty = async (req, res) => {
             rating: parseNumber(rating),
             popular: parseBoolean(popular),
             ambiance: parseArray(ambiance),
-            features: parseArray(features)
+            features: parseArray(features),
+            ownerId: ownerId !== undefined && ownerId !== null && ownerId !== ''
+                ? parseNumber(ownerId)
+                : null
         });
         
         console.log(`✅ Admin a créé l'hébergement: ${title}`);
@@ -169,10 +174,11 @@ const updateProperty = async (req, res) => {
             rating,
             popular,
             ambiance,
-            features
+            features,
+            ownerId
         } = payload;
 
-        await property.update({
+        const updateData = {
             title: title || property.title,
             location: location || property.location,
             description: description || property.description,
@@ -188,7 +194,14 @@ const updateProperty = async (req, res) => {
             popular: popular !== undefined ? parseBoolean(popular) : property.popular,
             ambiance: ambiance !== undefined ? parseArray(ambiance) : property.ambiance,
             features: features !== undefined ? parseArray(features) : property.features
-        });
+        };
+
+        if (ownerId !== undefined) {
+            updateData.ownerId =
+                ownerId === null || ownerId === '' ? null : parseNumber(ownerId);
+        }
+
+        await property.update(updateData);
         
         console.log(`✅ Admin a modifié l'hébergement ID: ${req.params.id}`);
         res.json(property);

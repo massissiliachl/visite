@@ -1,0 +1,131 @@
+/* ===== Employeurs ===== */
+.emp-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.emp-main { min-width: 0; display: flex; flex-direction: column; gap: 0.85rem; }
+
+.emp-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.emp-card:hover { border-color: rgba(226, 69, 60, 0.35); box-shadow: var(--shadow-soft); }
+.emp-card.is-active { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(226, 69, 60, 0.12); }
+.emp-card.is-off { opacity: 0.72; }
+
+.emp-card__avatar {
+    position: relative;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--grad);
+    color: #fff;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+.emp-dot {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #94a3b8;
+    border: 2px solid #fff;
+}
+.emp-dot.is-on { background: #16a34a; }
+
+.emp-card__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
+.emp-card__body strong { font-size: 0.95rem; color: var(--ink); }
+.emp-card__body span { font-size: 0.8rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.emp-card__body small { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; margin-top: 0.2rem; }
+.emp-card__body small em { font-style: normal; font-size: 0.72rem; color: var(--muted); }
+.emp-resa-link {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    font: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--sea-mid);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.emp-resa-link:hover { color: var(--coral); }
+
+.emp-card__actions { display: flex; gap: 0.25rem; flex-shrink: 0; }
+.emp-card__actions button {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--muted);
+    cursor: pointer;
+}
+.emp-card__actions button:hover { color: var(--coral); border-color: rgba(226, 69, 60, 0.3); }
+
+.emp-pass-row { display: flex; gap: 0.45rem; }
+.emp-pass-row input { flex: 1; }
+
+.emp-creds {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    font-size: 0.84rem;
+}
+.emp-creds strong { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.45rem; }
+.emp-creds p { margin: 0.2rem 0; }
+.emp-creds code {
+    display: inline-block;
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.7);
+    font-weight: 700;
+    word-break: break-all;
+}
+
+.act-editor .blk-field { margin-bottom: 0.85rem; }
+.act-editor .blk-field > span {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.act-editor .blk-field input {
+    width: 100%;
+    height: 44px;
+    padding: 0 0.85rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    background: #fff;
+    font: inherit;
+    font-size: 0.9rem;
+}
+.act-editor .blk-submit { width: 100%; margin-top: 0.35rem; }
+
+@media (max-width: 980px) {
+    .emp-layout { grid-template-columns: 1fr; }
+}

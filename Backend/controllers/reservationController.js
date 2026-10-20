@@ -78,16 +78,18 @@ const cleanDate = cleanData.date_depart
 
 // Vérifier si la date est bloquée pour cette activité
 if (cleanData.nom_item && cleanDate) {
+const baseName = cleanData.nom_item.replace(/\s*\([^)]*\)\s*$/, "").trim();
 const blocked = await Blocked.findOne({
   where: {
-    nom_item: cleanData.nom_item,
+    nom_item: [...new Set([cleanData.nom_item, baseName])],
+    item_type: 'activity',
     date: cleanDate
   }
 });
 
 if (blocked) {
   return res.status(400).json({
-    message: `La date ${cleanDate} est bloquée pour l'activité ${cleanData.nom_item}. Veuillez choisir une autre date.`
+    message: `La date ${cleanDate} n'est pas disponible pour ${baseName}. Veuillez choisir une autre date.`
   });
 }
 }
@@ -141,8 +143,18 @@ if (blocked) {
 // ➤ GET all reservations (admin)
 exports.getAllReservations = async (req, res) => {
   try {
+    const light = req.query.light === '1' || req.query.light === 'true';
     const reservations = await Reservation.findAll({
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
+      ...(light && {
+        attributes: {
+          exclude: ['payment_proof'],
+          include: [[
+            Reservation.sequelize.literal(`(payment_proof IS NOT NULL AND payment_proof <> '')`),
+            'has_proof'
+          ]]
+        }
+      })
     });
 
     res.json(reservations);
@@ -159,6 +171,9 @@ exports.getAllReservations = async (req, res) => {
 // ➤ GET one reservation
 exports.getReservationById = async (req, res) => {
   try {
+    if (!/^\d+$/.test(String(req.params.id))) {
+      return res.status(400).json({ message: "Identifiant invalide" });
+    }
     const reservation = await Reservation.findByPk(req.params.id);
 
     if (!reservation) {

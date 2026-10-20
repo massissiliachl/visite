@@ -329,6 +329,7 @@
 
 .filter-btn.active {
     animation: filterPulse 0.45s ease;
+    opacity: 1;
 }
 
 @keyframes filterPulse {
