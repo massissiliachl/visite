@@ -238,7 +238,8 @@
         renderGuichetSummary(guichet);
     }
 
-    if (window.AdminAPI) load();
+    if (sessionStorage.getItem("admin_jwt")) load();
+    window.addEventListener("admin:ready", () => load());
     window.addEventListener("admin:navigate", (e) => {
         if (e.detail?.page === "dashboard" && window.AdminAPI) load();
     });

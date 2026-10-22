@@ -6,7 +6,7 @@
     <title>Admin | Visit Bejaia</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../css/activity-cards.css">
     <link rel="stylesheet" href="css/layout.css">
@@ -18,7 +18,47 @@
     <link rel="stylesheet" href="css/guichet.css">
     <link rel="stylesheet" href="css/stats.css">
 </head>
-<body class="admin-body">
+<body class="admin-body is-locked">
+    <div class="admin-gate" id="adminGate" style="position:fixed;inset:0;z-index:99999;display:grid;">
+        <div class="admin-gate__layout">
+            <form class="admin-gate__card" id="adminGateForm" autocomplete="off">
+                <div class="admin-gate__logo"><img src="../assets/images/logo.png" alt="Visit Béjaïa"></div>
+                <h1>Visit Béjaïa</h1>
+                <p>Espace administration</p>
+                <span class="admin-gate__accent" aria-hidden="true"></span>
+                <label class="admin-gate__field" for="adminGatePass">
+                    <i class="fas fa-lock" aria-hidden="true"></i> Mot de passe
+                    <span class="admin-gate__pass">
+                        <input id="adminGatePass" type="password" name="password" required autocomplete="current-password" placeholder="Entrez votre mot de passe">
+                        <button type="button" class="admin-gate__eye" id="adminGateEye" aria-label="Afficher le mot de passe" aria-pressed="false">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </span>
+                </label>
+                <div class="admin-gate__row">
+                    <label class="admin-gate__check">
+                        <input type="checkbox" id="adminGateRemember" name="remember">
+                        Se souvenir de moi
+                    </label>
+                    <button type="button" class="admin-gate__forgot" id="adminGateForgot">Mot de passe oublié ?</button>
+                </div>
+                <p class="admin-gate__error" id="adminGateError" role="alert"></p>
+                <button type="submit" class="admin-gate__submit"><i class="fas fa-right-to-bracket"></i><span>Se connecter</span></button>
+                <div class="admin-gate__foot">
+                    <span>Visit Béjaïa</span>
+                    <em>L'authenticité à portée de main</em>
+                </div>
+            </form>
+            <aside class="admin-gate__aside">
+                <h2>Béjaïa<br><em>notre fierté</em></h2>
+                <ul>
+                    <li><i class="fas fa-map-location-dot"></i><span>Gérez vos réservations</span></li>
+                    <li><i class="fas fa-calendar-check"></i><span>Suivez vos activités</span></li>
+                    <li><i class="fas fa-users"></i><span>Administrez votre espace</span></li>
+                </ul>
+            </aside>
+        </div>
+    </div>
     <div class="admin-overlay" id="adminOverlay"></div>
 
     <div class="admin-shell" id="adminShell">
@@ -83,7 +123,7 @@
             </nav>
 
             <div class="admin-sidebar__footer">
-                <button type="button" class="admin-sidebar__logout" id="adminLogoutBtn">
+                <button type="button" class="admin-sidebar__logout" id="adminLogoutBtn" onclick="window.__adminLogout && window.__adminLogout()">
                     <i class="fas fa-right-from-bracket"></i><span>Déconnexion</span>
                 </button>
             </div>
@@ -124,6 +164,9 @@
                             </div>
                         </div>
                     </div>
+                    <button type="button" class="admin-header__logout" onclick="window.__adminLogout && window.__adminLogout()">
+                        <i class="fas fa-right-from-bracket"></i><span>Déconnexion</span>
+                    </button>
                     <div class="admin-header__user">
                         <div class="admin-header__avatar">VB</div>
                         <div class="admin-header__user-meta">

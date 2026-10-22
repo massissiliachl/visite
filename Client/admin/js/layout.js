@@ -158,10 +158,11 @@
         if (!isMobile()) closeMobileSidebar();
     });
 
-    document.getElementById("adminLogoutBtn")?.addEventListener("click", () => {
-        // Hook prêt pour l'auth réelle
-        window.dispatchEvent(new CustomEvent("admin:logout"));
-        console.info("[admin] logout demandé — brancher l'auth ici");
+    document.getElementById("adminLogoutBtn")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (window.AdminAPI?.logout) window.AdminAPI.logout();
+        else window.dispatchEvent(new CustomEvent("admin:logout"));
     });
 
     initFromHash();

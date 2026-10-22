@@ -7,7 +7,7 @@ const activityController = require("../controllers/activityController");
 
 const ADMIN = {
     email: "admin@visitbejaia.com",
-    password: "adminvb2026"
+    password: "visitbejaia@06"
 };
 
 // LOGIN ADMIN

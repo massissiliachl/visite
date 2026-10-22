@@ -151,8 +151,15 @@
         if (e.key === "Escape" && !panel.hidden) close();
     });
 
-    load();
-    setInterval(() => {
-        if (document.visibilityState === "visible") load();
-    }, REFRESH_MS);
+    function start() {
+        load();
+        if (!start.timer) {
+            start.timer = setInterval(() => {
+                if (document.visibilityState === "visible" && sessionStorage.getItem("admin_jwt")) load();
+            }, REFRESH_MS);
+        }
+    }
+
+    if (sessionStorage.getItem("admin_jwt")) start();
+    window.addEventListener("admin:ready", start);
 })();
